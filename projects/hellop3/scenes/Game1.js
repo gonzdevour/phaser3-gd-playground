@@ -19,7 +19,7 @@ class Game extends Phaser.Scene {
     create() {
 		// Example of creating sprite/image
         this.add.image(308, 667, 'classroom');
-        this.add.image(308, 667, 'bg_label');
+        //this.add.image(308, 667, 'bg_label');
 		this.add.image(308, 200, 'char_catgirl');
 		
         var buttons = this.rexUI.add.buttons({
