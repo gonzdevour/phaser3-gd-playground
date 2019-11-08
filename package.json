@@ -1,0 +1,44 @@
+{
+    "name": "phaser3-projects",
+    "version": "1.0.0",
+    "description": "Projects of phaser3",
+    "scripts": {
+        "dev": "webpack",
+        "test": "eslint ./plugins/**/**.js"
+    },
+    "keywords": [
+        "phaser3"
+    ],
+    "devDependencies": {
+        "@babel/core": "^7.6.4",
+        "@babel/polyfill": "^7.6.0",
+        "@babel/preset-env": "^7.6.3",
+        "@electron-forge/plugin-webpack": "^6.0.0-beta.45",
+        "babel-eslint": "^9.0.0",
+        "babel-loader": "^8.0.0",
+        "babel-preset-env": "^1.7.0",
+        "browser-sync": "^2.26.5",
+        "browser-sync-webpack-plugin": "^2.2.2",
+        "clean-webpack-plugin": "^0.1.19",
+        "copy-webpack-plugin": "^4.5.1",
+        "json-import-loader": "^1.3.1",
+        "eslint": "^5.15.0",
+        "eslint-plugin-import": "^2.18.2",
+        "expose-loader": "^0.7.3",
+        "html-webpack-plugin": "^3.2.0",
+        "nodemon-webpack-plugin": "4.0.8",
+        "raw-loader": "^0.5.1",
+        "source-map-support": "0.5.12",
+        "uglifyjs-webpack-plugin": "^1.3.0",
+        "webpack": "^4.41.2",
+        "webpack-cli": "^3.3.9",
+        "webpack-node-externals": "1.7.2"
+    },
+    "dependencies": {
+        "chart.js": "^2.8.0",
+        "firebase": "^5.11.1",
+        "parse": "^2.8.0",
+        "phaser": "3.20.1",
+        "phaser3-rex-plugins": "git+https://github.com/rexrainbow/phaser3-rex-notes.git"
+    }
+}
