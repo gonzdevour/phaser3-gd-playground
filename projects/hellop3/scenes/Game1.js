@@ -23,8 +23,10 @@ class Game extends Phaser.Scene {
 		this.add.image(308, 200, 'char_catgirl');
 		
         var buttons = this.rexUI.add.buttons({
-            x: 'center',
-            y: 'center',
+            anchor: {
+                centerX: 'center',
+                centerY: 'center'
+            },
 
             orientation: 'x',
 			space: 20,
