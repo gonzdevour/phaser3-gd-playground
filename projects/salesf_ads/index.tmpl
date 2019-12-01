@@ -3,25 +3,26 @@
 
 <head>
     <meta charset="UTF-8">
-	<!-- IE兼容模式設定 -->
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!-- IE兼容模式設定 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Demo</title>
-	<!-- Allow fullscreen mode on iOS devices. (These are Apple specific meta tags.) -->
-	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui, viewport-fit=cover" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<!-- Chrome for Android web app tags -->
-	<meta name="mobile-web-app-capable" content="yes" />
-	<!-- icon的href記得要改 -->
-	<link rel="apple-touch-icon" sizes="256x256" href="icon-256.png" />
-	<link rel="shortcut icon" sizes="256x256" href="icon-256.png" />
-	<!-- IE與feature phone使用的優化tag -->	
+    <!-- Allow fullscreen mode on iOS devices. (These are Apple specific meta tags.) -->
+    <meta name="viewport"
+        content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!-- Chrome for Android web app tags -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- icon的href記得要改 -->
+    <link rel="apple-touch-icon" sizes="256x256" href="icon-256.png" />
+    <link rel="shortcut icon" sizes="256x256" href="icon-256.png" />
+    <!-- IE與feature phone使用的優化tag -->
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
     <meta http-equiv="cleartype" content="on">
-	<!-- 禁止手機瀏覽器自動辨識聯絡資訊 -->
+    <!-- 禁止手機瀏覽器自動辨識聯絡資訊 -->
     <meta name="format-detection" content="telephone=no">
-	<!-- ads div用到的style -->
+    <!-- ads div用到的style -->
     <link rel="stylesheet" type="text/css" href="style.css">
     <style>
         html,
@@ -48,18 +49,20 @@
 </head>
 
 <body>
-	<!-- ads div and script-->
-	<div id="mainContainer">
-      <div id="content">
-        <video id="contentElement">
-          <source src="http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4"></source>
-          <source src="http://rmcdn.2mdn.net/Demo/vast_inspector/android.webm"></source>
-        </video>
-      </div>
-      <div id="adContainer"></div>
+    <!-- ads div and script-->
+    <div id="mainContainer">
+        <div id="content">
+            <video id="contentElement">
+                <source src="http://rmcdn.2mdn.net/Demo/vast_inspector/android.mp4">
+                </source>
+                <source src="http://rmcdn.2mdn.net/Demo/vast_inspector/android.webm">
+                </source>
+            </video>
+        </div>
+        <div id="adContainer"></div>
     </div>
     <script type="text/javascript" src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
     <script type="text/javascript" src="js/ads.js"></script>
-	<!-- game div -->
+    <!-- game div -->
     <div id="game"></div>
 </body>
