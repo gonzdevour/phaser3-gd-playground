@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+// const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
@@ -60,7 +60,7 @@ module.exports = {
             WEBGL_RENDERER: true, // I did this to make webpack work, but I'm not really sure it should always be true
             CANVAS_RENDERER: true // I did this to make webpack work, but I'm not really sure it should always be true
         }),
-        new CleanWebpackPlugin([distFolder]),
+        // new CleanWebpackPlugin([distFolder]), // Don't clean dist folder
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new HtmlWebpackPlugin({
             filename: distFolder + '/index.html',
