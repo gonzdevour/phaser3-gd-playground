@@ -1,7 +1,7 @@
 @echo off
-set htmlTemplate=./projects/hellop3/index.tmpl
-set main=./projects/hellop3/main.js
-set assets=./projects/hellop3/assets
+set htmlTemplate=./projects/salesf_ads/index.tmpl
+set main=./projects/salesf_ads/main.js
+set assets=./projects/salesf_ads/assets
 cd ..
 cd ..
 npm run dev

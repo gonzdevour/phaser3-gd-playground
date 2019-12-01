@@ -7,6 +7,9 @@ import Game2 from './scenes/Game2.js';
 var config = {
     type: Phaser.AUTO,
     parent: 'game',
+    dom: {
+        createContainer: true
+    },
     width: 616,
     height: 1334,
     scale: {
