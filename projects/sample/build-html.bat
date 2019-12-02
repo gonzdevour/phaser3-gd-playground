@@ -1,5 +1,6 @@
 @echo off
 set dist=./app/export-html-test
+set postfix=timestamp
 set project=./projects/sample
 rem set main=main.js
 rem set htmlTemplate=index.tmpl

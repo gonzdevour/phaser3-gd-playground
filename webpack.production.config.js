@@ -9,7 +9,13 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const phaserModule = path.join(__dirname, '/node_modules/phaser/');
 const phaser = path.join(phaserModule, 'src/phaser.js');
 
-const dist = process.env.dist;
+var dist = process.env.dist;
+var postfix = process.env.postfix || false;
+if (postfix) {
+    var dateTime = new Date();
+    postfix = dateTime.toLocaleString().replace(/\/|:|\s/g, '-');
+    dist = `${dist}-${postfix}`;
+}
 
 var projectRoot = process.env.project || false;
 var projectMain = process.env.main || 'main.js'; // Entery js
