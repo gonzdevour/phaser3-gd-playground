@@ -1,2 +1,2 @@
 style="margin-top: -360px"
-也許寬高可以用100%
+也許寬高可以用100% 再試一次在gamediv內加ads div
