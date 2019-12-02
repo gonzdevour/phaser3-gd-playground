@@ -9,10 +9,13 @@ class Game extends Phaser.Scene {
     }
 
     preload() {
+        // Load assets from assets folder
         this.load.image('classroom', 'assets/classroom.png');
-
         this.load.image('uiBg0', 'assets/nine-patch.png');
         this.load.json('uiBg0', 'assets/nine-patch.json');
+
+        // Load assets from root-assets folder
+        this.load.image('key', 'key.png');
     }
 
     create() {
@@ -20,6 +23,8 @@ class Game extends Phaser.Scene {
 
         // Example of creating sprite/image
         this.add.image(400, 300, 'classroom');
+
+        this.add.image(400, 300, 'key');
 
         // Example of creating ui component
         this.rexUI.add.label({
