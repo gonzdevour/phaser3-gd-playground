@@ -1,9 +1,9 @@
 @echo off
 set project=./projects/sample
-rem set htmlTemplate=./projects/sample/index.tmpl
-rem set main=./projects/sample/main.js
-rem set assets=./projects/sample/assets
-rem set root=./projects/sample/root
+rem set main=main.js
+rem set htmlTemplate=index.tmpl
+rem set assets=assets
+rem set root=root
 cd ..
 cd ..
 npm run dev
