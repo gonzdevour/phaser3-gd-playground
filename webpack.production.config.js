@@ -83,16 +83,16 @@ module.exports = {
             template: htmlTemplate,
             chunks: ['vendor', 'app'],
             chunksSortMode: 'manual',
-            minify: {
-                removeAttributeQuotes: true,
-                collapseWhitespace: true,
-                html5: true,
-                minifyCSS: true,
-                minifyJS: true,
-                minifyURLs: true,
-                removeComments: true,
-                removeEmptyAttributes: true
-            },
+            // minify: {
+            //     removeAttributeQuotes: true,
+            //     collapseWhitespace: true,
+            //     html5: true,
+            //     minifyCSS: true,
+            //     minifyJS: true,
+            //     minifyURLs: true,
+            //     removeComments: true,
+            //     removeEmptyAttributes: true
+            // },
             hash: true
         }),
         new CopyWebpackPlugin([
