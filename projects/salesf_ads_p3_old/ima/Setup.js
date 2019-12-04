@@ -25,9 +25,6 @@ var Setup = function (config) {
     // var self= this;
     // var contentEndedListener = function () { self.adsLoader.contentComplete(); };
     //videoContent.onended = contentEndedListener;
-
-    // Request video ads.
-    this.request(config);
 }
 
 export default Setup;

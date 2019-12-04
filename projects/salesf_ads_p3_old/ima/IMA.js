@@ -14,6 +14,8 @@ class IMA {
         this.setEventEmitter(eventEmitter, EventEmitterClass);
 
         this.setup(config);
+        // Request video ads.
+        this.request(config);
     }
 
     shutdown() {
