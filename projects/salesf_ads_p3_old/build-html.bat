@@ -1,5 +1,5 @@
 @echo off
-set dist=C:\Users\JyunRu\Dropbox\Public\salesf_ads_p3_old
+set dist=./app/salesf_ads
 set postfix=timestamp
 set project=%CD%
 cd ..
