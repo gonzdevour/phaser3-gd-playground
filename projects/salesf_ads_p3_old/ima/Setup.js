@@ -2,8 +2,7 @@ import GetValue from '../../../../phaser3-rex-notes/plugins/utils/object/GetValu
 
 var Setup = function (config) {
     var containerID = GetValue(config, 'containerID', 'adContainer');
-    var adTag = GetValue(config, 'adTag', '');
-
+    
     console.log('SetupIMA');
     // Create the ad display container.
     this.topContainer = document.getElementById(containerID);
@@ -28,7 +27,7 @@ var Setup = function (config) {
     //videoContent.onended = contentEndedListener;
 
     // Request video ads.
-    this.request(adTag);
+    this.request(config);
 }
 
 export default Setup;

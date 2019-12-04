@@ -23,7 +23,6 @@ class IMA {
     destroy() {
         this.shutdown();
     }
-
 }
 
 var methods = {
