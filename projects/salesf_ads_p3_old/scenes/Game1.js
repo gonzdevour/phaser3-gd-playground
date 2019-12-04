@@ -1,4 +1,4 @@
-import IMA from '../ima/IMA.js';
+import IMA from '../../../plugins/ima/IMA.js';
 
 
 const COLOR_PRIMARY = 0x4e342e;

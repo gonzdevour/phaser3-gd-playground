@@ -1,5 +1,5 @@
-import EventEmitterMethods from '../../../../phaser3-rex-notes/plugins/utils/eventemitter/EventEmitterMethods.js';
-import GetValue from '../../../../phaser3-rex-notes/plugins/utils/object/GetValue.js';
+import EventEmitterMethods from '../../../phaser3-rex-notes/plugins/utils/eventemitter/EventEmitterMethods.js';
+import GetValue from '../../../phaser3-rex-notes/plugins/utils/object/GetValue.js';
 import Setup from './Setup.js';
 import Request from './Request.js';
 import Play from './Play.js';

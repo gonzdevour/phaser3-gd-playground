@@ -1,4 +1,4 @@
-import GetValue from '../../../../phaser3-rex-notes/plugins/utils/object/GetValue.js';
+import GetValue from '../../../phaser3-rex-notes/plugins/utils/object/GetValue.js';
 
 var Request = function (config) {
     var adTag = GetValue(config, 'adTag', '');
