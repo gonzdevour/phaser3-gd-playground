@@ -1,3 +1,6 @@
+import IMA from '../ima/IMA.js';
+
+
 const COLOR_PRIMARY = 0x4e342e;
 const COLOR_LIGHT = 0x7b5e57;
 const COLOR_DARK = 0x260e04;
@@ -17,6 +20,10 @@ class Game extends Phaser.Scene {
     }
 
     create() {
+        var ima = new IMA({
+            adTag: 'https://googleads.g.doubleclick.net/pagead/ads?ad_type=video_text_image&client=ca-games-pub-7380101976321108&description_url=http%3A%2F%2Fsales-frontier.com&videoad_start_delay=0&hl=zh_TW&max_ad_duration=30000&vad_type=nonlinear&adtest=on'
+        });
+
         // Example of creating sprite/image
         this.add.image(308, 667, 'classroom');
         //this.add.image(308, 667, 'bg_label');
@@ -46,7 +53,7 @@ class Game extends Phaser.Scene {
                 console.log(`Click button-${button.text}` + index);
                 if (index == 0) {
                     console.log(index + ' has been clicked!');
-                    playAds();
+                    ima.play();
                 } else if (index == 1) {
                     console.log(index + ' has been clicked!');
                     this.scene.start('game2');
