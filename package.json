@@ -35,6 +35,7 @@
         "webpack-node-externals": "1.7.2"
     },
     "dependencies": {
-        "phaser": "3.21.0"
+        "enable3d": "0.0.14",
+        "phaser": "^3.22.0"
     }
 }
