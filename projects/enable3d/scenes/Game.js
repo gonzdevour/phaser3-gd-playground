@@ -1,4 +1,4 @@
-import enable3d, { Scene3D } from 'enable3d'
+import { Scene3D } from 'enable3d'
 
 // STEP 5: Extend your Scene with Scene3D instead of Phaser.Scene
 class Game extends Scene3D {
