@@ -56,8 +56,8 @@ module.exports = {
     devtool: 'cheap-source-map',
     output: {
         pathinfo: true,
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: './dist/',
+        path: path.resolve(__dirname, 'watch-dist'),
+        publicPath: './watch-dist/',
         library: '[name]',
         libraryTarget: 'umd',
         filename: '[name].js'
