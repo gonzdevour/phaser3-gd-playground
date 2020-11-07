@@ -5,4 +5,4 @@ set main=./projects/salesf_ads/main.js
 set assets=./projects/salesf_ads/assets
 cd ..
 cd ..
-webpack --config webpack.production.config.js
+npm run production

@@ -8,4 +8,4 @@ rem set assets=assets
 rem set root=root
 cd ..
 cd ..
-webpack --config webpack.production.config.js
+npm run production

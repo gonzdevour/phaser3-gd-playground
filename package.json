@@ -4,6 +4,7 @@
     "description": "Projects of phaser3",
     "scripts": {
         "dev": "webpack",
+        "production": "webpack --config webpack.production.config.js",
         "test": "eslint ./plugins/**/**.js"
     },
     "keywords": [

@@ -5,4 +5,4 @@ set main=./projects/hellop3/main.js
 set assets=./projects/hellop3/assets
 cd ..
 cd ..
-webpack --config webpack.production.config.js
+npm run production

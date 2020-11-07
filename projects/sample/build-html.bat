@@ -1,6 +1,6 @@
 @echo off
 set dist=./app/export-html-test
-set postfix=timestamp
+rem set postfix=timestamp
 set project=./projects/sample
 rem set main=main.js
 rem set htmlTemplate=index.tmpl
@@ -8,4 +8,4 @@ rem set assets=assets
 rem set root=root
 cd ..
 cd ..
-webpack --config webpack.production.config.js
+npm run production
