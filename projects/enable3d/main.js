@@ -1,3 +1,4 @@
+import 'phaser';
 import AllPlugins from '../../plugins/AllPlugins.js';
 // STEP 1: Add the libraries with "npm install phaser enable3d"
 import enable3d, { Canvas } from 'enable3d';

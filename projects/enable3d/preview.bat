@@ -1,9 +1,9 @@
 @echo off
 set project=./projects/enable3d
-rem set main=main.js
-rem set htmlTemplate=index.tmpl
-rem set assets=assets
-rem set root=root
+set main=main.js
+set htmlTemplate=index.tmpl
+set assets=assets
+set root=root
 cd ..
 cd ..
 npm run dev

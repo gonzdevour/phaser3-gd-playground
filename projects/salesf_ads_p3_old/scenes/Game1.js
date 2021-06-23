@@ -1,3 +1,4 @@
+import 'phaser';
 import IMA from '../../../plugins/ima/IMA.js';
 
 

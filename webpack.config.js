@@ -3,46 +3,29 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
-// Phaser webpack config
-var phaser;
-const testMode = process.env.testmode || '0';
-switch (testMode) {
-    case '0':
-        var phaserModule = path.join(__dirname, '/node_modules/phaser/'); // Official released phaser
-        phaser = path.join(phaserModule, 'src/phaser.js');
-        break;
-    case '1':
-        var phaserModule = path.join(__dirname, '/../rex-phaser/'); // My tested phaser
-        phaser = path.join(phaserModule, 'src/phaser.js');
-        break;
-    case '2':
-        var phaserModule = path.join(__dirname, '/../phaser/'); // Lastest phaser
-        phaser = path.join(phaserModule, 'src/phaser.js');
-        break;
-    default:
-        var phaserModule = path.join(__dirname, testMode); // Other phaser path
-        phaser = path.join(phaserModule, 'src/phaser.js');
-        break;
-}
-
 var projectRoot = process.env.project || false;
 var projectMain = process.env.main || 'main.js'; // Entery js
-var htmlTemplate = process.env.htmltemplate || 'index.tmpl'; // Template of index.html
+var htmlTemplate = process.env.htmlTemplate || 'index.tmpl'; // Template of index.html
 var assetsFolder = process.env.assets || 'assets'; // Map to assets folder
 var rootAssetsFolder = process.env.root || 'root'; // Map to root folder
+
+console.log(process.env.main);
+console.log(projectMain);
+
 if (projectRoot) {
     projectRoot = path.resolve(__dirname, projectRoot);
     projectMain = path.resolve(projectRoot, projectMain);
+    console.log(projectMain);
     htmlTemplate = path.resolve(projectRoot, htmlTemplate);
     assetsFolder = path.resolve(projectRoot, assetsFolder);
     rootAssetsFolder = path.resolve(projectRoot, rootAssetsFolder);
 }
 
-console.log(projectRoot);
-console.log(projectMain);
-console.log(htmlTemplate);
-console.log(assetsFolder);
-console.log(rootAssetsFolder);
+// console.log(projectRoot);
+// console.log(projectMain);
+// console.log(htmlTemplate);
+// console.log(assetsFolder);
+// console.log(rootAssetsFolder);
 
 module.exports = {
     mode: 'development',
@@ -50,8 +33,7 @@ module.exports = {
         app: [
             '@babel/polyfill',
             projectMain
-        ],
-        vendor: ['phaser']
+        ]
     },
     devtool: 'cheap-source-map',
     output: {
@@ -117,10 +99,5 @@ module.exports = {
     },
     node: {
         fs: 'empty'
-    },
-    resolve: {
-        alias: {
-            'phaser': phaser,
-        },
     }
 }

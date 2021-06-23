@@ -1,3 +1,4 @@
+import 'phaser';
 import AddAdsDiv from '../helper/AddAdsDiv.js';
 
 const COLOR_PRIMARY = 0x4e342e;

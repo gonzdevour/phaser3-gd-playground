@@ -19,7 +19,7 @@ if (postfix) {
 
 var projectRoot = process.env.project || false;
 var projectMain = process.env.main || 'main.js'; // Entery js
-var htmlTemplate = process.env.htmltemplate || 'index.tmpl'; // Template of index.html
+var htmlTemplate = process.env.htmlTemplate || 'index.tmpl'; // Template of index.html
 var assetsFolder = process.env.assets || 'assets'; // Map to assets folder
 var rootAssetsFolder = process.env.root || 'root'; // Map to root folder
 if (projectRoot) {
@@ -38,8 +38,7 @@ module.exports = {
         app: [
             '@babel/polyfill',
             projectMain
-        ],
-        vendor: ['phaser']
+        ]
     },
     output: {
         path: distFolder,
@@ -81,7 +80,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: distFolder + '/index.html',
             template: htmlTemplate,
-            chunks: ['vendor', 'app'],
+            chunks: ['app'],
             chunksSortMode: 'manual',
             // minify: {
             //     removeAttributeQuotes: true,
@@ -126,10 +125,5 @@ module.exports = {
                 use: 'raw-loader'
             }
         ]
-    },
-    resolve: {
-        alias: {
-            'phaser': phaser,
-        }
     }
 }

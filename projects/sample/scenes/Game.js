@@ -1,3 +1,4 @@
+import 'phaser';
 import Create3x3NinePatch from '../../utils/Create3x3NinePatch.js';
 
 class Game extends Phaser.Scene {
