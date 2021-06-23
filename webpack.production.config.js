@@ -108,6 +108,10 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.ts$/,
+                loaders: ['babel-loader', 'awesome-typescript-loader'],
+            },
+            {
                 test: /\.js$/,
                 use: {
                     loader: 'babel-loader',
