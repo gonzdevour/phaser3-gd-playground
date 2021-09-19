@@ -13,7 +13,8 @@ class Character extends Sizer {
 
         var background = GetValue(config, 'background');
         var character = GetValue(config, 'character');
-        var bopomofo = new Bopomofo(scene, config.bopomofo);
+        var bopomofoConfig = GetValue(config, 'bopomofo');
+        var bopomofo = new Bopomofo(scene, bopomofoConfig);
 
         config.orientation = 'x';
         super(scene, config);
