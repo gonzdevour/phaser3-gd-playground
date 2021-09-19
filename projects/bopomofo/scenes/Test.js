@@ -1,5 +1,5 @@
 import 'phaser';
-import Bopomofo from '../gameobjects/bopomofo/Bopomofo';
+import Character from '../gameobjects/character/Character';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -13,27 +13,32 @@ class Test extends Phaser.Scene {
     }
 
     create() {
-        var bopomofo = new Bopomofo(this, {
+        var character = new Character(this, {
             x: 400, y: 300,           // Position
-            width: 100, height: 120,  // Minimun size
+            width: 150, height: 120,  // Minimun size
 
-            // background: this.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
+            background: this.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
+            character: this.rexUI.add.label({
+                background: this.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
+                text: this.rexUI.add.BBCodeText(0, 0, '',
+                    { fontSize: 40, fixedWidth: 48, fixedHeight: 48, halign: 'center', valign: 'center' }
+                ),
+                align: 'center',
+                space: { left: 5, right: 5, top: 5, bottom: 5 }
+            }),
 
-            // Use getLabelCallback if initials, media, vowel, tone parameter is not given
-            getLabelCallback: GetLabel,
-
-            // Assign element individually
-            // initials: GetLabel(this, 'ㄑ'),
-            // media: GetLabel(this, 'ㄧ'),
-            // vowel: GetLabel(this, 'ㄢ'),
-            // tone: GetLabel(this, 'ˊ'),
+            bopomofo: {
+                getLabelCallback: GetLabel
+            }
         })
             .layout()
         // .drawBounds(this.add.graphics(), 0xff0000);
 
-        console.log(`${bopomofo.width}x${bopomofo.height}`)
+        console.log(`${character.width}x${character.height}`)
 
-        bopomofo.setInitials('ㄑ').setMedia('ㄧ').setVowel('ㄢ').setTone('ˊ');
+        character
+            .setCharacter('前')
+            .setInitials('ㄑ').setMedia('ㄧ').setVowel('ㄢ').setTone('ˊ');
     }
 
     update() { }
@@ -43,12 +48,12 @@ var GetLabel = function (scene, text) {
     return scene.rexUI.add.label({
         background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
         text: scene.rexUI.add.BBCodeText(0, 0, text,
-            { fontSize: 20, fixedWidth: 24, fixedHeight: 24, halign: 'center', valign: 'center' }
+            { fontSize: 16, fixedWidth: 20, fixedHeight: 20, halign: 'center', valign: 'center' }
         ),
         // Set fixedWidth, fixedHeight for all kinds of text input
 
         align: 'center',
-        space: { left: 10, right: 10, top: 10, bottom: 10 }
+        space: { left: 5, right: 5, top: 5, bottom: 5 }
     })
 }
 

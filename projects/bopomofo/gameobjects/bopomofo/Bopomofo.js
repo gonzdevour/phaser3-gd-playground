@@ -29,7 +29,7 @@ var GetLabel = function (scene, text) {
 }
 */
 
-import UI from '../../../../plugins/ui-components.js'
+import UI from '../../../../plugins/ui-components.js';
 
 const Sizer = UI.Sizer;
 const GetValue = Phaser.Utils.Objects.GetValue;
@@ -86,10 +86,11 @@ class Bopomofo extends Sizer {
         this
             .add(
                 bopomofoSizer,
-                { expand: true }
+                { proportion: 0, expand: true }
             )
             .add(
-                tone
+                tone,
+                { proportion: 0 }
             )
 
         this
