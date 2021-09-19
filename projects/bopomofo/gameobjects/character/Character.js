@@ -39,7 +39,17 @@ class Character extends Sizer {
     }
 
     setCharacter(text) {
-        this.getElement('character').setText(text);
+        if (typeof (text) === 'string') {
+            this.getElement('character').setText(text);
+        } else {
+            var config = text;
+            this
+                .setCharacter(GetValue(config, 'character', ''))
+                .setInitials(GetValue(config, 'initials', ''))
+                .setMedia(GetValue(config, 'media', ''))
+                .setVowel(GetValue(config, 'vowel', ''))
+                .setTone(GetValue(config, 'tone', ''))
+        }
         return this;
     }
 

@@ -37,8 +37,9 @@ class Test extends Phaser.Scene {
         console.log(`${character.width}x${character.height}`)
 
         character
-            .setCharacter('前')
-            .setInitials('ㄑ').setMedia('ㄧ').setVowel('ㄢ').setTone('ˊ');
+            .setCharacter(
+                { character: '前', initials: 'ㄑ', media: 'ㄧ', vowel: 'ㄢ', tone: 'ˊ' }
+            )
     }
 
     update() { }
