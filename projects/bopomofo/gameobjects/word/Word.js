@@ -25,10 +25,13 @@ class Word extends Sizer {
                 { proportion: 1, expand: true }
             )
         }
+
+        this
+            .addChildrenMap('characters', characters)
     }
 
     setWord(characters) {
-        var items = this.getElement('items');
+        var items = this.getElement('characters');
         var cnt = Math.min(characters.length, items.length);
         for (var i = 0; i < cnt; i++) {
             items[i].setCharacter(characters[i]);
