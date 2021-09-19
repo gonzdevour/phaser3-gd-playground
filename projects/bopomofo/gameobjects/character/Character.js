@@ -18,6 +18,7 @@ class Character extends Sizer {
 
         config.orientation = 'x';
         super(scene, config);
+        scene.add.existing(this);
 
         if (background) {
             this.addBackground(background);
