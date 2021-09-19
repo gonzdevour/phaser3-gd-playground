@@ -1,5 +1,4 @@
 import UI from '../../../../plugins/ui-components.js';
-import Character from '../character/Character';
 
 const Sizer = UI.Sizer;
 const GetValue = Phaser.Utils.Objects.GetValue;
