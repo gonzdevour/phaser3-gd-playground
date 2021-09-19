@@ -1,34 +1,3 @@
-/*
-var bopomofo = new Bopomofo(scene, {
-    x: 400, y: 300,           // Position
-    width: 100, height: 120,  // Minimun size
-
-    // background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
-
-    // Use getLabelCallback if initials, media, vowel, tone parameter is not given
-    getLabelCallback: GetLabel,  
-    
-    // Assign element individually
-    // initials: GetLabel(scene, 'ㄑ'),
-    // media: GetLabel(scene, 'ㄧ'),
-    // vowel: GetLabel(scene, 'ㄢ'),
-    // tone: GetLabel(scene, 'ˊ'),
-});
-
-var GetLabel = function (scene, text) {
-    return scene.rexUI.add.label({
-        background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
-        text: scene.rexUI.add.BBCodeText(0, 0, text,
-            { fontSize: 20, fixedWidth: 24, fixedHeight: 24, halign: 'center', valign: 'center' }
-        ),
-        // Set fixedWidth, fixedHeight for all kinds of text input
-
-        align: 'center',
-        space: { left: 10, right: 10, top: 10, bottom: 10 }
-    })
-}
-*/
-
 import UI from '../../../../plugins/ui-components.js';
 
 const Sizer = UI.Sizer;
@@ -36,6 +5,10 @@ const GetValue = Phaser.Utils.Objects.GetValue;
 
 class Bopomofo extends Sizer {
     constructor(scene, config) {
+        if (config === undefined) {
+            config = {};
+        }
+
         var background = GetValue(config, 'background');
         var getLabel = GetValue(config, 'getLabelCallback');
         var initials = GetValue(config, 'initials');  // Label, or text
