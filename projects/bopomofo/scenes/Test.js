@@ -61,7 +61,10 @@ var GetCharacter = function (scene) {
         }),
 
         bopomofo: {
-            getLabelCallback: GetLabel
+            initials: GetLabel(scene),
+            media: GetLabel(scene),
+            vowel: GetLabel(scene),
+            tone: GetLabel(scene),
         }
     })
 }
