@@ -9,20 +9,19 @@ class Bopomofo extends Sizer {
             config = {};
         }
 
-        var background = GetValue(config, 'background');
-        var initials = GetValue(config, 'initials');  // Label, or text
-        var media = GetValue(config, 'media');        // Label, or text
-        var vowel = GetValue(config, 'vowel');        // Label, or text
-        var tone = GetValue(config, 'tone');          // Label, or text
-
         config.orientation = 'x';
         super(scene, config);
         scene.add.existing(this);
 
+        var background = GetValue(config, 'background');
         if (background) {
             this.addBackground(background);
         }
 
+        var initials = GetValue(config, 'initials');  // Label, or text
+        var media = GetValue(config, 'media');        // Label, or text
+        var vowel = GetValue(config, 'vowel');        // Label, or text
+        var tone = GetValue(config, 'tone');          // Label, or text
         var bopomofoSizer = new Sizer(scene, {
             orientation: 'y'
         })

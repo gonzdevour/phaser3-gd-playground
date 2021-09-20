@@ -6,6 +6,8 @@ var CreateChoices = function (scene) {
     var choices = new Choices(scene, {
         width: 200, height: 200,
 
+        background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
+
         initials: [
             CreateLabel(scene), CreateLabel(scene), CreateLabel(scene), CreateLabel(scene)
         ],

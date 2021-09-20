@@ -9,15 +9,14 @@ class Word extends Sizer {
             config = {};
         }
 
-        var background = GetValue(config, 'background');
-        var characters = GetValue(config, 'characters')
-
         super(scene, config);
 
+        var background = GetValue(config, 'background');
         if (background) {
             this.addBackground(background);
         }
 
+        var characters = GetValue(config, 'characters')
         for (var i = 0, cnt = characters.length; i < cnt; i++) {
             this.add(
                 characters[i],

@@ -15,6 +15,11 @@ class Choices extends Sizer {
         super(scene, config);
         scene.add.existing(this);
 
+        var background = GetValue(config, 'background');        
+        if (background) {
+            this.addBackground(background);
+        }
+
         for (var i = 0, icnt = GroupNames.length; i < icnt; i++) {
             let groupName = GroupNames[i];
             let buttons = GetValue(config, groupName);
