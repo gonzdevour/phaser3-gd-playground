@@ -16,7 +16,8 @@ class Test extends Phaser.Scene {
 
     create() {
         var word = new Word(this, {
-            x: 400, y: 300,           // Position
+            // x: 400, y: 300,           // Position
+            anchor: { left: 'left+10', top: 'top+10' }, // Anchor
             width: 150,               // Minimun size
             orientation: 'y',         // Vertical
 
