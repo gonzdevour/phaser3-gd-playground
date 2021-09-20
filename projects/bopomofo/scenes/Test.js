@@ -1,5 +1,5 @@
 import 'phaser';
-import CreateWord from '../samples/CreateWord.js';
+import CreateChoices from '../samples/CreateChoices.js';
 
 
 class Test extends Phaser.Scene {
@@ -13,20 +13,21 @@ class Test extends Phaser.Scene {
     preload() {
     }
 
-    create() {
-        var word = CreateWord(this)
+    create() {        
+        var choices = CreateChoices(this)
+            .setPosition(400, 300)
             .layout()
 
-        console.log(`${word.width}x${word.height}`)
+        console.log(`${choices.width}x${choices.height}`)
 
-        word
-            .setWord(
-                [
-                    { character: '一', initials: '', media: '一', vowel: '', tone: '' },
-                    { character: '葉', initials: '', media: '一', vowel: 'ㄝ', tone: 'ˋ' },
-                    { character: '知', initials: 'ㄓ', media: '', vowel: '', tone: '' },
-                    { character: '秋', initials: 'ㄑ', media: '一', vowel: 'ㄡ', tone: '' }
-                ]
+        choices
+            .setChoices(
+                {
+                    initials: ['ㄅ', 'ㄆ', 'ㄇ', 'ㄈ'],
+                    media: ['一', 'ㄨ', 'ㄩ', ' '],
+                    vowel: ['ㄚ', 'ㄛ', 'ㄝ', 'ㄢ'],
+                    tone: ['˙', 'ˊ', 'ˇ', 'ˋ']
+                }
             )
     }
 

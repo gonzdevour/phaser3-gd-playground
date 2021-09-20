@@ -13,10 +13,7 @@ var CreateWord = function (scene) {
         background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
 
         characters: [
-            CreateCharacter(scene),
-            CreateCharacter(scene),
-            CreateCharacter(scene),
-            CreateCharacter(scene)
+            CreateCharacter(scene), CreateCharacter(scene), CreateCharacter(scene), CreateCharacter(scene)
         ]
     })
 }
