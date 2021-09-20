@@ -10,27 +10,10 @@ class Bopomofo extends Sizer {
         }
 
         var background = GetValue(config, 'background');
-        var getLabel = GetValue(config, 'getLabelCallback');
         var initials = GetValue(config, 'initials');  // Label, or text
         var media = GetValue(config, 'media');        // Label, or text
         var vowel = GetValue(config, 'vowel');        // Label, or text
         var tone = GetValue(config, 'tone');          // Label, or text
-
-        if (initials == undefined) {
-            initials = getLabel(scene);
-        }
-
-        if (media == undefined) {
-            media = getLabel(scene);
-        }
-
-        if (vowel == undefined) {
-            vowel = getLabel(scene);
-        }
-
-        if (tone == undefined) {
-            tone = getLabel(scene);
-        }
 
         config.orientation = 'x';
         super(scene, config);
