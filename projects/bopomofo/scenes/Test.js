@@ -21,16 +21,12 @@ class Test extends Phaser.Scene {
         console.log(`${panel.width}x${panel.height}`)
 
         panel
-            .getElement('word')
             .setWord([
                 { character: '一', initials: '', media: '一', vowel: '', tone: '' },
                 { character: '葉', initials: '', media: '一', vowel: 'ㄝ', tone: 'ˋ' },
                 { character: '知', initials: 'ㄓ', media: '', vowel: '', tone: '' },
                 { character: '秋', initials: 'ㄑ', media: '一', vowel: 'ㄡ', tone: '' }
             ])
-
-        panel
-            .getElement('choices')
             .setChoicesText(
                 {
                     initials: ['ㄐ', 'ㄑ', 'ㄒ', 'ㄓ'],

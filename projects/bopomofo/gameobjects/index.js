@@ -1,9 +1,11 @@
-import Character from "./character/Character";
-import Word from "./word/Word";
-import Choices from "./choices/Choices";
+import Character from "./character/Character.js";
+import Word from "./word/Word.js";
+import Choices from "./choices/Choices.js";
+import Panel from "./panel/Panel.js";
 
 export {
     Character,
     Word,
-    Choices
+    Choices,
+    Panel
 }

@@ -1,6 +1,4 @@
-import * as GO from '../gameobjects';
-
-const Character = GO.Character;
+import { Character } from '../gameobjects';
 
 var CreateCharacter = function (scene) {
     return new Character(scene, {

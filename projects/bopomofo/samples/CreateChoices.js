@@ -1,6 +1,4 @@
-import * as GO from '../gameobjects';
-
-const Choices = GO.Choices;
+import { Choices } from '../gameobjects';
 
 var CreateChoices = function (scene) {
     var choices = new Choices(scene, {

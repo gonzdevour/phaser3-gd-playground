@@ -1,7 +1,5 @@
-import * as GO from '../gameobjects';
+import { Word } from '../gameobjects';
 import CreateCharacter from './CreateCharacter';
-
-const Word = GO.Word;
 
 var CreateWord = function (scene) {
     return new Word(scene, {

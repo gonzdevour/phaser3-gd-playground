@@ -1,19 +1,16 @@
 import CreateWord from "./CreateWord";
 import CreateChoices from "./CreateChoices";
+import { Panel } from '../gameobjects';
 
 var CreatePanel = function (scene) {
-    return scene.rexUI.add.sizer({
+    return new Panel(scene, {
         width: 400,
         orientation: 'y',
-    })
-        .add(
-            CreateWord(scene),
-            { key: 'word', expand: false, align:'center' }
-        )
-        .add(
-            CreateChoices(scene),
-            { key: 'choices', expand: true }
-        )
+
+        background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
+        word: CreateWord(scene),
+        choices: CreateChoices(scene),
+    });
 }
 
 export default CreatePanel;
