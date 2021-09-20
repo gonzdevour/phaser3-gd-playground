@@ -1,5 +1,5 @@
 import 'phaser';
-import CreatePanel from '../samples/CreatePanel.js';
+import CreatePanel from '../build/CreatePanel.js';
 
 
 class Test extends Phaser.Scene {
