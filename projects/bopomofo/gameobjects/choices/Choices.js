@@ -15,7 +15,7 @@ class Choices extends Sizer {
         super(scene, config);
         scene.add.existing(this);
 
-        var background = GetValue(config, 'background');        
+        var background = GetValue(config, 'background');
         if (background) {
             this.addBackground(background);
         }
@@ -74,9 +74,19 @@ class Choices extends Sizer {
 
     clearChoices() {
         for (var i = 0, icnt = GroupNames.length; i < icnt; i++) {
-            this.getElement(`${GroupNames[i]}Sizer`).setData('value', null);
+            var groupName = GroupNames[i];
+            this.getElement(`${groupName}Sizer`).setData('value', null);
         }
         return this;
+    }
+
+    getChoiceResult() {
+        var result = {};
+        for (var i = 0, icnt = GroupNames.length; i < icnt; i++) {
+            var groupName = GroupNames[i];
+            result[groupName] = parseInt(this.getElement(`${groupName}Sizer`).value);
+        }
+        return result;
     }
 }
 

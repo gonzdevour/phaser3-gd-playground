@@ -1,24 +1,48 @@
 import { Choices } from '../gameobjects';
 
+const MaxInitialsButtons = 5;
+const MaxMediaButtons = 3;
+const MaxVowelButtons = 5;
+const MaxToneButtons = 5;
+
 var CreateChoices = function (scene) {
-    var choices = new Choices(scene, {
-        width: 200, height: 200,
-
+    var config = {
         background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
+        initials: [],
+        media: [],
+        vowel: [],
+        tone: []
+    }
 
-        initials: [
-            CreateLabel(scene), CreateLabel(scene), CreateLabel(scene), CreateLabel(scene)
-        ],
-        media: [
-            CreateLabel(scene), CreateLabel(scene), CreateLabel(scene), CreateLabel(scene)
-        ],
-        vowel: [
-            CreateLabel(scene), CreateLabel(scene), CreateLabel(scene), CreateLabel(scene)
-        ],
-        tone: [
-            CreateLabel(scene), CreateLabel(scene), CreateLabel(scene), CreateLabel(scene)
-        ],
-    })
+    var initials = config.initials;
+    for (var i = 0; i < MaxInitialsButtons; i++) {
+        initials.push(
+            CreateLabel(scene)
+        )
+    }
+
+    var media = config.media;
+    for (var i = 0; i < MaxMediaButtons; i++) {
+        media.push(
+            CreateLabel(scene)
+        )
+    }
+
+    var vowel = config.vowel;
+    for (var i = 0; i < MaxVowelButtons; i++) {
+        vowel.push(
+            CreateLabel(scene)
+        )
+    }
+
+    var tone = config.tone;
+    for (var i = 0; i < MaxToneButtons; i++) {
+        tone.push(
+            CreateLabel(scene)
+        )
+    }
+
+    var choices = new Choices(scene, config);
 
     choices
         .on('button.click', function (button, groupName, index, pointer, event) {

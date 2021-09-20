@@ -6,7 +6,7 @@ var CreateCharacter = function (scene) {
         character: scene.rexUI.add.label({
             background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
             text: scene.rexUI.add.BBCodeText(0, 0, '',
-                { fontSize: 40, fixedWidth: 48, fixedHeight: 48, halign: 'center', valign: 'center' }
+                { fontSize: 36, fixedWidth: 40, fixedHeight: 40, halign: 'center', valign: 'center' }
             ),
             align: 'center',
             space: { left: 5, right: 5, top: 5, bottom: 5 }
@@ -30,7 +30,7 @@ var CreateLabel = function (scene) {
         // Set fixedWidth, fixedHeight for all kinds of text input
 
         align: 'center',
-        space: { left: 5, right: 5, top: 5, bottom: 5 }
+        space: { left: 2, right: 2, top: 2, bottom: 2 }
     })
 }
 

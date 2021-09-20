@@ -21,6 +21,7 @@ class Test extends Phaser.Scene {
         console.log(`${panel.width}x${panel.height}`)
 
         panel
+            .setTitle('波波莫福')
             .setWord([
                 { character: '一', initials: '', media: '一', vowel: '', tone: '' },
                 { character: '葉', initials: '', media: '一', vowel: 'ㄝ', tone: 'ˋ' },
@@ -29,12 +30,15 @@ class Test extends Phaser.Scene {
             ])
             .setChoicesText(
                 {
-                    initials: ['ㄐ', 'ㄑ', 'ㄒ', 'ㄓ'],
+                    initials: ['ㄐ', 'ㄑ', 'ㄒ', 'ㄓ', 'ㄔ'],
                     media: ['一', 'ㄨ', 'ㄩ', ' '],
-                    vowel: ['ㄠ', 'ㄡ', 'ㄢ', 'ㄤ'],
-                    tone: ['˙', 'ˊ', 'ˇ', 'ˋ']
+                    vowel: ['ㄠ', 'ㄡ', 'ㄢ', 'ㄤ', 'ㄣ'],
+                    tone: [' ', '˙', 'ˊ', 'ˇ', 'ˋ']
                 }
             )
+            .on('answer', function (result) {
+                console.log(result)
+            })
     }
 
     update() { }
