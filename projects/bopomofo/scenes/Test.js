@@ -21,7 +21,7 @@ class Test extends Phaser.Scene {
         console.log(`${choices.width}x${choices.height}`)
 
         choices
-            .setChoices(
+            .setChoicesText(
                 {
                     initials: ['ㄅ', 'ㄆ', 'ㄇ', 'ㄈ'],
                     media: ['一', 'ㄨ', 'ㄩ', ' '],

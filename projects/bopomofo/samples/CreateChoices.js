@@ -22,13 +22,19 @@ var CreateChoices = function (scene) {
 
     choices
         .on('button.click', function (button, groupName, index, pointer, event) {
-            console.log(`Click ${groupName}-${index}`)
+            // console.log(`Click ${groupName}-${index}`)
         })
         .on('button.over', function (button, groupName, index, pointer, event) {
-            button.getElement('background').setStrokeStyle(2, 0xff0000)
+            // button.getElement('background').setStrokeStyle(2, 0xff0000)
         })
         .on('button.out', function (button, groupName, index, pointer, event) {
-            button.getElement('background').setStrokeStyle(2, 0xffffff)
+            // button.getElement('background').setStrokeStyle(2, 0xffffff)
+        })
+        .on('select', function (button, groupName) {
+            button.getElement('background').setFillStyle(0x333333)
+        })
+        .on('unselect', function (button, groupName) {
+            button.getElement('background').setFillStyle()
         })
 
     return choices;

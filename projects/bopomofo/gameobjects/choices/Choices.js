@@ -3,7 +3,7 @@ import UI from '../../../../plugins/ui-components.js';
 const Sizer = UI.Sizer;
 const Buttons = UI.Buttons;
 const GetValue = Phaser.Utils.Objects.GetValue;
-const ChoicesGroupNames = ['initials', 'media', 'vowel', 'tone'];
+const GroupNames = ['initials', 'media', 'vowel', 'tone'];
 
 class Choices extends Sizer {
     constructor(scene, config) {
@@ -15,21 +15,27 @@ class Choices extends Sizer {
         super(scene, config);
         scene.add.existing(this);
 
-        for (var i = 0, icnt = ChoicesGroupNames.length; i < icnt; i++) {
-            var groupName = ChoicesGroupNames[i];
-            var buttons = GetValue(config, groupName);
+        for (var i = 0, icnt = GroupNames.length; i < icnt; i++) {
+            let groupName = GroupNames[i];
+            let buttons = GetValue(config, groupName);
             for (var j = 0, jcnt = buttons.length; j < jcnt; j++) {
                 buttons[j].name = j.toString();
             }
 
-            var buttonsSizer = new Buttons(scene, {
+            let buttonsSizer = new Buttons(scene, {
                 type: 'radio',
                 orientation: 'x',
                 buttons: buttons,
                 expand: true,
                 eventEmitter: this,
-                groupName: groupName
+                groupName: groupName,
+                setValueCallback: function (button, value, previousValue) {
+                    var eventName = (value) ? 'select' : 'unselect';
+                    this.emit(eventName, button, groupName);
+                },
+                setValueCallbackScope: this
             })
+
 
             this
                 .add(
@@ -37,13 +43,15 @@ class Choices extends Sizer {
                     { proportion: 1, expand: true }
                 )
                 .addChildrenMap(groupName, buttons)
+                .addChildrenMap(`${groupName}Sizer`, buttonsSizer)
         }
 
+        this.clearChoices();
     }
 
-    setChoices(data) {
-        for (var i = 0, icnt = ChoicesGroupNames.length; i < icnt; i++) {
-            var groupName = ChoicesGroupNames[i];
+    setChoicesText(data) {
+        for (var i = 0, icnt = GroupNames.length; i < icnt; i++) {
+            var groupName = GroupNames[i];
             var textArray = data[groupName];
             if (!textArray) {
                 continue;
@@ -56,6 +64,13 @@ class Choices extends Sizer {
             }
         }
 
+        return this;
+    }
+
+    clearChoices() {
+        for (var i = 0, icnt = GroupNames.length; i < icnt; i++) {
+            this.getElement(`${GroupNames[i]}Sizer`).setData('value', null);
+        }
         return this;
     }
 }
