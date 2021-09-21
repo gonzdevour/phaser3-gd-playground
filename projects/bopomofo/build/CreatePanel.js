@@ -30,7 +30,7 @@ var CreatePanel = function (scene) {
         .on('button.click', function (button, index, pointer, event) {
             if (index === 0) {  // OK button
                 var result = panel.getChoiceResult();                
-                panel.emit('answer', result)
+                panel.emit('submit', result)
             }
         })
 

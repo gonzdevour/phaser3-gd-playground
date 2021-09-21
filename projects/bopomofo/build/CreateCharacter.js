@@ -4,6 +4,7 @@ var CreateCharacter = function (scene) {
     return new Character(scene, {
         background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
         character: scene.rexUI.add.label({
+            height: (24 * 3),  // Min height
             background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
             text: scene.rexUI.add.BBCodeText(0, 0, '',
                 { fontSize: 36, fixedWidth: 40, fixedHeight: 40, halign: 'center', valign: 'center' }
@@ -23,7 +24,7 @@ var CreateCharacter = function (scene) {
 
 var CreateLabel = function (scene) {
     return scene.rexUI.add.label({
-        background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
+        // background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
         text: scene.rexUI.add.BBCodeText(0, 0, '',
             { fontSize: 16, fixedWidth: 20, fixedHeight: 20, halign: 'center', valign: 'center' }
         ),

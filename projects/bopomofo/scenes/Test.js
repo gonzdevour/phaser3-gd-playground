@@ -19,8 +19,11 @@ class Test extends Phaser.Scene {
             .layout()
 
         console.log(`${panel.width}x${panel.height}`)
-
+    
         panel
+            .on('submit', function (result) {
+                console.log(result)
+            })
             .setTitle('波波莫福')
             .setWord([
                 { character: '一', initials: '', media: '一', vowel: '', tone: '' },
@@ -36,9 +39,9 @@ class Test extends Phaser.Scene {
                     tone: [' ', '˙', 'ˊ', 'ˇ', 'ˋ']
                 }
             )
-            .on('answer', function (result) {
-                console.log(result)
-            })
+            .layout()
+
+        console.log(`${panel.width}x${panel.height}`)
     }
 
     update() { }
