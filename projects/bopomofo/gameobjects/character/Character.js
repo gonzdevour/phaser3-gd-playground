@@ -53,32 +53,23 @@ class Character extends Sizer {
     }
 
     setInitials(text) {
-        SetText(this.getElement('bopomofo.initials'), text);
+        this.getElement('bopomofo').setInitials(text);
         return this;
     }
 
     setMedia(text) {
-        SetText(this.getElement('bopomofo.media'), text);
+        this.getElement('bopomofo').setMedia(text);
         return this;
     }
 
     setVowel(text) {
-        SetText(this.getElement('bopomofo.vowel'), text);
+        this.getElement('bopomofo').setVowel(text);
         return this;
     }
 
     setTone(text) {
         this.getElement('bopomofo.tone').setText(text);
         return this;
-    }
-}
-
-var SetText = function (item, text) {
-    item.setText(text);
-    if ((!text) || (text === '')) {
-        item.hide();
-    } else {
-        item.show();
     }
 }
 

@@ -56,23 +56,32 @@ class Bopomofo extends Sizer {
     }
 
     setInitials(text) {
-        this.getElement('initials').setText(text);
+        SetText(this.getElement('initials'), text);
         return this;
     }
 
     setMedia(text) {
-        this.getElement('media').setText(text);
+        SetText(this.getElement('media'), text);
         return this;
     }
 
     setVowel(text) {
-        this.getElement('vowel').setText(text);
+        SetText(this.getElement('vowel'), text);
         return this;
     }
 
     setTone(text) {
         this.getElement('tone').setText(text);
         return this;
+    }
+}
+
+var SetText = function (item, text) {
+    item.setText(text);
+    if ((!text) || (text === '')) {
+        item.hide();
+    } else {
+        item.show();
     }
 }
 
