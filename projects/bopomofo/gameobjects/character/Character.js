@@ -29,7 +29,7 @@ class Character extends Sizer {
             )
             .add(
                 bopomofo,
-                { proportion: 0, expand: true }
+                { proportion: 0, expand: false, align: 'center' }
             )
 
         this
