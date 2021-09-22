@@ -6,7 +6,7 @@ var CreateWord = function (scene) {
         width: 300,
         orientation: 'y',
 
-        background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
+        background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 0).setStrokeStyle(2, 0xffffff),
 
         characters: [
             CreateCharacter(scene), CreateCharacter(scene), CreateCharacter(scene), CreateCharacter(scene)

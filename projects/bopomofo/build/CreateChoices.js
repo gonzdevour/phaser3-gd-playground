@@ -7,7 +7,7 @@ const MaxToneButtons = 5;
 
 var CreateChoices = function (scene) {
     var config = {
-        background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
+        background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 0).setStrokeStyle(2, 0xffffff),
         initials: [],
         media: [],
         vowel: [],
