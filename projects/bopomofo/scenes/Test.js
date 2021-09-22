@@ -24,9 +24,9 @@ class Test extends Phaser.Scene {
             .on('submit', function (result) {
                 console.log(result)
             })
-            .setTitle('波波莫福')
+            .setTitle('2021教育部高頻字詞600注音練習')
             .setWord([
-                { character: '一', initials: '', media: 'ㄧ', vowel: '', tone: 'ˊ' },
+                { character: '萬', initials: '', media: 'ㄧ', vowel: '', tone: 'ˊ' },
                 { character: '葉', initials: '', media: 'ㄧ', vowel: 'ㄝ', tone: 'ˋ' },
                 { character: '知', initials: 'ㄓ', media: '', vowel: '', tone: '' },
                 { character: '秋', initials: 'ㄑ', media: 'ㄧ', vowel: 'ㄡ', tone: '' }
@@ -40,7 +40,7 @@ class Test extends Phaser.Scene {
                 }
             )
             .layout()
-        // .drawBounds(this.add.graphics(), 0xff0000)
+         //.drawBounds(this.add.graphics(), 0xff0000)
 
         console.log(`${panel.width}x${panel.height}`)
     }

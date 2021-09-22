@@ -13,9 +13,9 @@ var CreatePanel = function (scene) {
             background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, {tl:10,tr:10,bl:0,br:0}).setStrokeStyle(2, 0xffffff),
             icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(2, 0x0000ff),
             text: scene.rexUI.add.BBCodeText(0, 0, '',
-                { fontSize: 32, fixedHeight: 48, valign: 'center' }
+                { fontFamily:'Arial', fontSize: 32, fixedHeight: 48, valign: 'center', testString:'回' }
             ),
-            space: { left: 5, right: 5, top: 5, bottom: 5, icon: 10 }
+            space: { left: 15, right: 5, top: 5, bottom: 5, icon: 10 }
         }),
 
         word: CreateWord(scene),
@@ -41,8 +41,8 @@ var CreateOKButton = function (scene) {
     return scene.rexUI.add.label({
         background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, {tl:0,tr:0,bl:0,br:10}).setStrokeStyle(2, 0xffffff),
         icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(2, 0x0000ff),
-        text: scene.rexUI.add.BBCodeText(0, 0, 'OK啦',
-            { fontSize: 32, fixedWidth:48*2, fixedHeight: 48, valign: 'center' }
+        text: scene.rexUI.add.BBCodeText(0, 0, '下一題',
+            { fontSize: 32, fixedWidth:48*2, fixedHeight: 48, valign: 'center', testString:'回' }
         ),
         space: { left: 15, right: 5, top: 5, bottom: 5, icon: 10 }
     });

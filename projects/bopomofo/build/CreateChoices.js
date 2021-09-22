@@ -71,7 +71,7 @@ var CreateLabel = function (scene) {
     return scene.rexUI.add.label({
         background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
         text: scene.rexUI.add.BBCodeText(0, 0, '',
-            { fontSize: 60, fixedWidth: 72, fixedHeight: 90, halign: 'center', valign: 'center' }
+            { fontSize: 60, fixedWidth: 72, fixedHeight: 90, halign: 'center', valign: 'center', testString:'回' }
         ),
         // Set fixedWidth, fixedHeight for all kinds of text input
 
