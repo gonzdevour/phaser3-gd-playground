@@ -3,7 +3,7 @@ import CreateCharacter from './CreateCharacter';
 
 var CreateWord = function (scene) {
     return new Word(scene, {
-        width: 150,
+        width: 300,
         orientation: 'y',
 
         background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),

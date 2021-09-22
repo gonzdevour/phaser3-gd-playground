@@ -4,16 +4,16 @@ import { Panel } from '../gameobjects';
 
 var CreatePanel = function (scene) {
     var panel = new Panel(scene, {
-        width: 400,
+        width: 700,
         orientation: 'y',
 
         background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
 
         title: scene.rexUI.add.label({
-            background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
+            background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, {tl:10,tr:10,bl:0,br:0}).setStrokeStyle(2, 0xffffff),
             icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(2, 0x0000ff),
             text: scene.rexUI.add.BBCodeText(0, 0, '',
-                { fontSize: 20, fixedHeight: 24, valign: 'center' }
+                { fontSize: 32, fixedHeight: 48, valign: 'center' }
             ),
             space: { left: 5, right: 5, top: 5, bottom: 5, icon: 10 }
         }),
@@ -39,10 +39,10 @@ var CreatePanel = function (scene) {
 
 var CreateOKButton = function (scene) {
     return scene.rexUI.add.label({
-        background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
+        background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, {tl:0,tr:0,bl:10,br:10}).setStrokeStyle(2, 0xffffff),
         icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(2, 0x0000ff),
         text: scene.rexUI.add.BBCodeText(0, 0, 'OK',
-            { fontSize: 20, fixedHeight: 24, valign: 'center' }
+            { fontSize: 32, fixedHeight: 48, valign: 'center' }
         ),
         space: { left: 5, right: 5, top: 5, bottom: 5, icon: 10 }
     });

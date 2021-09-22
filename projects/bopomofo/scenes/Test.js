@@ -15,7 +15,7 @@ class Test extends Phaser.Scene {
 
     create() {
         var panel = CreatePanel(this)
-            .setPosition(400, 300)
+            .setPosition(384, 667)
             .layout()
 
         console.log(`${panel.width}x${panel.height}`)
