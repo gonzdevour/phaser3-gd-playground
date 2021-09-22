@@ -19,7 +19,7 @@ class Test extends Phaser.Scene {
             .layout()
 
         console.log(`${panel.width}x${panel.height}`)
-    
+
         panel
             .on('submit', function (result) {
                 console.log(result)
@@ -40,6 +40,7 @@ class Test extends Phaser.Scene {
                 }
             )
             .layout()
+        // .drawBounds(this.add.graphics(), 0xff0000)
 
         console.log(`${panel.width}x${panel.height}`)
     }
