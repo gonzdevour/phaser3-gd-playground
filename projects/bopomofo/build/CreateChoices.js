@@ -11,7 +11,10 @@ var CreateChoices = function (scene) {
         initials: [],
         media: [],
         vowel: [],
-        tone: []
+        tone: [],
+        space: {
+            left: 10, right: 10, top: 10, bottom: 10, row: 10, column: 10
+        }
     }
 
     var initials = config.initials;

@@ -11,6 +11,12 @@ class Choices extends Sizer {
             config = {};
         }
 
+        if (!config.hasOwnProperty('space')) {
+            config.space = {};
+        }
+
+
+        config.space.item = GetValue(config, 'space.row', config.space.item);
         config.orientation = 'y';
         super(scene, config);
         scene.add.existing(this);
@@ -20,6 +26,9 @@ class Choices extends Sizer {
             this.addBackground(background);
         }
 
+        var buttonsSpace = {
+            item: GetValue(config, 'space.column', 0),
+        }
         for (var i = 0, icnt = GroupNames.length; i < icnt; i++) {
             let groupName = GroupNames[i];
             let buttons = GetValue(config, groupName);
@@ -31,6 +40,7 @@ class Choices extends Sizer {
                 type: 'radio',
                 orientation: 'x',
                 buttons: buttons,
+                space: buttonsSpace,
                 expand: true,
                 eventEmitter: this,
                 groupName: groupName,
