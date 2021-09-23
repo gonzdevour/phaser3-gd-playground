@@ -1,3 +1,4 @@
+import Papa from 'papaparse';
 import Characters from "./characters/Characters";
 
 const GetValue = Phaser.Utils.Objects.GetValue;
@@ -13,7 +14,10 @@ class Model {
     }
 
     loadCharactersCSV(csvString) {
-        this.characters.loadCSV(csvString);
+        var items = Papa.parse(csvString, {
+            header: true
+        }).data;
+        this.characters.load(items);
         return this;
     }
 

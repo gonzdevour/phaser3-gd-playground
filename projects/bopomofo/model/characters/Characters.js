@@ -1,19 +1,14 @@
 import DB from '../db/DB.js';
-import Papa from 'papaparse';
 
 class Characters {
     constructor() {
         this.collection = DB.addCollection('characters');
     }
 
-    loadCSV(csvString) {
-        var data = Papa.parse(csvString, {
-            header: true
-        }).data;
-
+    load(items) {
         var collection = this.collection;
-        for (var i = 0, cnt = data.length; i < cnt; i++) {
-            collection.insert(data[i]);
+        for (var i = 0, cnt = items.length; i < cnt; i++) {
+            collection.insert(items[i]);
         }
 
         return this;
