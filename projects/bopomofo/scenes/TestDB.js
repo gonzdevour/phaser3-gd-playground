@@ -1,6 +1,5 @@
 import 'phaser';
 import CreateModel from '../build/CreateModel';
-import ParseBopomofo from '../model/bopomofo/ParseBopomofo';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -22,10 +21,6 @@ class Test extends Phaser.Scene {
 
         var docArray = model.queryCharacter('的');
         console.log(docArray);
-
-        console.log(ParseBopomofo('ㄛ'));
-        console.log(ParseBopomofo('ㄑㄧㄡ'));
-        console.log(ParseBopomofo('ㄌㄜˋ'));
     }
 
     update() { }
