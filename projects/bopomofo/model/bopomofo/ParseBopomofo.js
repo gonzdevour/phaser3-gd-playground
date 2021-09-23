@@ -1,21 +1,24 @@
 import { bopomofo } from './Bopomofo.js';
 
-var ParseBopomofo = function (s) {
-    var result = {};
+var ParseBopomofo = function (s, out) {
+    if (out === undefined) {
+        out = {};
+    }
+
     for (var typeName in bopomofo) {
-        result[typeName] = '';
+        out[typeName] = '';
     }
 
     for (var i = 0, cnt = s.length; i < cnt; i++) {
         var char = s.charAt(i);
         for (var typeName in bopomofo) {
             if (bopomofo[typeName].indexOf(char) !== -1) {
-                result[typeName] = char;
+                out[typeName] = char;
             }
         }
     }
 
-    return result;
+    return out;
 }
 
 export default ParseBopomofo;
