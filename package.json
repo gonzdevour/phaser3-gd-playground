@@ -40,6 +40,8 @@
     "dependencies": {
         "enable3d": "0.0.14",
         "phaser": "^3.55.2",
-        "phaser3-rex-plugins": "^1.1.58"
+        "phaser3-rex-plugins": "^1.1.58",
+        "lokijs": "^1.5.12",
+        "papaparse": "^5.3.1"
     }
 }
