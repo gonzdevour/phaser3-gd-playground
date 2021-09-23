@@ -1,6 +1,5 @@
 import 'phaser';
-import Papa from 'papaparse';
-import loki from 'lokijs/src/lokijs.js';
+import CreateModel from '../build/CreateModel';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -16,25 +15,12 @@ class Test extends Phaser.Scene {
     }
 
     create() {
-        // Get csv string
-        var csvString = this.cache.text.get('characters');
-        // Parse csv string to json array
-        var characters = Papa.parse(csvString, {
-            header: true
-        }).data;
-        console.log(characters);
+        var model = CreateModel({
+            characters: this.cache.text.get('characters')
+        })
 
-        // Create db
-        var db = new loki();
-        // Add collection
-        var collection = db.addCollection('characters');
-        // Add document
-        for (var i = 0, cnt = characters.length; i < cnt; i++) {
-            collection.insert(characters[i]);
-        }
-        // Query character = '的'
-        var docArray = collection.find({ character: '的' });
-        console.log(docArray);  // Will get 2 items
+        var docArray = model.queryCharacter('的');
+        console.log(docArray);
     }
 
     update() { }
