@@ -1,6 +1,6 @@
 class Characters {
-    constructor(db) {
-        this.collection = db.addCollection('characters');
+    constructor(parent) {       
+        this.collection = parent.db.addCollection('characters');
     }
 
     load(items) {

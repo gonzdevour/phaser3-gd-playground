@@ -1,9 +1,9 @@
 import UI from '../../../../plugins/ui-components.js';
+import { types as GroupNames } from '../../model/bopomofo/Bopomofo.js';
 
 const Sizer = UI.Sizer;
 const Buttons = UI.Buttons;
 const GetValue = Phaser.Utils.Objects.GetValue;
-const GroupNames = ['initials', 'media', 'vowel', 'tone'];
 
 class Choices extends Sizer {
     constructor(scene, config) {
