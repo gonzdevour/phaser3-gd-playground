@@ -1,8 +1,6 @@
-import DB from '../db/DB.js';
-
 class Characters {
-    constructor() {
-        this.collection = DB.addCollection('characters');
+    constructor(db) {
+        this.collection = db.addCollection('characters');
     }
 
     load(items) {

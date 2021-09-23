@@ -1,3 +1,4 @@
+import loki from 'lokijs/src/lokijs.js';
 import Papa from 'papaparse';
 import Characters from "./characters/Characters";
 
@@ -5,7 +6,8 @@ const GetValue = Phaser.Utils.Objects.GetValue;
 
 class Model {
     constructor(config) {
-        this.characters = new Characters();
+        this.db = new loki();
+        this.characters = new Characters(this.db);
 
         var charactersCSV = GetValue(config, 'characters');
         if (charactersCSV) {
