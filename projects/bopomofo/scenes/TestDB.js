@@ -12,7 +12,7 @@ class Test extends Phaser.Scene {
 
     preload() {
         // Load csv file
-        this.load.text('characters', 'assets/data/characters.csv');
+        this.load.text('characters', 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQWaeZDoFdraJRJtlfcpOpZ0RaBUHn6hO7VkfgH_RwT_qK1D9nLKWJBcXkyvWw9flaU2mUBlbZhSN-c/pub?gid=1005913310&single=true&output=csv');
     }
 
     create() {
