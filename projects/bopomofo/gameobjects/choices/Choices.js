@@ -94,7 +94,8 @@ class Choices extends Sizer {
         var result = {};
         for (var i = 0, icnt = GroupNames.length; i < icnt; i++) {
             var groupName = GroupNames[i];
-            result[groupName] = parseInt(this.getElement(`${groupName}Sizer`).value);
+            var value = this.getElement(`${groupName}Sizer`).value;
+            result[groupName] = (value) ? parseInt(value) : null;
         }
         return result;
     }
