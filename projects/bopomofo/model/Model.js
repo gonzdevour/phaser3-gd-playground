@@ -19,7 +19,7 @@ class Model {
         }
 
         // Initial database
-        var deserializeString = GetValue(config, 'data');
+        var deserializeString = GetValue(config, 'db');
         if (deserializeString) {
             this.stringToDB(deserializeString);
         } else {

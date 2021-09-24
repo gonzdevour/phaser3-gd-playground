@@ -29,7 +29,7 @@ class Test extends Phaser.Scene {
 
         // Copy to another model
         var testModel = CreateModel({
-            data: s
+            db: s
         })
         var docArray = testModel.queryCharacter('的');
         console.log(docArray);
