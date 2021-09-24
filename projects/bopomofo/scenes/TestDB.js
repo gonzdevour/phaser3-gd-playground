@@ -16,11 +16,16 @@ class Test extends Phaser.Scene {
 
     create() {
         var model = CreateModel({
-            characters: this.cache.text.get('characters')
+            characters: this.cache.text.get('characters'),
+
+            compress: true
         })
 
         var docArray = model.queryCharacter('的');
         console.log(docArray);
+
+        var s = model.dbToString();
+        console.log(s.length);  // Open compress : 10202 -> 1461
     }
 
     update() { }
