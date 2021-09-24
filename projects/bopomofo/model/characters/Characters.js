@@ -4,11 +4,7 @@ class Characters {
     }
 
     load(items) {
-        var collection = this.collection;
-        for (var i = 0, cnt = items.length; i < cnt; i++) {
-            collection.insert(items[i]);
-        }
-
+        this.collection.insert(items);
         return this;
     }
 
