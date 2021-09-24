@@ -2,7 +2,7 @@ import loki from 'lokijs/src/lokijs.js';
 import Papa from 'papaparse';
 import Characters from "./characters/Characters";
 import ParseBopomofo from './bopomofo/ParseBopomofo.js';
-import LZString from '../../../plugins/lzstring.js'
+import Methods from './Methods';
 
 const GetValue = Phaser.Utils.Objects.GetValue;
 
@@ -10,13 +10,6 @@ class Model {
     constructor(config) {
         this.db = new loki();
         this.characters = new Characters(this);
-
-        var compress = GetValue(config, 'compress', true);
-        if (compress) {
-            this.lzString = new LZString();
-        } else {
-            this.lzString = null;
-        }
 
         // Initial database
         var deserializeString = GetValue(config, 'db');
@@ -52,21 +45,11 @@ class Model {
         return this.characters.queryCharacter(character);
     }
 
-    dbToString() {
-        var s = this.db.serialize();
-        if (this.lzString) {
-            s = this.lzString.compress(s);
-        }
-        return s;
-    }
-
-    stringToDB(s) {
-        if (this.lzString) {
-            s = this.lzString.decompress(s);
-        }
-        this.db.loadJSON(s);
-        return this;
-    }
 }
+
+Object.assign(
+    Model.prototype,
+    Methods
+);
 
 export default Model;
