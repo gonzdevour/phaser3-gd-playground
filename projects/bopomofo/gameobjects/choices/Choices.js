@@ -1,5 +1,5 @@
 import UI from '../../../../plugins/ui-components.js';
-import { types as GroupNames } from '../../model/bopomofo/Bopomofo.js';
+import { TypeNames } from '../../model/bopomofo/Bopomofo.js';
 
 const Sizer = UI.Sizer;
 const Buttons = UI.Buttons;
@@ -29,8 +29,8 @@ class Choices extends Sizer {
         var buttonsSpace = {
             item: GetValue(config, 'space.column', 0),
         }
-        for (var i = 0, icnt = GroupNames.length; i < icnt; i++) {
-            let groupName = GroupNames[i];
+        for (var i = 0, icnt = TypeNames.length; i < icnt; i++) {
+            let groupName = TypeNames[i];
             let buttons = GetValue(config, groupName);
             for (var j = 0, jcnt = buttons.length; j < jcnt; j++) {
                 buttons[j].name = j.toString();
@@ -65,8 +65,8 @@ class Choices extends Sizer {
     }
 
     setChoicesText(data) {
-        for (var i = 0, icnt = GroupNames.length; i < icnt; i++) {
-            var groupName = GroupNames[i];
+        for (var i = 0, icnt = TypeNames.length; i < icnt; i++) {
+            var groupName = TypeNames[i];
             var textArray = data[groupName];
             if (!textArray) {
                 continue;
@@ -83,8 +83,8 @@ class Choices extends Sizer {
     }
 
     clearChoices() {
-        for (var i = 0, icnt = GroupNames.length; i < icnt; i++) {
-            var groupName = GroupNames[i];
+        for (var i = 0, icnt = TypeNames.length; i < icnt; i++) {
+            var groupName = TypeNames[i];
             this.getElement(`${groupName}Sizer`).setData('value', null);
         }
         return this;
@@ -92,8 +92,8 @@ class Choices extends Sizer {
 
     getChoiceResult() {
         var result = {};
-        for (var i = 0, icnt = GroupNames.length; i < icnt; i++) {
-            var groupName = GroupNames[i];
+        for (var i = 0, icnt = TypeNames.length; i < icnt; i++) {
+            var groupName = TypeNames[i];
             var value = this.getElement(`${groupName}Sizer`).value;
             if (value == null) {
                 value = '';

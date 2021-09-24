@@ -1,17 +1,17 @@
-const types = ['initials', 'media', 'vowel', 'tone'];
-const initials = 'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ';
-const media = 'ㄧㄨㄩ';
-const vowel = 'ㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ';
-const tone = '˙ ˊˇˋ';
-const bopomofo = {
-    initials: initials.split(''),
-    media: media.split(''),
-    vowel: vowel.split(''),
-    tone: tone.split(''),
+const TypeNames = ['initials', 'media', 'vowel', 'tone'];
+const Initials = 'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ';
+const Media = 'ㄧㄨㄩ';
+const Vowel = 'ㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦ';
+const Tone = '˙ ˊˇˋ';
+const Bopomofo = {
+    initials: Initials.split(''),
+    media: Media.split(''),
+    vowel: Vowel.split(''),
+    tone: Tone.split(''),
 }
 
 export {
-    types,
-    initials, media, vowel, tone,
-    bopomofo
+    TypeNames,
+    Initials, Media, Vowel, Tone,
+    Bopomofo
 };

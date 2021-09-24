@@ -33,7 +33,8 @@ class Test extends Phaser.Scene {
 
         panel
             .on('submit', function (result) {
-                console.log(result)
+                console.log(result);
+                console.log((question.verify(result)) ? 'Pass' : 'Fail');
             })
             .setTitle('2021教育部高頻字詞600注音練習')
             .setWord([
