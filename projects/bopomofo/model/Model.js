@@ -33,12 +33,10 @@ class Model {
         var items = [];
         for (var i = 0, icnt = data.length; i < icnt; i++) {
             var line = data[i];
-            var character = line.character;
             var bopomofoList = line.bopomofo.split('|');
             for (var j = 0, jcnt = bopomofoList.length; j < jcnt; j++) {
-                var characterData = ParseBopomofo(bopomofoList[j]);
-                characterData.character = character;
-                items.push(characterData);
+                var character = ParseBopomofo(bopomofoList[j], { character: line.character });
+                items.push(character);
             }
         }
         this.characters.load(items);
