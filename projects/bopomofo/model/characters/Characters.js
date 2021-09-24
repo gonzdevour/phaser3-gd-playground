@@ -1,6 +1,17 @@
+const CollectionName = 'characters';
+
 class Characters {
-    constructor(parent) {       
-        this.collection = parent.db.addCollection('characters');
+    constructor(parent) {
+        this.db = parent.db;
+    }
+
+    get collection() {
+        // Reference of collection might be changed after deserializing
+        var collection = this.db.getCollection(CollectionName);
+        if (!collection) {
+            collection = this.db.addCollection(CollectionName)
+        }
+        return collection;
     }
 
     load(items) {

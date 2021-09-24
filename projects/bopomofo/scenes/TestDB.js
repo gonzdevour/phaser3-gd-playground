@@ -26,6 +26,13 @@ class Test extends Phaser.Scene {
 
         var s = model.dbToString();
         console.log(s.length);  // Open compress : 10202 -> 1461
+
+        // Copy to another model
+        var testModel = CreateModel({
+            data: s
+        })
+        var docArray = testModel.queryCharacter('的');
+        console.log(docArray);
     }
 
     update() { }

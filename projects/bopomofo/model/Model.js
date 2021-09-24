@@ -11,17 +11,22 @@ class Model {
         this.db = new loki();
         this.characters = new Characters(this);
 
-        var compress = GetValue(config, 'compress', false);
+        var compress = GetValue(config, 'compress', true);
         if (compress) {
             this.lzString = new LZString();
         } else {
             this.lzString = null;
         }
 
-
-        var charactersCSV = GetValue(config, 'characters');
-        if (charactersCSV) {
-            this.loadCharactersCSV(charactersCSV);
+        // Initial database
+        var deserializeString = GetValue(config, 'data');
+        if (deserializeString) {
+            this.stringToDB(deserializeString);
+        } else {
+            var charactersCSV = GetValue(config, 'characters');
+            if (charactersCSV) {
+                this.loadCharactersCSV(charactersCSV);
+            }
         }
     }
 
