@@ -1,6 +1,5 @@
 import 'phaser';
-import CreateModel from '../build/CreateModel';
-import CreateQuestion from '../model/characters/CreateQuestion';
+import CreateModel from '../build/CreateModel.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -34,7 +33,7 @@ class Test extends Phaser.Scene {
         console.log(docArray);
 
         // Create question testing
-        var result = CreateQuestion({
+        var result = model.createQuestion({
             character: docArray[0],
         })
         console.log(result);

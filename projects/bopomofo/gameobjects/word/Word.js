@@ -30,9 +30,13 @@ class Word extends Sizer {
 
     setWord(characters) {
         var items = this.getElement('characters');
-        var cnt = Math.min(characters.length, items.length);
-        for (var i = 0; i < cnt; i++) {
-            items[i].setCharacter(characters[i]);
+        var charactersLength = characters.length;
+        for (var i = 0, cnt = items.length; i < cnt; i++) {
+            if (i < charactersLength) {
+                items[i].show().setCharacter(characters[i])
+            } else {
+                items[i].hide();
+            }
         }
         return this;
     }
