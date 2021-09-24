@@ -1,5 +1,6 @@
 import 'phaser';
 import CreateModel from '../build/CreateModel';
+import CreateQuestion from '../model/characters/CreateQuestion';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -31,6 +32,12 @@ class Test extends Phaser.Scene {
         })
         var docArray = testModel.queryCharacter('的');
         console.log(docArray);
+
+        // Create question testing
+        var result = CreateQuestion({
+            character: docArray[0],
+        })
+        console.log(result);
     }
 
     update() { }
