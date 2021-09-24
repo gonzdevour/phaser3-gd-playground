@@ -17,8 +17,6 @@ class Test extends Phaser.Scene {
     create() {
         var model = CreateModel({
             characters: this.cache.text.get('characters'),
-
-            compress: true
         })
 
         var docArray = model.queryCharacter('的');

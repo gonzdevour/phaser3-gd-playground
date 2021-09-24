@@ -9,7 +9,9 @@ class Characters {
         // Reference of collection might be changed after deserializing
         var collection = this.db.getCollection(CollectionName);
         if (!collection) {
-            collection = this.db.addCollection(CollectionName)
+            collection = this.db.addCollection(CollectionName, {
+                indices: ['character']
+            })
         }
         return collection;
     }
