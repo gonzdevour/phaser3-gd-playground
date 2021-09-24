@@ -1,12 +1,12 @@
-import LZString from '../../../plugins/lzstring.js';
+import { Serialize, Deserialize } from '../../../../phaser3-rex-notes/plugins/utils/lokijs/SerializeMethods.js';
 
 export default {
     dbToString() {
-        return LZString.compress(this.db.serialize());
+        return Serialize(this.db);
     },
 
     stringToDB(s) {
-        this.db.loadJSON(LZString.decompress(s));
+        Deserialize(this.db, s);
         return this;
     }
 }
