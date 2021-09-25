@@ -39,29 +39,33 @@ class KeyboardToBopomofo extends EventEmitter {
     onKeydown(event) {
         var keyName = event.key.toLowerCase();
 
-        switch (keyName) {
-            case 'backspace': // Clear
-                this.reset();
-                this.eventEmitter.emit('change', this.bopomofo);
-                break;
+        var isClearKey = (keyName === 'backspace') || (keyName === 'escape');
+        if (isClearKey) {  // Clear
+            this.reset();
+            this.eventEmitter.emit('change', this.bopomofo);
+            return;
+        }
 
-            case 'enter':  // Submit
-                this.eventEmitter.emit('submit', this.bopomofo);
-                this.reset();
-                break;
+        var char = KeyToBopomofoMap[keyName];
+        if (!char) { // Invalid input
+            return;
+        }
 
-            default:  // Set
-                var char = KeyToBopomofoMap[keyName];
-                // Fill to bopomofo
-                for (var typeName in Bopomofo) {
-                    if (Bopomofo[typeName].indexOf(char) !== -1) {
-                        this.bopomofo[typeName] = char;
-                        break;
-                    }
-                }
-
-                this.eventEmitter.emit('change', this.bopomofo);
+        // Fill to bopomofo
+        var isTone;
+        for (var typeName in Bopomofo) {
+            if (Bopomofo[typeName].indexOf(char) !== -1) {
+                this.bopomofo[typeName] = char;
+                isTone = (typeName === 'tone');
                 break;
+            }
+        }
+
+        if (isTone) {
+            this.eventEmitter.emit('submit', this.bopomofo);
+            this.reset();
+        } else {
+            this.eventEmitter.emit('change', this.bopomofo);
         }
     }
 }
