@@ -6,7 +6,7 @@ const GetValue = Phaser.Utils.Objects.GetValue;
 
 class Model {
     constructor(config) {        
-        this.db = new loki(undefined, {
+        this.db = new loki('bopomofo.db', {
             env: 'BROWSER'
         });
         this.characters = new Characters(this);
