@@ -18,7 +18,9 @@ class EditableCharacter extends Character {
     }
 
     startEdit() {
-        if (LastEditingCharacter) {
+        if (LastEditingCharacter === this) {  // Already started
+            return this;
+        } else if (LastEditingCharacter) {  // Another character is editing
             LastEditingCharacter.stopEdit();
         }
         LastEditingCharacter = this;
