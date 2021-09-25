@@ -1,5 +1,6 @@
 import 'phaser';
 import CreateWord from '../build/CreateWord.js';
+import CreateModel from '../build/CreateModel.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -10,10 +11,14 @@ class Test extends Phaser.Scene {
     }
 
     preload() {
-
+        this.load.text('characters', 'assets/data/characters.txt');
     }
 
     create() {
+        var model = CreateModel();
+        model.loadCharactersText(this.cache.text.get('characters'));
+        model.saveDB(); // Will save to Local Storage
+
         var word = CreateWord(this, {
             character: {
                 editable: true
