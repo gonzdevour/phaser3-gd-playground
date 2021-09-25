@@ -18,6 +18,7 @@ class Test extends Phaser.Scene {
         var model = CreateModel();
         model.loadCharactersText(this.cache.text.get('characters'));
         model.saveDB(); // Will save to Local Storage
+        model.saveDBToFile();
 
         var word = CreateWord(this, {
             character: {
