@@ -19,6 +19,12 @@ class KeyboardToBopomofo extends EventEmitter {
         }
     }
 
+    destroy() {
+        this.stop();
+        this.scene = undefined;
+        this.eventEmitter = undefined;
+    }
+
     start() {
         this.scene.input.keyboard.on('keydown', this.onKeydown, this);
     }
@@ -61,11 +67,11 @@ class KeyboardToBopomofo extends EventEmitter {
             }
         }
 
+        this.eventEmitter.emit('change', this.bopomofo);
+
         if (isTone) {
             this.eventEmitter.emit('submit', this.bopomofo);
             this.reset();
-        } else {
-            this.eventEmitter.emit('change', this.bopomofo);
         }
     }
 }

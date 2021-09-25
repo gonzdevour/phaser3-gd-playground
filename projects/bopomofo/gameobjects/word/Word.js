@@ -25,6 +25,7 @@ class Word extends Sizer {
         }
 
         this
+            .addChildrenMap('background', background)
             .addChildrenMap('characters', characters)
     }
 

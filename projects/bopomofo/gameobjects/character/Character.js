@@ -33,6 +33,7 @@ class Character extends Sizer {
             )
 
         this
+            .addChildrenMap('background', background)
             .addChildrenMap('character', character)
             .addChildrenMap('bopomofo', bopomofo)
     }
@@ -44,11 +45,18 @@ class Character extends Sizer {
             var config = text;
             this
                 .setCharacter(GetValue(config, 'character', ''))
-                .setInitials(GetValue(config, 'initials', ''))
-                .setMedia(GetValue(config, 'media', ''))
-                .setVowel(GetValue(config, 'vowel', ''))
-                .setTone(GetValue(config, 'tone', ''))
+                .setBopomofo(config)
         }
+        return this;
+    }
+
+    setBopomofo(config) {
+        this
+            .setInitials(GetValue(config, 'initials', ''))
+            .setMedia(GetValue(config, 'media', ''))
+            .setVowel(GetValue(config, 'vowel', ''))
+            .setTone(GetValue(config, 'tone', ''))
+
         return this;
     }
 
@@ -68,7 +76,7 @@ class Character extends Sizer {
     }
 
     setTone(text) {
-        this.getElement('bopomofo.tone').setText(text);
+        this.getElement('bopomofo').setTone(text);
         return this;
     }
 }

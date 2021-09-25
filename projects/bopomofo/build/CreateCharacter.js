@@ -1,7 +1,11 @@
-import { Character } from '../gameobjects';
+import { Character, EditableCharacter } from '../gameobjects';
 
-var CreateCharacter = function (scene) {
-    return new Character(scene, {
+const GetValue = Phaser.Utils.Objects.GetValue;
+
+var CreateCharacter = function (scene, config) {
+    var editable = GetValue(config, 'editable', false);
+    var CharacterClass = (editable)? EditableCharacter : Character
+    return new CharacterClass(scene, {
         background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 0),//.setStrokeStyle(2, 0xffffff),
         character: scene.rexUI.add.label({
             height: (60 * 3) + 2,  // Min height

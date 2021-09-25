@@ -2,9 +2,10 @@ import { Word } from '../gameobjects';
 import CreateCharacter from './CreateCharacter';
 
 const MaxCharacters = 4;
+const GetValue = Phaser.Utils.Objects.GetValue;
 
-var CreateWord = function (scene) {
-    var config = {
+var CreateWord = function (scene, config) {
+    var wordConfig = {
         width: 300,
         orientation: 'y',
 
@@ -13,14 +14,15 @@ var CreateWord = function (scene) {
         characters: [],
     }
 
-    var characters = config.characters;
+    var characters = wordConfig.characters;
+    var characterConfig = GetValue(config, 'character');
     for (var i = 0; i < MaxCharacters; i++) {
         characters.push(
-            CreateCharacter(scene)
+            CreateCharacter(scene, characterConfig)
         )
     }
 
-    var word = new Word(scene, config)
+    var word = new Word(scene, wordConfig)
     word.layout().setMinHeight(word.height) // Height won't less then current height
     return word;
 }
