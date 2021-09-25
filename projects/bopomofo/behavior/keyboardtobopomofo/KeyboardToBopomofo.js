@@ -58,21 +58,16 @@ class KeyboardToBopomofo extends EventEmitter {
         }
 
         // Fill to bopomofo
-        var isTone;
+        var matchedTypeName;
         for (var typeName in Bopomofo) {
             if (Bopomofo[typeName].indexOf(char) !== -1) {
                 this.bopomofo[typeName] = char;
-                isTone = (typeName === 'tone');
+                matchedTypeName = typeName;
                 break;
             }
         }
 
-        this.eventEmitter.emit('change', this.bopomofo);
-
-        if (isTone) {
-            this.eventEmitter.emit('submit', this.bopomofo);
-            this.reset();
-        }
+        this.eventEmitter.emit('change', this.bopomofo, matchedTypeName);
     }
 }
 

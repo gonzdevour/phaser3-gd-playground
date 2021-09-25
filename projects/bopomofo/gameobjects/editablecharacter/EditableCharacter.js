@@ -24,13 +24,14 @@ class EditableCharacter extends Character {
         LastEditingCharacter = this;
 
         this.bopomofoEditor = new KeyboardToBopomofo(this.scene)
-            .on('change', function (bopomofo) {
+            .on('change', function (bopomofo, typeName) {
                 this.setBopomofo(bopomofo);
                 this.getTopmostSizer().layout();  // Run layout
+
+                if (typeName === 'tone') {
+                    this.stopEdit();
+                }
             }, this)
-            .on('submit', function () {
-                this.stopEdit();
-            }, this);
 
         this.emit('startedit', this);
 
