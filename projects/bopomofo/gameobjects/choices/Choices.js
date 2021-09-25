@@ -53,6 +53,7 @@ class Choices extends Sizer {
 
 
             this
+                .addChildrenMap('background', background)
                 .add(
                     buttonsSizer,
                     { proportion: 1, expand: true }

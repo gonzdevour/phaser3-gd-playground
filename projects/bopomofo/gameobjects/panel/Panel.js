@@ -26,6 +26,7 @@ class Panel extends Sizer {
         var choices = GetValue(config, 'choices');
 
         this
+            .addChildrenMap('background', background)
             .add(
                 word,
                 { proportion: 0, expand: false, align: 'center' }

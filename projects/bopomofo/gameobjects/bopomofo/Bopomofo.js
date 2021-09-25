@@ -49,6 +49,7 @@ class Bopomofo extends Sizer {
             )
 
         this
+            .addChildrenMap('background', background)
             .addChildrenMap('initials', initials)
             .addChildrenMap('media', media)
             .addChildrenMap('vowel', vowel)
