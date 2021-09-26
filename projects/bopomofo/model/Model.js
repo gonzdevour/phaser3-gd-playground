@@ -5,7 +5,7 @@ import Methods from './Methods';
 const GetValue = Phaser.Utils.Objects.GetValue;
 
 class Model {
-    constructor(config) {        
+    constructor(config) {
         this.db = new loki('bopomofo.db', {
             env: 'BROWSER'
         });

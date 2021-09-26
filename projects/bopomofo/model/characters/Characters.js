@@ -21,8 +21,16 @@ class Characters {
         return this;
     }
 
-    queryCharacter(character) {
-        return this.collection.find({ character: character });
+    queryCharacter(character, index) {
+        var filterConfig = {
+            character: character
+        };
+
+        if (index !== undefined) {
+            filterConfig.index = index;
+        }
+
+        return this.collection.find(filterConfig);
     }
 }
 

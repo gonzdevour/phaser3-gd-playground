@@ -1,6 +1,7 @@
 import Papa from 'papaparse';
 import ParseBopomofo from './bopomofo/ParseBopomofo.js';
 
+// Will be abandoned later
 var LoadCharactersCSV = function (csvString) {
     var data = Papa.parse(csvString, {
         header: true

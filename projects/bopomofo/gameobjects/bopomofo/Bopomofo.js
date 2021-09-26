@@ -23,29 +23,30 @@ class Bopomofo extends Sizer {
         var vowel = GetValue(config, 'vowel');        // Label, or text
         var tone = GetValue(config, 'tone');          // Label, or text
         var bopomofoSizer = new Sizer(scene, {
-            orientation: 'y'
+            orientation: 'y',
+            align:'center'
         })
             .add(
                 initials,
-                { proportion: 1, expand: true }
+                { proportion: 0, expand: false }
             )
             .add(
                 media,
-                { proportion: 1, expand: true }
+                { proportion: 0, expand: false }
             )
             .add(
                 vowel,
-                { proportion: 1, expand: true }
+                { proportion: 0, expand: false }
             )
 
         this
             .add(
                 bopomofoSizer,
-                { proportion: 0, expand: true }
+                { proportion: 0, expand: false }
             )
             .add(
                 tone,
-                { proportion: 0 }
+                { proportion: 0, expand: false }
             )
 
         this

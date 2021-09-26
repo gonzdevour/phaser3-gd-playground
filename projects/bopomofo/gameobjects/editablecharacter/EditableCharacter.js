@@ -28,7 +28,7 @@ class EditableCharacter extends Character {
         this.bopomofoEditor = new KeyboardToBopomofo(this.scene)
             .on('change', function (bopomofo, typeName) {
                 this.setBopomofo(bopomofo);
-                this.getTopmostSizer().layout();  // Run layout
+                this.layout();  // Run layout to set position of bopomofo-ui
 
                 if (typeName === 'tone') {
                     this.stopEdit();

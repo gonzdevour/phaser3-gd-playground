@@ -6,7 +6,6 @@ const GetValue = Phaser.Utils.Objects.GetValue;
 
 var CreateWord = function (scene, config) {
     var wordConfig = {
-        width: 300,
         orientation: 'y',
 
         background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 0),//.setStrokeStyle(2, 0xffffff),

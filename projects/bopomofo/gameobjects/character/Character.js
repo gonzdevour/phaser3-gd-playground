@@ -25,11 +25,11 @@ class Character extends Sizer {
         var bopomofo = new Bopomofo(scene, bopomofoConfig);
         this
             .add(character,
-                { proportion: 1, expand: true }
+                { proportion: 0, expand: true }
             )
             .add(
                 bopomofo,
-                { proportion: 0, expand: false, align: 'center' }
+                { proportion: 0, expand: true }
             )
 
         this

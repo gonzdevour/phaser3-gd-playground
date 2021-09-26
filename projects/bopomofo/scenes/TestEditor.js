@@ -11,14 +11,14 @@ class Test extends Phaser.Scene {
     }
 
     preload() {
-        this.load.text('characters', 'assets/data/characters.txt');
+        // this.load.text('characters', 'assets/data/characters.txt');
     }
 
     create() {
-        var model = CreateModel();
-        model.loadCharactersText(this.cache.text.get('characters'));
-        model.saveDB(); // Will save to Local Storage
-        model.saveDBToFile();
+        // var model = CreateModel();
+        // model.loadCharactersText(this.cache.text.get('characters'));
+        // model.saveDB(); // Will save to Local Storage
+        // model.saveDBToFile();
 
         var word = CreateWord(this, {
             character: {
