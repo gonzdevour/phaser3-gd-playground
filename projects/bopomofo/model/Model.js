@@ -27,6 +27,10 @@ class Model {
         return this.characters.queryCharacter(character);
     }
 
+    getCharacterPage(pageIndex, pageSize) {
+        return this.characters.getCharacterPage(pageIndex, pageSize);
+    }
+
 }
 
 Object.assign(

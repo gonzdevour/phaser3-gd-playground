@@ -1,6 +1,6 @@
 import 'phaser';
-import CreateWord from '../build/CreateWord.js';
 import CreateModel from '../build/CreateModel.js';
+import CreateCharactersTable from '../build/CreateCharactersTable.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -11,47 +11,28 @@ class Test extends Phaser.Scene {
     }
 
     preload() {
-        // this.load.text('characters', 'assets/data/characters.txt');
+        this.load.text('characters', 'assets/data/characters.txt');
     }
 
     create() {
-        // var model = CreateModel();
-        // model.loadCharactersText(this.cache.text.get('characters'));
-        // model.saveDB(); // Will save to Local Storage
-        // model.saveDBToFile();
+        var model = CreateModel();
+        model.loadCharactersText(this.cache.text.get('characters'));
 
-        var word = CreateWord(this, {
-            character: {
-                editable: true
-            }
+        var table = CreateCharactersTable(this, {
         })
-            .setPosition(384, 667)
+            .setPosition(960, 540)
             .layout()
-
-        word.setWord([
-            { character: '萬', initials: '', media: 'ㄧ', vowel: '', tone: 'ˊ' },
-            { character: '葉', initials: '', media: 'ㄧ', vowel: 'ㄝ', tone: 'ˋ' },
-            { character: '知', initials: 'ㄓ', media: '', vowel: '', tone: '' },
-            { character: '秋', initials: 'ㄑ', media: 'ㄧ', vowel: 'ㄡ', tone: '' }
-        ])
-            .layout()
-
-        var characters = word.getElement('characters');
-        for (var i = 0, cnt = characters.length; i < cnt; i++) {
-            var gameObject = characters[i];
-            gameObject
-                .on('startedit', function (gameObject) {
-                    gameObject.getElement('background').setStrokeStyle(2, 0xffffff)
-                })
-                .on('stopedit', function (gameObject) {
+            // .drawBounds(this.add.graphics(), 0xff0000)
+            .on('button.click', function (button, index, pointer, event) {
+                button.getElement('background').setStrokeStyle(2, 0xffffff)
+                button.startEdit();
+                button.once('stopedit', function (gameObject) {
                     gameObject.getElement('background').setStrokeStyle()
                 })
+            })
 
-            this.rexUI.add.click(gameObject)
-                .on('click', function (button, gameObject, pointer, event) {
-                    gameObject.startEdit()
-                })
-        }
+        table
+            .setCharacters(model.getCharacterPage(0, table.pageSize));
     }
 
     update() { }

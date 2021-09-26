@@ -6,8 +6,8 @@ import Test from './scenes/TestEditor.js';
 var config = {
     type: Phaser.AUTO,
     parent: 'game',
-    width: 768,
-    height: 1334,
+    width: 1920,
+    height: 1080,
     scale: {
         // mode: Phaser.Scale.ENVELOP,
         mode: Phaser.Scale.FIT,

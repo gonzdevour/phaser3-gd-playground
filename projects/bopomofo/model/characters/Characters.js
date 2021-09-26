@@ -32,6 +32,10 @@ class Characters {
 
         return this.collection.find(filterConfig);
     }
+
+    getCharacterPage(pageIndex, pageSize) {
+        return this.collection.chain().offset(pageIndex * pageSize).limit(pageSize).data();
+    }
 }
 
 export default Characters;
