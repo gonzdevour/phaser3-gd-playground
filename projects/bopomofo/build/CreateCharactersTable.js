@@ -6,8 +6,9 @@ var CreateCharactersTable = function (scene, config) {
         config = {};
     }
 
+    var columnCount = 1;
     config.row = 10;
-    config.col = 8;
+    config.col = 4 * columnCount;
     config.expand = false;
     config.createCellContainerCallback = function (scene, x, y) {
         return CreateEditableCharacter(scene);

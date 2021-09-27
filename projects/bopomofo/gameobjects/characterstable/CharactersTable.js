@@ -7,8 +7,6 @@ class CharactersTable extends GridButtons {
     constructor(scene, config) {
         super(scene, config);
         scene.add.existing(this);
-
-        this.pageSize = this.columnCount * this.rowCount;
     }
 
     setCharacters(characters) {
