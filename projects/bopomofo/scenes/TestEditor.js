@@ -32,7 +32,7 @@ class Test extends Phaser.Scene {
             })
 
         table
-            .setCharacters(model.getCharacterPage(0, table.pageSize));
+            .setCharacters(model.getCharacterPage(0, table.gridCount));
     }
 
     update() { }

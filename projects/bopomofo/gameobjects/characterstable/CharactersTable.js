@@ -13,9 +13,10 @@ class CharactersTable extends GridButtons {
 
     setCharacters(characters) {
         var buttons = this.getElement('buttons');
-        var cnt = Math.min(buttons.length, characters.length);
-        for (var i = 0; i < cnt; i++) {
-            buttons[i].setCharacter(characters[i]);
+        var charactersLength = characters.length;
+        for (var i = 0, cnt = buttons.length; i < cnt; i++) {
+            var characterData = (i < charactersLength) ? characters[i] : undefined;
+            buttons[i].setCharacter(characterData);
         }
         return this;
     }
