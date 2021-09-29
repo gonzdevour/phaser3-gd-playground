@@ -16,7 +16,6 @@ class Test extends Phaser.Scene {
     }
 
     create() {
-        debugger
         var model = CreateModel({
             db: this.cache.text.get('db'),
         })
