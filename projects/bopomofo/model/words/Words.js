@@ -1,7 +1,7 @@
-import { CharactersCollectionName } from '../prebuilddb/Const.js';
+import { WordsCollectionName } from '../prebuilddb/Const.js';
 import QueryMethods from './QueryMethods.js';
 
-class Characters {
+class Words {
     constructor(parent) {
         this.parent = parent;
         this.db = parent.db;
@@ -9,13 +9,12 @@ class Characters {
 
     get collection() {
         // Reference of collection might be changed after deserializing
-        return this.db.getCollection(CharactersCollectionName);
+        return this.db.getCollection(WordsCollectionName);
     }
 }
 
 Object.assign(
-    Characters.prototype,
+    Words.prototype,
     QueryMethods
 );
-
-export default Characters;
+export default Words;

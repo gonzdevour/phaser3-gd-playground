@@ -26,10 +26,8 @@ class Test extends Phaser.Scene {
 
         console.log(`${panel.width}x${panel.height}`)
 
-        var docArray = model.queryCharacter('我');
-        var question = model.createQuestion({
-            character: docArray[0]
-        })
+        var character = model.characters.queryRandomCharacter();
+        var question = character.createQuestion();
 
         panel
             .on('submit', function (result) {

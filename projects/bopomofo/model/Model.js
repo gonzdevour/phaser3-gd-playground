@@ -15,22 +15,8 @@ class Model {
         var deserializeString = GetValue(config, 'db');
         if (deserializeString) {
             this.stringToDB(deserializeString);
-        } else {
-            var charactersCSV = GetValue(config, 'characters');
-            if (charactersCSV) {
-                this.loadCharactersCSV(charactersCSV);
-            }
         }
     }
-
-    queryCharacter(character) {
-        return this.characters.queryCharacter(character);
-    }
-
-    getCharacterPage(pageIndex, pageSize) {
-        return this.characters.getCharacterPage(pageIndex, pageSize);
-    }
-
 }
 
 Object.assign(

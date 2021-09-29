@@ -3,17 +3,17 @@ import { CompressionMode, DecompressionMode } from './prebuilddb/Const.js'
 
 export default {
     dbToString(compress) {
-        if (compress === undefined) {
-            compress = true;
+        if ((compress === undefined) || (compress === true)) {
+            compress = CompressionMode;
         }
-        return Serialize(this.db, CompressionMode);
+        return Serialize(this.db, compress);
     },
 
     stringToDB(s, decompress) {
-        if (decompress === undefined) {
-            decompress = true;
+        if ((decompress === undefined) || (decompress === true)) {
+            decompress = DecompressionMode;
         }
-        Deserialize(this.db, s, DecompressionMode);
+        Deserialize(this.db, s, decompress);
         return this;
     }
 }

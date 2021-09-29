@@ -1,3 +1,5 @@
+// For editor, will be removed later
+
 import { EditableCharacter } from '../gameobjects';
 
 var CreateEditableCharacter = function (scene) {

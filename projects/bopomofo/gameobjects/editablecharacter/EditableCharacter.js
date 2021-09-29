@@ -1,3 +1,5 @@
+// For editor, will be removed later
+
 import Character from '../character/Character';
 import KeyboardToBopomofo from '../../behavior/keyboardtobopomofo/KeyboardToBopomofo';
 
