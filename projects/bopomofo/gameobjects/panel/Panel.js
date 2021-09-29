@@ -67,6 +67,10 @@ class Panel extends Sizer {
         return this;
     }
 
+    getCharacter(index) {
+        return this.getElement('word').getCharacter(index);
+    }
+
     setChoicesText(data) {
         this.getElement('choices').setChoicesText(data);
         return this;

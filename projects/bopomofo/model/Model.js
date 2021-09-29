@@ -1,4 +1,5 @@
 import loki from 'lokijs/src/lokijs.js';
+import Words from './words/Words.js';
 import Characters from "./characters/Characters";
 import Methods from './Methods';
 
@@ -9,6 +10,7 @@ class Model {
         this.db = new loki('bopomofo.db', {
             env: 'BROWSER'
         });
+        this.words = new Words(this);
         this.characters = new Characters(this);
 
         // Initial database

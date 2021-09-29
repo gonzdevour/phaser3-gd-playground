@@ -60,6 +60,14 @@ class Character extends Sizer {
         return this;
     }
 
+    setBopomofoVisible(visible) {
+        if (visible === undefined) {
+            visible = true;
+        }
+        this.setChildVisible(this.getElement('bopomofo'), visible);
+        return this;
+    }
+
     setInitials(text) {
         this.getElement('bopomofo').setInitials(text);
         return this;

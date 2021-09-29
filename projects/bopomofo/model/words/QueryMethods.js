@@ -8,11 +8,12 @@ export default {
             word: word
         };
         var docArray = this.collection.find(filterConfig).data();
-        return docArray.map(function (doc) { return new Word(doc) });
+        var db = this.db;
+        return docArray.map(function (doc) { return new Word(db, doc) });
     },
 
     queryRandomWord() {
         var docArray = this.collection.chain().data();
-        return new Word(GetRandomItem(docArray));
+        return new Word(this.db, GetRandomItem(docArray));
     }
 }

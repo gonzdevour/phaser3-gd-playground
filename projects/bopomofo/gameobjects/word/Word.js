@@ -41,6 +41,10 @@ class Word extends Sizer {
         }
         return this;
     }
+
+    getCharacter(index) {
+        return this.getElement('characters')[index];
+    }
 }
 
 export default Word;

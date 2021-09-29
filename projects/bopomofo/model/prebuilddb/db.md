@@ -1,0 +1,13 @@
+- characters
+    - character
+    - initials
+    - media
+    - vowel
+    - tone
+    - wid : ID list of wordDoc
+- words
+    - word
+    - freq
+    - pid : 
+        - 0 : ID list of characterDoc
+        - 1 : ID list of characterDoc

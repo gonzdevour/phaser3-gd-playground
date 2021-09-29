@@ -8,12 +8,13 @@ export default {
             character: character
         };
         var docArray = this.collection.find(filterConfig).data();
-        return docArray.map(function (doc) { return new Character(doc) });
+        var db = this.db;
+        return docArray.map(function (doc) { return new Character(db, doc) });
     },
 
     queryRandomCharacter() {
         var docArray = this.collection.chain().data();
-        return new Character(GetRandomItem(docArray));
+        return new Character(this.db, GetRandomItem(docArray));
     }
 
 }

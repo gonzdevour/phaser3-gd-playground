@@ -1,28 +1,25 @@
+/*
+- characters
+    - character
+    - initials
+    - media
+    - vowel
+    - tone
+    - wid : ID list of wordDoc
+*/
+
 import Question from '../question/Question';
 
 class Character {
-    constructor(doc) {
+    constructor(db, doc) {
+        this.db = db;
         this.doc = doc;
-    }
 
-    get character() {
-        return this.doc.character;
-    }
-
-    get initials() {
-        return this.doc.initials;
-    }
-
-    get media() {
-        return this.doc.media;
-    }
-
-    get vowel() {
-        return this.doc.vowel;
-    }
-
-    get tone() {
-        return this.doc.tone;
+        this.character = doc.character;
+        this.initials = doc.initials;
+        this.media = doc.media;
+        this.vowel = doc.vowel;
+        this.tone = doc.tone;
     }
 
     createQuestion(config) {
