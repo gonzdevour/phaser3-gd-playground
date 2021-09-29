@@ -6,7 +6,7 @@ var CreateDB = function () {
     });
 
     db.addCollection('characters', {
-        indices: ['character']
+        indices: ['character', 'initials', 'media', 'vowel', 'tone']
     })
 
     db.addCollection('words', {

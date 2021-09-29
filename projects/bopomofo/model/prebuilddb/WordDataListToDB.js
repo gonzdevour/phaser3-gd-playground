@@ -16,23 +16,24 @@ var WordDataToDB = function (wordData, db) {
     var wordsCollection = db.getCollection('words');
     var charactersCollection = db.getCollection('characters')
 
-    for (var c = 0, ccnt = word.length; c < ccnt; c++) {
-        var character = word.charAt(c);
+    var hasValidPinyin = false;
+    for (var p = 0, pcnt = pinyins.length; p < pcnt; p++) {
+        if (!IsValidPinyin(pinyins[p])) {
+            continue;
+        }
+
         var characterDocIDList = [];
-        wordData[`c${c}`] = characterDocIDList;
-        var hasValidPinyin = false;
-        for (var p = 0, pcnt = pinyins.length; p < pcnt; p++) {
-            if (!IsValidPinyin(pinyins[p])) {
-                continue;
+        wordData[`p${p}`] = characterDocIDList;
+        for (var c = 0, ccnt = word.length; c < ccnt; c++) {
+            var pinyin = pinyins[p][c];
+            if (pinyin === '') {
+                pinyin = pinyins[0][c];
             }
 
+            var characterData = ParseBopomofo(pinyin, { character: word.charAt(c) })
+            var characterDoc = GetCharacterDoc(characterData, charactersCollection);
+            characterDocIDList.push(characterDoc.$loki)
             hasValidPinyin = true;
-            var pinyin = pinyins[p][c];
-            if (pinyin !== '') {
-                var characterData = ParseBopomofo(pinyin, { character: character })
-                var characterDoc = GetCharacterDoc(characterData, charactersCollection);
-                characterDocIDList.push(characterDoc.$loki)
-            }
         }
     }
 

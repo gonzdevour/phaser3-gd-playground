@@ -18,7 +18,7 @@ class BuildDB extends Phaser.Scene {
     create() {
         var db = PrebuildDB(this.cache.text.get('words'))
         DBToFile(db, 'bopomofo.json', false);
-        DBToFile(db, 'bopomofo.c', true);
+        DBToFile(db, 'bopomofo.compress', true);
     }
 
     update() { }
