@@ -1,20 +1,17 @@
 import 'phaser';
-import AllPlugins from '../../plugins/AllPlugins.js';
 
-import Test from './scenes/TestDB.js';
+import BuildDB from './scenes/BuildDB.js';
 
 var config = {
     type: Phaser.AUTO,
     parent: 'game',
-    width: 768,
-    height: 1334,
+    width: 800,
+    height: 600,
     scale: {
-        // mode: Phaser.Scale.ENVELOP,
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
-    plugins: AllPlugins,
-    scene: Test
+    scene: BuildDB
 };
 
 var game = new Phaser.Game(config);

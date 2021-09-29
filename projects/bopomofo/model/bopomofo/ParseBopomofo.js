@@ -18,6 +18,10 @@ var ParseBopomofo = function (s, out) {
         }
     }
 
+    if (out.tone === '') {
+        out.tone = ' ';
+    }
+
     return out;
 }
 
