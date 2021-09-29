@@ -1,4 +1,5 @@
 import ParseBopomofo from '../bopomofo/ParseBopomofo.js';
+import { CharactersCollectionName, WordsCollectionName } from './Const.js';
 import GetCharacterDoc from "./GetCharacterDoc.js";
 
 
@@ -13,8 +14,8 @@ var WordDataToDB = function (wordData, db) {
     var pinyins = wordData.pinyins;
     delete wordData.pinyins;
 
-    var wordsCollection = db.getCollection('words');
-    var charactersCollection = db.getCollection('characters')
+    var wordsCollection = db.getCollection(WordsCollectionName);
+    var charactersCollection = db.getCollection(CharactersCollectionName)
 
     var hasValidPinyin = false;
     for (var p = 0, pcnt = pinyins.length; p < pcnt; p++) {
