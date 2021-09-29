@@ -1,4 +1,10 @@
+const CompressionMode = 'compressToUTF16';
+const DecompressionMode = 'decompressFromUTF16';
+
 const CharactersCollectionName = 'characters';
 const WordsCollectionName = 'words';
 
-export { CharactersCollectionName, WordsCollectionName };
+export {
+    CompressionMode, DecompressionMode,
+    CharactersCollectionName, WordsCollectionName
+};

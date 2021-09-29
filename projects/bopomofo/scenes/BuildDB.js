@@ -1,6 +1,7 @@
 import 'phaser';
 import PrebuildDB from '../model/prebuilddb/PrebuildDB';
 import DBToFile from '../model/prebuilddb/DBToFile';
+import { CompressionMode } from '../model/prebuilddb/Const.js'
 
 class BuildDB extends Phaser.Scene {
     constructor() {
@@ -18,7 +19,7 @@ class BuildDB extends Phaser.Scene {
     create() {
         var db = PrebuildDB(this.cache.text.get('words'))
         DBToFile(db, 'bopomofo.json', false);
-        DBToFile(db, 'bopomofo.compress', 'compressToUTF16');
+        DBToFile(db, 'bopomofo.compress', CompressionMode);
     }
 
     update() { }
