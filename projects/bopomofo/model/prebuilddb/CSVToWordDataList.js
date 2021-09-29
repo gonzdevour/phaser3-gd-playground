@@ -26,7 +26,8 @@ var CSVToWordDataList = function (csvString) {
         }
         wordDataList.push({
             word: word,
-            pinyins: pinyins
+            pinyins: pinyins,
+            freq: parseInt(item.freq)
         })
     }
     return wordDataList;

@@ -15,16 +15,19 @@ var WordDataToDB = function (wordData, db) {
     delete wordData.pinyins;
 
     var wordsCollection = db.getCollection(WordsCollectionName);
-    var charactersCollection = db.getCollection(CharactersCollectionName)
+    var charactersCollection = db.getCollection(CharactersCollectionName);
 
     var hasValidPinyin = false;
+    wordData.pid = [];
+    var characterDocs = [];
     for (var p = 0, pcnt = pinyins.length; p < pcnt; p++) {
         if (!IsValidPinyin(pinyins[p])) {
             continue;
         }
 
+
         var characterDocIDList = [];
-        wordData[`p${p}`] = characterDocIDList;
+        wordData.pid.push(characterDocIDList);
         for (var c = 0, ccnt = word.length; c < ccnt; c++) {
             var pinyin = pinyins[p][c];
             if (pinyin === '') {
@@ -33,13 +36,22 @@ var WordDataToDB = function (wordData, db) {
 
             var characterData = ParseBopomofo(pinyin, { character: word.charAt(c) })
             var characterDoc = GetCharacterDoc(characterData, charactersCollection);
-            characterDocIDList.push(characterDoc.$loki)
+            characterDocIDList.push(characterDoc.$loki);
             hasValidPinyin = true;
+            characterDocs.push(characterDoc);
         }
     }
 
     if (hasValidPinyin) {
-        wordsCollection.insert(wordData);
+        var wordDoc = wordsCollection.insert(wordData);
+        var wordDocId = wordDoc.$loki;
+        for (var i = 0, cnt = characterDocs.length; i < cnt; i++) {
+            var characterDoc = characterDocs[i];
+            if (!characterDoc.hasOwnProperty('wid')) {
+                characterDoc.wid = [];
+            }
+            characterDoc.wid.push(wordDocId);
+        }
     }
 }
 
