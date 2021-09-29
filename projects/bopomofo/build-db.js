@@ -1,6 +1,28 @@
 import 'phaser';
+import PrebuildDB from './build/PreBuildDB.js';
 
-import BuildDB from './scenes/BuildDB.js';
+class BuildDB extends Phaser.Scene {
+    constructor() {
+        super({
+            key: 'pre-build-db'
+        })
+
+    }
+
+    preload() {
+        // Load csv file
+        this.load.text('words', '/assets/data/words.csv');
+    }
+
+    create() {
+        PrebuildDB({
+            csv: this.cache.text.get('words'),
+            // fileName: 'bopomofo'
+        })
+    }
+
+    update() { }
+}
 
 var config = {
     type: Phaser.AUTO,
