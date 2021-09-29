@@ -5,14 +5,14 @@ export default {
         if (compress === undefined) {
             compress = true;
         }
-        return Serialize(this.db, compress);
+        return Serialize(this.db, 'compressToUTF16');
     },
 
     stringToDB(s, decompress) {
         if (decompress === undefined) {
             decompress = true;
         }
-        Deserialize(this.db, s, decompress);
+        Deserialize(this.db, s, 'decompressFromUTF16');
         return this;
     }
 }
