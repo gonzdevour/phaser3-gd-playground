@@ -38,7 +38,10 @@ var WordDataToDB = function (wordData, db) {
             var characterDoc = GetCharacterDoc(characterData, charactersCollection);
             characterDocIDList.push(characterDoc.$loki);
             hasValidPinyin = true;
-            characterDocs.push(characterDoc);
+
+            if (characterDocs.indexOf(characterDoc) !== -1) {
+                characterDocs.push(characterDoc);
+            }
         }
     }
 
