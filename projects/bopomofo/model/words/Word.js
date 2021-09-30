@@ -14,15 +14,19 @@ class Word {
     constructor(db, doc) {
         this.db = db;
         this.doc = doc;
+        this.word = this.doc.word;
     }
 
-    get word() {
-        return this.doc.word;
+    get polyphonicCount() {
+        return this.doc.pid.length;
     }
 
-    get characters() {
+    getCharacters(polyphonicIndex) {
+        if (polyphonicIndex === undefined) {
+            polyphonicIndex = 0;
+        }
         var pid0 = this.doc.pid[0];
-        var characterCollection =  this.db.getCollection(CharactersCollectionName)
+        var characterCollection = this.db.getCollection(CharactersCollectionName)
         var characters = [];
         for (var i = 0, cnt = pid0.length; i < cnt; i++) {
             var characterDoc = characterCollection.get(pid0[i]);

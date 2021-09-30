@@ -2,8 +2,6 @@ import 'phaser';
 import CreatePanel from '../build/CreatePanel.js';
 import CreateModel from '../build/CreateModel.js';
 
-const GetRandomItem = Phaser.Utils.Array.GetRandom;
-
 class Test extends Phaser.Scene {
     constructor() {
         super({
@@ -29,7 +27,7 @@ class Test extends Phaser.Scene {
         console.log(`${panel.width}x${panel.height}`)
 
         var word = model.words.queryRandomWord();
-        var characters = word.characters;
+        var characters = word.getCharacters();
         var characterIndex = Phaser.Math.Between(0, characters.length - 1);
         var character = characters[characterIndex];
         var question = character.createQuestion();

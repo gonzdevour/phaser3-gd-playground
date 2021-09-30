@@ -3,13 +3,16 @@ import Word from './Word.js';
 const GetRandomItem = Phaser.Utils.Array.GetRandom;
 
 export default {
-    queryWord(word) {
-        var filterConfig = {
-            word: word
-        };
-        var docArray = this.collection.find(filterConfig).data();
+    query(filter) {
+        var docArray = this.collection.find(filter).data();
         var db = this.db;
         return docArray.map(function (doc) { return new Word(db, doc) });
+    },
+
+    queryWord(word) {
+        return this.query({
+            word: word
+        });
     },
 
     queryRandomWord() {

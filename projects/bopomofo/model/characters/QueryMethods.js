@@ -3,13 +3,16 @@ import Character from './Character.js';
 const GetRandomItem = Phaser.Utils.Array.GetRandom;
 
 export default {
-    queryCharacter(character) {
-        var filterConfig = {
-            character: character
-        };
-        var docArray = this.collection.find(filterConfig).data();
+    query(filter) {
+        var docArray = this.collection.find(filter).data();
         var db = this.db;
         return docArray.map(function (doc) { return new Character(db, doc) });
+    },
+
+    queryCharacter(character) {
+        return this.query({
+            character: character
+        });
     },
 
     queryRandomCharacter() {
