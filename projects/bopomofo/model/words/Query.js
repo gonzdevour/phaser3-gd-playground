@@ -2,12 +2,13 @@ import Word from './Word.js';
 
 const GetRandomItem = Phaser.Utils.Array.GetRandom;
 
-var QueryWord = function (db, collection, word) {
-    var filter = {
-        word: word
-    }
+var Query = function (db, collection, filter) {
     var docArray = collection.find(filter).data();
     return docArray.map(function (doc) { return new Word(db, doc) });
+}
+
+var QueryWord = function (db, collection, word) {
+    return Query(db, collection, { word: word });
 }
 
 var QueryRandomWord = function (db, collection) {
@@ -15,4 +16,4 @@ var QueryRandomWord = function (db, collection) {
     return new Word(db, GetRandomItem(docArray));
 }
 
-export { QueryWord, QueryRandomWord };
+export { Query, QueryWord, QueryRandomWord };
