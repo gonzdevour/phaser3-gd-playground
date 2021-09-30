@@ -18,6 +18,7 @@ var CreateCharacter = function (scene,) {
             media: CreateLabel(scene, 'right', 32),
             vowel: CreateLabel(scene, 'right', 32),
             tone: CreateLabel(scene, 'left', 72),
+            tone0: CreateLabel(scene, 'right', 72),
         }
     })
 

@@ -3,7 +3,7 @@ import Word from './Word.js';
 const GetRandomItem = Phaser.Utils.Array.GetRandom;
 
 var Query = function (db, collection, filter) {
-    var docArray = collection.find(filter).data();
+    var docArray = collection.chain().find(filter).data();
     return docArray.map(function (doc) { return new Word(db, doc) });
 }
 

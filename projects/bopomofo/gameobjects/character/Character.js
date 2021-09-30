@@ -51,11 +51,18 @@ class Character extends Sizer {
     }
 
     setBopomofo(config) {
+        var tone = GetValue(config, 'tone', ''),
+            tone0 = '';
+        if (tone === '˙') {
+            tone0 = tone;
+            tone = ''
+        }
         this
             .setInitials(GetValue(config, 'initials', ''))
             .setMedia(GetValue(config, 'media', ''))
             .setVowel(GetValue(config, 'vowel', ''))
-            .setTone(GetValue(config, 'tone', ''))
+            .setTone(tone)
+            .setTone0(tone0)
 
         return this;
     }
@@ -85,6 +92,11 @@ class Character extends Sizer {
 
     setTone(text) {
         this.getElement('bopomofo').setTone(text);
+        return this;
+    }
+
+    setTone0(text) {
+        this.getElement('bopomofo').setTone0(text);
         return this;
     }
 }

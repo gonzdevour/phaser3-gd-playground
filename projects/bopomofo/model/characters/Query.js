@@ -1,7 +1,7 @@
 import Character from './Character.js';
 
 var Query = function (db, collection, filter) {
-    var docArray = collection.find(filter).data();
+    var docArray = collection.chain().find(filter).data();
     return docArray.map(function (doc) { return new Character(db, doc) });
 }
 var QueryCharacter = function (db, collection, character) {

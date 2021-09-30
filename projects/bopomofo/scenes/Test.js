@@ -26,7 +26,8 @@ class Test extends Phaser.Scene {
 
         console.log(`${panel.width}x${panel.height}`)
 
-        var word = model.words.queryRandomWord();
+        // var word = model.words.queryRandomWord();
+        var word = model.words.queryWord('什麼')[0];
         var characters = word.getCharacters();
         var characterIndex = Phaser.Math.Between(0, characters.length - 1);
         var character = characters[characterIndex];
@@ -41,7 +42,7 @@ class Test extends Phaser.Scene {
             .setWord(characters)
             .setChoicesText(question.choices)
             .layout()
-        //.drawBounds(this.add.graphics(), 0xff0000)
+            .drawBounds(this.add.graphics(), 0xff0000)
 
         console.log(`${panel.width}x${panel.height}`)
 

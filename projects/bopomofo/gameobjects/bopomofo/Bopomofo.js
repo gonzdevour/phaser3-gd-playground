@@ -22,10 +22,15 @@ class Bopomofo extends Sizer {
         var media = GetValue(config, 'media');        // Label, or text
         var vowel = GetValue(config, 'vowel');        // Label, or text
         var tone = GetValue(config, 'tone');          // Label, or text
+        var tone0 = GetValue(config, 'tone0');        // Label, or text
         var bopomofoSizer = new Sizer(scene, {
             orientation: 'y',
-            align:'center'
+            align: 'center'
         })
+            .add(
+                tone0,
+                { proportion: 0, expand: false }
+            )
             .add(
                 initials,
                 { proportion: 0, expand: false }
@@ -55,6 +60,7 @@ class Bopomofo extends Sizer {
             .addChildrenMap('media', media)
             .addChildrenMap('vowel', vowel)
             .addChildrenMap('tone', tone)
+            .addChildrenMap('tone0', tone0)
     }
 
     setInitials(text) {
@@ -74,6 +80,11 @@ class Bopomofo extends Sizer {
 
     setTone(text) {
         this.getElement('tone').setText(text);
+        return this;
+    }
+
+    setTone0(text) {
+        SetText(this.getElement('tone0'), text);
         return this;
     }
 }
