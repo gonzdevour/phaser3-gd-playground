@@ -16,13 +16,17 @@ class Word extends Sizer {
             this.addBackground(background);
         }
 
+        this.addSpace();
+
         var characters = GetValue(config, 'characters')
         for (var i = 0, cnt = characters.length; i < cnt; i++) {
             this.add(
                 characters[i],
-                { proportion: 1, expand: true }
+                { proportion: 0, expand: false }
             )
         }
+
+        this.addSpace();
 
         this
             .addChildrenMap('background', background)
