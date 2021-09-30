@@ -1,7 +1,7 @@
 import loki from 'lokijs/src/lokijs.js';
 import Words from './words/Words.js';
 import Characters from "./characters/Characters";
-import Methods from './Methods';
+import { DBToString, StringToDB } from './SerializeMethods.js';
 
 const GetValue = Phaser.Utils.Objects.GetValue;
 
@@ -19,11 +19,15 @@ class Model {
             this.stringToDB(deserializeString);
         }
     }
-}
 
-Object.assign(
-    Model.prototype,
-    Methods
-);
+    dbToString(compress) {
+        return DBToString(this.db, compress);
+    }
+
+    stringToDB(s, decompress) {
+        StringToDB(this.db, s, decompress);
+        return this;
+    }
+}
 
 export default Model;

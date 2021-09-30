@@ -1,5 +1,5 @@
 import { WordsCollectionName } from '../prebuilddb/Const.js';
-import QueryMethods from './QueryMethods.js';
+import { QueryWord, QueryRandomWord } from './Query.js';
 
 class Words {
     constructor(parent) {
@@ -11,10 +11,14 @@ class Words {
         // Reference of collection might be changed after deserializing
         return this.db.getCollection(WordsCollectionName);
     }
+
+    queryWord(word) {
+        return QueryWord(this.db, this.collection, word);
+    }
+
+    queryRandomWord() {
+        return QueryRandomWord(this.db, this.collection);
+    }
 }
 
-Object.assign(
-    Words.prototype,
-    QueryMethods
-);
 export default Words;
