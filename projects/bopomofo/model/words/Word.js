@@ -25,11 +25,11 @@ class Word {
         if (polyphonicIndex === undefined) {
             polyphonicIndex = 0;
         }
-        var pid0 = this.doc.pid[0];
+        var pid = this.doc.pid[polyphonicIndex];
         var characterCollection = this.db.getCollection(CharactersCollectionName)
         var characters = [];
-        for (var i = 0, cnt = pid0.length; i < cnt; i++) {
-            var characterDoc = characterCollection.get(pid0[i]);
+        for (var i = 0, cnt = pid.length; i < cnt; i++) {
+            var characterDoc = characterCollection.get(pid[i]);
             characters.push(new Character(this.db, characterDoc));
         }
         return characters;
