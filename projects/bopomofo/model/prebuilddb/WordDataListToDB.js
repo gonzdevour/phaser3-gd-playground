@@ -2,8 +2,14 @@ import ParseBopomofo from '../bopomofo/ParseBopomofo.js';
 import { CharactersCollectionName, WordsCollectionName } from './Const.js';
 import GetCharacterDoc from "./GetCharacterDoc.js";
 
+// Collections will be set later
+var WordsCollection;
+var CharactersCollection;
 
 var WordDataListToDB = function (wordDataList, db) {
+    WordsCollection = db.getCollection(WordsCollectionName);
+    CharactersCollection = db.getCollection(CharactersCollectionName);
+
     for (var i = 0, cnt = wordDataList.length; i < cnt; i++) {
         WordDataToDB(wordDataList[i], db);
     }
@@ -11,42 +17,48 @@ var WordDataListToDB = function (wordDataList, db) {
 
 var WordDataToDB = function (wordData, db) {
     var word = wordData.word;
-    var pinyins = wordData.pinyins;
-    delete wordData.pinyins;
-
-    var wordsCollection = db.getCollection(WordsCollectionName);
-    var charactersCollection = db.getCollection(CharactersCollectionName);
+    var pinyins = wordData.pinyins; 
+    // pinyins: A 2d array, contains 2 set of pinyins, each pinyin contains bopomofo of characters
+    // [ [c0, c1, ...], [c0, c1, ...] ]
+    delete wordData.pinyins;  // pinyins property won't be store into wordDoc
 
     var hasValidPinyin = false;
     wordData.pid = [];
-    var characterDocSet = new Phaser.Structs.Set();
+    var characterDocSet = new Phaser.Structs.Set();  // Will be used to bind wordDocID to characterDoc
     for (var p = 0, pcnt = pinyins.length; p < pcnt; p++) {
+        // All bopomofo of characters are empty
         if (!IsValidPinyin(pinyins[p])) {
             continue;
         }
 
-
         var characterDocIDList = [];
         wordData.pid.push(characterDocIDList);
+        // wordData.pid : A 2d array, map pinyins to characterDocID
         for (var c = 0, ccnt = word.length; c < ccnt; c++) {
             var pinyin = pinyins[p][c];
-            if (pinyin === '') {
+            if (pinyin === '') {  // Don't have bopomofo? Pick first bopomofo as default value.
                 pinyin = pinyins[0][c];
             }
 
-            var characterData = ParseBopomofo(pinyin, { character: word.charAt(c) })
-            var characterDoc = GetCharacterDoc(characterData, charactersCollection);
+            // Build json data of characterDoc
+            var characterData = ParseBopomofo(pinyin, { character: word.charAt(c) });
+            // FindOne or insert json data, return characterDoc
+            var characterDoc = GetCharacterDoc(characterData, CharactersCollection);
+            // Insert characterDocID into wordData.pid[p]
             characterDocIDList.push(characterDoc.$loki);
             hasValidPinyin = true;
 
+            // Add characterDoc for binding later
             characterDocSet.set(characterDoc);
         }
     }
 
     if (hasValidPinyin) {
-        var wordDoc = wordsCollection.insert(wordData);
-        var wordDocId = wordDoc.$loki;
+        // Insert json data, return wordDoc
+        var wordDoc = WordsCollection.insert(wordData);
 
+        // Bind wordDocID to characterDoc
+        var wordDocId = wordDoc.$loki;
         characterDocSet.iterate(function (characterDoc) {            
             characterDoc.wid.push(wordDocId);
         });
