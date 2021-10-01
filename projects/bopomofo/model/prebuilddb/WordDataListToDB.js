@@ -47,10 +47,7 @@ var WordDataToDB = function (wordData, db) {
         var wordDoc = wordsCollection.insert(wordData);
         var wordDocId = wordDoc.$loki;
 
-        characterDocSet.iterate(function (characterDoc) {
-            if (!characterDoc.hasOwnProperty('wid')) {
-                characterDoc.wid = [];
-            }
+        characterDocSet.iterate(function (characterDoc) {            
             characterDoc.wid.push(wordDocId);
         });
     }
