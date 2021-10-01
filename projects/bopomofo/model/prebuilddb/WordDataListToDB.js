@@ -19,7 +19,7 @@ var WordDataToDB = function (wordData, db) {
 
     var hasValidPinyin = false;
     wordData.pid = [];
-    var characterDocs = [];
+    var characterDocSet = new Phaser.Structs.Set();
     for (var p = 0, pcnt = pinyins.length; p < pcnt; p++) {
         if (!IsValidPinyin(pinyins[p])) {
             continue;
@@ -39,22 +39,20 @@ var WordDataToDB = function (wordData, db) {
             characterDocIDList.push(characterDoc.$loki);
             hasValidPinyin = true;
 
-            if (characterDocs.indexOf(characterDoc) !== -1) {
-                characterDocs.push(characterDoc);
-            }
+            characterDocSet.set(characterDoc);
         }
     }
 
     if (hasValidPinyin) {
         var wordDoc = wordsCollection.insert(wordData);
         var wordDocId = wordDoc.$loki;
-        for (var i = 0, cnt = characterDocs.length; i < cnt; i++) {
-            var characterDoc = characterDocs[i];
+
+        characterDocSet.iterate(function (characterDoc) {
             if (!characterDoc.hasOwnProperty('wid')) {
                 characterDoc.wid = [];
             }
             characterDoc.wid.push(wordDocId);
-        }
+        });
     }
 }
 
