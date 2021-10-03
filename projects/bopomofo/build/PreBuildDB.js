@@ -9,7 +9,7 @@ var PreBuildDB = function (config) {
     var fileName = GetValue(config, 'fileName', 'bopomofo');    
 
     var db = PrebuildDB(csvString)
-    // DBToFile(db, `${fileName}.json`, false);
+    DBToFile(db, `${fileName}.json`, false);
     DBToFile(db, `${fileName}.compress`, CompressionMode);
 }
 

@@ -7,10 +7,12 @@ var CreateDB = function () {
     });
 
     db.addCollection(CharactersCollectionName, {
+        disableMeta: true,
         indices: ['character', 'initials', 'media', 'vowel', 'tone']
     });
 
     db.addCollection(WordsCollectionName, {
+        disableMeta: true,
         indices: ['word', 'freq']
     })
 
