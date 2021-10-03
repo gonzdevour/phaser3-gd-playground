@@ -5,11 +5,8 @@ class Characters {
     constructor(parent) {
         this.parent = parent;
         this.db = parent.db;
-    }
-
-    get collection() {
-        // Reference of collection might be changed after deserializing
-        return this.db.getCollection(CharactersCollectionName);
+        this.collection = this.db.getCollection(CharactersCollectionName);
+        // Note: db won't be deserialized, thus reference of collection won't change.
     }
 
     queryCharacter(character) {

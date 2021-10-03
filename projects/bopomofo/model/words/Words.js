@@ -5,11 +5,8 @@ class Words {
     constructor(parent) {
         this.parent = parent;
         this.db = parent.db;
-    }
-
-    get collection() {
-        // Reference of collection might be changed after deserializing
-        return this.db.getCollection(WordsCollectionName);
+        this.collection = this.db.getCollection(WordsCollectionName);
+        // Note: db won't be deserialized, thus reference of collection won't change.
     }
 
     queryWord(word) {
