@@ -36,11 +36,22 @@ class Test extends Phaser.Scene {
         panel
             .on('submit', function (result) {
                 console.log(result);
-                console.log((question.verify(result)) ? 'Pass' : 'Fail');
+                var isPass = question.verify(result);
+                if (!isPass) { // Verify polyphonic                     
+                    var character = word.getCharacters(1, characterIndex); // Get polyphonic character
+                    if (character) { // Has polyphonic
+                        isPass = question.setAnswer(character).verify(result);
+                        if (isPass) {
+                            console.log('Match polyphonic');
+                        }
+                    }
+                }
+
+                console.log((isPass) ? 'Pass' : 'Fail');
             })
             .setTitle('2021教育部高頻字詞600注音練習')
             .setWord(characters)
-            .setChoicesText(question.choices)
+            .setChoicesText(question.createChoices())
             .layout()
             .drawBounds(this.add.graphics(), 0xff0000)
 

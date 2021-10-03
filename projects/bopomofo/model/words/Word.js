@@ -21,18 +21,34 @@ class Word {
         return this.doc.pid.length;
     }
 
-    getCharacters(polyphonicIndex) {
+    getCharacters(polyphonicIndex, characterIndex) {
         if (polyphonicIndex === undefined) {
             polyphonicIndex = 0;
         }
         var pid = this.doc.pid[polyphonicIndex];
-        var characterCollection = this.db.getCollection(CharactersCollectionName)
-        var characters = [];
-        for (var i = 0, cnt = pid.length; i < cnt; i++) {
-            var characterDoc = characterCollection.get(pid[i]);
-            characters.push(new Character(this.db, characterDoc));
+        if (!pid) {
+            return null;
         }
-        return characters;
+
+        var characterCollection = this.db.getCollection(CharactersCollectionName);
+
+        if (characterIndex === undefined) {
+            var characters = [];
+            for (var i = 0, cnt = pid.length; i < cnt; i++) {
+                var characterDoc = characterCollection.get(pid[i]);
+                characters.push(new Character(this.db, characterDoc));
+            }
+            return characters;
+        } else {
+            var characterID = pid[characterIndex];
+            if (characterID == null) {
+                return null;
+            }
+
+            var characterDoc = characterCollection.get(characterID);
+            return new Character(this.db, characterDoc)
+        }
+
     }
 }
 

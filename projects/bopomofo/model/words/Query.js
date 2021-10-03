@@ -4,7 +4,11 @@ const GetRandomItem = Phaser.Utils.Array.GetRandom;
 
 var Query = function (db, collection, filter) {
     var docArray = collection.chain().find(filter).data();
-    return docArray.map(function (doc) { return new Word(db, doc) });
+    var words = [];
+    for (var i = 0, cnt = docArray.length; i < cnt; i++) {
+        words.push(new Word(db, docArray[i]))
+    }
+    return words;
 }
 
 var QueryWord = function (db, collection, word) {

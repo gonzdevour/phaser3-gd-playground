@@ -12,21 +12,30 @@ const GetValue = Phaser.Utils.Objects.GetValue;
 const Shuffle = Phaser.Utils.Array.Shuffle;
 
 class Question {
-    constructor(config) {
-        var character = GetValue(config, 'character');
+    constructor() {
+        this.answer = {
+            character: '',
+            initials: '', media: '', vowel: '', tone: ''
+        };
+    }
+
+    setAnswer(character) {
+        var answer = this.answer;
+        answer.character = character.character;
+        answer.initials = character.initials;
+        answer.media = character.media;
+        answer.vowel = character.vowel;
+        answer.tone = character.tone;
+        return this;
+    }
+
+    createChoices(config) {
+        var answer = GetValue(config, 'answer', this.answer);
         var initialsCount = GetValue(config, 'initialsCount', 5);
         var mediaCount = GetValue(config, 'mediaCount', 3);
         var vowelCount = GetValue(config, 'vowelCount', 5);
         var toneCount = GetValue(config, 'toneCount', 5);
         var shuffleChoices = GetValue(config, 'shuffleChoices', true);
-
-        var answer = {
-            character: character.character,
-            initials: character.initials,
-            media: character.media,
-            vowel: character.vowel,
-            tone: character.tone,
-        }
 
         var choices = {
             initials: GetItems(answer.initials, initialsList, initialsCount),
@@ -42,8 +51,7 @@ class Question {
             choices.tone = Shuffle(choices.tone);
         }
 
-        this.choices = choices;
-        this.answer = answer;
+        return choices;
     }
 
     verify(input) {

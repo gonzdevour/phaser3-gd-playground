@@ -22,12 +22,10 @@ class Character {
         this.tone = doc.tone;
     }
 
-    createQuestion(config) {
-        if (config === undefined) {
-            config = {};
-        }
-        config.character = this;
-        return new Question(config);
+    createQuestion() {
+        var question = new Question();
+        question.setAnswer(this);
+        return question;
     }
 }
 
