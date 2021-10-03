@@ -21,7 +21,7 @@ class Word {
         return this.doc.pid.length;
     }
 
-    getCharacters(polyphonicIndex, characterIndex) {
+    getCharacters(polyphonicIndex) {
         if (polyphonicIndex === undefined) {
             polyphonicIndex = 0;
         }
@@ -31,24 +31,12 @@ class Word {
         }
 
         var characterCollection = this.db.getCollection(CharactersCollectionName);
-
-        if (characterIndex === undefined) {
-            var characters = [];
-            for (var i = 0, cnt = pid.length; i < cnt; i++) {
-                var characterDoc = characterCollection.get(pid[i]);
-                characters.push(new Character(this.db, characterDoc));
-            }
-            return characters;
-        } else {
-            var characterID = pid[characterIndex];
-            if (characterID == null) {
-                return null;
-            }
-
-            var characterDoc = characterCollection.get(characterID);
-            return new Character(this.db, characterDoc)
+        var characters = [];
+        for (var i = 0, cnt = pid.length; i < cnt; i++) {
+            var characterDoc = characterCollection.get(pid[i]);
+            characters.push(new Character(this.db, characterDoc));
         }
-
+        return characters;
     }
 }
 
