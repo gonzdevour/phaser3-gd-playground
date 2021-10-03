@@ -37,7 +37,7 @@ class Test extends Phaser.Scene {
             .on('submit', function (result) {
                 console.log(result);
                 var isPass = question.verify(result);
-                if (!isPass) { // Verify polyphonic                     
+                if (!isPass) { // Verify polyphonic
                     var character = word.getCharacters(1)[characterIndex]; // Get polyphonic character
                     if (character) { // Has polyphonic
                         isPass = question.setAnswer(character).verify(result);

@@ -1,5 +1,5 @@
 import { CharactersCollectionName } from '../prebuilddb/Const.js';
-import { QueryCharacter, QueryRandomCharacter } from './Query.js';
+import { Query, QueryCharacter, QueryRandomCharacter } from './Query.js';
 
 class Characters {
     constructor(parent) {
@@ -18,6 +18,10 @@ class Characters {
 
     queryRandomCharacter() {
         return QueryRandomCharacter(this.db, this.collection);
+    }
+
+    getAll() {
+        return Query(this.db, this.collection);
     }
 }
 

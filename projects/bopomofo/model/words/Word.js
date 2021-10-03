@@ -17,19 +17,19 @@ class Word {
         this.word = this.doc.word;
     }
 
-    get polyphonicCount() {
+    get polyphonyCount() {
         return this.doc.pid.length;
     }
 
-    getCharacters(polyphonicIndex) {
-        if (polyphonicIndex === undefined) {
-            polyphonicIndex = 0;
+    getCharacters(polyphonyIndex) {
+        if (polyphonyIndex === undefined) {
+            polyphonyIndex = 0;
         }
-        var pid = this.doc.pid[polyphonicIndex];
-        if (!pid) {
+        if (polyphonyIndex >= this.polyphonyCount) {
             return null;
         }
 
+        var pid = this.doc.pid[polyphonyIndex];
         var characterCollection = this.db.getCollection(CharactersCollectionName);
         var characters = [];
         for (var i = 0, cnt = pid.length; i < cnt; i++) {
