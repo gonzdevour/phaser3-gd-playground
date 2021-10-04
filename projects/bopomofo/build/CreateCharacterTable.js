@@ -1,7 +1,7 @@
-import { CharactersTable, Character } from '../gameobjects';
+import { CharacterTable, Character } from '../gameobjects';
 
-var CreateCharactersTable = function (scene) {
-    return new CharactersTable(scene, {
+var CreateCharacterTable = function (scene) {
+    return new CharacterTable(scene, {
         createCharacterCell: GetCharacterCellSizerConfig(),
     })
 }
@@ -94,4 +94,4 @@ var CreateTone0Label = function (scene) {
 }
 
 
-export default CreateCharactersTable;
+export default CreateCharacterTable;

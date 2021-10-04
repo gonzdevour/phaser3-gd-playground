@@ -3,7 +3,7 @@ import CharacterCellSizer from './CharacterCellSizer.js';
 
 const GridTable = UI.GridTable;
 
-class CharactersTable extends GridTable {
+class CharacterTable extends GridTable {
     constructor(scene, config) {
         if (config === undefined) {
             config = {};
@@ -35,4 +35,4 @@ class CharactersTable extends GridTable {
 
 
 
-export default CharactersTable;
+export default CharacterTable;
