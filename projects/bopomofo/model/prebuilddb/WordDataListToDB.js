@@ -1,5 +1,6 @@
 import ParseBopomofo from '../bopomofo/ParseBopomofo.js';
-import { CharactersCollectionName, WordsCollectionName } from '../db/Const.js';
+
+import { GetWordCollection, GetCharacterCollection } from '../db/GetCollectionMethods.js';
 import GetCharacterDoc from "./GetCharacterDoc.js";
 
 // Collections will be set later
@@ -7,17 +8,17 @@ var WordsCollection;
 var CharactersCollection;
 
 var WordDataListToDB = function (wordDataList, db) {
-    WordsCollection = db.getCollection(WordsCollectionName);
-    CharactersCollection = db.getCollection(CharactersCollectionName);
+    WordsCollection = GetWordCollection(db);
+    CharactersCollection = GetCharacterCollection(db);
 
     for (var i = 0, cnt = wordDataList.length; i < cnt; i++) {
-        WordDataToDB(wordDataList[i], db);
+        WordDataToDB(wordDataList[i]);
     }
 }
 
-var WordDataToDB = function (wordData, db) {
+var WordDataToDB = function (wordData) {
     var word = wordData.word;
-    var pinyins = wordData.pinyins; 
+    var pinyins = wordData.pinyins;
     // pinyins: A 2d array, contains 2 set of pinyins, each pinyin contains bopomofo of characters
     // [ [c0, c1, ...], [c0, c1, ...] ]
     delete wordData.pinyins;  // pinyins property won't be store into wordDoc
@@ -59,7 +60,7 @@ var WordDataToDB = function (wordData, db) {
 
         // Bind wordDocID to characterDoc
         var wordDocId = wordDoc.$loki;
-        characterDocSet.iterate(function (characterDoc) {            
+        characterDocSet.iterate(function (characterDoc) {
             characterDoc.wid.push(wordDocId);
         });
     }
