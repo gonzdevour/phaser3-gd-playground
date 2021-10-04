@@ -21,6 +21,11 @@ class CharactersTable extends GridTable {
             if (cellContainer === null) {
                 cellContainer = new CharacterCellSizer(scene, createCharacterCellSizerConfig);
             }
+
+            cellContainer
+                .setMinSize(width, height)
+                .showCharacter(item);
+
             return cellContainer;
         }
         super(scene, config);

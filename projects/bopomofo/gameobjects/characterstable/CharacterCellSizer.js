@@ -1,6 +1,7 @@
 import UI from '../../../../plugins/ui-components.js';
 
 const Sizer = UI.Sizer;
+const GetValue = Phaser.Utils.Objects.GetValue;
 
 class CharacterCellSizer extends Sizer {
     constructor(scene, config) {
@@ -11,15 +12,17 @@ class CharacterCellSizer extends Sizer {
         super(scene, config);
         scene.add.existing(this);
 
+        var background;
         var backgroundCallback = GetValue(config, 'background');
         if (backgroundCallback) {
-            this.addBackground(backgroundCallback(scene));
+            background = backgroundCallback(scene);
+            this.addBackground(background);
         }
 
         var characterCallback = GetValue(config, 'character');
-        character = characterCallback(scene);
+        var character = characterCallback(scene);
         this.add(character,
-            { proportion: 0, expand: true }
+            { proportion: 0, expand: false }
         )
 
         var words = [];
@@ -28,7 +31,7 @@ class CharacterCellSizer extends Sizer {
         for (var i = 0; i < wordCount; i++) {
             var word = wordCallback(scene);
             this.add(word,
-                { proportion: 0, expand: true }
+                { proportion: 0, expand: false }
             )
             words.push(word);
         }

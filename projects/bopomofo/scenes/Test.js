@@ -1,6 +1,7 @@
 import 'phaser';
-import CreatePanel from '../build/CreatePanel.js';
 import CreateModel from '../build/CreateModel.js';
+import CharacterCellSizer from '../gameobjects/characterstable/CharacterCellSizer.js';
+import CreateCharacter from '../build/CreateCharacter.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -20,47 +21,36 @@ class Test extends Phaser.Scene {
             db: this.cache.text.get('db'),
         })
 
-        var panel = CreatePanel(this)
-            .setPosition(384, 667)
+        var ui = new CharacterCellSizer(this, {
+            x: 400, y: 300,
+            width: 500,
+
+            background: function (scene) {
+                return scene.rexUI.add.roundRectangle(0, 0, 1, 1, 0);
+            },
+
+            character: CreateCharacter,
+
+            word: function (scene) {
+                return scene.rexUI.add.label({
+                    background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 5).setStrokeStyle(2, 0xffffff),
+                    text: scene.rexUI.add.BBCodeText(0, 0, '',
+                        { fontSize: 40, halign: 'center', valign: 'center', testString: '回' }
+                    ),
+
+                    space: { left: 5, right: 5, top: 5, bottom: 5 }
+                })
+            }
+        })
             .layout()
 
-        console.log(`${panel.width}x${panel.height}`)
-
-        // var word = model.words.queryRandomWord();
-        var word = model.words.queryWord('什麼')[0];
-        var characters = word.getCharacters();
-        var characterIndex = Phaser.Math.Between(0, characters.length - 1);
-        var character = characters[characterIndex];
-        var question = character.createQuestion();
-
-        panel
-            .on('submit', function (result) {
-                console.log(result);
-                var isPass = question.verify(result);
-                if (!isPass) { // Verify polyphonic
-                    var character = word.getCharacters(1)[characterIndex]; // Get polyphonic character
-                    if (character) { // Has polyphonic
-                        isPass = question.setAnswer(character).verify(result);
-                        if (isPass) {
-                            console.log('Match polyphonic');
-                        }
-                    }
-                }
-
-                console.log((isPass) ? 'Pass' : 'Fail');
-            })
-            .setTitle('2021教育部高頻字詞600注音練習')
-            .setWord(characters)
-            .setChoicesText(question.createChoices())
+        var character = model.characters.queryCharacter('我')[0];
+        ui
+            .showCharacter(character)
             .layout()
             .drawBounds(this.add.graphics(), 0xff0000)
 
-        console.log(`${panel.width}x${panel.height}`)
-
-        // Style question character
-        var characterUI = panel.getCharacter(characterIndex);
-        characterUI.setBopomofoVisible(false); // Or characterUI.setBopomofo()
-        characterUI.getElement('character.text').setColor('chocolate');
+        console.log(`${ui.width}x${ui.height}`)
     }
 
     update() { }

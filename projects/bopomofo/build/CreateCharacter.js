@@ -1,4 +1,5 @@
 import { Character } from '../gameobjects';
+import { Initials, Media, Vowel } from '../model/bopomofo/Bopomofo.js'
 
 var CreateCharacter = function (scene,) {
     var characterUI = new Character(scene, {
@@ -14,11 +15,11 @@ var CreateCharacter = function (scene,) {
         }),
 
         bopomofo: {
-            initials: CreateLabel(scene, 'right', 32),
-            media: CreateLabel(scene, 'right', 32),
-            vowel: CreateLabel(scene, 'right', 32),
-            tone: CreateLabel(scene, 'left', 72),
-            tone0: CreateLabel(scene, 'right', 72),
+            initials: CreatePhonologyLabel(scene, Initials),
+            media: CreatePhonologyLabel(scene, Media),
+            vowel: CreatePhonologyLabel(scene, Vowel),
+            tone: CreateToneLabel(scene),
+            tone0: CreateTone0Label(scene),
         }
     })
 
@@ -27,16 +28,42 @@ var CreateCharacter = function (scene,) {
     return characterUI;
 }
 
-var CreateLabel = function (scene, textalign, textsize) {
+var CreatePhonologyLabel = function (scene, testString) {
     return scene.rexUI.add.label({
         // background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
         text: scene.rexUI.add.BBCodeText(0, 0, '',
-            { fontSize: textsize, fixedWidth: 60, fixedHeight: 40, halign: textalign, valign: 'center', testString: '回' }
+            { fontSize: 32, fixedWidth: 36, fixedHeight: 40, halign: 'right', valign: 'center', testString: testString }
         ),
         // Set fixedWidth, fixedHeight for all kinds of text input
 
         align: 'center',
         //space: { left: 2, right: 2, top: 2, bottom: 2 }
+    })
+}
+
+var CreateToneLabel = function (scene) {
+    return scene.rexUI.add.label({
+        // background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
+        text: scene.rexUI.add.BBCodeText(0, 0, '',
+            { fontSize: 72, fixedWidth: 36, fixedHeight: 20, halign: 'left', valign: 'center', testString: 'ˊˇˋ' }
+        ),
+        // Set fixedWidth, fixedHeight for all kinds of text input
+
+        align: 'center',
+        //space: { left: 2, right: 2, top: 2, bottom: 2 }
+    })
+}
+
+var CreateTone0Label = function (scene) {
+    return scene.rexUI.add.label({
+        // background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
+        text: scene.rexUI.add.BBCodeText(0, 0, '',
+            { fontSize: 20, fixedWidth: 36, fixedHeight: 20, halign: 'center', valign: 'bottom', testString: '˙' }
+        ),
+        // Set fixedWidth, fixedHeight for all kinds of text input
+
+        align: 'center',
+        space: { left: 0, right: 0, top: -8, bottom: -4 }
     })
 }
 
