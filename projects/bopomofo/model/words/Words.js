@@ -1,4 +1,4 @@
-import { QueryWord, QueryRandomWord } from './Query.js';
+import { QueryWord, QueryRandomWord, QueryByID } from './Query.js';
 
 class Words {
     constructor(model) {
@@ -11,6 +11,10 @@ class Words {
 
     queryRandomWord() {
         return QueryRandomWord(this.model);
+    }
+
+    queryByID(id) {
+        return QueryByID(this.model, id);
     }
 }
 

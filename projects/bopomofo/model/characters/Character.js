@@ -27,6 +27,24 @@ class Character {
         question.setAnswer(this);
         return question;
     }
+
+    getWords(wordCount) {
+        var wordDocIDList = this.doc.wid;
+        var wordDocIDListLength = wordDocIDList.length;
+        if (wordCount === undefined) {
+            wordCount = wordDocIDListLength;
+        } else if (wordCount > wordDocIDListLength) {
+            wordCount = wordDocIDListLength;
+        }
+
+        var wordCollectionHelper = this.model.words;
+        var words = [];
+        for (var i = 0; i < wordCount; i++) {
+            var word = wordCollectionHelper.queryByID(wordDocIDList[i]);
+            words.push(word);
+        }
+        return words;
+    }
 }
 
 export default Character;

@@ -22,4 +22,13 @@ var QueryRandomWord = function (model) {
     return new Word(model, GetRandomItem(docArray));
 }
 
-export { Query, QueryWord, QueryRandomWord };
+var QueryByID = function (model, id) {
+    var wordCollection = model.wordCollection;
+    var doc = wordCollection.get(id);
+    return new Word(model, doc);
+}
+
+export {
+    Query, QueryWord, QueryRandomWord,
+    QueryByID
+};
