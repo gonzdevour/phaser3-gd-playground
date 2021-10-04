@@ -1,6 +1,6 @@
 import 'phaser';
 import CreateModel from '../build/CreateModel.js';
-import CharacterCellSizer from '../gameobjects/characterstable/CharacterCellSizer.js';
+import CharacterCellSizer from '../gameobjects/charactertable/CharacterCellSizer.js';
 import CreateCharacter from '../build/CreateCharacter.js';
 
 class Test extends Phaser.Scene {

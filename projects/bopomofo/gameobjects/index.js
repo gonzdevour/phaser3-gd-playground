@@ -3,7 +3,7 @@ import Word from "./word/Word.js";
 import Choices from "./choices/Choices.js";
 import Panel from "./panel/Panel.js";
 
-import CharactersTable from "./characterstable/CharactersTable.js";
+import CharacterTable from "./charactertable/CharacterTable.js";
 
 export {
     Character,
@@ -11,5 +11,5 @@ export {
     Choices,
     Panel,
 
-    CharactersTable,
+    CharacterTable,
 }
