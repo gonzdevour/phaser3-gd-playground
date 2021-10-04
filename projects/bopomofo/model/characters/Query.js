@@ -1,14 +1,38 @@
 import Character from './Character.js';
 
-var Query = function (model, filter) {
+var Query = function (model, filter, sortMode) {
     var characterCollection = model.characterCollection;
-    var docArray = characterCollection.find(filter);
+
+    if (typeof (sortMode) === 'string') {
+        sortMode = SortMode[sortMode];
+    }
+
+    var docArray;
+    switch (sortMode) {
+        case 1: // 'bopomofo'
+            docArray = characterCollection
+                .chain()
+                .find(filter)
+                .compoundsort(['initials', 'media', 'vowel', 'tone'])
+                .data();
+            break;
+        default:
+            docArray = characterCollection.find(filter);
+            break;
+    }
+
     var characters = [];
     for (var i = 0, cnt = docArray.length; i < cnt; i++) {
         characters.push(new Character(model, docArray[i]))
     }
     return characters;
 }
+const SortMode = {
+    'none': 0,
+    'bopomofo': 1
+}
+
+
 var QueryCharacter = function (model, character) {
     return Query(model, { character: character });
 }

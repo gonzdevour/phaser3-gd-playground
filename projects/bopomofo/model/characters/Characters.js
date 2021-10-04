@@ -17,8 +17,8 @@ class Characters {
         return QueryByID(this.model, id);
     }
 
-    getAll() {
-        return Query(this.model);
+    getAll(sortMode) {
+        return Query(this.model, {}, sortMode);
     }
 }
 
