@@ -1,4 +1,4 @@
-import { Query, QueryCharacter, QueryRandomCharacter } from './Query.js';
+import { Query, QueryCharacter, QueryRandomCharacter, QueryByID } from './Query.js';
 
 class Characters {
     constructor(model) {
@@ -11,6 +11,10 @@ class Characters {
 
     queryRandomCharacter() {
         return QueryRandomCharacter(this.model);
+    }
+
+    queryByID(id) {
+        return QueryByID(this.model, id);
     }
 
     getAll() {

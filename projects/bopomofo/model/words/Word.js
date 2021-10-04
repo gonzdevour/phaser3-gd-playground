@@ -28,12 +28,13 @@ class Word {
             return null;
         }
 
+        var characterCollectionHelper = this.model.characters;
+
         var pid = this.doc.pid[polyphonyIndex];
-        var characterCollection = this.model.characterCollection;
         var characters = [];
         for (var i = 0, cnt = pid.length; i < cnt; i++) {
-            var characterDoc = characterCollection.get(pid[i]);
-            characters.push(new Character(this.model, characterDoc));
+            var character = characterCollectionHelper.queryByID(pid[i])
+            characters.push(character);
         }
         return characters;
     }

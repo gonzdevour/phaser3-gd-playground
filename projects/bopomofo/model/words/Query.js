@@ -4,7 +4,7 @@ const GetRandomItem = Phaser.Utils.Array.GetRandom;
 
 var Query = function (model, filter) {
     var wordCollection = model.wordCollection;
-    var docArray = wordCollection.chain().find(filter).data();
+    var docArray = wordCollection.find(filter);
     var words = [];
     for (var i = 0, cnt = docArray.length; i < cnt; i++) {
         words.push(new Word(model, docArray[i]))
@@ -18,7 +18,7 @@ var QueryWord = function (model, word) {
 
 var QueryRandomWord = function (model) {
     var wordCollection = model.wordCollection;
-    var docArray = wordCollection.chain().data();
+    var docArray = wordCollection.data();
     return new Word(model, GetRandomItem(docArray));
 }
 
