@@ -1,20 +1,16 @@
-import { WordsCollectionName } from '../prebuilddb/Const.js';
 import { QueryWord, QueryRandomWord } from './Query.js';
 
 class Words {
-    constructor(parent) {
-        this.parent = parent;
-        this.db = parent.db;
-        this.collection = this.db.getCollection(WordsCollectionName);
-        // Note: db won't be deserialized, thus reference of collection won't change.
+    constructor(model) {
+        this.model = model;
     }
 
     queryWord(word) {
-        return QueryWord(this.db, this.collection, word);
+        return QueryWord(this.model, word);
     }
 
     queryRandomWord() {
-        return QueryRandomWord(this.db, this.collection);
+        return QueryRandomWord(this.model);
     }
 }
 

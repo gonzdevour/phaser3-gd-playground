@@ -11,8 +11,8 @@
 import Question from '../question/Question';
 
 class Character {
-    constructor(db, doc) {
-        this.db = db;
+    constructor(model, doc) {
+        this.model = model;
         this.doc = doc;
 
         this.character = doc.character;

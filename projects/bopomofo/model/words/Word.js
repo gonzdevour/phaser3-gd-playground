@@ -7,12 +7,11 @@
         - 1 : ID list of characterDoc
 */
 
-import { CharactersCollectionName } from '../prebuilddb/Const.js';
 import Character from '../characters/Character.js';
 
 class Word {
-    constructor(db, doc) {
-        this.db = db;
+    constructor(model, doc) {
+        this.model = model;
         this.doc = doc;
         this.word = this.doc.word;
     }
@@ -30,11 +29,11 @@ class Word {
         }
 
         var pid = this.doc.pid[polyphonyIndex];
-        var characterCollection = this.db.getCollection(CharactersCollectionName);
+        var characterCollection = this.model.characterCollection;
         var characters = [];
         for (var i = 0, cnt = pid.length; i < cnt; i++) {
             var characterDoc = characterCollection.get(pid[i]);
-            characters.push(new Character(this.db, characterDoc));
+            characters.push(new Character(this.model, characterDoc));
         }
         return characters;
     }
