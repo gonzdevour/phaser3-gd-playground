@@ -1,4 +1,5 @@
 import { Choices } from '../gameobjects';
+import { Style } from './style/style.js';
 
 const MaxInitialsButtons = 5;
 const MaxMediaButtons = 3;
@@ -20,28 +21,28 @@ var CreateChoices = function (scene) {
     var initials = config.initials;
     for (var i = 0; i < MaxInitialsButtons; i++) {
         initials.push(
-            CreateLabel(scene)
+            CreateLabel(scene, Style.choice.phonology)
         )
     }
 
     var media = config.media;
     for (var i = 0; i < MaxMediaButtons; i++) {
         media.push(
-            CreateLabel(scene)
+            CreateLabel(scene, Style.choice.phonology)
         )
     }
 
     var vowel = config.vowel;
     for (var i = 0; i < MaxVowelButtons; i++) {
         vowel.push(
-            CreateLabel(scene)
+            CreateLabel(scene, Style.choice.phonology)
         )
     }
 
     var tone = config.tone;
     for (var i = 0; i < MaxToneButtons; i++) {
         tone.push(
-            CreateLabel(scene)
+            CreateLabel(scene, Style.choice.tone)
         )
     }
 
@@ -67,12 +68,10 @@ var CreateChoices = function (scene) {
     return choices;
 }
 
-var CreateLabel = function (scene) {
+var CreateLabel = function (scene, style) {
     return scene.rexUI.add.label({
         background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
-        text: scene.rexUI.add.BBCodeText(0, 0, '',
-            { fontSize: 60, fixedWidth: 72, fixedHeight: 90, halign: 'center', valign: 'center', testString:'回' }
-        ),
+        text: scene.rexUI.add.BBCodeText(0, 0, '', style),
         // Set fixedWidth, fixedHeight for all kinds of text input
 
         align: 'center',

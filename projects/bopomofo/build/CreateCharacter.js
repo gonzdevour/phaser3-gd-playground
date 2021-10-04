@@ -1,15 +1,14 @@
 import { Character } from '../gameobjects';
 import { Initials, Media, Vowel } from '../model/bopomofo/Bopomofo.js'
+import { Style } from './style/style.js';
 
 var CreateCharacter = function (scene,) {
     var characterUI = new Character(scene, {
         background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 0),//.setStrokeStyle(2, 0xffffff),
         character: scene.rexUI.add.label({
-            height: (60 * 3) + 2,  // Min height
+            height: (55 * 3) + 2,  // Min height
             background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 0),//.setStrokeStyle(2, 0xffffff),
-            text: scene.rexUI.add.BBCodeText(0, 0, '',
-                { fontFamily: 'DFKai-SB', fontSize: 96, fixedWidth: 100, fixedHeight: 100, halign: 'center', valign: 'center', testString: '回' }
-            ),
+            text: scene.rexUI.add.BBCodeText(0, 0, '', Style.quiz.character),
             align: 'right',
             space: { left: 5, right: 5, top: 5, bottom: 5 }
         }),
@@ -22,7 +21,6 @@ var CreateCharacter = function (scene,) {
             tone0: CreateTone0Label(scene),
         }
     })
-
     characterUI.layout().setMinSize(characterUI.width, characterUI.height);
 
     return characterUI;
@@ -31,9 +29,7 @@ var CreateCharacter = function (scene,) {
 var CreatePhonologyLabel = function (scene, testString) {
     return scene.rexUI.add.label({
         // background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
-        text: scene.rexUI.add.BBCodeText(0, 0, '',
-            { fontSize: 32, fixedWidth: 36, fixedHeight: 40, halign: 'right', valign: 'center', testString: testString }
-        ),
+        text: scene.rexUI.add.BBCodeText(0, 0, '', Style.quiz.phonology),
         // Set fixedWidth, fixedHeight for all kinds of text input
 
         align: 'center',
@@ -44,22 +40,18 @@ var CreatePhonologyLabel = function (scene, testString) {
 var CreateToneLabel = function (scene) {
     return scene.rexUI.add.label({
         // background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
-        text: scene.rexUI.add.BBCodeText(0, 0, '',
-            { fontSize: 72, fixedWidth: 36, fixedHeight: 20, halign: 'left', valign: 'center', testString: 'ˊˇˋ' }
-        ),
+        text: scene.rexUI.add.BBCodeText(0, 0, '', Style.quiz.tone),
         // Set fixedWidth, fixedHeight for all kinds of text input
 
-        align: 'center',
-        //space: { left: 2, right: 2, top: 2, bottom: 2 }
+        align: 'left',
+        space: { left: -12, right: 0, top: 0, bottom: 0 }
     })
 }
 
 var CreateTone0Label = function (scene) {
     return scene.rexUI.add.label({
         // background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
-        text: scene.rexUI.add.BBCodeText(0, 0, '',
-            { fontSize: 20, fixedWidth: 36, fixedHeight: 20, halign: 'center', valign: 'bottom', testString: '˙' }
-        ),
+        text: scene.rexUI.add.BBCodeText(0, 0, '', Style.quiz.tone0),
         // Set fixedWidth, fixedHeight for all kinds of text input
 
         align: 'center',

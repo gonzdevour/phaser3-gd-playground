@@ -17,40 +17,53 @@ var CreateChoices = function (config) {
     var shuffleChoices = GetValue(config, 'shuffleChoices', true);
 
     var choices = {
-        initials: GetItems(answer.initials, initialsList, initialsCount),
-        media: GetItems(answer.media, mediaList, mediaCount),
-        vowel: GetItems(answer.vowel, vowelList, vowelCount),
-        tone: GetItems(answer.tone, toneList, toneCount),
+        initials: GetItems(answer.initials, initialsList, initialsCount, true),
+        media: GetItems(answer.media, mediaList, mediaCount, false),
+        vowel: GetItems(answer.vowel, vowelList, vowelCount, true),
+        tone: GetItems(answer.tone, toneList, toneCount, false),
     }
 
     if (shuffleChoices) {
         choices.initials = Shuffle(choices.initials);
-        choices.media = Shuffle(choices.media);
+        //choices.media = Shuffle(choices.media);
         choices.vowel = Shuffle(choices.vowel);
-        choices.tone = Shuffle(choices.tone);
+        //choices.tone = Shuffle(choices.tone);
     }
 
     return choices;
 }
 
-var GetItems = function (preserveItem, items, count) {
+var GetItems = function (preserveItem, items, count, shuffle) {
     var out = [];
-    if (preserveItem !== '') {
-        out.push(preserveItem);
-    }
 
-    items = Shuffle(items);
-    for (var i = 0, cnt = items.length; i < cnt; i++) {
-        var item = items[i];
-        if (item === preserveItem) {
-            continue;
+    if (shuffle) {
+        if (preserveItem !== '') {
+            out.push(preserveItem);
         }
-        out.push(item);
-
-        if (out.length === count) {
-            break;
+        items = Shuffle(items);
+        for (var i = 0, cnt = items.length; i < cnt; i++) {
+            var item = items[i];
+            if (item === preserveItem) {
+                continue;
+            }
+            out.push(item);
+    
+            if (out.length === count) {
+                break;
+            }
         }
     }
+    else {
+        for (var i = 0, cnt = items.length; i < cnt; i++) {
+            var item = items[i];
+            out.push(item);    
+            if (out.length === count) {
+                break;
+            }
+        }
+    }
+    
+
 
     return out;
 }

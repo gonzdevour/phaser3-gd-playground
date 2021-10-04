@@ -49,7 +49,7 @@ class Quiz extends Phaser.Scene {
 
                 console.log((isPass) ? 'Pass' : 'Fail');
             })
-            .setTitle('2021教育部高頻字詞600注音練習')
+            .setTitle('2021高頻詞600注音練習')
             .setWord(characters)
             .setChoicesText(question.createChoices())
             .layout()
