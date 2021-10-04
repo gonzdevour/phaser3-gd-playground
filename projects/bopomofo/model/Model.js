@@ -1,5 +1,5 @@
-import CreateDB from './prebuilddb/CreateDB.js';
-import { WordsCollectionName, CharactersCollectionName } from './prebuilddb/Const.js';
+import CreateDB from './db/CreateDB.js';
+import { WordsCollectionName, CharactersCollectionName } from './db/Const.js';
 import Words from './words/Words.js';
 import Characters from "./characters/Characters";
 import { DBToString, StringToDB } from './SerializeMethods.js';

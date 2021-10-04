@@ -1,4 +1,4 @@
-import CreateDB from "./CreateDB";
+import CreateDB from "../db/CreateDB";
 import CSVToWordDataList from './CSVToWordDataList.js';
 import WordDataListToDB from './WordDataListToDB.js'
 

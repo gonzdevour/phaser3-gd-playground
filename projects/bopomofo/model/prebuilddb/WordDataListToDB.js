@@ -1,5 +1,5 @@
 import ParseBopomofo from '../bopomofo/ParseBopomofo.js';
-import { CharactersCollectionName, WordsCollectionName } from './Const.js';
+import { CharactersCollectionName, WordsCollectionName } from '../db/Const.js';
 import GetCharacterDoc from "./GetCharacterDoc.js";
 
 // Collections will be set later
