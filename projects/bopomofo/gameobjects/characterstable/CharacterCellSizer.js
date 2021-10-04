@@ -42,11 +42,17 @@ class CharacterCellSizer extends Sizer {
 
     showCharacter(character) {
         this.getElement('character').setCharacter(character);
-        var words = this.getElement('words');
-        var wordIDList = character.wid;
-        for (var i = 0, cnt = words.length; i < cnt; i++) {
-
+        var wordsUI = this.getElement('words');
+        var words = character.getWords(wordsUI.length);
+        var wordsLength = words.length;
+        for (var i = 0, cnt = wordsUI.length; i < cnt; i++) {
+            if (i < wordsLength) {
+                wordsUI[i].show().setText(words[i].word);
+            } else {
+                wordsUI[i].hide();
+            }
         }
+        return this;
     }
 }
 
