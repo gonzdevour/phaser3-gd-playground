@@ -8,7 +8,7 @@
     - wid : ID list of wordDoc
 */
 
-import Question from '../question/Question';
+import Question from '../question/Question.js';
 
 class Character {
     constructor(model, doc) {

@@ -1,4 +1,4 @@
-import Character from './Character.js';
+import Character from '../Character.js';
 
 var Query = function (model, filter, sortMode) {
     var characterCollection = model.characterCollection;
@@ -32,25 +32,4 @@ const SortMode = {
     'bopomofo': 1
 }
 
-
-var QueryCharacter = function (model, character) {
-    return Query(model, { character: character });
-}
-
-const GetRandomItem = Phaser.Utils.Array.GetRandom;
-var QueryRandomCharacter = function (model) {
-    var characterCollection = model.characterCollection;
-    var docArray = characterCollection.data();
-    return new Character(model, GetRandomItem(docArray));
-}
-
-var QueryByID = function (model, id) {
-    var characterCollection = model.characterCollection;
-    var doc = characterCollection.get(id);
-    return new Character(model, doc);
-}
-
-export {
-    Query, QueryCharacter, QueryRandomCharacter,
-    QueryByID
-};
+export default Query;
