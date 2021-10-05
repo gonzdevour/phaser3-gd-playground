@@ -42,7 +42,7 @@ class Word {
         var pidLists = this.doc.pid,
             characterIndex;
         for (var p = 0, pcnt = pidLists.length; p < pcnt; p++) {
-            characterIndex = pidLists.indexOf(characterDocID);
+            characterIndex = pidLists[p].indexOf(characterDocID);
             if (characterIndex !== -1) {
                 break;
             }

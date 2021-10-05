@@ -28,11 +28,15 @@ class Quiz extends Phaser.Scene {
 
         console.log(`${panel.width}x${panel.height}`)
 
-        // var word = model.words.queryRandomWord();
-        var word = model.words.queryWord('什麼')[0];
+        var characters = model.characters.queryByBopomofo('ㄠ');
+        var character = Phaser.Utils.Array.GetRandom(characters);
+
+        var words = character.getWords();
+        var word = Phaser.Utils.Array.GetRandom(words);
 
         CreateQuiz(panel, {
             word: word,
+            character: character,
             title: '2021高頻詞600注音練習'
         })
             .drawBounds(this.add.graphics(), 0xff0000)
