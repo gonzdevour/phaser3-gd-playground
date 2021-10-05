@@ -1,4 +1,4 @@
-import { Word } from '../gameobjects';
+import { Word } from '../../gameobjects/quizpanel.js';
 import CreateCharacter from './CreateCharacter';
 
 const MaxCharacters = 4;
@@ -9,7 +9,7 @@ var CreateWord = function (scene, config) {
         orientation: 'y',
 
         background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 0),//.setStrokeStyle(2, 0xffffff),
-        space: { left: 30, right:0, top:0, bottom:0, item:0 },
+        space: { left: 30, right: 0, top: 0, bottom: 0, item: 0 },
 
         characters: [],
     }

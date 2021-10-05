@@ -4,7 +4,7 @@ const Sizer = UI.Sizer;
 const Buttons = UI.Buttons;
 const GetValue = Phaser.Utils.Objects.GetValue;
 
-class Panel extends Sizer {
+class QuizPanel extends Sizer {
     constructor(scene, config) {
         super(scene, config);
         scene.add.existing(this);
@@ -81,4 +81,4 @@ class Panel extends Sizer {
     }
 }
 
-export default Panel;
+export default QuizPanel;

@@ -1,7 +1,7 @@
 import 'phaser';
 import CreateModel from '../build/CreateModel.js';
-import CreatePanel from '../build/CreatePanel.js';
-import CreateQuiz from '../build/CreateQuiz.js';
+import CreateQuizPanel from '../build/quizpanel/CreateQuizPanel.js';
+import CreateQuiz from '../build/quizpanel/CreateQuiz.js';
 
 
 class Quiz extends Phaser.Scene {
@@ -22,18 +22,18 @@ class Quiz extends Phaser.Scene {
             db: this.cache.text.get('db'),
         })
 
-        var panel = CreatePanel(this)
+        var quizPanel = CreateQuizPanel(this)
             .setPosition(384, 667)
             .layout()
 
-        console.log(`${panel.width}x${panel.height}`)
+        console.log(`${quizPanel.width}x${quizPanel.height}`)
 
         var characters = model.characters.queryByBopomofo('ㄢㄣ');
         var character = Phaser.Utils.Array.GetRandom(characters);
 
         var word = character.getRandomWord();
 
-        CreateQuiz(panel, {
+        CreateQuiz(quizPanel, {
             word: word,
             character: character,
             title: '2021高頻詞600注音練習'

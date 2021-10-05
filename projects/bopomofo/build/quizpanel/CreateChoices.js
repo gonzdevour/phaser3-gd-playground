@@ -1,5 +1,5 @@
-import { Choices } from '../gameobjects';
-import { Style } from './style/style.js';
+import { Choices } from '../../gameobjects/quizpanel.js';
+import { Style } from '../style/style.js';
 
 const MaxInitialsButtons = 5;
 const MaxMediaButtons = 3;

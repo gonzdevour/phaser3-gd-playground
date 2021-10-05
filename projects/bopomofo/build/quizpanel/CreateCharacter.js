@@ -1,6 +1,6 @@
-import { Character } from '../gameobjects';
-import { Initials, Media, Vowel } from '../model/bopomofo/Bopomofo.js'
-import { Style } from './style/style.js';
+import { Character } from '../../gameobjects/quizpanel.js';
+import { Initials, Media, Vowel } from '../../model/bopomofo/Bopomofo.js'
+import { Style } from '../style/style.js';
 
 var CreateCharacter = function (scene,) {
     var characterUI = new Character(scene, {
