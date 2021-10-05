@@ -10,6 +10,8 @@
 
 import Question from '../question/Question.js';
 
+const GetRandomItem = Phaser.Utils.Array.GetRandom;
+
 class Character {
     constructor(model, doc) {
         this.model = model;
@@ -44,6 +46,12 @@ class Character {
             words.push(word);
         }
         return words;
+    }
+
+    getRandomWord() {
+        var wordDocID = GetRandomItem(this.doc.wid);
+        var wordCollectionHelper = this.model.words;
+        return wordCollectionHelper.queryByID(wordDocID);
     }
 }
 
