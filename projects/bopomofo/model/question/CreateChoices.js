@@ -47,7 +47,7 @@ var GetItems = function (preserveItem, items, count, shuffle) {
                 continue;
             }
             out.push(item);
-    
+
             if (out.length === count) {
                 break;
             }
@@ -56,14 +56,12 @@ var GetItems = function (preserveItem, items, count, shuffle) {
     else {
         for (var i = 0, cnt = items.length; i < cnt; i++) {
             var item = items[i];
-            out.push(item);    
+            out.push(item);
             if (out.length === count) {
                 break;
             }
         }
     }
-    
-
 
     return out;
 }

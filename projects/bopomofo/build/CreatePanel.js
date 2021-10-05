@@ -28,8 +28,8 @@ var CreatePanel = function (scene) {
     panel
         .on('button.click', function (button, index, pointer, event) {
             if (index === 0) {  // OK button
-                var result = panel.getChoiceResult();                
-                panel.emit('submit', result)
+                var result = panel.getChoiceResult();
+                panel.emit('_submit', result);  // Fire internal event
             }
         })
 

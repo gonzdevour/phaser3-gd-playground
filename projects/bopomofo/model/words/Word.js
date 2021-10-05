@@ -7,8 +7,6 @@
         - 1 : ID list of characterDoc
 */
 
-import Character from '../characters/Character.js';
-
 class Word {
     constructor(model, doc) {
         this.model = model;
@@ -37,6 +35,19 @@ class Word {
             characters.push(character);
         }
         return characters;
+    }
+
+    getCharacterIndex(character) {
+        var characterDocID = character.doc.$loki;
+        var pidLists = this.doc.pid,
+            characterIndex;
+        for (var p = 0, pcnt = pidLists.length; p < pcnt; p++) {
+            characterIndex = pidLists.indexOf(characterDocID);
+            if (characterIndex !== -1) {
+                break;
+            }
+        }
+        return characterIndex;
     }
 }
 
