@@ -14,7 +14,7 @@ class Quiz extends Phaser.Scene {
 
     preload() {
         // Load db file
-        this.load.text('db', '/assets/data/bopomofo.compress');
+        this.load.text('db', 'assets/bopomofo.compress');
     }
 
     create() {
