@@ -26,10 +26,12 @@ var CreateQuizPanel = function (scene) {
         ],
 
         space: {
-            title: 20,
-            word: 20,
-            choices: 20,
-            actionItem: 20
+            title: 10,
+            word: 10,
+            choices: 10,
+            action: {
+                left: 0, right: 50, items: 20
+            }
         }
     });
 

@@ -51,19 +51,17 @@ class QuizPanel extends Sizer {
 
         var actions = GetValue(config, 'actions');
         var spaceAction = GetValue(config, 'space.action', 0);
-        var spaceActionItem = GetValue(config, 'space.actionItem', 0);
         if (actions) {
             var actionsSizer = new Buttons(scene, {
                 orientation: 'x',
                 buttons: actions,
                 eventEmitter: this,
-                space: { item: spaceActionItem }
+                space: spaceAction
             })
             this.add(
                 actionsSizer,
                 {
-                    proportion: 0, align: 'right',
-                    padding: { bottom: spaceAction }
+                    proportion: 0, align: 'right'
                 }
             )
         }
