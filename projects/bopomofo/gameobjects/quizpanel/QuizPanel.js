@@ -49,29 +49,21 @@ class QuizPanel extends Sizer {
                 }
             )
 
-        var actions = GetValue(config, 'actions');
-        var spaceAction = GetValue(config, 'space.action', 0);
-        if (actions) {
-            var actionsSizer = new Buttons(scene, {
-                orientation: 'x',
-                buttons: actions,
-                eventEmitter: this,
-                space: spaceAction
-            })
+        var footer = GetValue(config, 'footer');
+        if (footer) {
             this.add(
-                actionsSizer,
+                footer,
                 {
                     proportion: 0, align: 'right'
                 }
             )
         }
 
-
         this
             .addChildrenMap('title', title)
             .addChildrenMap('word', word)
             .addChildrenMap('choices', choices)
-            .addChildrenMap('actions', actions)
+            .addChildrenMap('footer', footer)
     }
 
     setTitle(data) {
