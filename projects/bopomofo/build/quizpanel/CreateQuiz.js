@@ -1,11 +1,15 @@
 const GetValue = Phaser.Utils.Objects.GetValue;
 
-var StyleQuestionCharacter = function (characterUI) {
-    characterUI.setBopomofoVisible(false); // Or characterUI.setBopomofo()
-    characterUI.getElement('character.text').setColor('chocolate');
+var ResetWordStyle = function (word) {
+    word.setWordColor('white');
+}
+var SetQuestionCharacterStyle = function (characterUI) {
+    characterUI
+        .setCharacterColor('chocolate')
+        .setBopomofo();
 }
 
-var CreateQuiz = function (panel, config) {
+var CreateQuiz = function (quizPanel, config) {
     // word, characters
     var word = GetValue(config, 'word');
     var characters = word.getCharacters();
@@ -29,21 +33,22 @@ var CreateQuiz = function (panel, config) {
     // question
     var question = character.createQuestion();
 
-    // Fill panel
-    panel
+    // Fill quizPanel
+    quizPanel
         .setWord(characters)
         .setChoicesText(question.createChoices())
 
     var title = GetValue(config, 'title');
     if (title) {
-        panel.setTitle(title);
+        quizPanel.setTitle(title);
     }
 
     // Layout positions
-    panel.layout();
+    quizPanel.layout();
 
-    panel
-        .on('_submit', function (result) {
+    // TODO: Remove pending events
+    quizPanel
+        .once('_submit', function (result) {
             var isPass = question.verify(result);
             if (!isPass) { // Verify polyphony
                 var polyphonyCharacter = word.getCharacters(1)[characterIndex]; // Get polyphony character
@@ -58,13 +63,14 @@ var CreateQuiz = function (panel, config) {
                 word: word,
                 character: (isPass && polyphonyCharacter) ? polyphonyCharacter : character
             }
-            panel.emit('complete', verifyResult);
+            quizPanel.emit('complete', verifyResult);
         })
 
     // Style question character after layout()
-    StyleQuestionCharacter(panel.getCharacter(characterIndex));
+    ResetWordStyle(quizPanel.getElement('word'));
+    SetQuestionCharacterStyle(quizPanel.getCharacter(characterIndex));
 
-    return panel;
+    return quizPanel;
 }
 
 export default CreateQuiz;

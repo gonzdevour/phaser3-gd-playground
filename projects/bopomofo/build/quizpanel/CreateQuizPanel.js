@@ -23,6 +23,7 @@ var CreateQuizPanel = function (scene) {
         }
     });
 
+    // Integrated events
     quizPanel.getElement('footer')
         .on('button.click', function (button, index, pointer, event) {
             switch (index) {
@@ -35,6 +36,11 @@ var CreateQuizPanel = function (scene) {
                     quizPanel.clearChoices();
                     break;
             }
+        })
+
+    quizPanel.getElement('choices')
+        .on('select', function (button) {
+            console.log('TODO: Set bopomofo of question character')
         })
 
     return quizPanel;

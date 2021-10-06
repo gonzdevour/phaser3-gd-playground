@@ -99,6 +99,16 @@ class Character extends Sizer {
         this.getElement('bopomofo').setTone0(text);
         return this;
     }
+
+    setCharacterColor(color) {
+        this.getElement('character.text').setColor(color);
+        this.getElement('bopomofo.initials.text').setColor(color);
+        this.getElement('bopomofo.media.text').setColor(color);
+        this.getElement('bopomofo.vowel.text').setColor(color);
+        this.getElement('bopomofo.tone.text').setColor(color);
+        this.getElement('bopomofo.tone0.text').setColor(color);
+        return this;
+    }
 }
 
 export default Character;
