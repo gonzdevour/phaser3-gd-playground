@@ -5,7 +5,7 @@ var CreateActions = function (scene) {
         orientation: 'x',
         buttons: [
             CreateLabel(scene, '送出答案'),
-            CreateLabel(scene, 'xxxxxxx'),
+            CreateLabel(scene, '清除選取'),
         ],
         space: {
             left: 0, right: 0, top: 0, bottom: 0, item: 40

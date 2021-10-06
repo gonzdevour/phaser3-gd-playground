@@ -85,6 +85,11 @@ class QuizPanel extends Sizer {
         return this;
     }
 
+    clearChoices() {
+        this.getElement('choices').clearChoices();
+        return this;
+    }
+
     getChoiceResult() {
         return this.getElement('choices').getChoiceResult();
     }

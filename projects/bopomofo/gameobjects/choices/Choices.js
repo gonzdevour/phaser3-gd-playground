@@ -86,7 +86,7 @@ class Choices extends Sizer {
     clearChoices() {
         for (var i = 0, icnt = TypeNames.length; i < icnt; i++) {
             var groupName = TypeNames[i];
-            this.getElement(`${groupName}Sizer`).setData('value', null);
+            this.getElement(`${groupName}Sizer`).value = null;
         }
         return this;
     }
