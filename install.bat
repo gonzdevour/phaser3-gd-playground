@@ -1,3 +1,2 @@
 @echo off
-ehco Installing dependencies......
 npm install
