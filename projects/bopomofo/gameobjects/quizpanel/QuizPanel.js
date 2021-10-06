@@ -33,7 +33,6 @@ class QuizPanel extends Sizer {
         var spaceChoices = GetValue(config, 'space.choices', 0);
 
         this
-            .addChildrenMap('background', background)
             .add(
                 word,
                 {
@@ -60,6 +59,7 @@ class QuizPanel extends Sizer {
         }
 
         this
+            .addChildrenMap('background', background)
             .addChildrenMap('title', title)
             .addChildrenMap('word', word)
             .addChildrenMap('choices', choices)
