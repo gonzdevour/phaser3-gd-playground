@@ -51,6 +51,11 @@ class Word extends Sizer {
         return this;
     }
 
+    setCharacterBopomofo(index, config) {
+        this.getElement('characters')[index].setBopomofo(config);
+        return this;
+    }
+
     getCharacter(index) {
         return this.getElement('characters')[index];
     }

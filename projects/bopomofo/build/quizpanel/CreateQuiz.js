@@ -1,5 +1,3 @@
-import { Style } from '../style/style.js';
-
 const GetValue = Phaser.Utils.Objects.GetValue;
 
 var CreateQuiz = function (quizPanel, config) {
@@ -42,6 +40,7 @@ var CreateQuiz = function (quizPanel, config) {
     // Warning: '_submit' callback won't be removed
     // Note: make sure '_submit' is emitted (OK button clicked)    
     quizPanel
+        .setData('focusCharacterIndex', characterIndex) // See CreateQuizPanel.js
         .once('_submit', function (result) {
             var isPass = question.verify(result);
             if (!isPass) { // Verify polyphony
@@ -59,12 +58,6 @@ var CreateQuiz = function (quizPanel, config) {
             }
             quizPanel.emit('complete', verifyResult);
         })
-
-    // Style question character after layout()
-    quizPanel
-        .setWordColor(Style.quizPanel.word.normalColor)
-        .setCharacterColor(characterIndex, Style.quizPanel.word.markColor)
-        .clearCharacterBopomofo(characterIndex);
 
     return quizPanel;
 }

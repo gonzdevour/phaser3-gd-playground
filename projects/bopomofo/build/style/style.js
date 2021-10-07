@@ -45,7 +45,7 @@ const Style = {
             },
 
             normalColor: 'white',
-            markColor: 'chocolate',
+            focusColor: 'chocolate',
         },
 
         choice: {

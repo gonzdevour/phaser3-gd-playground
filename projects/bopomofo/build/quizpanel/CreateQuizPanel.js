@@ -3,6 +3,7 @@ import CreateWord from "./CreateWord.js";
 import CreateChoices from "./CreateChoices.js";
 import CreateActions from "./CreateActions.js";
 import { QuizPanel } from '../../gameobjects/quizpanel.js';
+import { Style } from "../style/style.js";
 
 var CreateQuizPanel = function (scene) {
     var quizPanel = new QuizPanel(scene, {
@@ -38,9 +39,33 @@ var CreateQuizPanel = function (scene) {
             }
         })
 
+    // Focus character
+    quizPanel
+        .setData('focusCharacterIndex', null)
+        .on('changedata-focusCharacterIndex', function (gameObject, value, previousValue) {
+            quizPanel
+                .setWordColor(Style.quizPanel.word.normalColor)
+                .setCharacterColor(value, Style.quizPanel.word.focusColor)
+                .clearCharacterBopomofo(value)
+        })
+
+    // Set bopomofo of focus character
     quizPanel.getElement('choices')
         .on('select', function (button) {
-            console.log('TODO: Set bopomofo of question character')
+            var index = quizPanel.getData('focusCharacterIndex');
+            if (index == null) {
+                return;
+            }
+            quizPanel
+                .setCharacterBopomofo(index, quizPanel.getChoiceResult())
+                .layoutCharacter(index)
+        })
+        .on('clear', function () {
+            var index = quizPanel.getData('focusCharacterIndex');
+            if (index == null) {
+                return;
+            }
+            quizPanel.clearCharacterBopomofo(index);
         })
 
     return quizPanel;

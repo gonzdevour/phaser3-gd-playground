@@ -88,11 +88,14 @@ class Choices extends Sizer {
             var groupName = TypeNames[i];
             this.getElement(`${groupName}Sizer`).value = null;
         }
+        this.emit('clear');
         return this;
     }
 
-    getChoiceResult() {
-        var result = {};
+    getChoiceResult(out) {
+        if (out === undefined) {
+            out = {};
+        }
         for (var i = 0, icnt = TypeNames.length; i < icnt; i++) {
             var groupName = TypeNames[i];
             var value = this.getElement(`${groupName}Sizer`).value;
@@ -101,9 +104,9 @@ class Choices extends Sizer {
             } else {
                 value = this.getElement(`${groupName}[${value}]`).text;
             }
-            result[groupName] = value;
+            out[groupName] = value;
         }
-        return result;
+        return out;
     }
 }
 
