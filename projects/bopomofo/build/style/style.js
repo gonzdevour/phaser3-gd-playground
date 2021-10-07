@@ -43,6 +43,9 @@ const Style = {
                 valign: 'bottom',
                 testString: '˙'
             },
+
+            normalColor: 'white',
+            markColor: 'chocolate',
         },
 
         choice: {

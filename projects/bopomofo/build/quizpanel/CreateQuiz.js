@@ -1,13 +1,6 @@
-const GetValue = Phaser.Utils.Objects.GetValue;
+import { Style } from '../style/style.js';
 
-var ResetWordStyle = function (word) {
-    word.setWordColor('white');
-}
-var SetQuestionCharacterStyle = function (characterUI) {
-    characterUI
-        .setCharacterColor('chocolate')
-        .setBopomofo();
-}
+const GetValue = Phaser.Utils.Objects.GetValue;
 
 var CreateQuiz = function (quizPanel, config) {
     // word, characters
@@ -46,7 +39,8 @@ var CreateQuiz = function (quizPanel, config) {
     // Layout positions
     quizPanel.layout();
 
-    // TODO: Remove pending events
+    // Warning: '_submit' callback won't be removed
+    // Note: make sure '_submit' is emitted (OK button clicked)    
     quizPanel
         .once('_submit', function (result) {
             var isPass = question.verify(result);
@@ -67,8 +61,10 @@ var CreateQuiz = function (quizPanel, config) {
         })
 
     // Style question character after layout()
-    ResetWordStyle(quizPanel.getElement('word'));
-    SetQuestionCharacterStyle(quizPanel.getCharacter(characterIndex));
+    quizPanel
+        .setWordColor(Style.quizPanel.word.normalColor)
+        .setCharacterColor(characterIndex, Style.quizPanel.word.markColor)
+        .clearCharacterBopomofo(characterIndex);
 
     return quizPanel;
 }

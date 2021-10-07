@@ -75,6 +75,11 @@ class Character extends Sizer {
         return this;
     }
 
+    clearBopomofo() {
+        this.setBopomofo();
+        return this;
+    }
+
     setInitials(text) {
         this.getElement('bopomofo').setInitials(text);
         return this;

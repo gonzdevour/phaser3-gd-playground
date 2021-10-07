@@ -80,6 +80,11 @@ class QuizPanel extends Sizer {
         return this.getElement('word').getCharacter(index);
     }
 
+    clearCharacterBopomofo(index) {
+        this.getElement('word').clearCharacterBopomofo(index);
+        return this;
+    }
+
     setChoicesText(data) {
         this.getElement('choices').setChoicesText(data);
         return this;
@@ -92,6 +97,16 @@ class QuizPanel extends Sizer {
 
     getChoiceResult() {
         return this.getElement('choices').getChoiceResult();
+    }
+
+    setWordColor(color) {
+        this.getElement('word').setWordColor(color);
+        return this;
+    }
+
+    setCharacterColor(index, color) {
+        this.getElement('word').setCharacterColor(index, color);
+        return this;
     }
 }
 
