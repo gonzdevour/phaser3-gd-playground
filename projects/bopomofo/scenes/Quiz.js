@@ -15,6 +15,11 @@ class Quiz extends Phaser.Scene {
     preload() {
         // Load db file
         this.load.text('db', 'assets/bopomofo.compress');
+        // Load sound file
+        this.load.audio('ok', [
+            'assets/sound/right.ogg',
+            'assets/sound/right.m4a'
+        ]);
     }
 
     create() {
