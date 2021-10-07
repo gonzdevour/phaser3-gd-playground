@@ -8,7 +8,7 @@ var CreateCharacter = function (scene,) {
         character: scene.rexUI.add.label({
             height: (55 * 3) + 2,  // Min height
             background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 0),//.setStrokeStyle(2, 0xffffff),
-            text: scene.rexUI.add.BBCodeText(0, 0, '', Style.quiz.character),
+            text: scene.rexUI.add.BBCodeText(0, 0, '', Style.quizPanel.word.character),
             align: 'right',
             space: { left: 5, right: 5, top: 5, bottom: 5 }
         }),
@@ -29,7 +29,7 @@ var CreateCharacter = function (scene,) {
 var CreatePhonologyLabel = function (scene, testString) {
     return scene.rexUI.add.label({
         // background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
-        text: scene.rexUI.add.BBCodeText(0, 0, '', Style.quiz.phonology),
+        text: scene.rexUI.add.BBCodeText(0, 0, '', Style.quizPanel.word.phonology),
         // Set fixedWidth, fixedHeight for all kinds of text input
 
         align: 'center',
@@ -40,7 +40,7 @@ var CreatePhonologyLabel = function (scene, testString) {
 var CreateToneLabel = function (scene) {
     return scene.rexUI.add.label({
         // background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
-        text: scene.rexUI.add.BBCodeText(0, 0, '', Style.quiz.tone),
+        text: scene.rexUI.add.BBCodeText(0, 0, '', Style.quizPanel.word.tone),
         // Set fixedWidth, fixedHeight for all kinds of text input
 
         align: 'left',
@@ -51,7 +51,7 @@ var CreateToneLabel = function (scene) {
 var CreateTone0Label = function (scene) {
     return scene.rexUI.add.label({
         // background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
-        text: scene.rexUI.add.BBCodeText(0, 0, '', Style.quiz.tone0),
+        text: scene.rexUI.add.BBCodeText(0, 0, '', Style.quizPanel.word.tone0),
         // Set fixedWidth, fixedHeight for all kinds of text input
 
         align: 'center',

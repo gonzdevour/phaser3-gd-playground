@@ -21,28 +21,28 @@ var CreateChoices = function (scene) {
     var initials = config.initials;
     for (var i = 0; i < MaxInitialsButtons; i++) {
         initials.push(
-            CreateLabel(scene, Style.choice.phonology)
+            CreateLabel(scene, Style.quizPanel.choice.phonology)
         )
     }
 
     var media = config.media;
     for (var i = 0; i < MaxMediaButtons; i++) {
         media.push(
-            CreateLabel(scene, Style.choice.phonology)
+            CreateLabel(scene, Style.quizPanel.choice.phonology)
         )
     }
 
     var vowel = config.vowel;
     for (var i = 0; i < MaxVowelButtons; i++) {
         vowel.push(
-            CreateLabel(scene, Style.choice.phonology)
+            CreateLabel(scene, Style.quizPanel.choice.phonology)
         )
     }
 
     var tone = config.tone;
     for (var i = 0; i < MaxToneButtons; i++) {
         tone.push(
-            CreateLabel(scene, Style.choice.tone)
+            CreateLabel(scene, Style.quizPanel.choice.tone)
         )
     }
 

@@ -17,7 +17,7 @@ var CreateLabel = function (scene, text) {
     return scene.rexUI.add.label({
         background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, Style.quizPanel.bottom.round).setStrokeStyle(2, 0xffffff),
         icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(2, 0x0000ff),
-        text: scene.rexUI.add.BBCodeText(0, 0, text, Style.action.submit),
+        text: scene.rexUI.add.BBCodeText(0, 0, text, Style.quizPanel.action.submit),
         space: { left: 15, right: 5, top: 5, bottom: 5, icon: 10 }
     });
 }
