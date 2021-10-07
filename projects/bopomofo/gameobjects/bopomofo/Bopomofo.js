@@ -87,6 +87,27 @@ class Bopomofo extends Sizer {
         SetText(this.getElement('tone0'), text);
         return this;
     }
+
+    setBopomofoColor(initials, media, vowel, tone, tone0) {
+        if (media === undefined) {
+            media = initials;
+        }
+        if (vowel === undefined) {
+            vowel = initials;
+        }
+        if (tone === undefined) {
+            tone = initials;
+        }
+        if (tone0 === undefined) {
+            tone0 = initials;
+        }
+        this.getElement('initials.text').setColor(initials);
+        this.getElement('media.text').setColor(media);
+        this.getElement('vowel.text').setColor(vowel);
+        this.getElement('tone.text').setColor(tone);
+        this.getElement('tone0.text').setColor(tone0);
+        return this;
+    }
 }
 
 var SetText = function (item, text) {
