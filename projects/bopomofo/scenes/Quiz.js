@@ -1,7 +1,7 @@
 import 'phaser';
-import CreateModel from '../build/CreateModel.js';
+import CreateModel from '../build/model/CreateModel.js';
 import CreateQuizPanel from '../build/quizpanel/CreateQuizPanel.js';
-import CreateQuiz from '../build/quizpanel/CreateQuiz.js';
+import CreateQuiz from '../build/quiz/CreateQuiz.js';
 
 
 class Quiz extends Phaser.Scene {

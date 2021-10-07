@@ -1,4 +1,4 @@
-import { CharacterTable, Character } from '../gameobjects';
+import { CharacterTable, Character } from '../../gameobjects';
 
 var CreateCharacterTable = function (scene) {
     return new CharacterTable(scene, {

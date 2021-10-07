@@ -1,5 +1,5 @@
 import 'phaser';
-import PrebuildDB from './build/PreBuildDB.js';
+import PrebuildDB from './build/prebuilddb/PreBuildDB.js';
 
 class BuildDB extends Phaser.Scene {
     constructor() {
