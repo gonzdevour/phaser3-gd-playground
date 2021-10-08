@@ -79,7 +79,14 @@ class Bopomofo extends Sizer {
     }
 
     setTone(text) {
-        this.getElement('tone').setText(text);
+        var txt = this.getElement('tone.text');
+
+        // BBCodeText's new feature, to shift start position of text
+        if ((text !== '') && txt.measureTextMargins) {
+            txt.setXOffset(- txt.measureTextMargins(text).left);
+        }
+
+        txt.setText(text);
         return this;
     }
 

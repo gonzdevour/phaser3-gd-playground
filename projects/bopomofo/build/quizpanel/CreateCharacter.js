@@ -44,7 +44,7 @@ var CreateToneLabel = function (scene) {
         // Set fixedWidth, fixedHeight for all kinds of text input
 
         align: 'left',
-        space: { left: -4, right: 0, top: 0, bottom: 0 }
+        space: { left: 0, right: 0, top: 0, bottom: 0 }
     })
 }
 
