@@ -68,13 +68,6 @@ var CreateQuizPanel = function (scene) {
                 .setCharacterBopomofo(index, quizPanel.getChoiceResult())
                 .layoutCharacter(index)
         })
-        .on('clear', function () {
-            var index = quizPanel.getData('focusCharacterIndex');
-            if (index == null) {
-                return;
-            }
-            quizPanel.clearCharacterBopomofo(index);
-        })
 
     return quizPanel;
 }
