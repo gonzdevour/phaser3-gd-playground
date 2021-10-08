@@ -20,11 +20,13 @@ class Choices extends Sizer {
         config.orientation = 'y';
         super(scene, config);
         scene.add.existing(this);
+        this.selectedButtonIndexes = {}; // Index of button
 
         var background = GetValue(config, 'background');
         if (background) {
             this.addBackground(background);
         }
+        this.addChildrenMap('background', background);
 
         var buttonsSpace = {
             item: GetValue(config, 'space.column', 0),
@@ -32,37 +34,53 @@ class Choices extends Sizer {
         for (var i = 0, icnt = TypeNames.length; i < icnt; i++) {
             let groupName = TypeNames[i];
             let buttons = GetValue(config, groupName);
-            for (var j = 0, jcnt = buttons.length; j < jcnt; j++) {
-                buttons[j].name = j.toString();
-            }
-
             let buttonsSizer = new Buttons(scene, {
-                type: 'radio',
                 orientation: 'x',
                 buttons: buttons,
                 space: buttonsSpace,
                 expand: true,
                 eventEmitter: this,
                 groupName: groupName,
-                setValueCallback: function (button, value, previousValue) {
-                    var eventName = (value) ? 'select' : 'unselect';
-                    this.emit(eventName, button, groupName);
-                },
-                setValueCallbackScope: this
+                // setValueCallback: function (button, value, previousValue) {
+                //     var eventName = (value) ? 'select' : 'unselect';
+                //     this.emit(eventName, button, groupName);
+                // },
+                // setValueCallbackScope: this
             })
 
 
             this
-                .addChildrenMap('background', background)
                 .add(
                     buttonsSizer,
                     { proportion: 1, expand: true }
                 )
                 .addChildrenMap(groupName, buttons)
                 .addChildrenMap(`${groupName}Sizer`, buttonsSizer)
+
+            this.selectedButtonIndexes[groupName] = -1;
         }
 
+        this.on('button.click', function (button, groupName, index, pointer, event) {
+            var prevButtonIndex = this.selectedButtonIndexes[groupName];
+
+            if (prevButtonIndex === index) {
+                this.selectedButtonIndexes[groupName] = -1;
+                this.emit('unselect', button, groupName);
+            } else {
+                this.selectedButtonIndexes[groupName] = index;
+                if (prevButtonIndex >= 0) {
+                    this.emit('unselect', this.getButton(groupName, prevButtonIndex), groupName);
+                }
+
+                this.emit('select', button, groupName);
+            }
+        }, this);
+
         this.clearChoices();
+    }
+
+    getButton(groupName, index) {
+        return this.getElement(`${groupName}[${index}]`);
     }
 
     setChoicesText(data) {
@@ -84,9 +102,12 @@ class Choices extends Sizer {
     }
 
     clearChoices() {
-        for (var i = 0, icnt = TypeNames.length; i < icnt; i++) {
-            var groupName = TypeNames[i];
-            this.getElement(`${groupName}Sizer`).value = null;
+        for (var groupName in this.selectedButtonIndexes) {
+            var buttonIndex = this.selectedButtonIndexes[groupName];
+            if (buttonIndex >= 0) {
+                this.emit('unselect', this.getButton(groupName, buttonIndex), groupName);
+            }
+            this.selectedButtonIndexes[groupName] = -1;
         }
         this.emit('clear');
         return this;
@@ -96,13 +117,11 @@ class Choices extends Sizer {
         if (out === undefined) {
             out = {};
         }
-        for (var i = 0, icnt = TypeNames.length; i < icnt; i++) {
-            var groupName = TypeNames[i];
-            var value = this.getElement(`${groupName}Sizer`).value;
-            if (value == null) {
-                value = '';
-            } else {
-                value = this.getElement(`${groupName}[${value}]`).text;
+        for (var groupName in this.selectedButtonIndexes) {
+            var value = '';
+            var buttonIndex = this.selectedButtonIndexes[groupName];
+            if (buttonIndex >= 0) {
+                value = this.getButton(groupName, buttonIndex).text;
             }
             out[groupName] = value;
         }
