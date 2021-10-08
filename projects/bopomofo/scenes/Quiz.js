@@ -44,7 +44,7 @@ class Quiz extends Phaser.Scene {
         CreateQuiz(quizPanel, {
             word: word,
             character: character,
-            title: '2021高頻詞600注音練習'
+            title: '高頻詞600注音練習'
         })
             .drawBounds(this.add.graphics(), 0xff0000)
             .on('complete', function (result) {
