@@ -76,7 +76,7 @@ class Choices extends Sizer {
     }
 
     getButton(groupName, index) {
-        return this.getElement(`${groupName}[${index}]`);
+        return this.getElement(groupName)[index];
     }
 
     setChoicesText(data) {
