@@ -1,5 +1,6 @@
 import 'phaser';
 import CreateMainMenuPanel from '../build/mainmenupanel/CreateMainMenuPanel.js';
+import EaseMoveFrom from '../../../../phaser3-rex-notes/plugins/behaviors/easemove/EaseMoveFrom.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -26,6 +27,9 @@ class Test extends Phaser.Scene {
             .on('button.help', function () {
                 console.log('button.help')
             })
+
+        var logo = mainMenu.getElement('logo');
+        EaseMoveFrom(logo, 1000, undefined, '-=200', 'Cubic');
     }
 
     update() { }

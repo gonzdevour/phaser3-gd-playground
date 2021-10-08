@@ -59,6 +59,13 @@ var CreateMainMenuPanel = function (scene) {
         )
         .layout();
 
+    mainMenuPanel
+        .addChildrenMap('logo', logo)
+        .addChildrenMap('btnModeSelect', btnModeSelect)
+        .addChildrenMap('btnContinue', btnContinue)
+        .addChildrenMap('btnConfig', btnConfig)
+        .addChildrenMap('btnHelp', btnHelp)
+
     return mainMenuPanel;
 }
 
