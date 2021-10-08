@@ -55,7 +55,7 @@ var CreateMainMenuPanel = function (scene) {
     var gameConfig = scene.game.config;
     var gameWindowWidth = gameConfig.width;
     var gameWindowHeight = gameConfig.height;
-    var backgrroundOverlapSizer = scene.rexUI.add.overlapSizer({
+    var backgroundOverlapSizer = scene.rexUI.add.overlapSizer({
         x: gameWindowWidth / 2, y: gameWindowHeight / 2,
         width: gameWindowWidth, height: gameWindowHeight,
     })
