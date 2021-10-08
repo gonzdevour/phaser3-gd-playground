@@ -8,7 +8,7 @@ var CreateActions = function (scene) {
             CreateLabel(scene, '送出答案', 'confirm', 'right'),
         ],
         space: {
-            left: 0, right: 10, top: 0, bottom: 0, item: 10
+            left: 10, right: 10, top: 0, bottom: 0, item: 10
         }
     })
         .insertSpace(1)
