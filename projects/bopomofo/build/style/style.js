@@ -2,7 +2,7 @@ const Style = {
     quizPanel: {
 
         title: {
-            fontFamily: 'Arial',
+            fontFamily: 'DFKai-SB',
             fontSize: 32,
             fixedHeight: 48,
             valign: 'center',
@@ -53,6 +53,7 @@ const Style = {
 
         choice: {
             phonology: {
+                fontFamily: 'DFKai-SB',
                 fontSize: 60,
                 fixedWidth: 72,
                 fixedHeight: 90,
@@ -61,7 +62,8 @@ const Style = {
                 testString: '回'
             },
             tone: {
-                fontSize: 90,
+                fontFamily: 'DFKai-SB',
+                fontSize: 60,
                 fixedWidth: 72,
                 fixedHeight: 90,
                 halign: 'center',
