@@ -28,14 +28,17 @@ var CreateQuizPanel = function (scene) {
     quizPanel.getElement('footer')
         .on('button.click', function (button, index, pointer, event) {
             switch (index) {
-                case 0:  // OK button
+                
+                case 0: // Clear button
+                    quizPanel.clearChoices();
+                    break;
+
+                case 1:  // OK button
                     var result = quizPanel.getChoiceResult();
                     quizPanel.emit('_submit', result);  // Fire internal event
                     break;
 
-                case 1: // Clear button
-                    quizPanel.clearChoices();
-                    break;
+
             }
         })
 

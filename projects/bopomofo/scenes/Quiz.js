@@ -20,6 +20,9 @@ class Quiz extends Phaser.Scene {
             'assets/sound/right.ogg',
             'assets/sound/right.m4a'
         ]);
+        //Load image file
+        this.load.image('confirm', 'assets/img/confirm.png');
+        this.load.image('eraser', 'assets/img/eraser.png');
     }
 
     create() {
