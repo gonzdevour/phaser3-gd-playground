@@ -20,6 +20,7 @@ const Style = {
                 testString: '回'
             },
             phonology: {
+                fontFamily: 'DFKai-SB',
                 fontSize: 32,
                 fixedWidth: 36,
                 fixedHeight: 40,
@@ -28,7 +29,8 @@ const Style = {
                 testString: '回'
             },
             tone: {
-                fontSize: 72,
+                fontFamily: 'DFKai-SB',
+                fontSize: 32,
                 fixedWidth: 36,
                 fixedHeight: 20,
                 halign: 'left',
@@ -36,7 +38,8 @@ const Style = {
                 testString: 'ˊˇˋ'
             },
             tone0: {
-                fontSize: 72,
+                fontFamily: 'DFKai-SB',
+                fontSize: 32,
                 fixedWidth: 36,
                 fixedHeight: 20,
                 halign: 'center',
