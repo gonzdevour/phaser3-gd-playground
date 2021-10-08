@@ -59,7 +59,7 @@ var CreateQuizPanel = function (scene) {
 
     // Set bopomofo of focus character
     quizPanel.getElement('choices')
-        .on('select', function (button) {
+        .on('change', function (result) {
             var index = quizPanel.getData('focusCharacterIndex');
             if (index == null) {
                 return;

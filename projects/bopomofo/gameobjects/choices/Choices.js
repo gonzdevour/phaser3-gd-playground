@@ -41,13 +41,7 @@ class Choices extends Sizer {
                 expand: true,
                 eventEmitter: this,
                 groupName: groupName,
-                // setValueCallback: function (button, value, previousValue) {
-                //     var eventName = (value) ? 'select' : 'unselect';
-                //     this.emit(eventName, button, groupName);
-                // },
-                // setValueCallbackScope: this
             })
-
 
             this
                 .add(
@@ -74,6 +68,8 @@ class Choices extends Sizer {
 
                 this.emit('select', button, groupName);
             }
+
+            this.emit('change', this.getChoiceResult());
         }, this);
 
         this.clearChoices();
@@ -109,7 +105,8 @@ class Choices extends Sizer {
             }
             this.selectedButtonIndexes[groupName] = -1;
         }
-        this.emit('clear');
+
+        this.emit('change', this.getChoiceResult());
         return this;
     }
 
