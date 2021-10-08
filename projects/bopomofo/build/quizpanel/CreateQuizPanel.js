@@ -21,6 +21,7 @@ var CreateQuizPanel = function (scene) {
             title: 10,
             word: 10,
             choices: 10,
+            bottom: 10,
         }
     });
 
