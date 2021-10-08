@@ -1,7 +1,7 @@
 import 'phaser';
 import AllPlugins from '../../plugins/AllPlugins.js';
 
-import Test from './scenes/Test.js';
+import Test from './scenes/MainMenu.js';
 
 var config = {
     type: Phaser.AUTO,
