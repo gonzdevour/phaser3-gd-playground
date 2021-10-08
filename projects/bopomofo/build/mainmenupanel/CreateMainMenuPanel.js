@@ -1,4 +1,5 @@
 import { Style } from '../style/style.js';
+import CreateWord from '../quizpanel/CreateWord.js';
 
 var CreateMainMenuPanel = function (scene) {
     var mainMenuPanel = scene.rexUI.add.sizer({
@@ -7,6 +8,15 @@ var CreateMainMenuPanel = function (scene) {
 
     // Add Logo, replace it.
     var logo = scene.rexUI.add.BBCodeText(0, 0, 'Logo', { fontFamily: 'DFKai-SB', fontSize: 60 });
+
+    // TODO: style
+    var word = CreateWord(scene)
+        .setWord([
+            { character: '注', initials: 'ㄓ', media: 'ㄨ', vowel: '', tone: 'ˋ' },
+            { character: '音', initials: '', media: 'ㄧ', vowel: 'ㄣ', tone: '' },
+            { character: '習', initials: 'ㄒ', media: 'ㄧ', vowel: '', tone: 'ˊ' },
+            { character: '作', initials: 'ㄗ', media: 'ㄨ', vowel: 'ㄛ', tone: 'ˋ' }
+        ])
 
     // Add buttons
     // TODO: set width & height in scene.rexUI.add.label({...})
@@ -19,6 +29,10 @@ var CreateMainMenuPanel = function (scene) {
     mainMenuPanel
         .add(
             logo,
+            {}
+        )
+        .add(
+            word,
             {}
         )
         .add(
