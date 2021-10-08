@@ -22,6 +22,10 @@ var CreateQuizPanel = function (scene) {
             word: 10,
             choices: 10,
             bottom: 10,
+        },
+
+        expand: {
+            footer: true
         }
     });
 
@@ -29,7 +33,7 @@ var CreateQuizPanel = function (scene) {
     quizPanel.getElement('footer')
         .on('button.click', function (button, index, pointer, event) {
             switch (index) {
-                
+
                 case 0: // Clear button
                     quizPanel.clearChoices();
                     break;

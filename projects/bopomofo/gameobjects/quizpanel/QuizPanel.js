@@ -50,10 +50,13 @@ class QuizPanel extends Sizer {
 
         var footer = GetValue(config, 'footer');
         if (footer) {
+            var expand = GetValue(config, 'expand.footer', false);
             this.add(
                 footer,
                 {
-                    proportion: 0, align: 'right'
+                    proportion: 0,
+                    align: (expand) ? 'left' : 'right',
+                    expand: expand,
                 }
             )
         }
