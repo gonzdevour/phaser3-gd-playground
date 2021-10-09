@@ -1,7 +1,7 @@
 import { Style } from '../style/style.js';
 import CreateWord from '../quizpanel/CreateWord.js';
 
-var CreateMainMenuPanel = function (scene) {
+var CreateMainMenuPanel = function (scene, config) {
     var mainMenuPanel = scene.rexUI.add.sizer({
         orientation: 'y',
     })
@@ -21,10 +21,7 @@ var CreateMainMenuPanel = function (scene) {
     // Add buttons
     // TODO: set width & height in scene.rexUI.add.label({...})
     var btnModeSelect = CreateLabel(scene, '模式選擇');
-    AddButtonBehavior(btnModeSelect, 'button.mode-select', mainMenuPanel);
-
     var btnContinue = CreateLabel(scene, '繼續練習');
-    AddButtonBehavior(btnContinue, 'button.continue', mainMenuPanel);
 
     mainMenuPanel
         .add(
@@ -46,19 +43,9 @@ var CreateMainMenuPanel = function (scene) {
 
     // More buttons...
     var btnConfig = CreateLabel(scene, '*');
-    AddButtonBehavior(btnConfig, 'button.config', mainMenuPanel);
-
     var btnHelp = CreateLabel(scene, '?');
-    AddButtonBehavior(btnHelp, 'button.help', mainMenuPanel);
 
-    // Add an overlap sizer, with full page size
-    var gameConfig = scene.game.config;
-    var gameWindowWidth = gameConfig.width;
-    var gameWindowHeight = gameConfig.height;
-    var backgroundOverlapSizer = scene.rexUI.add.overlapSizer({
-        x: gameWindowWidth / 2, y: gameWindowHeight / 2,
-        width: gameWindowWidth, height: gameWindowHeight,
-    })
+    var backgroundOverlapSizer = scene.rexUI.add.overlapSizer(config)
         .add(
             mainMenuPanel,
             { align: 'center', expand: false }
@@ -71,16 +58,21 @@ var CreateMainMenuPanel = function (scene) {
             btnHelp,
             { align: 'right-top', expand: false }
         )
-        .layout();
 
-    mainMenuPanel
+
+    AddButtonBehavior(btnModeSelect, 'button.mode-select', backgroundOverlapSizer);
+    AddButtonBehavior(btnContinue, 'button.continue', backgroundOverlapSizer);
+    AddButtonBehavior(btnConfig, 'button.config', backgroundOverlapSizer);
+    AddButtonBehavior(btnHelp, 'button.help', backgroundOverlapSizer);
+
+    backgroundOverlapSizer
         .addChildrenMap('logo', logo)
         .addChildrenMap('btnModeSelect', btnModeSelect)
         .addChildrenMap('btnContinue', btnContinue)
         .addChildrenMap('btnConfig', btnConfig)
         .addChildrenMap('btnHelp', btnHelp)
 
-    return mainMenuPanel;
+    return backgroundOverlapSizer;
 }
 
 var CreateLabel = function (scene, text, img, pos) {

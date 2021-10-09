@@ -14,7 +14,14 @@ class Test extends Phaser.Scene {
     }
 
     create() {
-        var mainMenu = CreateMainMenuPanel(this)
+        var gameConfig = this.game.config;
+        var gameWindowWidth = gameConfig.width;
+        var gameWindowHeight = gameConfig.height;
+        var mainMenu = CreateMainMenuPanel(this, {
+            x: gameWindowWidth / 2, y: gameWindowHeight / 2,
+            width: gameWindowWidth, height: gameWindowHeight,
+        })
+            .layout()
             .on('button.mode-select', function () {
                 console.log('button.mode-select')
             })
