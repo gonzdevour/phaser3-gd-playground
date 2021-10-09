@@ -1,7 +1,7 @@
 import { Style } from '../style/style.js';
 import CreateWord from '../quizpanel/CreateWord.js';
 
-var CreateMainMenuPanel = function (scene, config) {
+var CreateMainMenuPanel = function (scene) {
     var mainMenuPanel = scene.rexUI.add.sizer({
         orientation: 'y',
     })
@@ -45,7 +45,7 @@ var CreateMainMenuPanel = function (scene, config) {
     var btnConfig = CreateLabel(scene, '*');
     var btnHelp = CreateLabel(scene, '?');
 
-    var backgroundOverlapSizer = scene.rexUI.add.overlapSizer(config)
+    var backgroundOverlapSizer = scene.rexUI.add.overlapSizer()
         .add(
             mainMenuPanel,
             { align: 'center', expand: false }
