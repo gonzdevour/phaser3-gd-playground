@@ -20,7 +20,7 @@ class QuizPanel extends Sizer {
             this.add(
                 title,
                 {
-                    proportion: 1, expand: true,
+                    proportion: 0, expand: true,
                     padding: { bottom: spaceTitle }
                 }
             )
