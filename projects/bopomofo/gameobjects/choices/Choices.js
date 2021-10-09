@@ -20,7 +20,6 @@ class Choices extends Sizer {
         config.orientation = 'y';
         super(scene, config);
         scene.add.existing(this);
-        this.selectedButtonIndexes = {}; // Index of button
 
         var background = GetValue(config, 'background');
         if (background) {
@@ -31,7 +30,7 @@ class Choices extends Sizer {
         var buttonsSpace = {
             item: GetValue(config, 'space.column', 0),
         }
-        for (var i = 0, icnt = TypeNames.length; i < icnt; i++) {
+        for (let i = 0, icnt = TypeNames.length; i < icnt; i++) {
             let groupName = TypeNames[i];
             let buttons = GetValue(config, groupName);
             let buttonsSizer = new Buttons(scene, {
@@ -51,25 +50,33 @@ class Choices extends Sizer {
                 .addChildrenMap(groupName, buttons)
                 .addChildrenMap(`${groupName}Sizer`, buttonsSizer)
 
-            this.selectedButtonIndexes[groupName] = -1;
+            this
+                .on(`changedata-${groupName}`, function (gameObject, value, previousValue) {
+                    if (value === previousValue) {
+                        return;
+                    }
+
+                    if (previousValue >= 0) {
+                        this.emit('unselect', this.getButton(groupName, previousValue), groupName);
+                    }
+
+                    if (value >= 0) {
+                        this.emit('select', this.getButton(groupName, value), groupName);
+                    }
+
+                    this.emit('change', this.getChoiceResult());
+                }, this)
+                .setData(groupName, -1);
         }
 
         this.on('button.click', function (button, groupName, index, pointer, event) {
-            var prevButtonIndex = this.selectedButtonIndexes[groupName];
+            var prevButtonIndex = this.getData(groupName);
 
             if (prevButtonIndex === index) {
-                this.selectedButtonIndexes[groupName] = -1;
-                this.emit('unselect', button, groupName);
+                this.setData(groupName, -1);
             } else {
-                this.selectedButtonIndexes[groupName] = index;
-                if (prevButtonIndex >= 0) {
-                    this.emit('unselect', this.getButton(groupName, prevButtonIndex), groupName);
-                }
-
-                this.emit('select', button, groupName);
+                this.setData(groupName, index);
             }
-
-            this.emit('change', this.getChoiceResult());
         }, this);
 
         this.clearChoices();
@@ -98,15 +105,9 @@ class Choices extends Sizer {
     }
 
     clearChoices() {
-        for (var groupName in this.selectedButtonIndexes) {
-            var buttonIndex = this.selectedButtonIndexes[groupName];
-            if (buttonIndex >= 0) {
-                this.emit('unselect', this.getButton(groupName, buttonIndex), groupName);
-            }
-            this.selectedButtonIndexes[groupName] = -1;
+        for (var i = 0, icnt = TypeNames.length; i < icnt; i++) {
+            this.setData(TypeNames[i], -1);
         }
-
-        this.emit('change', this.getChoiceResult());
         return this;
     }
 
@@ -114,9 +115,10 @@ class Choices extends Sizer {
         if (out === undefined) {
             out = {};
         }
-        for (var groupName in this.selectedButtonIndexes) {
+        for (var i = 0, icnt = TypeNames.length; i < icnt; i++) {
             var value = '';
-            var buttonIndex = this.selectedButtonIndexes[groupName];
+            var groupName = TypeNames[i];
+            var buttonIndex = this.getData(groupName);
             if (buttonIndex >= 0) {
                 value = this.getButton(groupName, buttonIndex).text;
             }
