@@ -1,7 +1,5 @@
 import 'phaser';
-import CreateModel from '../build/CreateModel.js';
-import CharacterCellSizer from '../gameobjects/charactertable/CharacterCellSizer.js';
-import CreateCharacter from '../build/CreateCharacter.js';
+import CreateQuizConfigurationPanel from '../build/quizconfigurationpanel/CreateQuizConfigurationPanel.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -12,16 +10,18 @@ class Test extends Phaser.Scene {
     }
 
     preload() {
-        // Load db file
-        this.load.text('db', '/assets/data/bopomofo.compress');
     }
 
     create() {
-        var model = CreateModel({
-            db: this.cache.text.get('db'),
-        })
-        var characters = model.characters.getAll('bopomofo');
-        debugger;
+        var gameConfig = this.game.config;
+        var gameWindowWidth = gameConfig.width;
+        var gameWindowHeight = gameConfig.height;
+        CreateQuizConfigurationPanel(this)
+            .setPosition(gameWindowWidth / 2, gameWindowHeight / 2)
+            .setMinSize(gameWindowWidth, gameWindowHeight)
+            .layout()
+            .drawBounds(this.add.graphics(), 0xff0000)
+
     }
 
     update() { }
