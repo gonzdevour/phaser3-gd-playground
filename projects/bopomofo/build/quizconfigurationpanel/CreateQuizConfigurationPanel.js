@@ -1,4 +1,5 @@
 import CreateDatabaseSelectPanel from './CreateDatabaseSelectPanel.js';
+import CreateEnhancementSelectPanel from './CreateEnhancementSelectPanel.js';
 import CreateQuizModePanel from "./CreateQuizModePanel.js";
 
 var CreateQuizConfigurationPanel = function (scene, config) {
@@ -8,12 +9,17 @@ var CreateQuizConfigurationPanel = function (scene, config) {
     })
 
     var databaseSelectPanel = CreateDatabaseSelectPanel(mainPanel);
+    var enhancementSelectPanel = CreateEnhancementSelectPanel(mainPanel);
     var quizModePanel = CreateQuizModePanel(mainPanel);
 
     return mainPanel
         .add(
             databaseSelectPanel,
             { proportion: 0, expand: true, align: 'center' }
+        )
+        .add(
+            enhancementSelectPanel,
+            { proportion: 0, expand: true, align: 'center', }
         )
         .add(
             quizModePanel,

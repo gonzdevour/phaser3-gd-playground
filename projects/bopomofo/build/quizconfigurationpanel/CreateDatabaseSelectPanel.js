@@ -1,3 +1,5 @@
+import CreateTitleLabel from './CreateTitleLabel.js';
+
 var CreateDatabaseSelectPanel = function (parent) {
     var scene = parent.scene;
     var title = CreateTitleLabel(scene, '詞庫選擇');
@@ -32,15 +34,6 @@ var CreateDatabaseSelectPanel = function (parent) {
         )
 }
 
-var CreateTitleLabel = function (scene, text) {
-    return scene.rexUI.add.label({
-        background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 0, 0xD2691E),
-        // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
-        text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
-        align: 'center'
-    });
-}
-
 var CreateOptionLabel = function (scene, title, text) {
     return scene.rexUI.add.sizer({
         orientation: 'y',
@@ -57,7 +50,7 @@ var CreateOptionLabel = function (scene, title, text) {
                 // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
                 text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
                 // action: scene.add.image(0, 0, img).setDisplaySize(90, 90),
-                space: { top: 20, bottom: 20, text: 30 }
+                space: { top: 20, bottom: 10, text: 30 }
             }),
             { expand: true, key: 'button' }
         )

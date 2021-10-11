@@ -1,13 +1,19 @@
 import CreateTitleLabel from './CreateTitleLabel.js';
 
-var CreateQuizModePanel = function (parent) {
+var CreateEnhancementSelectPanel = function (parent) {
     var scene = parent.scene;
-    var title = CreateTitleLabel(scene, '出題模式');
+    var title = CreateTitleLabel(scene, '強化練習');
 
     var buttons = [
-        CreateOptionLabel(scene, '隨機'),
-        CreateOptionLabel(scene, '依序'),
-        CreateOptionLabel(scene, '測驗'),
+        CreateOptionLabel(scene, 'ㄓㄗ'),
+        CreateOptionLabel(scene, 'ㄔㄘ'),
+        CreateOptionLabel(scene, 'ㄕㄙ'),
+        CreateOptionLabel(scene, 'ㄛㄡ'),
+        CreateOptionLabel(scene, 'ㄝㄟ'),
+        CreateOptionLabel(scene, 'ㄢㄣ'),
+        CreateOptionLabel(scene, 'ㄣㄥ'),
+        CreateOptionLabel(scene, '結合韻'),
+        CreateOptionLabel(scene, '無'),
     ]
     var choices = scene.rexUI.add.fixWidthButtons({
         align: 'justify',
@@ -44,4 +50,4 @@ var CreateOptionLabel = function (scene, text) {
     });
 }
 
-export default CreateQuizModePanel
+export default CreateEnhancementSelectPanel;
