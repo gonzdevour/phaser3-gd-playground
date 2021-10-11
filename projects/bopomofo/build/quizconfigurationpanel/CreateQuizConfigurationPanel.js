@@ -15,8 +15,8 @@ var CreateQuizConfigurationPanel = function (scene, config) {
     scene.rexUI.add.click(buttonLabel, {})
         .on('click', function (button, gameObject, pointer, event) {
             var result = {
-                databaseSelect: databaseSelectPanel.getElement('choices').value,
-                enhancementSelect: enhancementSelectPanel.getElement('choices').value,
+                database: databaseSelectPanel.getElement('choices').value,
+                enhancement: enhancementSelectPanel.getElement('choices').value,
                 quizMode: quizModePanel.getElement('choices').value
             }
             mainPanel.emit('startQuiz', result);
