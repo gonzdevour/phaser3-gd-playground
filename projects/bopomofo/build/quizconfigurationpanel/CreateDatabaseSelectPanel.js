@@ -42,7 +42,7 @@ var CreateOptionLabel = function (scene, title, text) {
         orientation: 'y',
         space: { item: 10 },
 
-        name: text   // !! Import: This value will be used as option name in choices sizer
+        name: text   // !! Important: This value will be used as option name in choices sizer
     })
         .add(
             scene.rexUI.add.BBCodeText(0, 0, title, { fontFamily: 'DFKai-SB', fontSize: 50 }),
