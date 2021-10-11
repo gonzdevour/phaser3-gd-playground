@@ -1,7 +1,6 @@
 import CreateTitleLabel from './CreateTitleLabel.js';
 
-var CreateDatabaseSelectPanel = function (parent) {
-    var scene = parent.scene;
+var CreateDatabaseSelectPanel = function (scene) {
     var title = CreateTitleLabel(scene, '詞庫選擇');
 
     var buttons = [
@@ -15,8 +14,11 @@ var CreateDatabaseSelectPanel = function (parent) {
         space: { item: 20 },
         buttons: buttons,
         setValueCallback: function (button, value, previousValue) {
-        }
+            button.getElement('button.background')
+                .setFillStyle((value) ? 0x8B4513 : undefined)
+        },
     })
+    choices.value = '高頻詞庫';
 
     return scene.rexUI.add.sizer({
         orientation: 'y',
@@ -29,7 +31,8 @@ var CreateDatabaseSelectPanel = function (parent) {
             choices,
             {
                 proportion: 0, align: 'center', expand: true,
-                padding: { left: 80, right: 80, top: 40 }
+                padding: { left: 80, right: 80, top: 40 },
+                key: 'choices'
             }
         )
 }
@@ -37,7 +40,9 @@ var CreateDatabaseSelectPanel = function (parent) {
 var CreateOptionLabel = function (scene, title, text) {
     return scene.rexUI.add.sizer({
         orientation: 'y',
-        space: { item: 10 }
+        space: { item: 10 },
+
+        name: text
     })
         .add(
             scene.rexUI.add.BBCodeText(0, 0, title, { fontFamily: 'DFKai-SB', fontSize: 50 }),

@@ -8,9 +8,19 @@ var CreateQuizConfigurationPanel = function (scene, config) {
         space: { item: 40 }
     })
 
-    var databaseSelectPanel = CreateDatabaseSelectPanel(mainPanel);
-    var enhancementSelectPanel = CreateEnhancementSelectPanel(mainPanel);
-    var quizModePanel = CreateQuizModePanel(mainPanel);
+    var databaseSelectPanel = CreateDatabaseSelectPanel(scene);
+    var enhancementSelectPanel = CreateEnhancementSelectPanel(scene);
+    var quizModePanel = CreateQuizModePanel(scene);
+    var buttonLabel = CreateLabel(scene, '開始練習');
+    scene.rexUI.add.click(buttonLabel, {})
+        .on('click', function (button, gameObject, pointer, event) {
+            var result = {
+                databaseSelect: databaseSelectPanel.getElement('choices').value,
+                enhancementSelect: enhancementSelectPanel.getElement('choices').value,
+                quizMode: quizModePanel.getElement('choices').value
+            }
+            mainPanel.emit('startQuiz', result);
+        })
 
     return mainPanel
         .add(
@@ -26,7 +36,7 @@ var CreateQuizConfigurationPanel = function (scene, config) {
             { proportion: 0, expand: true, align: 'center', }
         )
         .add(
-            CreateLabel(scene, '開始練習'),
+            buttonLabel,
             {
                 proportion: 0, expand: true, align: 'center',
                 padding: { left: 80, right: 80 }

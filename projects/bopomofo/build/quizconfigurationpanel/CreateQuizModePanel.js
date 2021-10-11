@@ -1,7 +1,6 @@
 import CreateTitleLabel from './CreateTitleLabel.js';
 
-var CreateQuizModePanel = function (parent) {
-    var scene = parent.scene;
+var CreateQuizModePanel = function (scene) {
     var title = CreateTitleLabel(scene, '出題模式');
 
     var buttons = [
@@ -16,8 +15,11 @@ var CreateQuizModePanel = function (parent) {
         type: 'radio',
         buttons: buttons,
         setValueCallback: function (button, value, previousValue) {
-        }
+            button.getElement('background')
+                .setFillStyle((value) ? 0x8B4513 : undefined)
+        },
     })
+    choices.value = '隨機';
 
     return scene.rexUI.add.sizer({
         orientation: 'y',
@@ -30,7 +32,8 @@ var CreateQuizModePanel = function (parent) {
             choices,
             {
                 proportion: 0, align: 'center', expand: true,
-                padding: { left: 80, right: 80, top: 40 }
+                padding: { left: 80, right: 80, top: 40 },
+                key: 'choices'
             }
         )
 }
@@ -40,7 +43,9 @@ var CreateOptionLabel = function (scene, text) {
         background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 20).setStrokeStyle(2, 0xffffff),
         // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
         text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
-        space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
+        space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 },
+
+        name: text
     });
 }
 

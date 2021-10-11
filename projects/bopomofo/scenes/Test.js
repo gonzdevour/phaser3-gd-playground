@@ -21,6 +21,9 @@ class Test extends Phaser.Scene {
             .setMinSize(gameWindowWidth, gameWindowHeight)
             .layout()
             .drawBounds(this.add.graphics(), 0xff0000)
+            .on('startQuiz', function (result) {
+                console.log(result)
+            })
 
     }
 
