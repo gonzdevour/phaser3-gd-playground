@@ -16,7 +16,7 @@ var CreateTitleLabel = function (scene, text) {
             }
         )
         .add(
-            CreateHelpButton(scene, OpenHelpDialog),
+            CreateHelpButton(scene, OpenHelpDialog).onClick(OpenHelpDialog),
             {
                 align: 'right', offsetX: -20, expand: false, key: 'help',
             }
@@ -24,7 +24,7 @@ var CreateTitleLabel = function (scene, text) {
 }
 
 var CreateHelpButton = function (scene, callback) {
-    var buttonLabel = scene.rexUI.add.label({
+    return scene.rexUI.add.label({
         background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 3),
         text: scene.rexUI.add.BBCodeText(0, 0, '?', {
             fontFamily: 'DFKai-SB', fontSize: 50,
@@ -32,10 +32,6 @@ var CreateHelpButton = function (scene, callback) {
         }),
         space: { left: 10, right: 10, top: 10, bottom: 10 }
     })
-
-    scene.rexUI.add.click(buttonLabel, {})
-        .on('click', callback)
-    return buttonLabel;
 }
 
 export default CreateTitleLabel;

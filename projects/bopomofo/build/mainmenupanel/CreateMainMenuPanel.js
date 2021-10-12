@@ -61,10 +61,10 @@ var CreateMainMenuPanel = function (scene) {
         )
 
 
-    AddButtonBehavior(btnModeSelect, 'button.mode-select', backgroundOverlapSizer);
-    AddButtonBehavior(btnContinue, 'button.continue', backgroundOverlapSizer);
-    AddButtonBehavior(btnConfig, 'button.config', backgroundOverlapSizer);
-    AddButtonBehavior(btnHelp, 'button.help', backgroundOverlapSizer);
+    RouteClickEvent(btnModeSelect, 'button.mode-select', backgroundOverlapSizer);
+    RouteClickEvent(btnContinue, 'button.continue', backgroundOverlapSizer);
+    RouteClickEvent(btnConfig, 'button.config', backgroundOverlapSizer);
+    RouteClickEvent(btnHelp, 'button.help', backgroundOverlapSizer);
 
     backgroundOverlapSizer
         .addChildrenMap('logo', logo)
@@ -85,12 +85,10 @@ var CreateLabel = function (scene, text, img, pos) {
     });
 }
 
-var AddButtonBehavior = function (gameObject, eventName, eventEmitter) {
-    var scene = gameObject.scene;
-    scene.rexUI.add.click(gameObject, {})
-        .on('click', function (button, gameObject, pointer, event) {
-            eventEmitter.emit(eventName, gameObject, pointer, event);
-        })
+var RouteClickEvent = function (gameObject, eventName, eventEmitter) {
+    gameObject.onClick(function (button, gameObject, pointer, event) {
+        eventEmitter.emit(eventName, gameObject, pointer, event);
+    })
 }
 
 export default CreateMainMenuPanel;
