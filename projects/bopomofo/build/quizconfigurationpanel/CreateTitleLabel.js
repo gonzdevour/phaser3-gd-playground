@@ -1,10 +1,6 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 
-var CreateTitleLabel = function (scene, text) {
-    var OpenHelpDialog = function () {
-        console.log('TODO: OpenHelpDialog')
-    }
-
+var CreateTitleLabel = function (scene, text, onClickHelpButtonCallback) {
     return scene.rexUI.add.overlapSizer({
         space: { top: 10, bottom: 10 }
     })
@@ -16,14 +12,14 @@ var CreateTitleLabel = function (scene, text) {
             }
         )
         .add(
-            CreateHelpButton(scene, OpenHelpDialog).onClick(OpenHelpDialog),
+            CreateHelpButton(scene).onClick(onClickHelpButtonCallback),
             {
                 align: 'right', offsetX: -20, expand: false, key: 'help',
             }
         )
 }
 
-var CreateHelpButton = function (scene, callback) {
+var CreateHelpButton = function (scene) {
     return scene.rexUI.add.label({
         background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 3),
         text: scene.rexUI.add.BBCodeText(0, 0, '?', {

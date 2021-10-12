@@ -10,6 +10,8 @@ class Test extends Phaser.Scene {
     }
 
     preload() {
+        this.load.image('yes', 'assets/img/yes.png');
+        this.load.image('no', 'assets/img/no.png');
     }
 
     create() {
@@ -22,7 +24,7 @@ class Test extends Phaser.Scene {
             .setPosition(gameWindowWidth / 2, gameWindowHeight / 2)
             .setMinSize(gameWindowWidth, gameWindowHeight)
             .layout()
-            .drawBounds(this.add.graphics(), 0xff0000)
+            // .drawBounds(this.add.graphics(), 0xff0000)
             .on('startQuiz', function (result) {
                 console.log(result)
             })

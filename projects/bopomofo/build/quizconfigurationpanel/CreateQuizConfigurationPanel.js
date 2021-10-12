@@ -11,9 +11,9 @@ var CreateQuizConfigurationPanel = function (scene, config) {
         space: { item: 40 }
     })
 
-    var databaseSelectPanel = CreateDatabaseSelectPanel(scene, config);
-    var enhancementSelectPanel = CreateEnhancementSelectPanel(scene, config);
-    var quizModePanel = CreateQuizModePanel(scene, config);
+    var databaseSelectPanel = CreateDatabaseSelectPanel(mainPanel, config);
+    var enhancementSelectPanel = CreateEnhancementSelectPanel(mainPanel, config);
+    var quizModePanel = CreateQuizModePanel(mainPanel, config);
     var buttonLabel = CreateLabel(scene, '開始練習');
 
     mainPanel

@@ -1,11 +1,15 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import CreateTitleLabel from './CreateTitleLabel.js';
+import CreateSimpleBBCodeTextDialog from '../style/dialog/CreateSimpleBBCodeTextDialog.js';
 
 const PanelName = 'database';
 const GetValue = Phaser.Utils.Objects.GetValue;
 
-var CreateDatabaseSelectPanel = function (scene, config) {
-    var title = CreateTitleLabel(scene, '詞庫選擇');
+var CreateDatabaseSelectPanel = function (parent, config) {
+    var scene = parent.scene;
+    var title = CreateTitleLabel(scene, '詞庫選擇', function () {
+        CreateHelpDialog(parent);
+    });
 
     var buttons = [
         CreateOptionLabel(scene, '參照教育部公布之詞頻總表', '高頻詞庫'),
@@ -64,6 +68,15 @@ var CreateOptionLabel = function (scene, title, text) {
             }),
             { expand: true, key: 'button' }
         )
+}
+
+var CreateHelpDialog = function (parent) {
+    return CreateSimpleBBCodeTextDialog(parent, {
+        title: 'Title',
+        content: 'Content',
+        okCallback: function () { },
+        cancelCallback: false
+    });
 }
 
 export default CreateDatabaseSelectPanel;

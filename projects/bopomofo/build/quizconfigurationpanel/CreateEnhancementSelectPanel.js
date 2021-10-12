@@ -4,7 +4,8 @@ import CreateTitleLabel from './CreateTitleLabel.js';
 const PanelName = 'enhancement';
 const GetValue = Phaser.Utils.Objects.GetValue;
 
-var CreateEnhancementSelectPanel = function (scene, config) {
+var CreateEnhancementSelectPanel = function (parent, config) {
+    var scene = parent.scene;
     var title = CreateTitleLabel(scene, '強化練習');
 
     var buttons = [

@@ -4,7 +4,8 @@ import CreateTitleLabel from './CreateTitleLabel.js';
 const PanelName = 'mode';
 const GetValue = Phaser.Utils.Objects.GetValue;
 
-var CreateQuizModePanel = function (scene, config) {
+var CreateQuizModePanel = function (parent, config) {
+    var scene = parent.scene;
     var title = CreateTitleLabel(scene, '出題模式');
 
     var buttons = [
