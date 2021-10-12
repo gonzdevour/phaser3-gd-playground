@@ -5,55 +5,55 @@ const GetValue = Phaser.Utils.Objects.GetValue;
 
 var CreateSimpleBBCodeTextDialog = function (parent, config) {
     var scene = parent.scene;
+    var parentTopUI = parent.getTopmostSizer();
     var gameConfig = scene.game.config;
     var gameWindowWidth = gameConfig.width;
     var gameWindowHeight = gameConfig.height;
     var x = GetValue(config, 'x', gameWindowWidth / 2);
     var y = GetValue(config, 'y', gameWindowHeight / 2);
-    var width = GetValue(config, 'width', gameWindowWidth);
-    var height = GetValue(config, 'height', gameWindowHeight);
+    var width = GetValue(config, 'width', 0);
+    var height = GetValue(config, 'height', 0);
     var title = GetValue(config, 'title', '');
     var content = GetValue(config, 'content', '');
     var okCallback = GetValue(config, 'okCallback', false);
-    var cancelCallback = GetValue(config, 'cancelCallback', false);
+    var cancelCallback = GetValue(config, 'cancelCallback', false);    
     var dialog;
 
     if (okCallback) {
         var _okCallback = okCallback;
         okCallback = function () {
             _okCallback();
-            TransitionOut(dialog, parent);
+            TransitionOut(dialog, parentTopUI);
         }
     }
     if (cancelCallback) {
         var _cancelCallback = cancelCallback;
         cancelCallback = function () {
             _cancelCallback();
-            TransitionOut(dialog, parent);
+            TransitionOut(dialog, parent.getTopmostSizer());
         }
     }
 
     dialog = scene.rexUI.add.sizer({
         x: x, y: y,
         width: width, height: height,
-        orientation: 'y'
+        orientation: 'y',
+        space: { left: 40, right: 40, top: 40, bottom: 40, item: 20 }
     })
         .addBackground(CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2))
         .add(
             scene.rexUI.add.BBCodeText(0, 0, title, { fontFamily: 'DFKai-SB', fontSize: 60 }),
         )
-        .addSpace()
         .add(
             scene.rexUI.add.BBCodeText(0, 0, content, { fontFamily: 'DFKai-SB', fontSize: 60 }),
         )
-        .addSpace()
         .add(
             CreateActionButtons(scene, okCallback, cancelCallback),
             { expand: true, }
         )
         .layout();
 
-    TransitionIn(dialog, parent);
+    TransitionIn(dialog, parentTopUI);
 
     return dialog;
 }

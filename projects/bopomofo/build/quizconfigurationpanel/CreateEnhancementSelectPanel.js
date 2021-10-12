@@ -1,12 +1,19 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import CreateTitleLabel from './CreateTitleLabel.js';
+import CreateSimpleBBCodeTextDialog from '../style/dialog/CreateSimpleBBCodeTextDialog.js';
 
 const PanelName = 'enhancement';
 const GetValue = Phaser.Utils.Objects.GetValue;
 
-var CreateEnhancementSelectPanel = function (parent, config) {
-    var scene = parent.scene;
-    var title = CreateTitleLabel(scene, '強化練習');
+var CreateEnhancementSelectPanel = function (scene, config) {    
+    var panel = scene.rexUI.add.sizer({
+        orientation: 'y',
+        name: PanelName
+    });
+
+    var title = CreateTitleLabel(scene, '強化練習', function () {
+        CreateHelpDialog(panel);
+    });
 
     var buttons = [
         CreateOptionLabel(scene, 'ㄓㄗ'),
@@ -32,10 +39,7 @@ var CreateEnhancementSelectPanel = function (parent, config) {
     })
     choices.value = GetValue(config, `radio.${PanelName}`, '無');
 
-    return scene.rexUI.add.sizer({
-        orientation: 'y',
-        name: PanelName
-    })
+    return panel
         .add(
             title,
             { proportion: 0, align: 'center', expand: true }
@@ -58,6 +62,15 @@ var CreateOptionLabel = function (scene, text) {
         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 },
 
         name: text   // !! Important: This value will be used as option name in choices sizer
+    });
+}
+
+var CreateHelpDialog = function (parent) {
+    return CreateSimpleBBCodeTextDialog(parent, {
+        title: '強化練習',
+        content: 'Content',
+        okCallback: function () { },
+        cancelCallback: false
     });
 }
 

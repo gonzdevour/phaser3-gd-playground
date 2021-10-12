@@ -5,10 +5,14 @@ import CreateSimpleBBCodeTextDialog from '../style/dialog/CreateSimpleBBCodeText
 const PanelName = 'database';
 const GetValue = Phaser.Utils.Objects.GetValue;
 
-var CreateDatabaseSelectPanel = function (parent, config) {
-    var scene = parent.scene;
+var CreateDatabaseSelectPanel = function (scene, config) {
+    var panel = scene.rexUI.add.sizer({
+        orientation: 'y',
+        name: PanelName
+    })
+
     var title = CreateTitleLabel(scene, '詞庫選擇', function () {
-        CreateHelpDialog(parent);
+        CreateHelpDialog(panel);
     });
 
     var buttons = [
@@ -28,10 +32,7 @@ var CreateDatabaseSelectPanel = function (parent, config) {
     })
     choices.value = GetValue(config, `radio.${PanelName}`, '高頻詞庫');
 
-    return scene.rexUI.add.sizer({
-        orientation: 'y',
-        name: PanelName
-    })
+    return panel
         .add(
             title,
             { proportion: 0, align: 'center', expand: true, }
@@ -72,7 +73,7 @@ var CreateOptionLabel = function (scene, title, text) {
 
 var CreateHelpDialog = function (parent) {
     return CreateSimpleBBCodeTextDialog(parent, {
-        title: 'Title',
+        title: '詞庫選擇',
         content: 'Content',
         okCallback: function () { },
         cancelCallback: false
