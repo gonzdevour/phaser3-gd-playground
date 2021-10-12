@@ -38,15 +38,14 @@ var CreateQuizConfigurationPanel = function (scene, config) {
         )
 
     var subPanels = [databaseSelectPanel, enhancementSelectPanel, quizModePanel];
-    scene.rexUI.add.click(buttonLabel, {})
-        .on('click', function (button, gameObject, pointer, event) {
-            var result = {};
-            for (var i = 0, cnt = subPanels.length; i < cnt; i++) {
-                var subPanel = subPanels[i];
-                result[subPanel.name] = subPanel.getElement('choices').value
-            }
-            mainPanel.emit('startQuiz', result);
-        })
+    buttonLabel.onClick(function (button, gameObject, pointer, event) {
+        var result = {};
+        for (var i = 0, cnt = subPanels.length; i < cnt; i++) {
+            var subPanel = subPanels[i];
+            result[subPanel.name] = subPanel.getElement('choices').value
+        }
+        mainPanel.emit('startQuiz', result);
+    })
 
     return mainPanel;
 }
