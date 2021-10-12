@@ -2,15 +2,17 @@ import CreateDatabaseSelectPanel from './CreateDatabaseSelectPanel.js';
 import CreateEnhancementSelectPanel from './CreateEnhancementSelectPanel.js';
 import CreateQuizModePanel from "./CreateQuizModePanel.js";
 
+const GetValue = Phaser.Utils.Objects.GetValue;
+
 var CreateQuizConfigurationPanel = function (scene, config) {
     var mainPanel = scene.rexUI.add.sizer({
         orientation: 'y',
         space: { item: 40 }
     })
 
-    var databaseSelectPanel = CreateDatabaseSelectPanel(scene);
-    var enhancementSelectPanel = CreateEnhancementSelectPanel(scene);
-    var quizModePanel = CreateQuizModePanel(scene);
+    var databaseSelectPanel = CreateDatabaseSelectPanel(scene, config);
+    var enhancementSelectPanel = CreateEnhancementSelectPanel(scene, config);
+    var quizModePanel = CreateQuizModePanel(scene, config);
     var buttonLabel = CreateLabel(scene, '開始練習');
 
     mainPanel
@@ -34,12 +36,13 @@ var CreateQuizConfigurationPanel = function (scene, config) {
             }
         )
 
+    var subPanels = [databaseSelectPanel, enhancementSelectPanel, quizModePanel];
     scene.rexUI.add.click(buttonLabel, {})
         .on('click', function (button, gameObject, pointer, event) {
-            var result = {
-                database: databaseSelectPanel.getElement('choices').value,
-                enhancement: enhancementSelectPanel.getElement('choices').value,
-                quizMode: quizModePanel.getElement('choices').value
+            var result = {};
+            for (var i = 0, cnt = subPanels.length; i < cnt; i++) {
+                var subPanel = subPanels[i];
+                result[subPanel.name] = subPanel.getElement('choices').value
             }
             mainPanel.emit('startQuiz', result);
         })

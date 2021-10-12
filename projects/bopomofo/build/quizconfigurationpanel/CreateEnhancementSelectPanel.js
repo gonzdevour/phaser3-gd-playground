@@ -1,6 +1,9 @@
 import CreateTitleLabel from './CreateTitleLabel.js';
 
-var CreateEnhancementSelectPanel = function (scene) {
+const PanelName = 'enhancement';
+const GetValue = Phaser.Utils.Objects.GetValue;
+
+var CreateEnhancementSelectPanel = function (scene, config) {
     var title = CreateTitleLabel(scene, '強化練習');
 
     var buttons = [
@@ -25,10 +28,11 @@ var CreateEnhancementSelectPanel = function (scene) {
                 .setFillStyle((value) ? 0x8B4513 : undefined)
         },
     })
-    choices.value = '無';
+    choices.value = GetValue(config, `radio.${PanelName}`, '無');
 
     return scene.rexUI.add.sizer({
         orientation: 'y',
+        name: PanelName
     })
         .add(
             title,

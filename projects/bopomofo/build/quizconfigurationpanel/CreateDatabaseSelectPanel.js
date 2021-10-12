@@ -1,6 +1,9 @@
 import CreateTitleLabel from './CreateTitleLabel.js';
 
-var CreateDatabaseSelectPanel = function (scene) {
+const PanelName = 'database';
+const GetValue = Phaser.Utils.Objects.GetValue;
+
+var CreateDatabaseSelectPanel = function (scene, config) {
     var title = CreateTitleLabel(scene, '詞庫選擇');
 
     var buttons = [
@@ -18,10 +21,11 @@ var CreateDatabaseSelectPanel = function (scene) {
                 .setFillStyle((value) ? 0x8B4513 : undefined)
         },
     })
-    choices.value = '高頻詞庫';
+    choices.value = GetValue(config, `radio.${PanelName}`, '高頻詞庫');
 
     return scene.rexUI.add.sizer({
         orientation: 'y',
+        name: PanelName
     })
         .add(
             title,

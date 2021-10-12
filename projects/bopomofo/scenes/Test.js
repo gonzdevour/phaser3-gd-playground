@@ -16,7 +16,9 @@ class Test extends Phaser.Scene {
         var gameConfig = this.game.config;
         var gameWindowWidth = gameConfig.width;
         var gameWindowHeight = gameConfig.height;
-        CreateQuizConfigurationPanel(this)
+        CreateQuizConfigurationPanel(this, {
+            radio: { database: '常用詞庫', enhancement: '結合韻', mode: '測驗' }
+        })
             .setPosition(gameWindowWidth / 2, gameWindowHeight / 2)
             .setMinSize(gameWindowWidth, gameWindowHeight)
             .layout()

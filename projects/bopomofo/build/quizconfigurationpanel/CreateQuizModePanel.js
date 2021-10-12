@@ -1,6 +1,9 @@
 import CreateTitleLabel from './CreateTitleLabel.js';
 
-var CreateQuizModePanel = function (scene) {
+const PanelName = 'mode';
+const GetValue = Phaser.Utils.Objects.GetValue;
+
+var CreateQuizModePanel = function (scene, config) {
     var title = CreateTitleLabel(scene, '出題模式');
 
     var buttons = [
@@ -19,10 +22,11 @@ var CreateQuizModePanel = function (scene) {
                 .setFillStyle((value) ? 0x8B4513 : undefined)
         },
     })
-    choices.value = '隨機';
+    choices.value = GetValue(config, `radio.${PanelName}`, '隨機');
 
     return scene.rexUI.add.sizer({
         orientation: 'y',
+        name: PanelName
     })
         .add(
             title,
