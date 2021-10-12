@@ -1,6 +1,6 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 
-var CreateTitleLabel = function (scene, text, onClickHelpButtonCallback) {
+var CreateTitleLabel = function (scene, text) {
     return scene.rexUI.add.overlapSizer({
         space: { top: 10, bottom: 10 }
     })
@@ -12,7 +12,7 @@ var CreateTitleLabel = function (scene, text, onClickHelpButtonCallback) {
             }
         )
         .add(
-            CreateHelpButton(scene).onClick(onClickHelpButtonCallback),
+            CreateHelpButton(scene),
             {
                 align: 'right', offsetX: -20, expand: false, key: 'help',
             }

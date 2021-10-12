@@ -5,15 +5,9 @@ import CreateSimpleBBCodeTextDialog from '../style/dialog/CreateSimpleBBCodeText
 const PanelName = 'enhancement';
 const GetValue = Phaser.Utils.Objects.GetValue;
 
-var CreateEnhancementSelectPanel = function (scene, config) {    
-    var panel = scene.rexUI.add.sizer({
-        orientation: 'y',
-        name: PanelName
-    });
-
-    var title = CreateTitleLabel(scene, '強化練習', function () {
-        CreateHelpDialog(panel);
-    });
+var CreateEnhancementSelectPanel = function (scene, config) {
+    // Build UI
+    var title = CreateTitleLabel(scene, '強化練習');
 
     var buttons = [
         CreateOptionLabel(scene, 'ㄓㄗ'),
@@ -39,7 +33,10 @@ var CreateEnhancementSelectPanel = function (scene, config) {
     })
     choices.value = GetValue(config, `radio.${PanelName}`, '無');
 
-    return panel
+    var panel = scene.rexUI.add.sizer({
+        orientation: 'y',
+        name: PanelName
+    })
         .add(
             title,
             { proportion: 0, align: 'center', expand: true }
@@ -52,7 +49,20 @@ var CreateEnhancementSelectPanel = function (scene, config) {
                 key: 'choices'
             }
         )
+
+    // Add button callback
+    title.getElement('help').onClick(function () {
+        CreateSimpleBBCodeTextDialog(panel, {
+            title: '強化練習',
+            content: 'Content',
+            okCallback: function () { },
+            cancelCallback: false
+        })
+    })
+
+    return panel;
 }
+
 
 var CreateOptionLabel = function (scene, text) {
     return scene.rexUI.add.label({
@@ -62,15 +72,6 @@ var CreateOptionLabel = function (scene, text) {
         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 },
 
         name: text   // !! Important: This value will be used as option name in choices sizer
-    });
-}
-
-var CreateHelpDialog = function (parent) {
-    return CreateSimpleBBCodeTextDialog(parent, {
-        title: '強化練習',
-        content: 'Content',
-        okCallback: function () { },
-        cancelCallback: false
     });
 }
 

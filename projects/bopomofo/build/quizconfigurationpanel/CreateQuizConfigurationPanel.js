@@ -6,17 +6,16 @@ import CreateQuizModePanel from "./CreateQuizModePanel.js";
 const GetValue = Phaser.Utils.Objects.GetValue;
 
 var CreateQuizConfigurationPanel = function (scene, config) {
-    var mainPanel = scene.rexUI.add.sizer({
-        orientation: 'y',
-        space: { item: 40 }
-    })
-
+    // Build UI
     var databaseSelectPanel = CreateDatabaseSelectPanel(scene, config);
     var enhancementSelectPanel = CreateEnhancementSelectPanel(scene, config);
     var quizModePanel = CreateQuizModePanel(scene, config);
     var buttonLabel = CreateLabel(scene, '開始練習');
 
-    mainPanel
+    var mainPanel = scene.rexUI.add.sizer({
+        orientation: 'y',
+        space: { item: 40 }
+    })
         .add(
             databaseSelectPanel,
             { proportion: 0, expand: true, align: 'center' }
@@ -37,6 +36,7 @@ var CreateQuizConfigurationPanel = function (scene, config) {
             }
         )
 
+    // Add button callback
     var subPanels = [databaseSelectPanel, enhancementSelectPanel, quizModePanel];
     buttonLabel.onClick(function (button, gameObject, pointer, event) {
         var result = {};

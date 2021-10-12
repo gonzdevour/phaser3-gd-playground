@@ -6,19 +6,13 @@ const PanelName = 'database';
 const GetValue = Phaser.Utils.Objects.GetValue;
 
 var CreateDatabaseSelectPanel = function (scene, config) {
-    var panel = scene.rexUI.add.sizer({
-        orientation: 'y',
-        name: PanelName
-    })
-
-    var title = CreateTitleLabel(scene, '詞庫選擇', function () {
-        CreateHelpDialog(panel);
-    });
+    // Build UI
+    var title = CreateTitleLabel(scene, '詞庫選擇');
 
     var buttons = [
         CreateOptionLabel(scene, '參照教育部公布之詞頻總表', '高頻詞庫'),
         CreateOptionLabel(scene, '分類整理生活中的常見用詞', '常用詞庫'),
-    ]
+    ];
     var choices = scene.rexUI.add.buttons({
         orientation: 'y',
         type: 'radio',
@@ -32,7 +26,10 @@ var CreateDatabaseSelectPanel = function (scene, config) {
     })
     choices.value = GetValue(config, `radio.${PanelName}`, '高頻詞庫');
 
-    return panel
+    var panel = scene.rexUI.add.sizer({
+        orientation: 'y',
+        name: PanelName
+    })
         .add(
             title,
             { proportion: 0, align: 'center', expand: true, }
@@ -45,6 +42,19 @@ var CreateDatabaseSelectPanel = function (scene, config) {
                 key: 'choices'
             }
         )
+
+    // Add button callback
+    title.getElement('help').onClick(function () {
+        CreateSimpleBBCodeTextDialog(panel, {
+            title: '詞庫選擇',
+            content: 'Content',
+            okCallback: function () { },
+            cancelCallback: false
+        })
+    })
+
+    return panel
+
 }
 
 var CreateOptionLabel = function (scene, title, text) {
@@ -69,15 +79,6 @@ var CreateOptionLabel = function (scene, title, text) {
             }),
             { expand: true, key: 'button' }
         )
-}
-
-var CreateHelpDialog = function (parent) {
-    return CreateSimpleBBCodeTextDialog(parent, {
-        title: '詞庫選擇',
-        content: 'Content',
-        okCallback: function () { },
-        cancelCallback: false
-    });
 }
 
 export default CreateDatabaseSelectPanel;
