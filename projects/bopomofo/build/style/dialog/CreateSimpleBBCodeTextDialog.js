@@ -1,5 +1,5 @@
 import CreateRoundRectangleBackground from '../CreateRoundRectangleBackground.js';
-import { TransitionIn, TransitionOut } from './TransitionMethods.js';
+import { TransitionIn, TransitionOut } from '../TransitionMethods.js';
 
 const GetValue = Phaser.Utils.Objects.GetValue;
 
