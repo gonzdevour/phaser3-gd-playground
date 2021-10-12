@@ -13,27 +13,14 @@ var CreateSimpleBBCodeTextDialog = function (parent, config) {
     var y = GetValue(config, 'y', gameWindowHeight / 2);
     var width = GetValue(config, 'width', 0);
     var height = GetValue(config, 'height', 0);
-    var title = GetValue(config, 'title', '');
-    var content = GetValue(config, 'content', '');
+    var title = GetValue(config, 'title');
+    var content = GetValue(config, 'content');
+    var transitionDuration = GetValue(config, 'transitionDuration', 500);
     var okCallback = GetValue(config, 'okCallback', false);
-    var cancelCallback = GetValue(config, 'cancelCallback', false);    
+    var cancelCallback = GetValue(config, 'cancelCallback', false);
     var dialog;
 
-    if (okCallback) {
-        var _okCallback = okCallback;
-        okCallback = function () {
-            _okCallback();
-            TransitionOut(dialog, parentTopUI);
-        }
-    }
-    if (cancelCallback) {
-        var _cancelCallback = cancelCallback;
-        cancelCallback = function () {
-            _cancelCallback();
-            TransitionOut(dialog, parent.getTopmostSizer());
-        }
-    }
-
+    // Build UI
     dialog = scene.rexUI.add.sizer({
         x: x, y: y,
         width: width, height: height,
@@ -41,25 +28,52 @@ var CreateSimpleBBCodeTextDialog = function (parent, config) {
         space: { left: 40, right: 40, top: 40, bottom: 40, item: 20 }
     })
         .addBackground(CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2))
-        .add(
-            scene.rexUI.add.BBCodeText(0, 0, title, { fontFamily: 'DFKai-SB', fontSize: 60 }),
-        )
-        .add(
-            scene.rexUI.add.BBCodeText(0, 0, content, { fontFamily: 'DFKai-SB', fontSize: 60 }),
-        )
-        .add(
-            CreateActionButtons(scene, okCallback, cancelCallback),
-            { expand: true, }
-        )
-        .layout();
 
-    TransitionIn(dialog, parentTopUI);
+    if (title) {
+        if (typeof (title) === 'string') {
+            title = scene.rexUI.add.BBCodeText(0, 0, title, { fontFamily: 'DFKai-SB', fontSize: 60 });
+        }
+        dialog.add(title);
+    }
+
+    if (content) {
+        if (typeof (content) === 'string') {
+            content = scene.rexUI.add.BBCodeText(0, 0, content, { fontFamily: 'DFKai-SB', fontSize: 60 });
+        }
+        dialog.add(content);
+    }
+
+    var buttons = CreateActionButtons(scene, !!okCallback, !!cancelCallback)
+    dialog.add(buttons, { expand: true, });
+
+    // Layout UI
+    dialog.layout();
+    // Transition-in
+    TransitionIn(dialog, parentTopUI, transitionDuration);
+
+    // Add button callback
+    var yesButton = buttons.getElement('yes');
+    if (yesButton) {
+        yesButton.onClick(function () {
+            okCallback();
+            TransitionOut(dialog, parentTopUI, transitionDuration)
+        });
+    }
+
+    var noButton = buttons.getElement('no');
+    if (noButton) {
+        noButton.onClick(function () {
+            cancelCallback();
+            TransitionOut(dialog, parentTopUI, transitionDuration)
+        });
+    }
 
     return dialog;
 }
 
-var CreateActionButtons = function (scene, okCallback, cancelCallback) {
-    var oneButtonMode = !!okCallback && !cancelCallback;
+var CreateActionButtons = function (scene, hasOKButton, hasCancelButton) {
+    // Build UI
+    var oneButtonMode = hasOKButton && !hasCancelButton;
     var buttons = scene.rexUI.add.sizer({
         orientation: 'x'
     })
@@ -68,22 +82,26 @@ var CreateActionButtons = function (scene, okCallback, cancelCallback) {
         buttons
             .addSpace()
             .add(
-                CreateLabel(scene, 'yes').onClick(okCallback),
+                CreateLabel(scene, 'yes'),
+                { key: 'yes' }
             )
             .addSpace()
     } else {
         buttons
             .add(
-                CreateLabel(scene, 'yes').onClick(okCallback),
+                CreateLabel(scene, 'yes'),
+                { key: 'yes' }
             )
             .addSpace()
             .add(
-                CreateLabel(scene, 'yes').onClick(okCallback),
+                CreateLabel(scene, 'no'),
+                { key: 'no' }
             )
     }
 
     return buttons;
 }
+
 var CreateLabel = function (scene, img) {
     return scene.rexUI.add.label({
         // background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),

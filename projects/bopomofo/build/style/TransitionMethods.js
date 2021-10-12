@@ -1,14 +1,20 @@
-var TransitionIn = function (newUI, prevUI) {
-    newUI.popUp(500);
+var TransitionIn = function (newUI, prevUI, duration) {
+    if (duration === undefined) {
+        duration = 500;
+    }
+    newUI.popUp(duration);
     if (prevUI) {
-        prevUI.fadeOut(500);
+        prevUI.fadeOut(duration);
     }
 }
 
-var TransitionOut = function (currUI, prevUI) {
-    currUI.scaleDownDestroy(500);
+var TransitionOut = function (currUI, prevUI, duration) {
+    if (duration === undefined) {
+        duration = 500;
+    }
+    currUI.scaleDownDestroy(duration);
     if (prevUI) {
-        prevUI.fadeIn(500);
+        prevUI.fadeIn(duration);
     }
 }
 
