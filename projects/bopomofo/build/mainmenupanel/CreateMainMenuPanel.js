@@ -1,3 +1,4 @@
+import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import { Style } from '../style/style.js';
 import CreateWord from '../quizpanel/CreateWord.js';
 
@@ -77,7 +78,7 @@ var CreateMainMenuPanel = function (scene) {
 
 var CreateLabel = function (scene, text, img, pos) {
     return scene.rexUI.add.label({
-        background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 20).setStrokeStyle(2, 0xffffff),
+        background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
         // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
         text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }

@@ -1,3 +1,4 @@
+import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import { Style } from '../style/style.js';
 
 var CreateActions = function (scene) {
@@ -16,7 +17,7 @@ var CreateActions = function (scene) {
 
 var CreateLabel = function (scene, text, img, pos) {
     return scene.rexUI.add.label({
-        background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
+        background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
         icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
         //text: scene.rexUI.add.BBCodeText(0, 0, text, Style.quizPanel.action.submit),
         //space: { left: 15, right: 5, top: 5, bottom: 5, icon: 10 }

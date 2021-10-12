@@ -1,3 +1,4 @@
+import CreateRoundRectangleBackground from "../style/CreateRoundRectangleBackground.js";
 import CreateTitle from "./CreateTitle.js";
 import CreateWord from "./CreateWord.js";
 import CreateChoices from "./CreateChoices.js";
@@ -10,7 +11,7 @@ var CreateQuizPanel = function (scene) {
         width: 700,
         orientation: 'y',
 
-        background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 10).setStrokeStyle(2, 0xffffff),
+        background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
 
         title: CreateTitle(scene),
         word: CreateWord(scene),

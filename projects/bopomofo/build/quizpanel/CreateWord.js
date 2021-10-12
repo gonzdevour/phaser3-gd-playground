@@ -1,3 +1,4 @@
+import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import { Word } from '../../gameobjects/quizpanel.js';
 import CreateCharacter from './CreateCharacter';
 
@@ -8,7 +9,7 @@ var CreateWord = function (scene, config) {
     var wordConfig = {
         orientation: 'y',
 
-        background: scene.rexUI.add.roundRectangle(0, 0, 1, 1, 0),//.setStrokeStyle(2, 0xffffff),
+        background: CreateRoundRectangleBackground(scene),
         space: { left: 30, right: 0, top: 0, bottom: 0, item: 0 },
 
         characters: [],
