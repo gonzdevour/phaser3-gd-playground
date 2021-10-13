@@ -1,22 +1,30 @@
 import 'phaser';
+import Base from './Base.js';
+import { BootSceneKey, MainMenuSceneKey } from './Const.js';
+import CreateModel from '../build/model/CreateModel.js';
 
-class Boot extends Phaser.Scene {
+// Preload global data
+class Boot extends Base {
     constructor() {
         super({
-            key: 'boot'
+            key: BootSceneKey
         })
 
     }
 
     preload() {
+        // Load db file
+        this.load.text('db', 'assets/bopomofo.compress');
     }
 
     create() {
-        console.log('Boot');
-        this.scene.start('game');  // Shutdown this Scene and run the given one 
-        // See more : https://rexrainbow.github.io/phaser3-rex-notes/docs/site/scenemanager/#start-scene        
+        this.model = CreateModel({
+            db: this.cache.text.get('db'),
+        });
+
+        this.scene.start(MainMenuSceneKey);
     }
 
-    update() {}
+    update() { }
 }
 export default Boot;
