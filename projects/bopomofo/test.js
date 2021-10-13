@@ -1,7 +1,22 @@
 import 'phaser';
 import AllPlugins from '../../plugins/AllPlugins.js';
 
-import Test from './scenes/Test.js';
+class Test extends Phaser.Scene {
+    constructor() {
+        super({
+            key: 'test'
+        })
+
+    }
+
+    preload() {
+    }
+
+    create() {
+    }
+
+    update() { }
+}
 
 var config = {
     type: Phaser.AUTO,

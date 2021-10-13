@@ -1,5 +1,6 @@
 import 'phaser';
-import CreateQuizConfigurationPanel from '../build/quizconfigurationpanel/CreateQuizConfigurationPanel.js';
+import AllPlugins from '../../plugins/AllPlugins.js';
+import CreateQuizConfigurationPanel from './build/quizconfigurationpanel/CreateQuizConfigurationPanel.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -34,4 +35,18 @@ class Test extends Phaser.Scene {
     update() { }
 }
 
-export default Test;
+var config = {
+    type: Phaser.AUTO,
+    parent: 'game',
+    width: 768,
+    height: 1334,
+    scale: {
+        // mode: Phaser.Scale.ENVELOP,
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
+    plugins: AllPlugins,
+    scene: Test
+};
+
+var game = new Phaser.Game(config);
