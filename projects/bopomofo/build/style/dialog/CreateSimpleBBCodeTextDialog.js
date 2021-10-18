@@ -28,7 +28,7 @@ var CreateSimpleBBCodeTextDialog = function (parent, config) {
         orientation: 'y',
         space: { left: 40, right: 40, top: 40, bottom: 40, item: 20 }
     })
-        .addBackground(CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2))
+        .addBackground(CreateRoundRectangleBackground(scene, 20, 0x0, 0xffffff, 2))
 
     if (title) {
         if (typeof (title) === 'string') {
