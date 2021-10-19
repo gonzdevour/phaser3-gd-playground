@@ -6,6 +6,11 @@
     - tone
     - wid : ID list of wordDoc
 - words
+    - db : Summation of db indexes
+        - `1`: 編詞-高頻
+        - `2` : 編詞-常用
+        - `4` : 
+        - `8` : 
     - word
     - freq
     - pid : 

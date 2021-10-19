@@ -13,7 +13,7 @@ var CreateDB = function () {
 
     db.addCollection(WordsCollectionName, {
         disableMeta: true,
-        indices: ['word', 'freq']
+        indices: ['db', 'word', 'freq']
     })
 
     return db;

@@ -1,7 +1,7 @@
 import Papa from 'papaparse';
 
 const PolyphonicKeys = ['p', 'q'];
-var CSVToWordDataList = function (csvString) {
+var CSVToWordDataList = function (csvString, dbIndex) {
     var data = Papa.parse(csvString, {
         header: true
     }).data;
@@ -25,9 +25,10 @@ var CSVToWordDataList = function (csvString) {
             pinyins.push(pinyin);
         }
         wordDataList.push({
+            db: dbIndex,
             word: word,
             pinyins: pinyins,
-            freq: parseInt(item.freq)
+            freq: parseInt(item.freq),            
         })
     }
     return wordDataList;
