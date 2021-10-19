@@ -11,16 +11,12 @@ class BuildDB extends Phaser.Scene {
 
     preload() {
         // Load csv file
-        this.load.text('db0', 'assets/db0.csv');
-        this.load.text('db1', 'assets/db1.csv');
+        this.load.text('words', 'assets/words.csv');
     }
 
     create() {
         PrebuildDB({
-            csv: [
-                this.cache.text.get('db0'),
-                this.cache.text.get('db1'),
-            ],
+            csv: this.cache.text.get('words'),
             // fileName: 'bopomofo'
         })
     }

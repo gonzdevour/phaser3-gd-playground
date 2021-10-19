@@ -18,12 +18,6 @@ var WordDataListToDB = function (wordDataList, db) {
 
 var WordDataToDB = function (wordData) {
     var word = wordData.word;
-    var wordDoc = WordsCollection.findOne({ word: word })
-    if (wordDoc) {
-        wordDoc.db = wordDoc.db | wordData.db;
-        return;
-    }
-
     var pinyins = wordData.pinyins;
     // pinyins: A 2d array, contains 2 set of pinyins, each pinyin contains bopomofo of characters
     // [ [c0, c1, ...], [c0, c1, ...] ]
@@ -62,7 +56,7 @@ var WordDataToDB = function (wordData) {
 
     if (hasValidPinyin) {
         // Insert json data, return wordDoc
-        wordDoc = WordsCollection.insert(wordData);
+        var wordDoc = WordsCollection.insert(wordData);
 
         // Bind wordDocID to characterDoc
         var wordDocId = wordDoc.$loki;
