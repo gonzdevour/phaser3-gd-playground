@@ -6,28 +6,28 @@ import {
 
 
 class Characters {
-    constructor(model) {
-        this.model = model;
+    constructor(dbWrap) {
+        this.dbWrap = dbWrap;
     }
 
     queryCharacter(character) {
-        return QueryCharacter(this.model, character);
+        return QueryCharacter(this.dbWrap, character);
     }
 
     queryRandomCharacter() {
-        return QueryRandomCharacter(this.model);
+        return QueryRandomCharacter(this.dbWrap);
     }
 
     queryByID(id) {
-        return QueryByID(this.model, id);
+        return QueryByID(this.dbWrap, id);
     }
 
     queryByBopomofo(bopomofo) {
-        return QueryByBopomofo(this.model, bopomofo);
+        return QueryByBopomofo(this.dbWrap, bopomofo);
     }
 
     getAll(sortMode) {
-        return Query(this.model, {}, sortMode);
+        return Query(this.dbWrap, {}, sortMode);
     }
 }
 

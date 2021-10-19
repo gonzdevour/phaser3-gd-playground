@@ -1,7 +1,7 @@
 import Character from '../Character.js';
 
-var Query = function (model, filter, sortMode) {
-    var characterCollection = model.characterCollection;
+var Query = function (dbWrap, filter, sortMode) {
+    var characterCollection = dbWrap.characterCollection;
 
     if (typeof (sortMode) === 'string') {
         sortMode = SortMode[sortMode];
@@ -23,7 +23,7 @@ var Query = function (model, filter, sortMode) {
 
     var characters = [];
     for (var i = 0, cnt = docArray.length; i < cnt; i++) {
-        characters.push(new Character(model, docArray[i]))
+        characters.push(new Character(dbWrap, docArray[i]))
     }
     return characters;
 }

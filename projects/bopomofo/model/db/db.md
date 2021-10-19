@@ -1,3 +1,12 @@
+# Lokijs database
+
+## Databases
+
+- db0 : 編詞-高頻
+- db1 : 編詞-常用
+
+## Structure of documents
+
 - characters
     - character
     - initials

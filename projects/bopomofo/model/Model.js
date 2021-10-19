@@ -1,37 +1,33 @@
-import CreateDB from './db/CreateDB.js';
-import { GetWordCollection, GetCharacterCollection } from './db/GetCollectionMethods.js';
-import Words from './words/Words.js';
-import Characters from "./characters/Characters";
-import { DBToString, StringToDB } from './SerializeMethods.js';
+import DBWrap from './db/DBWrap.js';
 
+const DBCount = 2;
 const GetValue = Phaser.Utils.Objects.GetValue;
 
 class Model {
     constructor(config) {
-        this.db = CreateDB();
-
-        // Initial database
-        var deserializeString = GetValue(config, 'db');
-        if (deserializeString) {
-            this.stringToDB(deserializeString);
+        var dbJsonList = GetValue(config, 'db', []);
+        this.dbwraps = [];
+        for (var i = 0; i < DBCount; i++) {
+            var dbWrap = new DBWrap(dbJsonList[i])
+            this.dbwraps.push(dbWrap);
         }
-
-        // Note: db won't be deserialized later, thus reference of collection won't change.
-        this.wordCollection = GetWordCollection(this.db);
-        this.characterCollection = GetCharacterCollection(this.db);
-
-        this.words = new Words(this);
-        this.characters = new Characters(this);
     }
 
-    dbToString(compress) {
-        return DBToString(this.db, compress);
+    get db0() {
+        return this.dbwraps[0];
     }
 
-    stringToDB(s, decompress) {
-        StringToDB(this.db, s, decompress);
-        return this;
+    get db1() {
+        return this.dbwraps[1];
     }
+
+    // get db2() {
+    //     return this.dbwraps[2];
+    // }
+    // 
+    // get db3() {
+    //     return this.dbwraps[3];
+    // }
 }
 
 export default Model;

@@ -1,7 +1,7 @@
 import Query from './Query.js';
-import { Bopomofo } from '../../bopomofo/Bopomofo.js';
+import { Bopomofo } from '../../../bopomofo/Bopomofo.js';
 
-var QueryByBopomofo = function (model, bopomofo) {
+var QueryByBopomofo = function (dbWrap, bopomofo) {
     var filter = {}
     for (var i = 0, cnt = bopomofo.length; i < cnt; i++) {
         var char = bopomofo.charAt(i);
@@ -23,7 +23,7 @@ var QueryByBopomofo = function (model, bopomofo) {
         }
     }
 
-    return Query(model, filter);
+    return Query(dbWrap, filter);
 }
 
 export default QueryByBopomofo;

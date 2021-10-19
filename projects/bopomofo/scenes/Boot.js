@@ -14,12 +14,16 @@ class Boot extends Base {
 
     preload() {
         // Load db file
-        this.load.text('db', 'assets/bopomofo.compress');
+        this.load.text('db0', 'assets/db0.compress');
+        this.load.text('db1', 'assets/db1.compress');
     }
 
     create() {
         this.model = CreateModel({
-            db: this.cache.text.get('db'),
+            db: [
+                this.cache.text.get('db0'),
+                this.cache.text.get('db1'),
+            ]
         });
 
         this.scene.start(MainMenuSceneKey);

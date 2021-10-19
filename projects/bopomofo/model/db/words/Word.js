@@ -8,8 +8,8 @@
 */
 
 class Word {
-    constructor(model, doc) {
-        this.model = model;
+    constructor(dbWrap, doc) {
+        this.dbWrap = dbWrap;
         this.doc = doc;
         this.word = this.doc.word;
     }
@@ -26,7 +26,7 @@ class Word {
             return null;
         }
 
-        var characterCollectionHelper = this.model.characters;
+        var characterCollectionHelper = this.dbWrap.characters;
 
         var pid = this.doc.pid[polyphonyIndex];
         var characters = [];

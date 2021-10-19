@@ -37,7 +37,7 @@ class Quiz extends Base {
 
         console.log(`${quizPanel.width}x${quizPanel.height}`)
 
-        var characters = model.characters.queryByBopomofo('ㄢㄣ');
+        var characters = model.db0.characters.queryByBopomofo('ㄢㄣ');
         var character = Phaser.Utils.Array.GetRandom(characters);
 
         var word = character.getRandomWord();

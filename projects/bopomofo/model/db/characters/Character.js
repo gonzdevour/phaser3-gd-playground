@@ -8,13 +8,13 @@
     - wid : ID list of wordDoc
 */
 
-import Question from '../question/Question.js';
+import Question from '../../question/Question.js';
 
 const GetRandomItem = Phaser.Utils.Array.GetRandom;
 
 class Character {
-    constructor(model, doc) {
-        this.model = model;
+    constructor(dbWrap, doc) {
+        this.dbWrap = dbWrap;
         this.doc = doc;
 
         this.character = doc.character;
@@ -39,7 +39,7 @@ class Character {
             wordCount = wordDocIDListLength;
         }
 
-        var wordCollectionHelper = this.model.words;
+        var wordCollectionHelper = this.dbWrap.words;
         var words = [];
         for (var i = 0; i < wordCount; i++) {
             var word = wordCollectionHelper.queryByID(wordDocIDList[i]);
@@ -50,7 +50,7 @@ class Character {
 
     getRandomWord() {
         var wordDocID = GetRandomItem(this.doc.wid);
-        var wordCollectionHelper = this.model.words;
+        var wordCollectionHelper = this.dbWrap.words;
         return wordCollectionHelper.queryByID(wordDocID);
     }
 }

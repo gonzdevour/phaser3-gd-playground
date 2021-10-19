@@ -14,7 +14,9 @@ class Test extends Phaser.Scene {
 
     preload() {
         // Load db file
-        this.load.text('db', 'assets/bopomofo.compress');
+        this.load.text('db0', 'assets/db0.compress');
+        this.load.text('db1', 'assets/db1.compress');
+
         // Load sound file
         this.load.audio('ok', [
             'assets/sound/right.ogg',
@@ -27,7 +29,10 @@ class Test extends Phaser.Scene {
 
     create() {
         var model = CreateModel({
-            db: this.cache.text.get('db'),
+            db: [
+                this.cache.text.get('db0'),
+                this.cache.text.get('db1'),
+            ]
         })
 
         var gameConfig = this.game.config;
@@ -40,7 +45,7 @@ class Test extends Phaser.Scene {
 
         console.log(`${quizPanel.width}x${quizPanel.height}`)
 
-        var characters = model.characters.queryByBopomofo('ㄢㄣ');
+        var characters = model.db0.characters.queryByBopomofo('ㄢㄣ');
         var character = Phaser.Utils.Array.GetRandom(characters);
 
         var word = character.getRandomWord();
