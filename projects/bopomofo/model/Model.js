@@ -7,26 +7,10 @@ class Model {
     constructor(config) {
         var jsonList = GetValue(config, 'db', []);
         this.db = [];
-        for (var i = 0; i < MaxDBCount; i++) {
+        for (var i = 0, cnt = jsonList.length; i < cnt; i++) {
             var dbWrap = new DBWrap(this, jsonList[i])
             this.db.push(dbWrap);
         }
-    }
-
-    get db0() {
-        return this.db[0];
-    }
-
-    get db1() {
-        return this.db[1];
-    }
-
-    get db2() {
-        return this.db[2];
-    }
-
-    get db3() {
-        return this.db[3];
     }
 }
 

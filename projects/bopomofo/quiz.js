@@ -45,7 +45,7 @@ class Test extends Phaser.Scene {
 
         console.log(`${quizPanel.width}x${quizPanel.height}`)
 
-        var characters = model.db0.characters.queryByBopomofo('ㄢㄣ');
+        var characters = model.db[0].characters.queryByBopomofo('ㄢㄣ');
         var character = Phaser.Utils.Array.GetRandom(characters);
 
         var word = character.getRandomWord();
