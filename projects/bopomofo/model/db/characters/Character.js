@@ -8,8 +8,6 @@
     - wid : ID list of wordDoc
 */
 
-import Question from '../../question/Question.js';
-
 const GetRandomItem = Phaser.Utils.Array.GetRandom;
 
 class Character {
@@ -22,12 +20,6 @@ class Character {
         this.media = doc.media;
         this.vowel = doc.vowel;
         this.tone = doc.tone;
-    }
-
-    createQuestion() {
-        var question = new Question();
-        question.setAnswer(this);
-        return question;
     }
 
     getWords(wordCount) {

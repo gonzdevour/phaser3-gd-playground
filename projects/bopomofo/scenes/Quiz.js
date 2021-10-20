@@ -3,6 +3,7 @@ import Base from './Base.js';
 import { QuizSceneKey } from './Const.js';
 import CreateQuizPanel from '../build/quizpanel/CreateQuizPanel.js';
 import SetupQuizPanel from '../build/quiz/SetupQuizPanel.js';
+import Question from '../model/quiz/Question.js'
 
 // Run quiz
 class Quiz extends Base {
@@ -39,14 +40,12 @@ class Quiz extends Base {
 
         var characters = model.db[0].characters.queryByBopomofo('ㄢㄣ');
         var character = Phaser.Utils.Array.GetRandom(characters);
-
-        var word = character.getRandomWord();
-
-        SetupQuizPanel(quizPanel, {
-            word: word,
-            character: character,
-            title: '高頻詞600注音練習'
+        var question = new Question({
+            title: '高頻詞600注音練習',
+            character: character
         })
+
+        SetupQuizPanel(quizPanel, question)
             .drawBounds(this.add.graphics(), 0xff0000)
             .on('complete', function (result) {
                 console.log(result)

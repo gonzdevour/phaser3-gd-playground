@@ -1,7 +1,7 @@
 import { TypeNames } from "../bopomofo/Bopomofo";
 import CreateChoices from "./CreateChoices";
 
-class Question {
+class Answer {
     constructor() {
         this.answer = {
             character: '',
@@ -42,4 +42,4 @@ class Question {
 
 }
 
-export default Question;
+export default Answer;

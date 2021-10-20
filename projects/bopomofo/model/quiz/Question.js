@@ -1,8 +1,10 @@
+import Answer from './Answer.js';
+
 const GetValue = Phaser.Utils.Objects.GetValue;
 
 class Question {
     constructor(config) {
-        var title = GetValue(config, 'title');
+        var title = GetValue(config, 'title', '');
         var word = GetValue(config, 'word');
         var character = GetValue(config, 'character');
         var characterIndex;
@@ -32,13 +34,27 @@ class Question {
 
         this.title = title;
         this.word = word;
+        this.characters = word.getCharacters();
         this.character = character;
         this.characterIndex = characterIndex;
-        this.question = character.createQuestion();
+        this.answer = (new Answer()).setAnswer(character);
     }
 
-    get choices() {
-        return this.question.createChoices()
+    getChoices() {
+        return this.answer.createChoices()
+    }
+
+    getPolyphonyCharacter() {
+        return this.word.getCharacters(1)[this.characterIndex];
+    }
+
+    setAnswer(character) {
+        this.answer.setAnswer(character);
+        return this;
+    }
+
+    verify(input) {
+        return this.answer.verify(input);
     }
 }
 
