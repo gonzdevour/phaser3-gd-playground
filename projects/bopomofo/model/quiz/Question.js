@@ -40,12 +40,12 @@ class Question {
         this.answer = (new Answer()).setAnswer(character);
     }
 
-    getChoices() {
-        return this.answer.createChoices()
-    }
-
     getPolyphonyCharacter() {
         return this.word.getCharacters(1)[this.characterIndex];
+    }
+
+    getChoices() {
+        return this.answer.createChoices()
     }
 
     setAnswer(character) {
