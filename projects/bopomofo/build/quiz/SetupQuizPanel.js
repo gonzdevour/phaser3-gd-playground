@@ -1,6 +1,6 @@
 const GetValue = Phaser.Utils.Objects.GetValue;
 
-var CreateQuiz = function (quizPanel, config) {
+var SetupQuizPanel = function (quizPanel, config) {
     // word, characters
     var word = GetValue(config, 'word');
     var characters = word.getCharacters();
@@ -62,4 +62,4 @@ var CreateQuiz = function (quizPanel, config) {
     return quizPanel;
 }
 
-export default CreateQuiz;
+export default SetupQuizPanel;

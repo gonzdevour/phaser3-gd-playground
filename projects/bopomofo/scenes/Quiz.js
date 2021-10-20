@@ -2,7 +2,7 @@ import 'phaser';
 import Base from './Base.js';
 import { QuizSceneKey } from './Const.js';
 import CreateQuizPanel from '../build/quizpanel/CreateQuizPanel.js';
-import CreateQuiz from '../build/quiz/CreateQuiz.js';
+import SetupQuizPanel from '../build/quiz/SetupQuizPanel.js';
 
 // Run quiz
 class Quiz extends Base {
@@ -42,7 +42,7 @@ class Quiz extends Base {
 
         var word = character.getRandomWord();
 
-        CreateQuiz(quizPanel, {
+        SetupQuizPanel(quizPanel, {
             word: word,
             character: character,
             title: '高頻詞600注音練習'

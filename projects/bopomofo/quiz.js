@@ -2,7 +2,7 @@ import 'phaser';
 import AllPlugins from '../../plugins/AllPlugins.js';
 import CreateModel from './build/model/CreateModel.js';
 import CreateQuizPanel from './build/quizpanel/CreateQuizPanel.js';
-import CreateQuiz from './build/quiz/CreateQuiz.js';
+import SetupQuizPanel from './build/quiz/SetupQuizPanel.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -50,7 +50,7 @@ class Test extends Phaser.Scene {
 
         var word = character.getRandomWord();
 
-        CreateQuiz(quizPanel, {
+        SetupQuizPanel(quizPanel, {
             word: word,
             character: character,
             title: '高頻詞600注音練習'
