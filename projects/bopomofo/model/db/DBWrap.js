@@ -5,7 +5,8 @@ import Words from './words/Words.js';
 import Characters from './characters/Characters.js';
 
 class DBWrap {
-    constructor(json) {
+    constructor(model, json) {
+        this.model = model
         this.db = CreateDB();
         if (json) {
             StringToDB(this.db, json);
