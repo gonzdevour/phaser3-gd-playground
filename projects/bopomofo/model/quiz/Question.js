@@ -44,7 +44,7 @@ class Question {
         return this.word.getCharacters(1)[this.characterIndex];
     }
 
-    getChoices() {
+    createChoices() {
         return this.answer.createChoices()
     }
 

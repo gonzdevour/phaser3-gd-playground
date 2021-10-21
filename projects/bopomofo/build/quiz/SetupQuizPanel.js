@@ -3,7 +3,7 @@ var SetupQuizPanel = function (quizPanel, question) {
     quizPanel
         .setTitle(question.title)
         .setWord(question.characters)
-        .setChoicesText(question.getChoices())
+        .setChoicesText(question.createChoices())
         .layout()
 
     // Warning: '_submit' callback won't be removed
@@ -13,7 +13,7 @@ var SetupQuizPanel = function (quizPanel, question) {
         .once('_submit', function (result) {
             var isPass = question.verify(result);
             if (!isPass) { // Verify polyphony
-                var word = question.word;                
+                var word = question.word;
                 var polyphonyCharacter = question.getPolyphonyCharacter();
                 if (polyphonyCharacter) { // Has polyphony
                     isPass = question.setAnswer(polyphonyCharacter).verify(result);
