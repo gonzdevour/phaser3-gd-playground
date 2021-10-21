@@ -95,9 +95,13 @@ class Choices extends Sizer {
             }
 
             var buttons = this.getElement(groupName);
-            var jcnt = Math.min(textArray.length, buttons.length);
-            for (var j = 0; j < jcnt; j++) {
-                buttons[j].setText(textArray[j]);
+            var textArrayLength = textArray.length;
+            for (var j = 0, jcnt = buttons.length; j < jcnt; j++) {
+                if (j < textArrayLength) {
+                    buttons[j].show().setText(textArray[j]);
+                } else {
+                    buttons[j].hide()
+                }
             }
         }
 

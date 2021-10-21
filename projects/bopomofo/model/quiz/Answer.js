@@ -1,5 +1,5 @@
-import { TypeNames } from "../bopomofo/Bopomofo";
-import CreateChoices from "./CreateChoices";
+import { TypeNames } from '../bopomofo/Bopomofo.js';
+import CreateChoices from './CreateChoices.js';
 
 class Answer {
     constructor() {

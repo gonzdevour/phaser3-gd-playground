@@ -1,4 +1,5 @@
 import Answer from './Answer.js';
+import { Bopomofo } from '../bopomofo/Bopomofo.js';
 
 const GetValue = Phaser.Utils.Objects.GetValue;
 
@@ -32,12 +33,15 @@ class Question {
             }
         }
 
+        // Question
         this.title = title;
         this.word = word;
         this.characters = word.getCharacters();
         this.character = character;
         this.characterIndex = characterIndex;
+        // Answer, choices
         this.answer = (new Answer()).setAnswer(character);
+        this.choicesConfig = ParseChoiceConfig(GetValue(config, 'choices'));
     }
 
     getPolyphonyCharacter() {
@@ -45,7 +49,7 @@ class Question {
     }
 
     createChoices() {
-        return this.answer.createChoices()
+        return this.answer.createChoices(this.choicesConfig);
     }
 
     setAnswer(character) {
@@ -56,6 +60,28 @@ class Question {
     verify(input) {
         return this.answer.verify(input);
     }
+}
+
+var ParseChoiceConfig = function (config) {
+    if (typeof (config) === 'string') {
+        var bopomofoList = config;
+        config = { initials: '', media: '', vowel: '', tone: '', };
+        for (var i = 0, cnt = bopomofoList.length; i < cnt; i++) {
+            var char = bopomofoList.charAt(i);
+            for (var typeName in Bopomofo) {
+                if (Bopomofo[typeName].indexOf(char) !== -1) {
+                    config[typeName] += char;
+                }
+            }
+        }
+
+        for (var typeName in config) {
+            if (config[typeName] === '') {
+                delete config[typeName]
+            }
+        }
+    }
+    return config;
 }
 
 export default Question;

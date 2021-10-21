@@ -1,6 +1,6 @@
 import DBWrap from './db/DBWrap.js';
+import Quiz from './quiz/Quiz.js';
 
-const MaxDBCount = 4;
 const GetValue = Phaser.Utils.Objects.GetValue;
 
 class Model {
@@ -11,6 +11,9 @@ class Model {
             var dbWrap = new DBWrap(this, jsonList[i])
             this.db.push(dbWrap);
         }
+
+        // Only one quiz (series of question) is running one time
+        this.quiz = new Quiz();
     }
 }
 

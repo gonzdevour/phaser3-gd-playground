@@ -10,23 +10,30 @@ const Shuffle = Phaser.Utils.Array.Shuffle;
 
 var CreateChoices = function (config) {
     var answer = GetValue(config, 'answer');
-    var initialsCount = GetValue(config, 'initialsCount', 5);
-    var mediaCount = GetValue(config, 'mediaCount', 3);
-    var vowelCount = GetValue(config, 'vowelCount', 5);
-    var toneCount = GetValue(config, 'toneCount', 5);
+    var initials = GetValue(config, 'initials', 5);
+    var media = GetValue(config, 'media', 3);
+    var vowel = GetValue(config, 'vowel', 5);
+    var tone = GetValue(config, 'tone', 5);
     var shuffleChoices = GetValue(config, 'shuffleChoices', true);
 
     var choices = {
-        initials: GetItems(answer.initials, initialsList, initialsCount, true),
-        media: GetItems(answer.media, mediaList, mediaCount, false),
-        vowel: GetItems(answer.vowel, vowelList, vowelCount, true),
-        tone: GetItems(answer.tone, toneList, toneCount, false),
+        initials: GetItems(answer.initials, initialsList, initials, true),
+        media: GetItems(answer.media, mediaList, media, false),
+        vowel: GetItems(answer.vowel, vowelList, vowel, true),
+        tone: GetItems(answer.tone, toneList, tone, false),
     }
 
     if (shuffleChoices) {
-        choices.initials = Shuffle(choices.initials);
+        if (typeof (initials) === 'number') {
+            choices.initials = Shuffle(choices.initials);
+        }
+
         //choices.media = Shuffle(choices.media);
-        choices.vowel = Shuffle(choices.vowel);
+
+        if (typeof (vowel) === 'number') {
+            choices.vowel = Shuffle(choices.vowel);
+        }
+
         //choices.tone = Shuffle(choices.tone);
     }
 
@@ -35,32 +42,36 @@ var CreateChoices = function (config) {
 
 var GetItems = function (preserveItem, items, count, shuffle) {
     var out = [];
+    if (typeof (count) === 'number') {
+        if (shuffle) {
+            if (preserveItem !== '') {
+                out.push(preserveItem);
+            }
+            items = Shuffle(items);
+            for (var i = 0, cnt = items.length; i < cnt; i++) {
+                var item = items[i];
+                if (item === preserveItem) {
+                    continue;
+                }
+                out.push(item);
 
-    if (shuffle) {
-        if (preserveItem !== '') {
-            out.push(preserveItem);
-        }
-        items = Shuffle(items);
-        for (var i = 0, cnt = items.length; i < cnt; i++) {
-            var item = items[i];
-            if (item === preserveItem) {
-                continue;
+                if (out.length === count) {
+                    break;
+                }
             }
-            out.push(item);
+        }
+        else {
+            for (var i = 0, cnt = items.length; i < cnt; i++) {
+                var item = items[i];
+                out.push(item);
+                if (out.length === count) {
+                    break;
+                }
+            }
+        }
 
-            if (out.length === count) {
-                break;
-            }
-        }
-    }
-    else {
-        for (var i = 0, cnt = items.length; i < cnt; i++) {
-            var item = items[i];
-            out.push(item);
-            if (out.length === count) {
-                break;
-            }
-        }
+    } else {
+        out = [...count];
     }
 
     return out;
