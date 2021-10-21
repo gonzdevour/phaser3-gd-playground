@@ -13,7 +13,7 @@ class Model {
         }
 
         // Only one quiz (series of question) is running one time
-        this.quiz = new Quiz();
+        this.quiz = new Quiz(this);
     }
 }
 

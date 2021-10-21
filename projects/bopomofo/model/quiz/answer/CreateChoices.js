@@ -1,4 +1,4 @@
-import { Bopomofo } from "../bopomofo/Bopomofo";
+import { Bopomofo } from '../../bopomofo/Bopomofo.js';
 
 const initialsList = Bopomofo.initials.slice();
 const mediaList = Bopomofo.media.slice();

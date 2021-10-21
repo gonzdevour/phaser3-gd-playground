@@ -1,18 +1,30 @@
-import Question from './Question.js';
+import Question from './question/Question.js';
 
-const GetValue = Phaser.Utils.Objects.GetValue;
 const Shuffle = Phaser.Utils.Array.Shuffle;
 
 class Quiz {
-    constructor(config) {
+    constructor(model) {
+        this.model = model;
         this.questions = [];
         this.questionIndex = 0;
-        this.setTitleCallback(GetValue(config, 'titleCallback'));
     }
 
-    setTitleCallback(callback) {
-        this.titleCallback = callback;
-        return this;
+    toJSON() {
+        return {
+            questions: this.questions.map(function (question) { return question.toJSON() }),
+            questionIndex: this.questionIndex
+        }
+    }
+
+    fromJSON(json) {
+        this.clearQuestions();
+
+        var questionJSONList = json.questions;
+        for (var i = 0, cnt = questionJSONList.length; i < cnt; i++) {
+            var question = Question.FromJSON(this.model, questionJSONList[i]);
+            this.addQuestion(question);
+        }
+        this.questionIndex = json.questionIndex;
     }
 
     reset() {
@@ -25,10 +37,6 @@ class Quiz {
             this.questionIndex = 0;
         }
         var question = this.questions[this.questionIndex];
-        if (this.titleCallback) {
-            question.title = this.titleCallback.call(this, this.questionIndex, question);
-        }
-
         this.questionIndex++;
         return question;
     }

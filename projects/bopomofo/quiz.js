@@ -62,6 +62,8 @@ class Test extends Phaser.Scene {
                 console.log(result)
             })
 
+        // var json = model.quiz.toJSON();        
+        // model.quiz.fromJSON(json);
     }
 
     update() { }

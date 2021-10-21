@@ -22,6 +22,14 @@ class Character {
         this.tone = doc.tone;
     }
 
+    get id() {
+        return this.doc.$loki;
+    }
+
+    get dbId() {
+        return this.dbWrap.id;
+    }
+
     getWords(wordCount) {
         var wordDocIDList = this.doc.wid;
         var wordDocIDListLength = wordDocIDList.length;

@@ -1,5 +1,5 @@
-import Answer from './Answer.js';
-import { Bopomofo } from '../bopomofo/Bopomofo.js';
+import Answer from '../answer/Answer.js';
+import ParseChoiceConfig from './ParseChoiceConfig.js';
 
 const GetValue = Phaser.Utils.Objects.GetValue;
 
@@ -44,12 +44,33 @@ class Question {
         this.choicesConfig = ParseChoiceConfig(GetValue(config, 'choices'));
     }
 
+    toJSON() {
+        return {
+            word: this.word.id,
+            character: this.character.id,
+            db: this.character.dbId,
+            title: this.title,
+            choices: this.choicesConfig
+        }
+    }
+
+    static FromJSON(model, json) {
+        var db = model.db[json.db];
+
+        return new Question({
+            title: json.title,
+            word: db.words.queryByID(json.word),
+            character: db.characters.queryByID(json.character),
+            choices: json.choices
+        })
+    }
+
     getPolyphonyCharacter() {
         return this.word.getCharacters(1)[this.characterIndex];
     }
 
     createChoices() {
-        return this.answer.createChoices(this.choicesConfig);
+        return this.answer.createChoices({ ...this.choicesConfig });
     }
 
     setAnswer(character) {
@@ -60,28 +81,6 @@ class Question {
     verify(input) {
         return this.answer.verify(input);
     }
-}
-
-var ParseChoiceConfig = function (config) {
-    if (typeof (config) === 'string') {
-        var bopomofoList = config;
-        config = { initials: '', media: '', vowel: '', tone: '', };
-        for (var i = 0, cnt = bopomofoList.length; i < cnt; i++) {
-            var char = bopomofoList.charAt(i);
-            for (var typeName in Bopomofo) {
-                if (Bopomofo[typeName].indexOf(char) !== -1) {
-                    config[typeName] += char;
-                }
-            }
-        }
-
-        for (var typeName in config) {
-            if (config[typeName] === '') {
-                delete config[typeName]
-            }
-        }
-    }
-    return config;
 }
 
 export default Question;

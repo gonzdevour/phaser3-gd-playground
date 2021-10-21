@@ -14,6 +14,14 @@ class Word {
         this.word = this.doc.word;
     }
 
+    get id() {
+        return this.doc.$loki;
+    }
+
+    get dbId() {
+        return this.dbWrap.id;
+    }
+
     get polyphonyCount() {
         return this.doc.pid.length;
     }
