@@ -6,7 +6,8 @@ import Characters from './characters/Characters.js';
 
 class DBWrap {
     constructor(model, json) {
-        this.model = model
+        this.model = model;
+        this.id = model.db.length;
         this.db = CreateDB();
         if (json) {
             StringToDB(this.db, json);
