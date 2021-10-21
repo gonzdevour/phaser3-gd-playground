@@ -1,5 +1,5 @@
 import CreateDB from './CreateDB.js';
-import { StringToDB } from '../SerializeMethods.js';
+import { StringToDB } from './SerializeMethods.js';
 import { GetWordCollection, GetCharacterCollection } from './GetCollectionMethods.js';
 import Words from './words/Words.js';
 import Characters from './characters/Characters.js';

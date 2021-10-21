@@ -1,5 +1,5 @@
-import { Serialize, Deserialize } from '../../../../phaser3-rex-notes/plugins/utils/lokijs/SerializeMethods.js';
-import { CompressionMode, DecompressionMode } from './prebuilddb/Const.js';
+import { Serialize, Deserialize } from '../../../../../phaser3-rex-notes/plugins/utils/lokijs/SerializeMethods.js';
+import { CompressionMode, DecompressionMode } from '../prebuilddb/Const.js';
 
 var DBToString = function (db, compress) {
     if ((compress === undefined) || (compress === true)) {
