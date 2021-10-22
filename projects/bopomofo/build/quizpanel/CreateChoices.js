@@ -1,4 +1,5 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
+import CreateButtonBackground from '../style/CreateButtonBackground.js';
 import { Choices } from '../../gameobjects/quizpanel.js';
 import { Style } from '../style/style.js';
 
@@ -71,7 +72,7 @@ var CreateChoices = function (scene) {
 
 var CreateLabel = function (scene, style) {
     return scene.rexUI.add.label({
-        background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
+        background: CreateButtonBackground(scene, 10, undefined, 0xffffff, 2),
         text: scene.rexUI.add.BBCodeText(0, 0, '', style),
         // Set fixedWidth, fixedHeight for all kinds of text input
 
