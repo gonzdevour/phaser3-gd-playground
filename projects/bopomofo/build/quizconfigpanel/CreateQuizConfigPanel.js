@@ -3,9 +3,7 @@ import CreateDatabaseSelectPanel from './CreateDatabaseSelectPanel.js';
 import CreateEnhancementSelectPanel from './CreateEnhancementSelectPanel.js';
 import CreateQuizModePanel from "./CreateQuizModePanel.js";
 
-const GetValue = Phaser.Utils.Objects.GetValue;
-
-var CreateQuizConfigurationPanel = function (scene, config) {
+var CreateQuizConfigPanel = function (scene, config) {
     // Build UI
     var databaseSelectPanel = CreateDatabaseSelectPanel(scene, config);
     var enhancementSelectPanel = CreateEnhancementSelectPanel(scene, config);
@@ -59,4 +57,4 @@ var CreateLabel = function (scene, text) {
     });
 }
 
-export default CreateQuizConfigurationPanel;
+export default CreateQuizConfigPanel;

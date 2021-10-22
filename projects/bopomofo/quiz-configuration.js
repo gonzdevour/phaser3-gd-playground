@@ -1,6 +1,6 @@
 import 'phaser';
 import AllPlugins from '../../plugins/AllPlugins.js';
-import CreateQuizConfigurationPanel from './build/quizconfigurationpanel/CreateQuizConfigurationPanel.js';
+import CreateQuizConfigPanel from './build/quizconfigpanel/CreateQuizConfigPanel.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -19,7 +19,7 @@ class Test extends Phaser.Scene {
         var gameConfig = this.game.config;
         var gameWindowWidth = gameConfig.width;
         var gameWindowHeight = gameConfig.height;
-        CreateQuizConfigurationPanel(this, {
+        CreateQuizConfigPanel(this, {
             radio: { database: '常用詞庫', enhancement: '結合韻', mode: '測驗' }
         })
             .setPosition(gameWindowWidth / 2, gameWindowHeight / 2)

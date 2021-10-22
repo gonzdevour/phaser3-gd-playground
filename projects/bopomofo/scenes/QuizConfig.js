@@ -1,7 +1,7 @@
 import 'phaser';
 import Base from './Base.js';
 import { QuizConfigSceneKey, QuizSceneKey } from './Const.js';
-import CreateQuizConfigurationPanel from '../build/quizconfigurationpanel/CreateQuizConfigurationPanel.js';
+import CreateQuizConfigPanel from '../build/quizconfigpanel/CreateQuizConfigPanel.js';
 
 // Setup quiz
 class QuizConfig extends Base {
@@ -23,7 +23,7 @@ class QuizConfig extends Base {
         var gameConfig = this.game.config;
         var gameWindowWidth = gameConfig.width;
         var gameWindowHeight = gameConfig.height;
-        CreateQuizConfigurationPanel(this, {
+        CreateQuizConfigPanel(this, {
             radio: quizConfig
         })
             .setPosition(gameWindowWidth / 2, gameWindowHeight / 2)
