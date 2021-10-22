@@ -12,6 +12,13 @@ class Model {
             this.db.push(dbWrap);
         }
 
+        // TODO: Load config from localstorage
+        this.quizConfig = {
+            database: '常用詞庫',
+            enhancement: '結合韻',
+            mode: '測驗'
+        };
+
         // Only one quiz (series of question) is running one time
         this.quiz = new Quiz(this);
     }

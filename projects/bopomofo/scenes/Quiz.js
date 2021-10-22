@@ -2,8 +2,8 @@ import 'phaser';
 import Base from './Base.js';
 import { QuizSceneKey } from './Const.js';
 import CreateQuizPanel from '../build/quizpanel/CreateQuizPanel.js';
+import BuildQuiz from '../build/quiz/BuildQuiz.js';
 import SetupQuizPanel from '../build/quiz/SetupQuizPanel.js';
-import Question from '../model/quiz/Question.js'
 
 // Run quiz
 class Quiz extends Base {
@@ -26,8 +26,6 @@ class Quiz extends Base {
     }
 
     create() {
-        var model = this.model;
-
         var gameConfig = this.game.config;
         var gameWindowWidth = gameConfig.width;
         var gameWindowHeight = gameConfig.height;
@@ -38,14 +36,9 @@ class Quiz extends Base {
 
         console.log(`${quizPanel.width}x${quizPanel.height}`)
 
-        var characters = model.db[0].characters.queryByBopomofo('ㄢㄣ');
-        var character = Phaser.Utils.Array.GetRandom(characters);
-        var question = new Question({
-            title: '高頻詞600注音練習',
-            character: character
-        })
+        var quiz = BuildQuiz(this.model);
 
-        SetupQuizPanel(quizPanel, question)
+        SetupQuizPanel(quizPanel, quiz.nextQuestion)
             .drawBounds(this.add.graphics(), 0xff0000)
             .on('complete', function (result) {
                 console.log(result)

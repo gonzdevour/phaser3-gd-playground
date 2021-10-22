@@ -10,6 +10,10 @@ class Characters {
         this.dbWrap = dbWrap;
     }
 
+    query(filter, sortMode) {
+        return Query(this.dbWrap, filter, sortMode);
+    }
+
     queryCharacter(character) {
         return QueryCharacter(this.dbWrap, character);
     }
