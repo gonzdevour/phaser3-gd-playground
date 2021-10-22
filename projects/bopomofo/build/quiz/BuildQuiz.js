@@ -17,6 +17,8 @@ var BuildQuiz = function (model) {
             break;
 
         case '結合韻':
+            filter.media = { '$ne': '' };
+            filter.vowel = { '$ne': '' };
             // TODO
             break;
 

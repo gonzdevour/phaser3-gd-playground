@@ -66,7 +66,8 @@ class Question {
     }
 
     getPolyphonyCharacter() {
-        return this.word.getCharacters(1)[this.characterIndex];
+        var characters = this.word.getCharacters(1);
+        return (characters) ? characters[this.characterIndex] : null;
     }
 
     createChoices() {
