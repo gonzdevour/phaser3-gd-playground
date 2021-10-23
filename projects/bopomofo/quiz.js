@@ -47,20 +47,33 @@ class Test extends Phaser.Scene {
         console.log(`${quizPanel.width}x${quizPanel.height}`)
 
         // Set quizConfig manually
-        var quizConfig = model.quizConfig;
-        quizConfig.database = '常用詞庫';
-        quizConfig.enhancement = 'ㄔㄘ';
-        quizConfig.mode = '依序';
-        var quiz = BuildQuiz(model);
+        // var quizConfig = model.quizConfig;
+        // quizConfig.database = '常用詞庫';
+        // quizConfig.enhancement = 'ㄔㄘ';
+        // quizConfig.mode = '依序';
+        // var quiz = BuildQuiz(model);
 
-        SetupQuizPanel(quizPanel, quiz.nextQuestion)
-            .drawBounds(this.add.graphics(), 0xff0000)
-            .on('complete', function (result) {
-                console.log(result)
+        // Test 2->4 word layout case
+        var quiz = model.quiz;
+        quiz
+            .clearQuestions()
+            .addQuestion({
+                word: model.db[1].words.queryWord('嘗試')[0]
+            })
+            .addQuestion({
+                word: model.db[1].words.queryWord('松柏常青')[0]
             })
 
-        // var json = model.quiz.toJSON();        
-        // model.quiz.fromJSON(json);
+        // Chain questions
+        var OnSubmit = function (result) {
+            console.log(result)
+            if (!quiz.isLastQuestion) {
+                SetupQuizPanel(quizPanel, quiz.nextQuestion, OnSubmit);
+            } else {
+                console.log('Quiz complete')
+            }
+        }
+        SetupQuizPanel(quizPanel, quiz.nextQuestion, OnSubmit);
     }
 
     update() { }

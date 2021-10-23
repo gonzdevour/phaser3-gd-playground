@@ -72,6 +72,13 @@ class Word extends Sizer {
         this.getElement('characters')[index].setCharacterColor(color);
         return this;
     }
+
+    // For debug
+    // layoutChildren() {
+    //     debugger
+    //     super.layoutChildren();
+    //     return this;
+    // }
 }
 
 export default Word;

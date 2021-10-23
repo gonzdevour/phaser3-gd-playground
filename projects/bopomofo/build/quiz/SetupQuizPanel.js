@@ -1,4 +1,4 @@
-var SetupQuizPanel = function (quizPanel, question) {
+var SetupQuizPanel = function (quizPanel, question, onSubmit) {
     // Fill quizPanel
     quizPanel
         .setTitle(question.title)
@@ -6,14 +6,13 @@ var SetupQuizPanel = function (quizPanel, question) {
         .setChoicesText(question.createChoices())
         .layout()
 
-    // Warning: '_submit' callback won't be removed
-    // Note: make sure '_submit' is emitted (OK button clicked)    
+    // Warning: 'submit' callback won't be removed
+    // Note: make sure 'submit' is emitted (OK button clicked)    
     quizPanel
         .setData('focusCharacterIndex', question.characterIndex) // See CreateQuizPanel.js
-        .once('_submit', function (result) {
+        .once('submit', function (result) {
             var isPass = question.verify(result);
             if (!isPass) { // Verify polyphony
-                var word = question.word;
                 var polyphonyCharacter = question.getPolyphonyCharacter();
                 if (polyphonyCharacter) { // Has polyphony
                     isPass = question.setAnswer(polyphonyCharacter).verify(result);
@@ -26,7 +25,10 @@ var SetupQuizPanel = function (quizPanel, question) {
                 word: question.word,
                 character: (isPass && polyphonyCharacter) ? polyphonyCharacter : question.character
             }
-            quizPanel.emit('complete', verifyResult);
+
+            if (onSubmit) {
+                onSubmit(verifyResult);
+            }
         })
 
     return quizPanel;

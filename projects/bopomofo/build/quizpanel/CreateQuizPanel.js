@@ -41,7 +41,7 @@ var CreateQuizPanel = function (scene) {
 
                 case 1:  // OK button
                     var result = quizPanel.getChoiceResult();
-                    quizPanel.emit('_submit', result);  // Fire internal event
+                    quizPanel.emit('submit', result);  // Fire internal event
                     break;
 
 
