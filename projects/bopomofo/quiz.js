@@ -1,9 +1,10 @@
 import 'phaser';
 import AllPlugins from '../../plugins/AllPlugins.js';
 import CreateModel from './build/model/CreateModel.js';
-import CreateQuizPanel from './build/quizpanel/CreateQuizPanel.js';
 import BuildQuiz from './build/quiz/BuildQuiz.js';
+import CreateQuizPanel from './build/quizpanel/CreateQuizPanel.js';
 import SetupQuizPanel from './build/quiz/SetupQuizPanel.js';
+import CreateQuizResultDialog from './build/quizpanel/CreateQuizResultDialog.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -26,6 +27,8 @@ class Test extends Phaser.Scene {
         //Load image file
         this.load.image('confirm', 'assets/img/confirm.png');
         this.load.image('eraser', 'assets/img/eraser.png');
+
+        this.load.image('yes', 'assets/img/yes.png');
     }
 
     create() {
@@ -66,12 +69,15 @@ class Test extends Phaser.Scene {
 
         // Chain questions
         var OnSubmit = function (result) {
-            console.log(result)
-            if (!quiz.isLastQuestion) {
-                SetupQuizPanel(quizPanel, quiz.nextQuestion, OnSubmit);
-            } else {
-                console.log('Quiz complete')
-            }
+            console.log(result);
+            CreateQuizResultDialog(quizPanel, result, function () {
+                // Test next question
+                if (!quiz.isLastQuestion) {
+                    SetupQuizPanel(quizPanel, quiz.nextQuestion, OnSubmit);
+                } else {
+                    console.log('Quiz complete')
+                }
+            });
         }
         SetupQuizPanel(quizPanel, quiz.nextQuestion, OnSubmit);
     }

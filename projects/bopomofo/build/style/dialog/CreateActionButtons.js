@@ -1,6 +1,8 @@
 var CreateActionButtons = function (scene, hasOKButton, hasCancelButton) {
     // Build UI
+    // var zeroButtonMode = !hasOKButton && !hasCancelButton;
     var oneButtonMode = hasOKButton && !hasCancelButton;
+    var twoButtonMode = hasOKButton && hasCancelButton;
     var buttons = scene.rexUI.add.sizer({
         orientation: 'x'
     })
@@ -13,7 +15,7 @@ var CreateActionButtons = function (scene, hasOKButton, hasCancelButton) {
                 { key: 'yes' }
             )
             .addSpace()
-    } else {
+    } else if (twoButtonMode) {
         buttons
             .add(
                 CreateLabel(scene, 'yes'),

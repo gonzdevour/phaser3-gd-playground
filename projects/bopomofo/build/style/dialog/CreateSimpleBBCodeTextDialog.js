@@ -6,6 +6,7 @@ const GetValue = Phaser.Utils.Objects.GetValue;
 
 var CreateSimpleBBCodeTextDialog = function (parent, config) {
     var scene = parent.scene;
+    var displayList = scene.children;
     var parentTopUI = parent.getTopmostSizer();
     var gameConfig = scene.game.config;
     var gameWindowWidth = gameConfig.width;
@@ -16,9 +17,12 @@ var CreateSimpleBBCodeTextDialog = function (parent, config) {
     var height = GetValue(config, 'height', 0);
     var title = GetValue(config, 'title');
     var content = GetValue(config, 'content');
+    var background = GetValue(config, 'background', undefined);
     var transitionDuration = GetValue(config, 'transitionDuration', 500);
+    var holdDuration = GetValue(config, 'holdDuration', 1000);  // Used in zero-button mode
     var okCallback = GetValue(config, 'okCallback', false);
     var cancelCallback = GetValue(config, 'cancelCallback', false);
+    var closeCallback = GetValue(config, 'closeCallback', false);
     var dialog;
 
     // Build UI
@@ -28,7 +32,12 @@ var CreateSimpleBBCodeTextDialog = function (parent, config) {
         orientation: 'y',
         space: { left: 40, right: 40, top: 40, bottom: 40, item: 20 }
     })
-        .addBackground(CreateRoundRectangleBackground(scene, 20, 0x0, 0xffffff, 2))
+
+    if (background === undefined) {
+        // Create default background
+        background = CreateRoundRectangleBackground(scene, 20, 0x0, 0xffffff, 2);
+        dialog.addBackground(background)
+    }
 
     if (title) {
         if (typeof (title) === 'string') {
@@ -47,17 +56,33 @@ var CreateSimpleBBCodeTextDialog = function (parent, config) {
     var buttons = CreateActionButtons(scene, !!okCallback, !!cancelCallback)
     dialog.add(buttons, { expand: true, });
 
+    // Put background at bottom
+    if (background) {
+        dialog.moveDepthBelow(background);
+    }
+
     // Layout UI
     dialog.layout();
     // Transition-in
     TransitionIn(dialog, parentTopUI, transitionDuration);
 
     // Add button callback
+    var CloseDialog = function () {
+        TransitionOut(dialog, parentTopUI, transitionDuration);
+        if (closeCallback) {
+            scene.time.delayedCall(
+                transitionDuration + 10, // delay
+                closeCallback,           // callback
+                [],                      // args
+            );
+        }
+    }
+
     var yesButton = buttons.getElement('yes');
     if (yesButton) {
         yesButton.onClick(function () {
             okCallback();
-            TransitionOut(dialog, parentTopUI, transitionDuration)
+            CloseDialog();
         });
     }
 
@@ -65,8 +90,17 @@ var CreateSimpleBBCodeTextDialog = function (parent, config) {
     if (noButton) {
         noButton.onClick(function () {
             cancelCallback();
-            TransitionOut(dialog, parentTopUI, transitionDuration)
+            CloseDialog();
         });
+    }
+
+    // Zero-button mode
+    if (!yesButton && !noButton) {
+        scene.time.delayedCall(
+            holdDuration,   // delay
+            CloseDialog,    // callback
+            [],             // args
+        );
     }
 
     return dialog;
