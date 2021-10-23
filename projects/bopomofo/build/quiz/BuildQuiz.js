@@ -5,10 +5,9 @@ const Shuffle = Phaser.Utils.Array.Shuffle;
 
 var BuildQuiz = function (model) {
     var quizConfig = model.quizConfig;
-    var dbName = quizConfig.database;
-    var enhancementMode = quizConfig.enhancement;
-    var quizMode = quizConfig.mode;
 
+    // See build/quizconfigpanel/CreateDatabaseSelectPanel.js
+    var dbName = quizConfig.database;
     var db;
     switch (dbName) {
         case '高頻詞庫':
@@ -20,18 +19,21 @@ var BuildQuiz = function (model) {
             break;
     }
 
-    var filter = {};
-    var choices;
+    // See build/quizconfigpanel/CreateEnhancementSelectPanel.js
+    var enhancementMode = quizConfig.enhancement;
+    var filter;   // Query character-collection
+    var choices;  // Set choice buttons
     switch (enhancementMode) {
         case '無':
+            filter = {};
             break;
 
         case '結合韻':
-            filter = GetCombinedRhyme(filter);
+            filter = GetCombinedRhyme();
             break;
 
         default:
-            filter = GetBopomofoFilter(enhancementMode, filter);
+            filter = GetBopomofoFilter(enhancementMode);
             choices = enhancementMode;
             break;
     }
@@ -41,6 +43,8 @@ var BuildQuiz = function (model) {
         'bopomofo'
     );
 
+    // See build/quizconfigpanel/CreateQuizModePanel.js
+    var quizMode = quizConfig.mode;
     switch (quizMode) {
         case '隨機':
             Shuffle(characters);
@@ -52,6 +56,8 @@ var BuildQuiz = function (model) {
             break;
     }
 
+    // Now we have quiz characters
+    // Clear and add these characters
     var quiz = model.quiz;
     quiz.clearQuestions();
 

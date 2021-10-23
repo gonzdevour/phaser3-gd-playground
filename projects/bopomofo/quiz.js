@@ -2,6 +2,7 @@ import 'phaser';
 import AllPlugins from '../../plugins/AllPlugins.js';
 import CreateModel from './build/model/CreateModel.js';
 import CreateQuizPanel from './build/quizpanel/CreateQuizPanel.js';
+import BuildQuiz from './build/quiz/BuildQuiz.js';
 import SetupQuizPanel from './build/quiz/SetupQuizPanel.js';
 
 class Test extends Phaser.Scene {
@@ -45,18 +46,14 @@ class Test extends Phaser.Scene {
 
         console.log(`${quizPanel.width}x${quizPanel.height}`)
 
-        var characters = model.db[0].characters.queryByBopomofo('ㄢㄣ');
-        var character = Phaser.Utils.Array.GetRandom(characters);
+        // Set quizConfig manually
+        var quizConfig = model.quizConfig;
+        quizConfig.database = '常用詞庫';
+        quizConfig.enhancement = 'ㄔㄘ';
+        quizConfig.mode = '依序';
+        var quiz = BuildQuiz(model);
 
-        model.quiz
-            .clearQuestions()
-            .addQuestion({
-                title: '高頻詞600注音練習',
-                character: character,
-                choices: 'ㄢㄣ'
-            })
-
-        SetupQuizPanel(quizPanel, model.quiz.nextQuestion)
+        SetupQuizPanel(quizPanel, quiz.nextQuestion)
             .drawBounds(this.add.graphics(), 0xff0000)
             .on('complete', function (result) {
                 console.log(result)
