@@ -1,14 +1,24 @@
-import { Bopomofo } from '../../model/bopomofo/Bopomofo.js';
+import GetBopomofoFilter from '../../model/db/characters/query/GetBopomofoFilter.js';
+import GetCombinedRhyme from '../../model/db/characters/query/GetCombinedRhyme.js';
 
 const Shuffle = Phaser.Utils.Array.Shuffle;
 
 var BuildQuiz = function (model) {
     var quizConfig = model.quizConfig;
-    var dbIndex = DBIndexMap[quizConfig.database];
+    var dbName = quizConfig.database;
     var enhancementMode = quizConfig.enhancement;
     var quizMode = quizConfig.mode;
 
-    var db = model.db[dbIndex];
+    var db;
+    switch (dbName) {
+        case '高頻詞庫':
+            db = model.db[0];
+            break;
+
+        case '常用詞庫':
+            db = model.db[1];
+            break;
+    }
 
     var filter = {};
     var choices;
@@ -17,32 +27,12 @@ var BuildQuiz = function (model) {
             break;
 
         case '結合韻':
-            filter.media = { '$ne': '' };
-            filter.vowel = { '$ne': '' };
+            filter = GetCombinedRhyme(filter);
             break;
 
         default:
-            var bopomofo = enhancementMode;
-            for (var i = 0, cnt = bopomofo.length; i < cnt; i++) {
-                var char = bopomofo.charAt(i);
-                for (var typeName in Bopomofo) {
-                    if (Bopomofo[typeName].indexOf(char) !== -1) {
-                        if (!filter.hasOwnProperty(typeName)) {
-                            filter[typeName] = [];
-                        }
-                        filter[typeName].push(char);
-                    }
-                }
-            }
-
-            for (var typeName in filter) {
-                if (filter[typeName].length === 1) {
-                    filter[typeName] = filter[typeName][0];
-                } else {
-                    filter[typeName] = { '$in': filter[typeName] };
-                }
-            }
-            choices = bopomofo;
+            filter = GetBopomofoFilter(enhancementMode, filter);
+            choices = enhancementMode;
             break;
     }
 
@@ -74,11 +64,6 @@ var BuildQuiz = function (model) {
     }
 
     return quiz;
-}
-
-const DBIndexMap = {
-    '高頻詞庫': 0,
-    '常用詞庫': 1
 }
 
 export default BuildQuiz;
