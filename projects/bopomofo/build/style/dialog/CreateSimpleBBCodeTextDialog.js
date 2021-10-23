@@ -71,7 +71,7 @@ var CreateSimpleBBCodeTextDialog = function (parent, config) {
         TransitionOut(dialog, parentTopUI, transitionDuration);
         if (closeCallback) {
             scene.time.delayedCall(
-                transitionDuration + 10, // delay
+                transitionDuration, // delay
                 closeCallback,           // callback
                 [],                      // args
             );
