@@ -38,12 +38,16 @@ class Quiz extends Base {
 
         var quiz = BuildQuiz(this.model);
 
-        SetupQuizPanel(quizPanel, quiz.nextQuestion)
-            .drawBounds(this.add.graphics(), 0xff0000)
-            .on('complete', function (result) {
-                console.log(result)
-            })
-
+        // Chain questions
+        var OnSubmit = function (result) {
+            console.log(result)
+            if (!quiz.isLastQuestion) {
+                SetupQuizPanel(quizPanel, quiz.nextQuestion, OnSubmit);
+            } else {
+                console.log('Quiz complete')
+            }
+        }
+        SetupQuizPanel(quizPanel, quiz.nextQuestion, OnSubmit);
     }
 
     update() { }

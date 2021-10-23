@@ -1,12 +1,12 @@
 var SetupQuizPanel = function (quizPanel, question, onSubmit) {
     // Fill quizPanel
     quizPanel
+        .clearChoices()
         .setTitle(question.title)
         .setWord(question.characters)
         .setChoicesText(question.createChoices())
         .layout()
 
-    // Warning: 'submit' callback won't be removed
     // Note: make sure 'submit' is emitted (OK button clicked)    
     quizPanel
         .setData('focusCharacterIndex', question.characterIndex) // See CreateQuizPanel.js
