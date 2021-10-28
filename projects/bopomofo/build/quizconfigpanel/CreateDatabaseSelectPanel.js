@@ -1,6 +1,6 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import CreateTitleLabel from './CreateTitleLabel.js';
-import CreateSimpleBBCodeTextDialog from '../style/dialog/CreateSimpleBBCodeTextDialog.js';
+import ModalDialogPromise from '../modeldialog/ModalDialogPromise.js';
 
 const PanelName = 'database';
 const GetValue = Phaser.Utils.Objects.GetValue;
@@ -45,11 +45,10 @@ var CreateDatabaseSelectPanel = function (scene, config) {
 
     // Add button callback
     title.getElement('help').onClick(function () {
-        CreateSimpleBBCodeTextDialog(panel, {
+        ModalDialogPromise(scene, {
             title: '詞庫選擇',
             content: 'Content',
-            okCallback: function () { },
-            cancelCallback: false
+            buttons: 1
         })
     })
 
