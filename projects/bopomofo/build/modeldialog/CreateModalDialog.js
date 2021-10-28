@@ -1,4 +1,5 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
+import SetValue from '../../../../../phaser3-rex-notes/plugins/utils/object/SetValue.js';
 
 const GetValue = Phaser.Utils.Objects.GetValue;
 
@@ -20,19 +21,19 @@ var CreateModalDialog = function (scene, config) {
         config.background = CreateRoundRectangleBackground(scene, 20, 0x0, 0xffffff, 2);
     }
 
-    var title = config.title;
-    if (typeof (title) === 'string') {
-        config.title = scene.rexUI.add.BBCodeText(0, 0, title, { fontFamily: 'DFKai-SB', fontSize: 60 });
+    if (typeof (config.title) === 'string') {
+        config.title = scene.rexUI.add.BBCodeText(0, 0, config.title, { fontFamily: 'DFKai-SB', fontSize: 60 });
     }
 
-    var content = config.content;
-    if (typeof (content) === 'string') {
-        config.content = scene.rexUI.add.BBCodeText(0, 0, title, { fontFamily: 'DFKai-SB', fontSize: 60 });
+    if (typeof (config.content) === 'string') {
+        config.content = scene.rexUI.add.BBCodeText(0, 0, config.content, { fontFamily: 'DFKai-SB', fontSize: 60 });
     }
 
+    if (config.buttonMode === undefined) {
+        config.buttonMode = 0;
+    }
     var buttons;
-    var buttonMode = GetValue(config, 'buttonMode', 0);
-    switch (buttonMode) {
+    switch (config.buttonMode) {
         case 2: // OK/Cancel
             buttons = [
                 CreateButton(scene, 'yes'),
@@ -52,6 +53,12 @@ var CreateModalDialog = function (scene, config) {
             break;
     }
     config.actions = buttons;
+
+    if (config.space === undefined) {
+        config.space = { left: 40, right: 40, top: 40, bottom: 40, item: 20 }
+    }
+
+    SetValue(config, 'expand.actions', true);
 
     var dialog = scene.rexUI.add.dialog(config);
 

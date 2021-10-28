@@ -48,7 +48,7 @@ var CreateDatabaseSelectPanel = function (scene, config) {
         ModalDialogPromise(scene, {
             title: '詞庫選擇',
             content: 'Content',
-            buttons: 1
+            buttonMode: 1
         })
     })
 
