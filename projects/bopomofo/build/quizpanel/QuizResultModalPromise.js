@@ -1,19 +1,14 @@
-import CreateSimpleBBCodeTextDialog from '../style/dialog/CreateSimpleBBCodeTextDialog.js';
+import ModalDialogPromise from '../modeldialog/ModalDialogPromise.js';
 import Character from '../../gameobjects/character/Character.js'
 import { Initials, Media, Vowel } from '../../model/bopomofo/Bopomofo.js'
 import { Style } from '../style/style.js';
 
-var CreateQuizResultDialog = function (parent, result, onCloseCallback) {
-    var scene = parent.scene;
+var QuizResultModalPromise = function (scene, result, onCloseCallback) {
     if (result.result) {  // Pass
-        return CreateSimpleBBCodeTextDialog(parent, {
+        return ModalDialogPromise(scene, {
             content: scene.add.image(0, 0, 'yes').setDisplaySize(540, 540),
-            background: null,
-            okCallback: false,
-            cancelCallback: false,
-            holdDuration: 500,
-            closeCallback: onCloseCallback
-        });
+            background: null
+        })
 
     } else {  // Fails
         // TODO: Style Character
@@ -37,15 +32,9 @@ var CreateQuizResultDialog = function (parent, result, onCloseCallback) {
         })
             .setCharacter(result.character)
 
-        return CreateSimpleBBCodeTextDialog(parent, {
+        return ModalDialogPromise(scene, {
             content: characterUI,
-            // background: null,
-            okCallback: false,
-            cancelCallback: false,
-            holdDuration: 1200,
-            closeCallback: onCloseCallback
-        });
-
+        })
     }
 }
 
@@ -82,4 +71,4 @@ var CreateTone0Label = function (scene) {
     })
 }
 
-export default CreateQuizResultDialog;
+export default QuizResultModalPromise;
