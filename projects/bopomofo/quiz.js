@@ -4,7 +4,6 @@ import CreateModel from './build/model/CreateModel.js';
 import BuildQuiz from './build/quiz/BuildQuiz.js';
 import CreateQuizPanel from './build/quizpanel/CreateQuizPanel.js';
 import QuizPromise from './build/quiz/QuizPromose.js';
-import QuizResultModalPromise from './build/quizpanel/QuizResultModalPromise.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -61,16 +60,7 @@ class Test extends Phaser.Scene {
                 word: model.db[1].words.queryWord('松柏常青')[0]
             })
 
-        // Chain questions
-        var Quiz = async function () {
-            while(!quiz.isLastQuestion) {
-                var result = await QuizPromise(quizPanel, quiz.nextQuestion);
-                console.log(result);
-                await QuizResultModalPromise(quizPanel.scene, result);    
-            }
-            console.log('Quiz complete');
-        }
-        Quiz();
+        QuizPromise(quizPanel, quiz);
     }
 
     update() { }
