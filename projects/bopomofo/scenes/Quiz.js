@@ -3,7 +3,7 @@ import Base from './Base.js';
 import { QuizSceneKey } from './Const.js';
 import CreateQuizPanel from '../build/quizpanel/CreateQuizPanel.js';
 import BuildQuiz from '../build/quiz/BuildQuiz.js';
-import SetupQuizPanel from '../build/quiz/SetupQuizPanel.js';
+import QuizPromise from './build/quiz/QuizPromose.js';
 import QuizResultModalPromise from '../build/quizpanel/QuizResultModalPromise.js';
 
 // Run quiz
@@ -43,20 +43,22 @@ class Quiz extends Base {
         var quiz = BuildQuiz(this.model);
 
         // Chain questions
-        var scene = this;
-        var OnSubmit = function (result) {
-            console.log(result);
-            QuizResultModalPromise(scene, result)
+        var Quiz = function () {
+            return QuizPromise(quizPanel, quiz.nextQuestion)
+                .then(function (result) {
+                    console.log(result);
+                    return QuizResultModalPromise(quizPanel.scene, result)
+                })
                 .then(function () {
                     // Test next question
                     if (!quiz.isLastQuestion) {
-                        SetupQuizPanel(quizPanel, quiz.nextQuestion, OnSubmit);
+                        return Quiz();
                     } else {
                         console.log('Quiz complete')
                     }
                 })
         }
-        SetupQuizPanel(quizPanel, quiz.nextQuestion, OnSubmit);
+        Quiz();
     }
 
     update() { }
