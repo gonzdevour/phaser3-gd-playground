@@ -3,6 +3,8 @@ import CreateDatabaseSelectPanel from './CreateDatabaseSelectPanel.js';
 import CreateEnhancementSelectPanel from './CreateEnhancementSelectPanel.js';
 import CreateQuizModePanel from "./CreateQuizModePanel.js";
 
+const GetValue = Phaser.Utils.Objects.GetValue;
+
 var CreateQuizConfigPanel = function (scene, config) {
     var gameConfig = scene.game.config;
     var gameWindowWidth = gameConfig.width;

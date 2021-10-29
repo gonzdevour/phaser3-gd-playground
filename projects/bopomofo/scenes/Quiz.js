@@ -3,7 +3,7 @@ import Base from './Base.js';
 import { QuizSceneKey } from './Const.js';
 import CreateQuizPanel from '../build/quizpanel/CreateQuizPanel.js';
 import BuildQuiz from '../build/quiz/BuildQuiz.js';
-import QuizPromise from './build/quiz/QuizPromose.js';
+import QuizPromise from '../build/quiz/QuizPromose.js';
 import QuizResultModalPromise from '../build/quizpanel/QuizResultModalPromise.js';
 
 // Run quiz
