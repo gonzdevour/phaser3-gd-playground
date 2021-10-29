@@ -69,16 +69,12 @@ class Test extends Phaser.Scene {
 
         // Chain questions
         var Quiz = async function () {
-            var result = await QuizPromise(quizPanel, quiz.nextQuestion);
-            console.log(result);
-            await QuizResultModalPromise(quizPanel.scene, result);
-
-            // Test next question
-            if (!quiz.isLastQuestion) {
-                await Quiz();
-            } else {
-                console.log('Quiz complete')
+            while(!quiz.isLastQuestion) {
+                var result = await QuizPromise(quizPanel, quiz.nextQuestion);
+                console.log(result);
+                await QuizResultModalPromise(quizPanel.scene, result);    
             }
+            console.log('Quiz complete');
         }
         Quiz();
     }
