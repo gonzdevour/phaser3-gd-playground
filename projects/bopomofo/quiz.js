@@ -75,7 +75,7 @@ class Test extends Phaser.Scene {
 
             // Test next question
             if (!quiz.isLastQuestion) {
-                Quiz();
+                await Quiz();
             } else {
                 console.log('Quiz complete')
             }
