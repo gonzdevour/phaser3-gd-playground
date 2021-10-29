@@ -16,19 +16,16 @@ class Test extends Phaser.Scene {
     }
 
     create() {
-        var gameConfig = this.game.config;
-        var gameWindowWidth = gameConfig.width;
-        var gameWindowHeight = gameConfig.height;
-        CreateQuizConfigPanel(this, {
+        var quizConfigPanel = CreateQuizConfigPanel(this, {
             radio: { database: '常用詞庫', enhancement: '結合韻', mode: '測驗' }
         })
-            .setPosition(gameWindowWidth / 2, gameWindowHeight / 2)
-            .setMinSize(gameWindowWidth, gameWindowHeight)
             .layout()
             // .drawBounds(this.add.graphics(), 0xff0000)
             .on('startQuiz', function (result) {
                 console.log(result)
             })
+
+        console.log(`${quizConfigPanel.width}x${quizConfigPanel.height}`)
 
     }
 

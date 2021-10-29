@@ -6,9 +6,20 @@ import CreateActions from "./CreateActions.js";
 import { QuizPanel } from '../../gameobjects/quizpanel.js';
 import { Style } from "../style/style.js";
 
-var CreateQuizPanel = function (scene) {
+const GetValue = Phaser.Utils.Objects.GetValue;
+
+var CreateQuizPanel = function (scene, config) {
+    var gameConfig = scene.game.config;
+    var gameWindowWidth = gameConfig.width;
+    var gameWindowHeight = gameConfig.height;
+    var x = GetValue(config, 'x', gameWindowWidth / 2);
+    var y = GetValue(config, 'y', gameWindowHeight / 2);
+    var width = GetValue(config, 'width', gameWindowWidth);
+    var height = GetValue(config, 'height', gameWindowHeight);
+
     var quizPanel = new QuizPanel(scene, {
-        width: 700,
+        x: x, y: y,
+        width: width, height: height,
         orientation: 'y',
 
         background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),

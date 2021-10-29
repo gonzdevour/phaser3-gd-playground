@@ -39,13 +39,7 @@ class Test extends Phaser.Scene {
             ]
         })
 
-        var gameConfig = this.game.config;
-        var gameWindowWidth = gameConfig.width;
-        var gameWindowHeight = gameConfig.height;
-        var quizPanel = CreateQuizPanel(this)
-            .setPosition(gameWindowWidth / 2, gameWindowHeight / 2)
-            .setMinSize(gameWindowWidth, gameWindowHeight)
-            .layout()
+        var quizPanel = CreateQuizPanel(this).layout();
 
         console.log(`${quizPanel.width}x${quizPanel.height}`)
 
