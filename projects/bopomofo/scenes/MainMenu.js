@@ -16,12 +16,7 @@ class MainMenu extends Base {
     }
 
     create() {
-        var gameConfig = this.game.config;
-        var gameWindowWidth = gameConfig.width;
-        var gameWindowHeight = gameConfig.height;
         var mainMenu = CreateMainMenuPanel(this)
-            .setPosition(gameWindowWidth / 2, gameWindowHeight / 2)
-            .setMinSize(gameWindowWidth, gameWindowHeight)
             .layout()
             .on('button.mode-select', function () {
                 this.scene.start(QuizConfigSceneKey);
@@ -35,6 +30,8 @@ class MainMenu extends Base {
             .on('button.help', function () {
                 console.log('button.help')
             })
+
+        console.log(`${mainMenu.width}x${mainMenu.height}`)
     }
 
     update() { }

@@ -2,8 +2,19 @@ import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackgro
 import { Style } from '../style/style.js';
 import CreateWord from '../quizpanel/CreateWord.js';
 
-var CreateMainMenuPanel = function (scene) {
+const GetValue = Phaser.Utils.Objects.GetValue;
+
+var CreateMainMenuPanel = function (scene, config) {
+    var gameConfig = scene.game.config;
+    var gameWindowWidth = gameConfig.width;
+    var gameWindowHeight = gameConfig.height;
+    var x = GetValue(config, 'x', gameWindowWidth / 2);
+    var y = GetValue(config, 'y', gameWindowHeight / 2);
+    var width = GetValue(config, 'width', gameWindowWidth);
+    var height = GetValue(config, 'height', gameWindowHeight);
     var mainMenuPanel = scene.rexUI.add.sizer({
+        x: x, y: y,
+        width: width, height: height,
         orientation: 'y',
     })
 
