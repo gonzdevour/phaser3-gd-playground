@@ -23,42 +23,40 @@ var CreateModalDialog = function (scene, config) {
 
     if (typeof (config.title) === 'string') {
         config.title = scene.rexUI.add.BBCodeText(0, 0, config.title, { fontFamily: 'DFKai-SB', fontSize: 60 });
+        SetValue(config, 'expand.title', false);
     }
 
     if (typeof (config.content) === 'string') {
         config.content = scene.rexUI.add.BBCodeText(0, 0, config.content, { fontFamily: 'DFKai-SB', fontSize: 60 });
+        SetValue(config, 'expand.content', false);
     }
 
     if (config.buttonMode === undefined) {
         config.buttonMode = 0;
     }
-    var buttons;
     switch (config.buttonMode) {
         case 2: // OK/Cancel
-            buttons = [
+            config.actions = [
                 CreateButton(scene, 'yes'),
                 scene.rexUI.add.space(),
                 CreateButton(scene, 'no')
             ];
             break;
         case 1: // OK
-            buttons = [
+            config.actions = [
                 scene.rexUI.add.space(),
                 CreateButton(scene, 'yes'),
                 scene.rexUI.add.space()
             ];
             break;
         default:
-            buttons = [];
+            config.actions = [];
             break;
     }
-    config.actions = buttons;
 
     if (config.space === undefined) {
-        config.space = { left: 40, right: 40, top: 40, bottom: 40, item: 20 }
+        config.space = { left: 40, right: 40, top: 40, bottom: 40, item: 20 };
     }
-
-    SetValue(config, 'expand.actions', true);
 
     var dialog = scene.rexUI.add.dialog(config);
 
@@ -66,9 +64,6 @@ var CreateModalDialog = function (scene, config) {
     if (config.background) {
         dialog.moveDepthBelow(config.background);
     }
-
-    // Layout UI
-    dialog.layout();
 
     return dialog;
 }

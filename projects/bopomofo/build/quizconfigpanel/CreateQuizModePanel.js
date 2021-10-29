@@ -1,6 +1,6 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import CreateTitleLabel from './CreateTitleLabel.js';
-import CreateSimpleBBCodeTextDialog from '../style/dialog/CreateSimpleBBCodeTextDialog.js';
+import ModalDialogPromise from '../modeldialog/ModalDialogPromise.js';
 
 const PanelName = 'mode';
 const GetValue = Phaser.Utils.Objects.GetValue;
@@ -48,11 +48,12 @@ var CreateQuizModePanel = function (scene, config) {
 
     // Add button callback
     title.getElement('help').onClick(function () {
-        CreateSimpleBBCodeTextDialog(panel, {
+        ModalDialogPromise(scene, {
             title: '出題模式',
             content: 'Content',
-            okCallback: function () { },
-            cancelCallback: false
+            buttonMode: 1,
+
+            width: 500,
         })
     })
 
