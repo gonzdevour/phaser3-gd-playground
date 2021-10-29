@@ -68,20 +68,17 @@ class Test extends Phaser.Scene {
             })
 
         // Chain questions
-        var Quiz = function () {
-            return QuizPromise(quizPanel, quiz.nextQuestion)
-                .then(function (result) {
-                    console.log(result);
-                    return QuizResultModalPromise(quizPanel.scene, result)
-                })
-                .then(function () {
-                    // Test next question
-                    if (!quiz.isLastQuestion) {
-                        return Quiz();
-                    } else {
-                        console.log('Quiz complete')
-                    }
-                })
+        var Quiz = async function () {
+            var result = await QuizPromise(quizPanel, quiz.nextQuestion);
+            console.log(result);
+            await QuizResultModalPromise(quizPanel.scene, result);
+
+            // Test next question
+            if (!quiz.isLastQuestion) {
+                return Quiz();
+            } else {
+                console.log('Quiz complete')
+            }
         }
         Quiz();
     }
