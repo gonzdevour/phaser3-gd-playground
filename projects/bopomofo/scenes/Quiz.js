@@ -50,7 +50,7 @@ class Quiz extends Base {
 
             // Test next question
             if (!quiz.isLastQuestion) {
-                return Quiz();
+                Quiz();
             } else {
                 console.log('Quiz complete')
             }
