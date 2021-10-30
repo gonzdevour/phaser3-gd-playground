@@ -6,13 +6,13 @@ var CreateActions = function (scene) {
         orientation: 'x',
         buttons: [
             CreateLabel(scene, '清除選取', 'eraser', 'left'),
+            scene.rexUI.add.space(),
             CreateLabel(scene, '送出答案', 'confirm', 'right'),
         ],
         space: {
             left: 10, right: 10, top: 0, bottom: 0, item: 10
         }
     })
-        .insertSpace(1)
 }
 
 var CreateLabel = function (scene, text, img, pos) {
