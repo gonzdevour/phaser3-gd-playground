@@ -12,9 +12,9 @@ var CreateMainMenuPanel = function (scene, config) {
     var y = GetValue(config, 'y', gameWindowHeight / 2);
     var width = GetValue(config, 'width', gameWindowWidth);
     var height = GetValue(config, 'height', gameWindowHeight);
+
+    // Not the top-most sizer
     var mainMenuPanel = scene.rexUI.add.sizer({
-        x: x, y: y,
-        width: width, height: height,
         orientation: 'y',
     })
 
@@ -57,7 +57,8 @@ var CreateMainMenuPanel = function (scene, config) {
     var btnConfig = CreateLabel(scene, '*');
     var btnHelp = CreateLabel(scene, '?');
 
-    var backgroundOverlapSizer = scene.rexUI.add.overlapSizer()
+    var backgroundOverlapSizer = scene.rexUI.add.overlapSizer({
+    })
         .add(
             mainMenuPanel,
             { align: 'center', expand: false }
@@ -84,7 +85,7 @@ var CreateMainMenuPanel = function (scene, config) {
         .addChildrenMap('btnConfig', btnConfig)
         .addChildrenMap('btnHelp', btnHelp)
 
-    return backgroundOverlapSizer;
+    return backgroundOverlapSizer.setPosition(x, y).setMinSize(width, height);
 }
 
 var CreateLabel = function (scene, text, img, pos) {

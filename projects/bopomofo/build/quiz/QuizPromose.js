@@ -7,7 +7,7 @@ var QuizPromise = async function (quizPanel, quiz) {
         console.log(result);
         await QuizResultModalPromise(quizPanel.scene, result);
     }
-    console.log('Quiz complete');
+    // End of quiz
 }
 
 var QuizPanelPromise = function (quizPanel, question) {

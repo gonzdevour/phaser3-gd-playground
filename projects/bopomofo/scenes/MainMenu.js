@@ -16,8 +16,7 @@ class MainMenu extends Base {
     }
 
     create() {
-        var mainMenu = CreateMainMenuPanel(this)
-            .layout()
+        var mainMenu = CreateMainMenuPanel(this).layout()
             .on('button.mode-select', function () {
                 this.scene.start(QuizConfigSceneKey);
             }, this)
