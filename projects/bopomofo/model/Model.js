@@ -26,7 +26,7 @@ class Model {
         this.quiz = new Quiz(this);
     }
 
-    get quizConfig() {
+    getQuizConfig() {
         var dataManager = this.lsData;
         return {
             database: dataManager.get('database'),
@@ -35,11 +35,12 @@ class Model {
         }
     }
 
-    set quizConfig(config) {
+    setQuizConfig(config) {
         var dataManager = this.lsData;
         for (var key in config) {
             dataManager.set(key, config[key]);
         }
+        return this;
     }
 }
 

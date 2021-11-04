@@ -4,7 +4,7 @@ import GetCombinedRhyme from '../../model/db/characters/query/GetCombinedRhyme.j
 const Shuffle = Phaser.Utils.Array.Shuffle;
 
 var BuildQuiz = function (model) {
-    var quizConfig = model.quizConfig;
+    var quizConfig = model.getQuizConfig();
 
     // See build/quizconfigpanel/CreateDatabaseSelectPanel.js
     var dbName = quizConfig.database;

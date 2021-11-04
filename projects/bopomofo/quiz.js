@@ -43,10 +43,11 @@ class Test extends Phaser.Scene {
         console.log(`${quizPanel.width}x${quizPanel.height}`)
 
         // Set quizConfig manually
-        // var quizConfig = model.quizConfig;
-        // quizConfig.database = '常用詞庫';
-        // quizConfig.enhancement = 'ㄔㄘ';
-        // quizConfig.mode = '依序';
+        // model.setQuizConfig({
+        //     database: '常用詞庫',
+        //     enhancement:'ㄔㄘ',
+        //     mode: '依序'
+        // })
         // var quiz = BuildQuiz(model);
 
         // Test 2->4 word layout case
