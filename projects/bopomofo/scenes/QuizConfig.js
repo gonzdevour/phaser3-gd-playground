@@ -18,15 +18,14 @@ class QuizConfig extends Base {
     }
 
     create() {
-        var quizConfig = this.model.quizConfig;
         var quizConfigPanel = CreateQuizConfigPanel(this, {
-            radio: quizConfig
+            radio: this.model.quizConfig
         })
             .layout()
             // .drawBounds(this.add.graphics(), 0xff0000)
             .on('startQuiz', function (result) {
                 console.log(result);
-                Object.assign(quizConfig, result);
+                this.model.quizConfig = result;
                 this.scene.start(QuizSceneKey);
             }, this)
 
