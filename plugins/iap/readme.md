@@ -7,12 +7,7 @@ Example
 // before we can use the store object.
 
 // 1. Create iap instance
-var iap = InitIAP([
-    { id: 'gems.lv1.cp', type: 'CONSUMABLE' },
-    { id: 'gems.lv2.cp', type: 'CONSUMABLE' },
-    { id: 'gems.lv3.cp', type: 'CONSUMABLE' },
-    { id: 'removeads.cp', type: 'NON_CONSUMABLE' },
-])
+var iap = InitIAP();
 
 // 2. Register events
 iap.on('registered', funtion(p){

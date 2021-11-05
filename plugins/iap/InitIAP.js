@@ -1,9 +1,9 @@
 import IAP from './IAP.js';
 
-var InitIAP = function (products) {
+var InitIAP = function () {
     // We must wait for the "deviceready" event to fire
     // before we can use the store object.
-    var iap = new IAP(store, products);
+    var iap = new IAP(store);
 
     // Register log event
     iap.on('registered', function (p) {
