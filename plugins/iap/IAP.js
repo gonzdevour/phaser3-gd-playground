@@ -1,7 +1,7 @@
 import EE from 'eventemitter3';
 
 class IAP extends EE {
-    constructor(store, products) {
+    constructor(store) {
         super();
 
         this.store = store;
@@ -24,17 +24,19 @@ class IAP extends EE {
         store.ready(function () {
             self.emit('ready');
         })
-
-        // Also register products if provided
-        if (products) {
-            for (var i = 0, cnt = products.length; i < cnt; i++) {
-                this.register(products[i]);
-            }
-            this.refresh();
-        }
     }
 
     register(id, type, alias) {
+        // Register products
+        if (Array.isArray(id)) {
+            var products = id;
+            for (var i = 0, cnt = products.length; i < cnt; i++) {
+                this.register(products[i]);
+            }
+            return this;
+        }
+
+        // Register a product
         if (typeof (id) === 'object') {
             var product = id;
             id = product.id;
