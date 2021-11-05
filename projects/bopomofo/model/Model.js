@@ -15,11 +15,7 @@ class Model {
 
         this.lsData = new LocalStorageData({
             name: 'bopomofo',
-            default: {
-                database: '高頻詞庫',
-                enhancement: '無',
-                mode: '隨機'
-            }
+            default: DefaultQuizConig
         })
 
         // Only one quiz (series of question) is running one time
@@ -37,11 +33,17 @@ class Model {
 
     setQuizConfig(config) {
         var dataManager = this.lsData;
-        for (var key in config) {
-            dataManager.set(key, config[key]);
-        }
+        dataManager.set('database', config.database);
+        dataManager.set('enhancement', config.enhancement);
+        dataManager.set('mode', config.mode);
         return this;
     }
+}
+
+var DefaultQuizConig = {
+    database: '高頻詞庫',
+    enhancement: '無',
+    mode: '隨機'
 }
 
 export default Model;
