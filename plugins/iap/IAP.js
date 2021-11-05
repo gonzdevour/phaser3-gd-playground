@@ -10,13 +10,13 @@ class IAP extends EE {
         // fovea receipt validator
         store.validator = "https://validator.fovea.cc/v1/validate?appName=com.playone.cp&apiKey=6b024545-4f20-4c11-9848-a30a9682823c";
         // Route events
-        RouteEvent(this, 'registered');
-        RouteEvent(this, 'loaded');
-        RouteEvent(this, 'updated');
-        RouteEvent(this, 'approved', function (p) { p.verify(); });
-        RouteEvent(this, 'verified', function (p) { p.finish(); });
-        RouteEvent(this, 'unverified');
-        RouteEvent(this, 'finished');
+        RouteProductEvent(this, 'registered');
+        RouteProductEvent(this, 'loaded');
+        RouteProductEvent(this, 'updated');
+        RouteProductEvent(this, 'approved', function (p) { p.verify(); });
+        RouteProductEvent(this, 'verified', function (p) { p.finish(); });
+        RouteProductEvent(this, 'unverified');
+        RouteProductEvent(this, 'finished');
 
         store.error(function (error) {
             self.emit('error', error);
@@ -62,7 +62,7 @@ class IAP extends EE {
     }
 }
 
-var RouteEvent = function (iap, eventName, postCallback) {
+var RouteProductEvent = function (iap, eventName, postCallback) {
     iap.store.when('product')[eventName](function (param) {
         iap.emit(eventName, param);
 
