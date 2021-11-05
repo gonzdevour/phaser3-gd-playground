@@ -1,6 +1,7 @@
 import DBWrap from './db/DBWrap.js';
 import Quiz from './quiz/Quiz.js';
 import LocalStorageData from '../../../../phaser3-rex-notes/plugins/localstorage-data.js';
+import { DefaultData, DefaultQuizConfig } from './DefaultData.js'
 
 const GetValue = Phaser.Utils.Objects.GetValue;
 
@@ -15,7 +16,7 @@ class Model {
 
         this.lsData = new LocalStorageData({
             name: 'bopomofo',
-            default: DefaultQuizConig
+            default: DefaultData
         })
 
         // Only one quiz (series of question) is running one time
@@ -24,26 +25,20 @@ class Model {
 
     getQuizConfig() {
         var dataManager = this.lsData;
-        return {
-            database: dataManager.get('database'),
-            enhancement: dataManager.get('enhancement'),
-            mode: dataManager.get('mode'),
+        var result = {};
+        for (var key in DefaultQuizConfig) {
+            result[key] = dataManager.get(key)
         }
+        return result;
     }
 
     setQuizConfig(config) {
         var dataManager = this.lsData;
-        dataManager.set('database', config.database);
-        dataManager.set('enhancement', config.enhancement);
-        dataManager.set('mode', config.mode);
+        for (var key in DefaultQuizConfig) {
+            dataManager.set(key, config[key]);
+        }
         return this;
     }
-}
-
-var DefaultQuizConig = {
-    database: '高頻詞庫',
-    enhancement: '無',
-    mode: '隨機'
 }
 
 export default Model;
