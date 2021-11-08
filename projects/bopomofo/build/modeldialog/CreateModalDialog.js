@@ -8,11 +8,9 @@ var CreateModalDialog = function (scene, config) {
         config = {};
     }
 
-    var gameConfig = scene.game.config;
-    var gameWindowWidth = gameConfig.width;
-    var gameWindowHeight = gameConfig.height;
-    config.x = GetValue(config, 'x', gameWindowWidth / 2);
-    config.y = GetValue(config, 'y', gameWindowHeight / 2);
+    var viewport = scene.rexUI.viewport;
+    config.x = GetValue(config, 'x', viewport.centerX);
+    config.y = GetValue(config, 'y', viewport.centerY);
     config.width = GetValue(config, 'width', 0);
     config.height = GetValue(config, 'height', 0);
 

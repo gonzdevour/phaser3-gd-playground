@@ -6,13 +6,11 @@ import CreateQuizModePanel from "./CreateQuizModePanel.js";
 const GetValue = Phaser.Utils.Objects.GetValue;
 
 var CreateQuizConfigPanel = function (scene, config) {
-    var gameConfig = scene.game.config;
-    var gameWindowWidth = gameConfig.width;
-    var gameWindowHeight = gameConfig.height;
-    var x = GetValue(config, 'x', gameWindowWidth / 2);
-    var y = GetValue(config, 'y', gameWindowHeight / 2);
-    var width = GetValue(config, 'width', gameWindowWidth);
-    var height = GetValue(config, 'height', gameWindowHeight);
+    var viewport = scene.rexUI.viewport;
+    var x = GetValue(config, 'x', viewport.centerX);
+    var y = GetValue(config, 'y', viewport.centerY);
+    var width = GetValue(config, 'width', viewport.width);
+    var height = GetValue(config, 'height', viewport.height);
 
     // Build UI
     var databaseSelectPanel = CreateDatabaseSelectPanel(scene, config);
