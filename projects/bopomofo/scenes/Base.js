@@ -20,5 +20,9 @@ class Base extends Phaser.Scene {
     get model() {
         return Model;
     }
+
+    create() {
+        this.rexScaleOuter.scale();
+    }
 }
 export default Base;

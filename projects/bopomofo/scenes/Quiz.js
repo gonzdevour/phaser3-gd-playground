@@ -29,6 +29,7 @@ class Quiz extends Base {
     }
 
     create() {
+        super.create();
         var quizPanel = CreateQuizPanel(this).layout();
 
         console.log(`${quizPanel.width}x${quizPanel.height}`)

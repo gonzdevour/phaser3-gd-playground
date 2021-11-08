@@ -15,12 +15,8 @@ class Test extends Phaser.Scene {
     }
 
     create() {
-        var gameConfig = this.game.config;
-        var gameWindowWidth = gameConfig.width;
-        var gameWindowHeight = gameConfig.height;
+        this.rexScaleOuter.scale();
         var mainMenu = CreateMainMenuPanel(this)
-            .setPosition(gameWindowWidth / 2, gameWindowHeight / 2)
-            .setMinSize(gameWindowWidth, gameWindowHeight)
             .layout()
             .on('button.mode-select', function () {
                 console.log('button.mode-select')
@@ -49,7 +45,7 @@ var config = {
     height: 1334,
     scale: {
         // mode: Phaser.Scale.ENVELOP,
-        mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     plugins: AllPlugins,

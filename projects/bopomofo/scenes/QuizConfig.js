@@ -18,6 +18,7 @@ class QuizConfig extends Base {
     }
 
     create() {
+        super.create();
         var quizConfigPanel = CreateQuizConfigPanel(this, {
             radio: this.model.getQuizConfig()
         })

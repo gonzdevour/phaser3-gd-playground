@@ -12,7 +12,7 @@ var config = {
     width: 768,
     height: 1334,
     scale: {
-        mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     plugins: AllPlugins,

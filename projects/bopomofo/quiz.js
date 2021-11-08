@@ -38,6 +38,7 @@ class Test extends Phaser.Scene {
             ]
         })
 
+        this.rexScaleOuter.scale();
         var quizPanel = CreateQuizPanel(this).layout();
 
         console.log(`${quizPanel.width}x${quizPanel.height}`)
@@ -77,7 +78,7 @@ var config = {
     height: 1334,
     scale: {
         // mode: Phaser.Scale.ENVELOP,
-        mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     plugins: AllPlugins,

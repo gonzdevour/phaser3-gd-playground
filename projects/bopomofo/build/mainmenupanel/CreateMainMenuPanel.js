@@ -5,7 +5,7 @@ import CreateWord from '../quizpanel/CreateWord.js';
 const GetValue = Phaser.Utils.Objects.GetValue;
 
 var CreateMainMenuPanel = function (scene, config) {
-    var viewport = scene.rexUI.viewport;
+    var viewport = scene.rexScaleOuter.outerViewport;
     var x = GetValue(config, 'x', viewport.centerX);
     var y = GetValue(config, 'y', viewport.centerY);
     var width = GetValue(config, 'width', viewport.width);
