@@ -1,5 +1,6 @@
 import 'phaser';
 import InitLog from '../../plugins/logger/InitLog.js';
+import rexScaleOuter from '../../plugins/scaleouter/scaleouter.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -36,9 +37,10 @@ var config = {
     width: 768,
     height: 1334,
     scale: {
-        mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
+    plugins: rexScaleOuter,
     scene: Test
 };
 

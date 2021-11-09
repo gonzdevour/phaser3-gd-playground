@@ -26,6 +26,7 @@ var CreateDiv = function (config) {
     div.style.position = 'absolute';
 
     div.style.overflow = 'auto';
+    div.style.fontSize = '64px';
     return div;
 }
 
