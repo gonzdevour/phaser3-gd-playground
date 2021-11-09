@@ -1,0 +1,41 @@
+import 'phaser';
+import InitLog from '../../plugins/logger/InitLog.js';
+
+class Test extends Phaser.Scene {
+    constructor() {
+        super({
+            key: 'test'
+        })
+        InitLog('game', {
+            width: '300px', height: '300px',
+            backgroundColor: 'Navy'
+        })
+    }
+
+    preload() {
+        console.log('preload')
+    }
+
+    create() {
+        console.log('create')
+        for(var i=0; i<1000; i++) {
+            console.log(i)
+        }
+    }
+
+    update() { }
+}
+
+var config = {
+    type: Phaser.AUTO,
+    parent: 'game',
+    width: 768,
+    height: 1334,
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
+    scene: Test
+};
+
+var game = new Phaser.Game(config);
