@@ -8,28 +8,6 @@ const COLOR_DARK = 0x260e04;
 
 const RandomInt = Phaser.Math.Between;
 
-//get viewport in resize mode with scaleOuter
-
-var vw, vh;
-var ww = window.innerWidth;
-var wh = window.innerHeight;
-var wr = wh / ww;
-var cw = this.game.config.width;
-var ch = this.game.config.height;
-var cr = ch / cw;
-if (wr != cr) {
-  //若螢幕比例與畫面比例不同
-  if (wr > cr) {
-    //螢幕比例比畫面比例長，改變vh
-    vw = cw;
-    vh = ch * ((wh * cw) / (ch * ww));
-  } else {
-    //螢幕比例比畫面比例寬，改變vw
-    vw = cw * ((ch * ww) / (wh * cw));
-    vh = ch;
-  }
-}
-
 //speech setting
 
 const synth = window.speechSynthesis;
@@ -54,44 +32,16 @@ var setVoice = function () {
 
 //create btn
 
-var createButton = function (scene, pkg) {
-  return scene.rexUI.add.label({
+var createButton = function (scene, key) {
+  var btn = scene.rexUI.add.label({
     background: scene.rexUI.add.roundRectangle(0, 0, 100, 500, 10, COLOR_PRIMARY).setStrokeStyle(2, COLOR_LIGHT),
-    text: scene.add.text(0, 0, pkg.txt, {
-      fontSize: 96,
+    text: scene.add.text(0, 0, key.txt, {
+      fontSize: 24,
     }),
-    fn: pkg.fn,
     align: "center",
   });
-};
-
-//cdvPlugin: dialog
-
-var dialog_confirm = function () {
-  console.log("dialog_confirm" + " complete");
-};
-
-var dialog_show = function () {
-  navigator.notification.confirm(
-    "You are the winner!", // message
-    dialog_confirm, // callback to invoke with index of button pressed
-    "Game Over", // title
-    ["Restart", "Exit"] // buttonLabels
-  );
-};
-
-var dialog_onPrompt = function (results) {
-  alert("You selected button number " + results.buttonIndex + " and entered " + results.input1);
-};
-
-var dialog_prompt = function () {
-  navigator.notification.prompt(
-    'Please enter your name',  // message
-    dialog_onPrompt,           // callback to invoke
-    'Registration',            // title
-    ['Ok','Exit'],             // buttonLabels
-    'Jane Doe'                 // defaultText
-  );
+  btn.fn = key.fn;
+  return btn;
 };
 
 class Test extends Phaser.Scene {
@@ -112,37 +62,69 @@ class Test extends Phaser.Scene {
   }
 
   create() {
-    var print = this.add.text(0, 0, "");
-    var background = this.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK);
+    //get viewport in resize mode with scaleOuter
 
-    var btnsBundle = [];
-    var btns = {};
-    var keys = [
-        { txt: "dialog_show", fn: dialog_show },
-        { txt: "dialog_prompt", fn: dialog_prompt },
-        { txt: "dialog_2", fn: dialog_prompt },
-        { txt: "dialog_3", fn: dialog_prompt },
-        { txt: "dialog_4", fn: dialog_prompt },
-        { txt: "dialog_5", fn: dialog_prompt },
-        { txt: "dialog_6", fn: dialog_prompt },
-        { txt: "dialog_7", fn: dialog_prompt },
-        { txt: "dialog_8", fn: dialog_prompt },
-      ],
-      key,
-      btnsRow = [];
-    for (var i = 0, cnt = keys.length; i < cnt; i++) {
-      key = keys[i];
-      btns[key] = createButton(this, key);
-      if (i != 0 && i % 3 == 0) {
-        btnsBundle.push(btnsRow);
-        btnsRow = [];
-        btnsRow.push([btns[key]]);
+    var vw, vh;
+    var ww = window.innerWidth;
+    var wh = window.innerHeight;
+    var wr = wh / ww;
+    var cw = this.game.config.width;
+    var ch = this.game.config.height;
+    var cr = ch / cw;
+    if (wr != cr) {
+      //若螢幕比例與畫面比例不同
+      if (wr > cr) {
+        //螢幕比例比畫面比例長，改變vh
+        vw = cw;
+        vh = ch * ((wh * cw) / (ch * ww));
       } else {
-        btnsRow.push([btns[key]]);
+        //螢幕比例比畫面比例寬，改變vw
+        vw = cw * ((ch * ww) / (wh * cw));
+        vh = ch;
       }
     }
 
-    console.log(JSON.stringify(btnsBundle));
+    var print = this.add.text(0, 0, "");
+    var background = this.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK);
+
+    var btns = {};
+    var keys = [
+        { txt: "dialog_show", fn: "dialog_show" },
+        { txt: "dialog_prompt", fn: "dialog_prompt" },
+        { txt: "dialog_2", fn: "dialog_prompt" },
+        { txt: "dialog_3", fn: "dialog_prompt" },
+      ],
+      key,
+      btnsRow = [],
+      btnsBundle = [];
+
+    for (var i = 0, cnt = keys.length; i < cnt; i++) {
+      key = keys[i];
+      btns[key] = createButton(this, key);
+      if (i > 0 && i%2 == 0) {
+        console.log("換列");//換列
+        btnsBundle.push(btnsRow);
+        btnsRow = [];
+        btnsRow.push(btns[key]);
+        console.log(JSON.stringify(btnsBundle));
+        if (i == cnt - 1) {
+          console.log("剛好loop結束");//如果剛好loop結束
+          btnsBundle.push(btnsRow);
+          console.log(JSON.stringify(btnsBundle));
+        };
+      } else if (i == cnt - 1) { 
+        console.log("沒換列但loop結束");//沒換列但loop結束       
+        btnsRow.push(btns[key]);
+        btnsBundle.push(btnsRow);
+        console.log(JSON.stringify(btnsBundle));
+      } else { 
+        console.log("沒換列");//沒換列      
+        btnsRow.push(btns[key]);
+        console.log(JSON.stringify(btnsBundle));
+      }
+    }
+
+    //console.log(JSON.stringify(btnsBundle));
 
     this.rexUI.add
       .gridButtons({
@@ -176,7 +158,8 @@ class Test extends Phaser.Scene {
           setVoice();
           synth.speak(utter);
 
-          button.fn();
+          gfn.cdvPlugin[button.fn]();
+
           var key = button.text;
           var word = print.text;
           if (key === "<") {
