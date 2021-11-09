@@ -6,7 +6,7 @@ class Test extends Phaser.Scene {
         super({
             key: 'test'
         })
-        InitLog('game', {
+        InitLog({
             width: '300px', height: '300px',
             backgroundColor: 'Navy'
         })
