@@ -13,14 +13,18 @@ class Test extends Phaser.Scene {
     }
 
     preload() {
-        console.log('preload')
+        log('preload')
     }
 
     create() {
-        console.log('create')
+        log('create')
         for(var i=0; i<1000; i++) {
-            console.log(i)
+            log(i)
         }
+
+        this.input.on('pointerup', function(){
+            logger.toggleVisible();
+        })
     }
 
     update() { }

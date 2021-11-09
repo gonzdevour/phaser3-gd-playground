@@ -16,10 +16,34 @@ class Logger {
         var print = CreateDiv(config);
         parent.appendChild(print);
         this.print = print;
+        this._visible = true;
     }
 
     log(text) {
         this.print.innerHTML += `${text}<br>`;
+        return this;
+    }
+
+    get visible() {
+        return this._visible;
+    }
+
+    set visible(value) {
+        this._visible = value;
+        this.print.style.display = (value) ? 'inline' : 'none';
+    }
+
+    setVisible(visible) {
+        if (visible === undefined) {
+            visible = true;
+        }
+
+        this.visible = visible;
+        return this;
+    }
+
+    toggleVisible() {
+        this.setVisible(!this.visible);
         return this;
     }
 }
