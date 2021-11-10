@@ -1,34 +1,7 @@
-//cdvPlugin: dialog
-var cdvPlugin = {};
+import speech from "./speech.js";
+import cdvPlugin from "./cdvPlugin.js";
 
-cdvPlugin.dialog_confirm = function () {
-  console.log("on dialog_confirm");
+export { 
+    cdvPlugin, 
+    speech,
 };
-
-cdvPlugin.dialog_show = function () {
-    console.log("on dialog_show");
-  navigator.notification.confirm(
-    "You are the winner!", // message
-    dialog_confirm, // callback to invoke with index of button pressed
-    "Game Over", // title
-    ["Restart", "Exit"] // buttonLabels
-  );
-};
-
-cdvPlugin.dialog_onPrompt = function (results) {
-    console.log("on dialog_onPrompt");
-  alert("You selected button number " + results.buttonIndex + " and entered " + results.input1);
-};
-
-cdvPlugin.dialog_prompt = function () {
-    console.log("on dialog_prompt");
-  navigator.notification.prompt(
-    "Please enter your name", // message
-    dialog_onPrompt, // callback to invoke
-    "Registration", // title
-    ["Ok", "Exit"], // buttonLabels
-    "Jane Doe" // defaultText
-  );
-};
-
-export { cdvPlugin };
