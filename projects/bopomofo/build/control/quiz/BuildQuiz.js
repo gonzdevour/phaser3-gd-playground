@@ -1,5 +1,5 @@
-import GetBopomofoFilter from '../../model/db/characters/query/GetBopomofoFilter.js';
-import GetCombinedRhyme from '../../model/db/characters/query/GetCombinedRhyme.js';
+import GetBopomofoFilter from '../../../model/db/characters/query/GetBopomofoFilter.js';
+import GetCombinedRhyme from '../../../model/db/characters/query/GetCombinedRhyme.js';
 
 const Shuffle = Phaser.Utils.Array.Shuffle;
 

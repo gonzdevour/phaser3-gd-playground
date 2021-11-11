@@ -1,7 +1,6 @@
 import 'phaser';
 import AllPlugins from '../../plugins/AllPlugins.js';
-import CreateMainMenuPanel from './build/mainmenupanel/CreateMainMenuPanel.js';
-import EaseMoveFrom from '../../../phaser3-rex-notes/plugins/behaviors/easemove/EaseMoveFrom.js';
+import CreateMainMenuPanel from './build/view/mainmenupanel/CreateMainMenuPanel.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -32,7 +31,7 @@ class Test extends Phaser.Scene {
             })
 
         var logo = mainMenu.getElement('logo');
-        EaseMoveFrom(logo, 1000, undefined, '-=200', 'Cubic');
+        this.rexUI.easeMoveFrom(logo, 1000, undefined, '-=200', 'Cubic');
     }
 
     update() { }

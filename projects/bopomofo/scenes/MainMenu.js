@@ -1,7 +1,7 @@
 import 'phaser';
 import Base from './Base.js';
 import { MainMenuSceneKey, QuizConfigSceneKey, QuizSceneKey } from './Const.js';
-import CreateMainMenuPanel from '../build/mainmenupanel/CreateMainMenuPanel.js';
+import CreateMainMenuPanel from '../build/view/mainmenupanel/CreateMainMenuPanel.js';
 
 // Main menu
 class MainMenu extends Base {
@@ -32,6 +32,10 @@ class MainMenu extends Base {
             }, this)
 
         console.log(`${mainMenu.width}x${mainMenu.height}`)
+
+        var logo = mainMenu.getElement('logo');
+        this.rexUI.easeMoveFrom(logo, 1000, undefined, '-=200', 'Cubic');
+
     }
 
     update() { }

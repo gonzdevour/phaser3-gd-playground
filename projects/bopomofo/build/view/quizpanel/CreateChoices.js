@@ -1,6 +1,6 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import CreateButtonBackground from '../style/CreateButtonBackground.js';
-import { Choices } from '../../gameobjects/quizpanel.js';
+import { Choices } from '../../../gameobjects/quizpanel.js';
 import { Style } from '../style/style.js';
 
 const MaxInitialsButtons = 5;

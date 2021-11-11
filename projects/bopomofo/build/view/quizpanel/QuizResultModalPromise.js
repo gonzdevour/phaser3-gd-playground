@@ -1,6 +1,6 @@
 import ModalDialogPromise from '../modeldialog/ModalDialogPromise.js';
-import Character from '../../gameobjects/character/Character.js'
-import { Initials, Media, Vowel } from '../../model/bopomofo/Bopomofo.js'
+import Character from '../../../gameobjects/character/Character.js'
+import { Initials, Media, Vowel } from '../../../model/bopomofo/Bopomofo.js'
 import { Style } from '../style/style.js';
 
 var QuizResultModalPromise = function (scene, result, onCloseCallback) {

@@ -1,6 +1,6 @@
 import 'phaser';
 import AllPlugins from '../../plugins/AllPlugins.js';
-import CreateQuizConfigPanel from './build/quizconfigpanel/CreateQuizConfigPanel.js';
+import CreateQuizConfigPanel from './build/view/quizconfigpanel/CreateQuizConfigPanel.js';
 
 class Test extends Phaser.Scene {
     constructor() {

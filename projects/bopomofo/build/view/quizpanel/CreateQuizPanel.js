@@ -3,7 +3,7 @@ import CreateTitle from "./CreateTitle.js";
 import CreateWord from "./CreateWord.js";
 import CreateChoices from "./CreateChoices.js";
 import CreateActions from "./CreateActions.js";
-import { QuizPanel } from '../../gameobjects/quizpanel.js';
+import { QuizPanel } from '../../../gameobjects/quizpanel.js';
 import { Style } from "../style/style.js";
 
 const GetValue = Phaser.Utils.Objects.GetValue;

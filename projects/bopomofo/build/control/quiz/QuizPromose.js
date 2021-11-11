@@ -1,5 +1,5 @@
 import SetupQuizPanel from './SetupQuizPanel.js';
-import QuizResultModalPromise from '../quizpanel/QuizResultModalPromise.js';
+import QuizResultModalPromise from '../../view/quizpanel/QuizResultModalPromise.js';
 
 var QuizPromise = async function (quizPanel, quiz) {
     while (!quiz.isLastQuestion) {
