@@ -2,14 +2,14 @@
 const synth = window.speechSynthesis;
 const utter = new SpeechSynthesisUtterance();
 
-/* speech.init = function (language, voiceName) { //voiceName: "Google 國語（臺灣）"|"Microsoft Hanhan - Chinese (Traditional, Taiwan)"
+var init = function (language, voiceName) { //voiceName: "Google 國語（臺灣）"|"Microsoft Hanhan - Chinese (Traditional, Taiwan)"
   utter.lang = language;
   setTimeout(function () {
-    speech.setVoice(voiceName);
-  }, 1000);
+    this.setVoice(voiceName);
+  }.bind(this), 1000);
 };
 
-speech.setVoice = function(voiceName) {
+var setVoice = function(voiceName) {
   var voices = synth.getVoices();
   //console.log(voices);
   var foundVoices = voices.filter(function (voice) {
@@ -21,12 +21,14 @@ speech.setVoice = function(voiceName) {
   }
 }
 
-speech.say = function (words) {
+var say = function (words) {
   utter.text = words;
   synth.speak(utter);
-}; */
+};
 
-class speech {
+export {init, setVoice, say};
+
+/* class speech {
   constructor() {
   }
   init(language, voiceName) {
@@ -51,6 +53,6 @@ class speech {
     utter.text = words;
     synth.speak(utter);
   }
-}
+} */
 
-export default speech;
+//export default speech;

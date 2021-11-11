@@ -1,8 +1,8 @@
 import "phaser";
 import AllPlugins from "../../plugins/AllPlugins.js";
 //import speech from "./res/api/speech.js";
-//import * as gfn from "./res/api/global.js";
-import {speech, cdvPlugin} from "./res/api/global.js";
+import * as gfn from "./res/api/global.js";
+//import {speech, cdvPlugin} from "./res/api/global.js";
 
 const COLOR_PRIMARY = 0x4e342e;
 const COLOR_LIGHT = 0x7b5e57;
@@ -11,11 +11,13 @@ const COLOR_DARK = 0x260e04;
 const RandomInt = Phaser.Math.Between;
 
 //speech init
-var sp = new speech();
-sp.init("zh-TW", "Google 國語（臺灣）");
+
+//var sp = new gfn.speech();
+gfn.speech.init("zh-TW", "Google 國語（臺灣）");
+//sp.init("zh-TW", "Google 國語（臺灣）");
 
 //cordova plugin init
-var cdvp = new cdvPlugin();
+var cdvp = new gfn.cdvPlugin();
 
 //create btn
 
@@ -121,7 +123,8 @@ class Test extends Phaser.Scene {
           //gfn.se.play(this, "ok");
           //this.sound.play("ok");
 
-          sp.say(button.say);
+          //sp.say(button.say);
+          gfn.speech.say(button.say);
           cdvp[button.fn]();
 
           var key = button.text;
