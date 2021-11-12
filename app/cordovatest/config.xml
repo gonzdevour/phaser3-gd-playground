@@ -129,6 +129,7 @@
     <allow-intent href="*" />
 
 	<plugin name="cordova-custom-config" />
+	<plugin name="@ahovakimyan/cordova-plugin-wkwebviewxhrfix" />
 	<plugin name="cordova-plugin-media" />
 	<plugin name="cordova-plugin-vibration" />
 	<plugin name="cordova-plugin-camera" />

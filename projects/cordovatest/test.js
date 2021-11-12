@@ -12,12 +12,7 @@ const RandomInt = Phaser.Math.Between;
 
 //speech init
 
-var sp = new gfn.speech("zh-TW", "Google 國語（臺灣）");
-//var sp = new gfn.speech();
-//sp.init("zh-TW", "Google 國語（臺灣）");
-
-//cordova plugin init
-//var cdvp = new gfn.cdvPlugin();
+//var sp = new gfn.speech("zh-TW", "Google 國語（臺灣）");
 
 //create btn
 
@@ -120,12 +115,9 @@ class Test extends Phaser.Scene {
       .on(
         "button.click",
         function (button, index, pointer, event) {
-          //gfn.se.play(this, "ok");
-          //this.sound.play("ok");
 
-          //sp.say(button.say);
+          this.sound.play("ok");
           sp.say(button.say);
-          //cdvp[button.fn]();
           gfn.cdvPlugin[button.fn]();
 
           var key = button.text;

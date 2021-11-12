@@ -1,5 +1,5 @@
 @echo off
-set dist=./app/cordovatest
+set dist=./app/cordovatest/www
 rem set postfix=timestamp
 set project=./projects/cordovatest
 set main=test.js
