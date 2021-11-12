@@ -2,7 +2,7 @@
 set dist=./app/bopomofo
 rem set postfix=timestamp
 set project=./projects/bopomofo
-set main=quiz.js
+set main=main.js
 set htmlTemplate=gd-index.tmpl
 set assets=assets
 set root=root
