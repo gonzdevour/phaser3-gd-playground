@@ -1,8 +1,8 @@
 @echo off
-set dist=./app/bopomofo
+set dist=./app/cordovatest
 rem set postfix=timestamp
-set project=./projects/bopomofo
-set main=quiz.js
+set project=./projects/cordovatest
+set main=test.js
 set htmlTemplate=gd-index.tmpl
 set assets=assets
 set root=root

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1079347638095",
+    "firebase_url": "https://crackling-heat-5467.firebaseio.com",
+    "project_id": "crackling-heat-5467",
+    "storage_bucket": "crackling-heat-5467.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079347638095:android:3eaf2aae25a7f8df",
+        "android_client_info": {
+          "package_name": "com.iegoart.lcs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1079347638095-bu26nvlncd2t5spcb38f46ul7ahajvq3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaU-2AHYKD5DGoSssoGKN4tO8TwRYHxkE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
