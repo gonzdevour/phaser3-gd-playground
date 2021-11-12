@@ -1,9 +1,9 @@
 import 'phaser';
 import Base from './Base.js';
 import { QuizSceneKey } from './Const.js';
-import CreateQuizPanel from '../build/quizpanel/CreateQuizPanel.js';
-import BuildQuiz from '../build/quiz/BuildQuiz.js';
-import QuizPromise from '../build/quiz/QuizPromose.js';
+import CreateQuizPanel from '../build/view/quizpanel/CreateQuizPanel.js';
+import BuildQuiz from '../build/control/quiz/BuildQuiz.js';
+import QuizPromise from '../build/control/quiz/QuizPromose.js';
 
 // Run quiz
 class Quiz extends Base {

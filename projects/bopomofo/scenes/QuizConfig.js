@@ -1,7 +1,7 @@
 import 'phaser';
 import Base from './Base.js';
 import { QuizConfigSceneKey, QuizSceneKey } from './Const.js';
-import CreateQuizConfigPanel from '../build/quizconfigpanel/CreateQuizConfigPanel.js';
+import CreateQuizConfigPanel from '../build/view/quizconfigpanel/CreateQuizConfigPanel.js';
 
 // Setup quiz
 class QuizConfig extends Base {

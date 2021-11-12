@@ -1,5 +1,5 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
-import { Word } from '../../gameobjects/quizpanel.js';
+import { Word } from '../../../gameobjects/quizpanel.js';
 import CreateCharacter from './CreateCharacter';
 
 const MaxCharacters = 4;

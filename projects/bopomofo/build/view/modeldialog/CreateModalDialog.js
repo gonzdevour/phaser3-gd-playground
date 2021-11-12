@@ -1,5 +1,5 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
-import SetValue from '../../../../../phaser3-rex-notes/plugins/utils/object/SetValue.js';
+import SetValue from '../../../../../../phaser3-rex-notes/plugins/utils/object/SetValue.js';
 
 const GetValue = Phaser.Utils.Objects.GetValue;
 
