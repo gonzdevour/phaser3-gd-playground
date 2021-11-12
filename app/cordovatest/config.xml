@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<widget id="com.playone.cp" version="1.2.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>cordovaP3</name>
+	<description>test cordova plugin with phaser3</description>
+	<author email="playoneapps@gmail.com" href="http://playoneapps.com.tw">playone</author>
+	
+	<!-- Splashscreen Settings -->
+	<!-- iOS only -->
+	<platform name="ios">
+		<!-- iOS 8.0+ -->
+		<icon src="res/icon/ios/icon-1024.png" width="1024" height="1024"/>
+		<!-- iPhone 6 Plus  -->
+		<icon src="res/icon/ios/icon-60@3x.png" width="180" height="180"/>
+		<!-- iOS 7.0+ -->
+		<!-- iPhone / iPod Touch  -->
+		<icon src="res/icon/ios/icon-60.png" width="60" height="60"/>
+		<icon src="res/icon/ios/icon-60@2x.png" width="120" height="120"/>
+		<!-- iPad -->
+		<icon src="res/icon/ios/icon-76.png" width="76" height="76"/>
+		<icon src="res/icon/ios/icon-76@2x.png" width="152" height="152"/>
+		<!-- Spotlight Icon -->
+		<icon src="res/icon/ios/icon-40.png" width="40" height="40"/>
+		<icon src="res/icon/ios/icon-40@2x.png" width="80" height="80"/>
+		<!-- iOS 6.1 -->
+		<!-- iPhone / iPod Touch -->
+		<icon src="res/icon/ios/icon.png" width="57" height="57"/>
+		<icon src="res/icon/ios/icon@2x.png" width="114" height="114"/>
+		<!-- iPad -->
+		<icon src="res/icon/ios/icon-72.png" width="72" height="72"/>
+		<icon src="res/icon/ios/icon-72@2x.png" width="144" height="144"/>
+		<!-- iPad Pro -->
+		<icon src="res/icon/ios/icon-167.png" width="167" height="167"/>
+		<!-- iPhone Spotlight and Settings Icon -->		
+		<icon src="res/icon/ios/icon-small.png" width="29" height="29"/>
+		<icon src="res/icon/ios/icon-small@2x.png" width="58" height="58"/>
+		<icon src="res/icon/ios/icon-small@3x.png" width="87" height="87"/>
+		<!-- iPad Spotlight and Settings Icon -->
+		<icon src="res/icon/ios/icon-50.png" width="50" height="50"/>
+		<icon src="res/icon/ios/icon-50@2x.png" width="100" height="100"/>
+		<icon src="res/icon/ios/icon-83.5@2x.png" width="167" height="167"/>
+
+		<!-- splash portrait -->
+		<splash src="res/screen/ios/Default@2x~iphone~anyany.png"/>
+		<splash src="res/screen/ios/Default@2x~iphone~comany.png"/>
+		<splash src="res/screen/ios/Default@3x~iphone~anyany.png"/>
+		<splash src="res/screen/ios/Default@3x~iphone~comany.png"/>
+		<splash src="res/screen/ios/Default@2x~ipad~anyany.png"/>
+		<splash src="res/screen/ios/Default@2x~ipad~comany.png"/>
+		<!-- splash landscape -->
+        <splash src="res/screen/ios/Default@2x~iphone~comcom.png"/>
+        <splash src="res/screen/ios/Default@3x~iphone~anycom.png"/>
+		<!-- splash display -->
+		<preference name="FadeSplashScreen" value="true"/>
+		<preference name="FadeSplashScreenDuration" value="500"/>
+		<!-- file import -->
+		<resource-file src="res/GoogleService-Info.plist" />
+	</platform>
+	<!-- Android only -->
+	<platform name="android">
+		<icon density="ldpi" src="res/icon/android/ldpi.png"/>
+		<icon density="mdpi" src="res/icon/android/mdpi.png"/>
+		<icon density="hdpi" src="res/icon/android/hdpi.png"/>
+		<icon density="xhdpi" src="res/icon/android/xhdpi.png"/>
+		<icon density="xxhdpi" src="res/icon/android/xxhdpi.png"/>
+		<icon density="xxxhdpi" src="res/icon/android/xxxhdpi.png"/>
+		<splash density="port-ldpi" src="res/screen/android/splash-port-ldpi.png"/>
+		<splash density="port-mdpi" src="res/screen/android/splash-port-mdpi.png"/>
+		<splash density="port-hdpi" src="res/screen/android/splash-port-hdpi.png"/>
+		<splash density="port-xhdpi" src="res/screen/android/splash-port-xhdpi.png"/>
+		<splash density="port-xxhdpi" src="res/screen/android/splash-port-xxhdpi.png"/>
+		<splash density="port-xxxhdpi" src="res/screen/android/splash-port-xxxhdpi.png"/>
+		<!-- splash display -->
+		<preference name="SplashMaintainAspectRatio" value="true" />
+		<preference name="SplashShowOnlyFirstTime" value="false" />
+		<!-- file import -->
+		<resource-file src="res/google-services.json" target="google-services.json" />
+	</platform>
+	<!-- Common -->
+	<preference name="ShowSplashScreenSpinner" value="false"/>
+	<preference name="AutoHideSplashScreen" value="true" />
+	<preference name="SplashScreenDelay" value="3000" />	
+	
+	<!-- Localization -->	
+	<config-file platform="ios" target="*-Info.plist" parent="CFBundleDevelopmentRegion">
+		<array>
+			<string>zh-Hant</string>
+		</array>
+	</config-file>
+	<config-file platform="ios" target="*-Info.plist" parent="CFBundleLocalizations">
+		<array>
+			<string>zh-Hant</string>
+		</array>
+	</config-file>
+	
+	<!-- Permission Description -->	
+	<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+    <string>需要啟用您的相機掃描展場中的光碼，以取得導覽或活動資訊。</string>
+	</edit-config>
+	
+	<edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+    <string>需要使用您的相簿以儲存照片。</string>
+	</edit-config>
+	
+	<edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+    <string>需要取得您的位置資訊以偵測在您附近舉辦的展覽或活動</string>
+	</edit-config>
+	
+	<edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
+    <string>需要使用您的相簿以儲存照片。</string>
+	</edit-config>
+
+	<!--cli 7.1.0, cordova android 6.3.0-->
+	<edit-config file="AndroidManifest.xml" target="/manifest/application" mode="merge">
+		<application android:allowBackup="false"/>
+	</edit-config>
+	
+	<preference name="android-targetSdkVersion" value="30" />
+	<preference name="android-minSdkVersion" value="28" />
+	<preference name="orientation" value="portrait" />
+	<preference name="fullscreen" value="true" />
+	<preference name="DisallowOverscroll" value="true" />
+	<preference name="AllowInlineMediaPlayback" value="true" />
+
+	<config-file parent="UIStatusBarHidden" platform="ios" target="*-Info.plist"><true/></config-file>
+	<config-file parent="UIViewControllerBasedStatusBarAppearance" platform="ios" target="*-Info.plist"><false/></config-file>
+
+	<access origin="*" />
+    <allow-navigation href="*" />
+    <allow-intent href="*" />
+
+	<plugin name="cordova-custom-config" />
+	<plugin name="cordova-plugin-media" />
+	<plugin name="cordova-plugin-vibration" />
+	<plugin name="cordova-plugin-camera" />
+	<plugin name="cordova-plugin-device" />
+	<plugin name="cordova-plugin-inappbrowser" />
+	<plugin name="cordova-plugin-statusbar" />
+	<plugin name="cordova-plugin-whitelist" />
+	<plugin name="cordova-plugin-splashscreen" />
+	<plugin name="cordova-plugin-dialogs" source="npm" />
+	<plugin name="cordova-plugin-password-dialog" source="npm" />
+	<plugin name="cordova-plugin-pin-dialog" source="npm" />
+	<plugin name="cordova-plugin-save-image" source="npm" />
+	<plugin name="cordova-plugin-network-information" source="npm" />
+	<plugin name="cordova-plugin-native-spinner" source="npm" />
+	<plugin name="cordova-plugin-market-ibby" source="npm" />
+	<plugin name="phonegap-plugin-barcodescanner" source="npm" />
+	<plugin name="cordova-plugin-badge" source="npm" />
+	<plugin name="cordova-plugin-local-notification" source="npm" />
+	<plugin name="cordova-plugin-game-center" source="npm" />
+	<plugin name="cordova-plugin-media-capture" />
+	<!-- testing -->
+	<plugin name="cordova-plugin-admobpro" source="npm">
+		<variable name="PLAY_SERVICES_VERSION" value="16.0.0" />
+		<variable name="ADMOB_APP_ID" value="ca-app-pub-9463460868384198~8273098860" />
+	</plugin>
+	<plugin name="cordova-plugin-play-games-services">
+		<variable name="ANDROID_PLAY_SERVICES_GAMES_VERSION" value="16.0.0" />
+		<variable name="ANDROID_PLAY_SERVICES_PLUS_VERSION" value="16.0.0" />
+		<variable name="APP_ID" value="1055728607458" />
+	</plugin>	
+	<plugin name="cordova-plugin-purchase" source="npm" version="9.0.0">
+		<variable name="BILLING_KEY" value="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnleRaUGvAAZ8OeGfMSRzBh4/SSkz0LQLeshZGa/O3zAX84EmZUtzLkkxwkLbYFtv/MEu5qgq5TH1WDlT7u+QF0Wt2JtIWU5PtyfeiuJAU1TnUo4ImOw+UBE1rqWckovS98YyyGf3q+2SBym5i3pRFNb5tpJojf51/h9HiwF/+uU+Yy48epRoddUO7zx8VJX7irXSj879x3xjc2MmkgX2YQ5HynGSDNemYgiNKCULc5cfzQeF7DQHIZYNL4xT35mpc/jI16oK2uFEfTHHxVBRe5UDbeEOV1bCeVO0vbIJ/rE4ylZ1OkFMUuquQ3W1jksGPDfOGhZkEaGloKyRbDxLeQIDAQAB" />
+	</plugin>
+</widget>
