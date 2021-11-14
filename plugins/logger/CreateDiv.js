@@ -17,6 +17,16 @@ var CreateDiv = function (config) {
     } else {
         div.style.top = '0px';
     }
+    if (config.hasOwnProperty('fontSize')) {
+        div.style.fontSize = config.fontSize;
+    } else {
+        div.style.fontSize = '12px';
+    }
+    if (config.hasOwnProperty('opacity')) {
+        div.style.opacity = config.opacity;
+    } else {
+        div.style.opacity = 1;
+    }
     if (config.hasOwnProperty('backgroundColor')) {
         div.style.backgroundColor = config.backgroundColor;
     }
@@ -24,9 +34,12 @@ var CreateDiv = function (config) {
     div.style.zIndex = '0';
     div.style.display = 'inline';
     div.style.position = 'absolute';
-
     div.style.overflow = 'auto';
-    div.style.fontSize = '64px';
+    div.style.borderStyle = 'solid';
+    div.style.borderWidth = '2px';
+    div.style.margin = '5px';
+    div.style.padding = '5px';
+
     return div;
 }
 

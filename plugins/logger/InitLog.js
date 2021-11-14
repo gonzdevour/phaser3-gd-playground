@@ -1,12 +1,20 @@
 import Logger from './Logger.js';
 
 var InitLog = function (parent, config) {
-    var logger = new Logger(parent, config);
-    window.logger = logger;
-    window.log = function (text) {
-        logger.log(text);
+    if (parent.active) {
+        var logger = new Logger(parent, config);
+        window.logger = logger;
+        window.log = function (text) {
+            logger.log(text);
+            console.log(text);
+        }
+        return logger;
+    } else {
+        window.log = function (text) {
+            console.log(text);
+        } 
     }
-    return logger;
+
 }
 
 export default InitLog;

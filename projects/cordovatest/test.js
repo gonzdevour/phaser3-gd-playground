@@ -1,4 +1,5 @@
 import "phaser";
+import InitLog from '../../plugins/logger/InitLog.js';
 import AllPlugins from "../../plugins/AllPlugins.js";
 import * as gfn from "./res/api/index.js";
 //import speech from "./res/api/speech.js";
@@ -9,6 +10,21 @@ const COLOR_LIGHT = 0x7b5e57;
 const COLOR_DARK = 0x260e04;
 
 const RandomInt = Phaser.Math.Between;
+
+//log init
+
+InitLog({
+  width: '70%', height: '30%',
+  fontSize: '24px',
+  backgroundColor: 'Navy',
+  opacity: 0.7,
+  active: true,
+})
+
+log('stand-alone')
+for (var i = 0; i < 1000; i++) {
+  log(i)
+}
 
 //speech init
 
