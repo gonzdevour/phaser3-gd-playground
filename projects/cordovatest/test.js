@@ -1,9 +1,9 @@
 import "phaser";
-import InitLog from '../../plugins/logger/InitLog.js';
+import InitLog from "../../plugins/logger/InitLog.js";
 import AllPlugins from "../../plugins/AllPlugins.js";
 //import * as gfn from "./res/api/index.js";
 //import speech from "./res/api/speech.js";
-import {speechSynthesis, cdvp} from "./res/api/index.js";
+import { speechSynthesis, cdvp } from "./res/api/index.js";
 
 const COLOR_PRIMARY = 0x4e342e;
 const COLOR_LIGHT = 0x7b5e57;
@@ -14,22 +14,36 @@ const RandomInt = Phaser.Math.Between;
 //log init
 
 InitLog({
-  width: '80%', height: '30%',
-  fontSize: Math.round(window.innerWidth/20) + 'px',
-  backgroundColor: 'Navy',
+  width: "80%",
+  height: "30%",
+  fontSize: Math.round(window.innerWidth / 20) + "px",
+  backgroundColor: "Navy",
   opacity: 0.7,
   active: true,
-})
+});
 
-log('logger start');
+log("logger start");
 
 //speech init
 
-var speech = new speechSynthesis("zh-TW", "Google 國語（臺灣）");
+//var speech = new speechSynthesis("zh-TW", "Google 國語（臺灣）");
 
 //cordova plugins init
-//dialog
-var dialog = new cdvp.dialog();
+if (!!window.cordova) {
+  log("cordova");
+  document.addEventListener(
+    "deviceready",
+    () => {
+      log("cordova deviceready");
+      //dialog
+      var dialog = new cdvp.dialog();
+    },
+    false
+  );
+} else {
+  log("website");
+  var dialog = new cdvp.dialog();
+}
 
 //create btn
 
@@ -64,7 +78,6 @@ class Test extends Phaser.Scene {
   }
 
   create() {
-
     var background = this.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK);
 
     var btns = {};
@@ -81,7 +94,7 @@ class Test extends Phaser.Scene {
     for (var i = 0, cnt = keys.length; i < cnt; i++) {
       key = keys[i];
       btns[key] = createButton(this, key);
-      if (i > 0 && i%2 == 0) {
+      if (i > 0 && i % 2 == 0) {
         //log("換列");//換列
         btnsBundle.push(btnsRow);
         btnsRow = [];
@@ -91,14 +104,14 @@ class Test extends Phaser.Scene {
           //log("剛好loop結束");//如果剛好loop結束
           btnsBundle.push(btnsRow);
           //log(JSON.stringify(btnsBundle));
-        };
-      } else if (i == cnt - 1) { 
-        //log("沒換列但loop結束");//沒換列但loop結束       
+        }
+      } else if (i == cnt - 1) {
+        //log("沒換列但loop結束");//沒換列但loop結束
         btnsRow.push(btns[key]);
         btnsBundle.push(btnsRow);
         //log(JSON.stringify(btnsBundle));
-      } else { 
-        //log("沒換列");//沒換列      
+      } else {
+        //log("沒換列");//沒換列
         btnsRow.push(btns[key]);
         //log(JSON.stringify(btnsBundle));
       }
@@ -114,7 +127,7 @@ class Test extends Phaser.Scene {
         height: vpt.height,
         background: background,
         buttons: btnsBundle,
-        space: { left: 10, right: 10, top: 20, bottom: 20, row: 20, column: 20, },
+        space: { left: 10, right: 10, top: 20, bottom: 20, row: 20, column: 20 },
         expand: true,
       })
       .layout()
@@ -122,12 +135,11 @@ class Test extends Phaser.Scene {
       .on(
         "button.click",
         function (button, index, pointer, event) {
-
-          this.sound.play("ok");
-          speech.say(button.say);
+          //audio.play("ok");
+          //this.sound.play("ok");
+          //speech.say(button.say);
           var fn = button.fn;
           fn();
-
         },
         this
       );
