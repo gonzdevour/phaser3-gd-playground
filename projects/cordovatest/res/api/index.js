@@ -1,7 +1,7 @@
-//import {speech} from "./speech.js";
-import {cdvPlugin} from "./cdvPlugin.js";
+import {speechSynthesis} from "./speech.js";
+import * as cdvp from "./cdvPlugins.js";
 
 export { 
-    cdvPlugin, 
-    //speech,
+    cdvp, 
+    speechSynthesis,
 };
