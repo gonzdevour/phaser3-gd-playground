@@ -1,9 +1,9 @@
 import "phaser";
 import InitLog from '../../plugins/logger/InitLog.js';
 import AllPlugins from "../../plugins/AllPlugins.js";
-import * as gfn from "./res/api/index.js";
+//import * as gfn from "./res/api/index.js";
 //import speech from "./res/api/speech.js";
-//import {speech, cdvPlugin} from "./res/api/index.js";
+import {speechSynthesis, cdvp} from "./res/api/index.js";
 
 const COLOR_PRIMARY = 0x4e342e;
 const COLOR_LIGHT = 0x7b5e57;
@@ -14,21 +14,22 @@ const RandomInt = Phaser.Math.Between;
 //log init
 
 InitLog({
-  width: '70%', height: '30%',
-  fontSize: '24px',
+  width: '80%', height: '30%',
+  fontSize: Math.round(window.innerWidth/20) + 'px',
   backgroundColor: 'Navy',
   opacity: 0.7,
   active: true,
 })
 
-log('stand-alone')
-for (var i = 0; i < 1000; i++) {
-  log(i)
-}
+log('logger start');
 
 //speech init
 
-//var sp = new gfn.speech("zh-TW", "Google 國語（臺灣）");
+var speech = new speechSynthesis("zh-TW", "Google 國語（臺灣）");
+
+//cordova plugins init
+//dialog
+var dialog = new cdvp.dialog();
 
 //create btn
 
@@ -40,7 +41,7 @@ function createButton(scene, key) {
     }),
     align: "center",
   });
-  btn.fn = key.fn; //callback name
+  btn.fn = key.fn; //callback
   btn.say = key.say; //voice text
   return btn;
 }
@@ -64,15 +65,14 @@ class Test extends Phaser.Scene {
 
   create() {
 
-    var print = this.add.text(0, 0, "");
     var background = this.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK);
 
     var btns = {};
     var keys = [
-        { txt: "火影忍者", fn: "dialog_show", say: "火影忍者跑去總統府洗澡" },
-        { txt: "老虎", fn: "dialog_prompt", say: "老虎掌海底" },
-        { txt: "馬桶", fn: "dialog_prompt", say: "馬桶" },
-        { txt: "葉公好龍", fn: "dialog_prompt", say: "葉公好龍鑷子" },
+        { txt: "火影忍者", fn: dialog.show, say: "火影忍者跑去總統府洗澡" },
+        { txt: "老虎", fn: dialog.prompt, say: "老虎掌海底" },
+        { txt: "馬桶", fn: dialog.prompt, say: "馬桶" },
+        { txt: "葉公好龍", fn: dialog.prompt, say: "葉公好龍鑷子" },
       ],
       key,
       btnsRow = [],
@@ -82,30 +82,28 @@ class Test extends Phaser.Scene {
       key = keys[i];
       btns[key] = createButton(this, key);
       if (i > 0 && i%2 == 0) {
-        //console.log("換列");//換列
+        //log("換列");//換列
         btnsBundle.push(btnsRow);
         btnsRow = [];
         btnsRow.push(btns[key]);
-        //console.log(JSON.stringify(btnsBundle));
+        //log(JSON.stringify(btnsBundle));
         if (i == cnt - 1) {
-          //console.log("剛好loop結束");//如果剛好loop結束
+          //log("剛好loop結束");//如果剛好loop結束
           btnsBundle.push(btnsRow);
-          //console.log(JSON.stringify(btnsBundle));
+          //log(JSON.stringify(btnsBundle));
         };
       } else if (i == cnt - 1) { 
-        //console.log("沒換列但loop結束");//沒換列但loop結束       
+        //log("沒換列但loop結束");//沒換列但loop結束       
         btnsRow.push(btns[key]);
         btnsBundle.push(btnsRow);
-        //console.log(JSON.stringify(btnsBundle));
+        //log(JSON.stringify(btnsBundle));
       } else { 
-        //console.log("沒換列");//沒換列      
+        //log("沒換列");//沒換列      
         btnsRow.push(btns[key]);
-        //console.log(JSON.stringify(btnsBundle));
+        //log(JSON.stringify(btnsBundle));
       }
     }
-    //console.log(JSON.stringify(btnsBundle));
-
-    //var vpt = getViewport(this);
+    //log(JSON.stringify(btnsBundle));
     var vpt = this.rexScaleOuter.outerViewport;
 
     this.rexUI.add
@@ -116,14 +114,7 @@ class Test extends Phaser.Scene {
         height: vpt.height,
         background: background,
         buttons: btnsBundle,
-        space: {
-          left: 10,
-          right: 10,
-          top: 20,
-          bottom: 20,
-          row: 20,
-          column: 20,
-        },
+        space: { left: 10, right: 10, top: 20, bottom: 20, row: 20, column: 20, },
         expand: true,
       })
       .layout()
@@ -133,19 +124,10 @@ class Test extends Phaser.Scene {
         function (button, index, pointer, event) {
 
           this.sound.play("ok");
-          sp.say(button.say);
-          gfn.cdvPlugin[button.fn]();
+          speech.say(button.say);
+          var fn = button.fn;
+          fn();
 
-          var key = button.text;
-          var word = print.text;
-          if (key === "<") {
-            if (word.length > 0) {
-              word = word.substring(0, word.length - 1);
-            }
-          } else {
-            word += key;
-          }
-          print.text = word;
         },
         this
       );
