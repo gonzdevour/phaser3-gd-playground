@@ -66,18 +66,36 @@ class Test extends Phaser.Scene {
       key: "cordova",
     });
   }
-
   preload() {
+    var loadAudio = function(key, filetype, data) {
+/*       var table = this.plugins.get('rexCsvToHashTable').add();
+      table.loadCSV(data); */
+      log(data);
+    }
+    // Load csv file
+    this.load.text("audiosrc", "assets/audiosrc.csv");
+    this.load.on("filecomplete-text-audiosrc", loadAudio, this);
     // Load sound file
     this.load.audio("ok", ["assets/sound/right.ogg", "assets/sound/right.m4a"]);
     //Load image file
     this.load.image("confirm", "assets/img/confirm.png");
     this.load.image("eraser", "assets/img/eraser.png");
-
     this.load.image("yes", "assets/img/yes.png");
   }
 
   create() {
+
+/*     var table = this.plugins.get('rexCsvToHashTable').add();
+    table.loadCSV(this.cache.text.get("audiosrc"));
+    log(table); */
+
+    var csvString = `name,hp,mp
+    Rex,100,20
+    Alice,300,40`;
+            var table = this.plugins.get('rexCsvToHashTable').add();
+            //table.loadCSV(csvString);
+            console.log(table);
+
     var background = this.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK);
 
     var btns = {};
