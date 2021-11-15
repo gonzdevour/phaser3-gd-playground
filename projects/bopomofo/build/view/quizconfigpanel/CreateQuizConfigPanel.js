@@ -24,6 +24,7 @@ var CreateQuizConfigPanel = function (scene, config) {
         orientation: 'y',
         space: { item: 40 }
     })
+        .addSpace()
         .add(
             databaseSelectPanel,
             { proportion: 0, expand: true, align: 'center' }
@@ -43,6 +44,7 @@ var CreateQuizConfigPanel = function (scene, config) {
                 padding: { left: 80, right: 80 }
             }
         )
+        .addSpace()
 
     // Add button callback
     var subPanels = [databaseSelectPanel, enhancementSelectPanel, quizModePanel];
