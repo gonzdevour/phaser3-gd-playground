@@ -36,6 +36,7 @@ var CreateQuizConfigPanel = function (scene, config) {
             quizModePanel,
             { proportion: 0, expand: true, align: 'center', }
         )
+        .addSpace()
         .add(
             buttonLabel,
             {
