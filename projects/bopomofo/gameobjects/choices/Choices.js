@@ -112,6 +112,10 @@ class Choices extends Sizer {
         for (var i = 0, icnt = TypeNames.length; i < icnt; i++) {
             this.setData(TypeNames[i], -1);
         }
+
+        // Set tone to ' ' as default value
+        this.setData('tone', 1);
+
         return this;
     }
 
