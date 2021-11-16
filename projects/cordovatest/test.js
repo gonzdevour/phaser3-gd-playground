@@ -31,7 +31,7 @@ log("logger start");
 //cordova plugins init
 var tb_audio = undefined;
 var dialog = undefined;
-var media = undefined;
+//var media = undefined;
 function cordovaCheck() {
   if (!!window.cordova) {
     log("cordova");
@@ -40,7 +40,7 @@ function cordovaCheck() {
       () => {
         log("cordova deviceready");
         //log(Media);
-        log(navigator.notification);
+        log(window.navigator.notification);
         //dialog
         dialog = new cdvp.dialog();
       },
