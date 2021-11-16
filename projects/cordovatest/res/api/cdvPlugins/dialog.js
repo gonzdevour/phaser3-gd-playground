@@ -13,7 +13,7 @@ class dialog {
           this.confirm, // callback to invoke with index of button pressed
           "Game Over", // title
           ["Restart", "Exit"] // buttonLabels
-        ).bind(this);
+        );
     }
     onPrompt(results) {
         log("on dialog_onPrompt");
@@ -27,7 +27,7 @@ class dialog {
           "Registration", // title
           ["Ok", "Exit"], // buttonLabels
           "Jane Doe" // defaultText
-        ).bind(this);
+        );
     }
   }
 

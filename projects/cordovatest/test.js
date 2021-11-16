@@ -39,7 +39,7 @@ function cordovaCheck() {
       "deviceready",
       () => {
         log("cordova deviceready");
-        log(Media);
+        //log(Media);
         log(navigator.notification);
         //dialog
         dialog = new cdvp.dialog();
@@ -75,11 +75,15 @@ class Test extends Phaser.Scene {
   }
   preload() {
     var loadAudio = function (key, filetype, data) {
-      tb_audio = this.plugins.get('rexCsvToHashTable').add().loadCSV(data);
-      tb_audio.eachRow("key", function(tb_audio, rowKey, colKey, value) {
-    // Load sound file
-        this.load.audio(rowKey, [tb_audio.get(rowKey, "ogg"), tb_audio.get(rowKey, "m4a")]);
-      }, this);
+      tb_audio = this.plugins.get("rexCsvToHashTable").add().loadCSV(data);
+      tb_audio.eachRow(
+        "key",
+        function (tb_audio, rowKey, colKey, value) {
+          // Load sound file
+          this.load.audio(rowKey, [tb_audio.get(rowKey, "ogg"), tb_audio.get(rowKey, "m4a")]);
+        },
+        this
+      );
     };
     // Load csv file
     this.load.text("audiosrc", "assets/audiosrc.csv");
@@ -151,13 +155,14 @@ class Test extends Phaser.Scene {
         "button.click",
         function (button, index, pointer, event) {
           //audio.play("ok");
-          if (!!window.cordova) {
+/*           if (!!window.cordova) {
             media = new Media(tb_audio.get("ok", "ogg"));
             media.play();
             log("cordova media play");
           } else {
             this.sound.play("ok");
-          }
+          } */
+          this.sound.play("ok");
           //speech.say(button.say);
           var fn = button.fn;
           fn();
@@ -178,6 +183,9 @@ var config = {
   scale: {
     mode: Phaser.Scale.RESIZE,
     autoCenter: Phaser.Scale.CENTER_BOTH,
+  },
+  audio: {
+    disableWebAudio: true,
   },
   plugins: AllPlugins,
   scene: Test,
