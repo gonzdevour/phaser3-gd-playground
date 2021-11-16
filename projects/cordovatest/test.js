@@ -30,7 +30,8 @@ log("logger start");
 
 //cordova plugins init
 var tb_audio = undefined;
-var dialog = undefined;
+//dialog
+var dialog = new cdvp.dialog();
 //var media = undefined;
 
 document.addEventListener(
@@ -48,10 +49,8 @@ document.addEventListener(
       }
     );
     player.play();
-    log("dialog obj:")
+    log("dialog obj:");
     log(JSON.stringify(navigator.notification));
-    //dialog
-    dialog = new cdvp.dialog();
   },
   false
 );
