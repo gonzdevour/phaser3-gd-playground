@@ -38,8 +38,10 @@ document.addEventListener(
   "deviceready",
   () => {
     log("cordova deviceready");
+    log(cordova.file.applicationDirectory + "www/assets/sound/right.ogg");
     var player = new Media(
-      "assets/sound/right.ogg",
+      cordova.file.applicationDirectory + "www/assets/sound/right.ogg",
+      //"assets/sound/right.ogg",
       function playSuccess() {
         log("media success");
         player.release();
@@ -53,6 +55,7 @@ document.addEventListener(
     log(JSON.stringify(navigator.notification));
     log("device:");
     log(device.cordova);
+    log(device.uuid)
   },
   false
 );
