@@ -29,20 +29,25 @@ log("logger start");
 //var speech = new speechSynthesis("zh-TW", "Google 國語（臺灣）");
 
 //cordova plugins init
-if (!!window.cordova) {
-  log("cordova");
-  document.addEventListener(
-    "deviceready",
-    () => {
-      log("cordova deviceready");
-      //dialog
-      var dialog = new cdvp.dialog();
-    },
-    false
-  );
-} else {
-  log("website");
-  var dialog = new cdvp.dialog();
+var tb_audio = undefined;
+var dialog = undefined;
+var media = undefined;
+function cordovaCheck() {
+  if (!!window.cordova) {
+    log("cordova");
+    document.addEventListener(
+      "deviceready",
+      () => {
+        log("cordova deviceready");
+        //dialog
+        dialog = new cdvp.dialog();
+      },
+      false
+    );
+  } else {
+    log("website");
+    dialog = new cdvp.dialog();
+  }
 }
 
 //create btn
@@ -67,16 +72,16 @@ class Test extends Phaser.Scene {
     });
   }
   preload() {
-    var loadAudio = function(key, filetype, data) {
-/*       var table = this.plugins.get('rexCsvToHashTable').add();
-      table.loadCSV(data); */
-      log(data);
-    }
+    var loadAudio = function (key, filetype, data) {
+      tb_audio = this.plugins.get('rexCsvToHashTable').add().loadCSV(data);
+      tb_audio.eachRow("key", function(tb_audio, rowKey, colKey, value) {
+    // Load sound file
+        this.load.audio(rowKey, [tb_audio.get(rowKey, "ogg"), tb_audio.get(rowKey, "m4a")]);
+      }, this);
+    };
     // Load csv file
     this.load.text("audiosrc", "assets/audiosrc.csv");
     this.load.on("filecomplete-text-audiosrc", loadAudio, this);
-    // Load sound file
-    this.load.audio("ok", ["assets/sound/right.ogg", "assets/sound/right.m4a"]);
     //Load image file
     this.load.image("confirm", "assets/img/confirm.png");
     this.load.image("eraser", "assets/img/eraser.png");
@@ -84,17 +89,7 @@ class Test extends Phaser.Scene {
   }
 
   create() {
-
-/*     var table = this.plugins.get('rexCsvToHashTable').add();
-    table.loadCSV(this.cache.text.get("audiosrc"));
-    log(table); */
-
-    var csvString = `name,hp,mp
-    Rex,100,20
-    Alice,300,40`;
-            var table = this.plugins.get('rexCsvToHashTable').add();
-            //table.loadCSV(csvString);
-            console.log(table);
+    cordovaCheck();
 
     var background = this.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK);
 
@@ -154,7 +149,13 @@ class Test extends Phaser.Scene {
         "button.click",
         function (button, index, pointer, event) {
           //audio.play("ok");
-          //this.sound.play("ok");
+          if (!!window.cordova) {
+            media = new Media(tb_audio.get("ok", "ogg"));
+            media.play();
+            log("cordova media play");
+          } else {
+            this.sound.play("ok");
+          }
           //speech.say(button.say);
           var fn = button.fn;
           fn();

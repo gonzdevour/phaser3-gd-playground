@@ -14,6 +14,8 @@ export default {
             plugin: rexscaleouterplugin,
             mapping: 'rexScaleOuter'
         },
+    ],
+    global: [
         {
             key: 'rexCsvToHashTable',
             plugin: CSVToHashTablePlugin,
