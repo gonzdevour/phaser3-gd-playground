@@ -32,25 +32,29 @@ log("logger start");
 var tb_audio = undefined;
 var dialog = undefined;
 //var media = undefined;
-function cordovaCheck() {
-  if (!!window.cordova) {
-    log("cordova");
-    document.addEventListener(
-      "deviceready",
-      () => {
-        log("cordova deviceready");
-        //log(Media);
-        log(window.navigator.notification);
-        //dialog
-        dialog = new cdvp.dialog();
+
+document.addEventListener(
+  "deviceready",
+  () => {
+    log("cordova deviceready");
+    var player = new Media(
+      "assets/sound/right.ogg",
+      function playSuccess() {
+        log("media success");
+        player.release();
       },
-      false
+      function playError(err) {
+        log("uh oh: " + err.code);
+      }
     );
-  } else {
-    log("website");
+    player.play();
+    log("dialog obj:")
+    log(JSON.stringify(navigator.notification));
+    //dialog
     dialog = new cdvp.dialog();
-  }
-}
+  },
+  false
+);
 
 //create btn
 
@@ -95,8 +99,6 @@ class Test extends Phaser.Scene {
   }
 
   create() {
-    cordovaCheck();
-
     var background = this.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK);
 
     var btns = {};
@@ -155,7 +157,7 @@ class Test extends Phaser.Scene {
         "button.click",
         function (button, index, pointer, event) {
           //audio.play("ok");
-/*           if (!!window.cordova) {
+          /*           if (!!window.cordova) {
             media = new Media(tb_audio.get("ok", "ogg"));
             media.play();
             log("cordova media play");
