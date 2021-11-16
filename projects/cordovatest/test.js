@@ -39,7 +39,7 @@ document.addEventListener(
   () => {
     log("cordova deviceready");
     var player = new Media(
-      "assets/sound/right.ogg",
+      "assets/sound/right.wav",
       //"assets/sound/right.ogg",
       function playSuccess() {
         log("media success");
@@ -51,7 +51,13 @@ document.addEventListener(
     );
     player.play();
     log("dialog obj:");
-    log(JSON.stringify(navigator.notification));
+    log(navigator.notification);
+    navigator.notification.alert(
+      'You are the winner!',               // message
+      function(){log("alertDismissed");},  // callback
+      'Game Over',                         // title
+      'Done'                               // buttonName
+  );
     log("device:");
     log(device.cordova);
     log(device.uuid)
