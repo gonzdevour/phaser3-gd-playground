@@ -51,6 +51,8 @@ document.addEventListener(
     player.play();
     log("dialog obj:");
     log(JSON.stringify(navigator.notification));
+    log("device:");
+    log(device.cordova);
   },
   false
 );
