@@ -39,8 +39,8 @@ function cordovaCheck() {
       "deviceready",
       () => {
         log("cordova deviceready");
-        log(Media);
-        log(navigator.notification);
+        //log(Media);
+        //log(navigator.notification);
         //dialog
         dialog = new cdvp.dialog();
       },
