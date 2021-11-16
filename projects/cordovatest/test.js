@@ -38,6 +38,7 @@ document.addEventListener(
   "deviceready",
   () => {
     log("cordova deviceready");
+    log("audio file dir");
     log(cordova.file.applicationDirectory + "www/assets/sound/right.ogg");
     var player = new Media(
       cordova.file.applicationDirectory + "www/assets/sound/right.ogg",
