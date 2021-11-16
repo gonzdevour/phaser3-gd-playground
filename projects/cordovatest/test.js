@@ -38,10 +38,8 @@ document.addEventListener(
   "deviceready",
   () => {
     log("cordova deviceready");
-    log("audio file dir");
-    log(cordova.file.applicationDirectory + "www/assets/sound/right.ogg");
     var player = new Media(
-      cordova.file.applicationDirectory + "www/assets/sound/right.ogg",
+      "assets/sound/right.ogg",
       //"assets/sound/right.ogg",
       function playSuccess() {
         log("media success");
@@ -169,6 +167,7 @@ class Test extends Phaser.Scene {
           } else {
             this.sound.play("ok");
           } */
+          navigator.vibrate(3000);
           this.sound.play("ok");
           //speech.say(button.say);
           var fn = button.fn;
