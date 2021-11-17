@@ -2,21 +2,16 @@
 
 class dialog {
   constructor() {}
-  onConfirm(a,b,c) {
+  onConfirm(btnIdx) {
     log("finally confirmed!");
-    log("a:" + a);
-    log("b:" + b);
-    log("c:" + c);
+    log("btnIdx:" + btnIdx);
   }
   show() {
     var _dialog = this;
     log("on dialog_show");
     navigator.notification.confirm(
       "You are the winner!", // message
-      function(){ 
-        log("confirmed");
-        _dialog.onConfirm(); 
-      }, // callback to invoke with index of button pressed
+      this.onConfirm.bind(this),
       //function () { log("confirmed"); },
       "Game Over", // title
       ["Restart", "Exit"] // buttonLabels

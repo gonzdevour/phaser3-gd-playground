@@ -44,6 +44,16 @@ document.addEventListener(
 );
 
 var cdvInit = function(){
+  async function ad() {
+    banner = new admob.BannerAd({
+      adUnitId: 'ca-app-pub-xxx/yyyca-app-pub-9463460868384198/1587436860',
+    })
+    banner.on('impression', async (evt) => {
+      await banner.hide()
+    })
+    await banner.show()
+  }
+  ad();
   var player = new Media(
     "assets/sound/what.mp3",
     //"assets/sound/right.wav",
