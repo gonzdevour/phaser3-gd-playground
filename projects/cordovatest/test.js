@@ -53,14 +53,14 @@ document.addEventListener(
     log("dialog obj:");
     log(navigator.notification);
     navigator.notification.alert(
-      'You are the winner!',               // message
-      function(){log("alertDismissed");},  // callback
-      'Game Over',                         // title
-      'Done'                               // buttonName
-  );
+      "You are the winner!", // message
+      function () { log("alertDismissed" ); }, // callback
+      "Game Over", // title
+      "Done" // buttonName
+    );
     log("device:");
     log(device.cordova);
-    log(device.uuid)
+    log(device.uuid);
   },
   false
 );
@@ -113,7 +113,7 @@ class Test extends Phaser.Scene {
     var btns = {};
     var keys = [
         { txt: "火影忍者", fn: dialog.show, say: "火影忍者跑去總統府洗澡" },
-        { txt: "老虎", fn: dialog.prompt, say: "老虎掌海底" },
+        { txt: "老虎", fn: dialog.alert, say: "老虎掌海底" },
         { txt: "馬桶", fn: dialog.prompt, say: "馬桶" },
         { txt: "葉公好龍", fn: dialog.prompt, say: "葉公好龍鑷子" },
       ],
