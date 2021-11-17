@@ -59,15 +59,6 @@ var cdvInit = function(){
   );
   //player.play();
   log("dialog obj:");
-  log(navigator.notification);
-  navigator.notification.alert(
-    "You are the winner!", // message
-    function () {
-      log("alertDismissed");
-    }, // callback
-    "Game Over", // title
-    "Done" // buttonName
-  );
   log("device:");
   log(device.cordova);
   log(device.uuid);
@@ -76,7 +67,7 @@ var cdvInit = function(){
   //log("TTSVoice:" + TTSVoice);
   TTS
       .speak({
-        text: "火影忍者跑著去總統府洗澡",
+        text: "火影忍者光著身子去總統府洗澡",
         identifier: "com.apple.ttsbundle.siri_female_zh-CN_compact",
         locale: "zh-TW",
         rate: 0,
