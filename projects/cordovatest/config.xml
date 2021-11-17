@@ -150,9 +150,9 @@
 	<plugin name="cordova-plugin-game-center" source="npm" />
 	<plugin name="cordova-plugin-media-capture" />
 	<!-- testing -->
-	<plugin name="cordova-plugin-admobpro" source="npm">
-		<variable name="PLAY_SERVICES_VERSION" value="16.0.0" />
-		<variable name="ADMOB_APP_ID" value="ca-app-pub-9463460868384198~8273098860" />
+	<plugin name="admob-plus-cordova" source="npm">
+		<variable name="APP_ID_ANDROID" value="ca-app-pub-9463460868384198~8273098860" />
+		<variable name="APP_ID_IOS" value="ca-app-pub-9463460868384198~9110703668" />
 	</plugin>
 	<plugin name="cordova-plugin-play-games-services">
 		<variable name="ANDROID_PLAY_SERVICES_GAMES_VERSION" value="16.0.0" />
