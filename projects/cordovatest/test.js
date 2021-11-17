@@ -39,21 +39,13 @@ document.addEventListener(
   () => {
     log("cordova deviceready");
     cdvInit();
+    admobInit();
   },
   false
 );
 
 var cdvInit = function(){
-  async function ad() {
-    banner = new admob.BannerAd({
-      adUnitId: 'ca-app-pub-xxx/yyyca-app-pub-9463460868384198/1587436860',
-    })
-    banner.on('impression', async (evt) => {
-      await banner.hide()
-    })
-    await banner.show()
-  }
-  ad();
+
   var player = new Media(
     "assets/sound/what.mp3",
     //"assets/sound/right.wav",
@@ -110,6 +102,33 @@ var cdvInit = function(){
     }
   );
 };
+
+//admob init
+
+function admobInit(){
+  // select the right Ad Id according to platform
+  var admobid = {};
+  if( /(android)/i.test(navigator.userAgent) ) { // for android & amazon-fireos
+    admobid = {
+      banner: 'ca-app-pub-9463460868384198/9749832066', // or DFP format "/6253334/dfp_example_ad"
+      interstitial: 'ca-app-pub-9463460868384198/2226565269'
+    };
+  } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
+    admobid = {
+      banner: 'ca-app-pub-9463460868384198/1587436860', // or DFP format "/6253334/dfp_example_ad"
+      interstitial: 'ca-app-pub-9463460868384198/3064170064'
+    };
+  } else { // for windows phone
+    admobid = {
+      banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
+      interstitial: 'ca-app-pub-xxx/kkk'
+    };
+  }
+  if(AdMob) AdMob.createBanner({
+    adId: admobid.banner,
+    position: AdMob.AD_POSITION.TOP_CENTER,
+    autoShow: true });
+}
 
 //create btn
 
