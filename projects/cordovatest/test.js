@@ -34,112 +34,67 @@ var tb_audio = undefined;
 var dialog = new cdvp.dialog();
 //var media = undefined;
 
-/* document.addEventListener(
+document.addEventListener(
   "deviceready",
   () => {
     log("cordova deviceready");
-    var player = new Media(
-      "assets/sound/right.wav",
-      //"assets/sound/right.ogg",
-      function playSuccess() {
-        log("media success");
-        player.release();
-      },
-      function playError(err) {
-        log("uh oh: " + err.code);
-      }
-    );
-    player.play();
-    log("dialog obj:");
-    log(navigator.notification);
-    navigator.notification.alert(
-      "You are the winner!", // message
-      function () {
-        log("alertDismissed");
-      }, // callback
-      "Game Over", // title
-      "Done" // buttonName
-    );
-    log("device:");
-    log(device.cordova);
-    log(device.uuid);
-    // basic usage
-    TTS.speak("你好, 世界繞著P3轉!").then(
-      function () {
-        log("speak success");
-      },
-      function (reason) {
-        log(reason);
-      }
-    );
-    // or with more options
-    TTS.getVoices().then(
-      function (voices) {
-        // Array of voices [{name:'', identifier: '', language: ''},..] see TS-declarations
-        voices.forEach(function(voice){
-          for(var key in voice){
-            log(key + ' : ' + voice[key])
-          }
-        });
-      },
-      function (reason) {
-        log(reason);
-      }
-    );
+    cdvInit();
   },
   false
-); */
+);
 
-var player = new Media(
-  "assets/sound/right.wav",
-  //"assets/sound/right.ogg",
-  function playSuccess() {
-    log("media success");
-    player.release();
-  },
-  function playError(err) {
-    log("uh oh: " + err.code);
-  }
-);
-player.play();
-log("dialog obj:");
-log(navigator.notification);
-navigator.notification.alert(
-  "You are the winner!", // message
-  function () {
-    log("alertDismissed");
-  }, // callback
-  "Game Over", // title
-  "Done" // buttonName
-);
-log("device:");
-log(device.cordova);
-log(device.uuid);
-// basic usage
-log("TTS:" + TTS);
-log("TTSVoice:" + TTSVoice);
-TTS.speak("你好, 世界繞著P3轉!").then(
-  function () {
-    log("speak success");
-  },
-  function (reason) {
-    log(reason);
-  }
-);
-// or with more options
-TTS.getVoices().then(
-  function (voices) {
-    // Array of voices [{name:'', identifier: '', language: ''},..] see TS-declarations
-    voices.forEach(function(voice){
-      for(var key in voice){
-        log(key + ' : ' + voice[key])
-      }
-    });
-  },
-  function (reason) {
-    log(reason);
-  }
-);
+var cdvInit = function(){
+  var player = new Media(
+    "assets/sound/right.wav",
+    //"assets/sound/right.ogg",
+    function playSuccess() {
+      log("media success");
+      player.release();
+    },
+    function playError(err) {
+      log("uh oh: " + err.code);
+    }
+  );
+  player.play();
+  log("dialog obj:");
+  log(navigator.notification);
+  navigator.notification.alert(
+    "You are the winner!", // message
+    function () {
+      log("alertDismissed");
+    }, // callback
+    "Game Over", // title
+    "Done" // buttonName
+  );
+  log("device:");
+  log(device.cordova);
+  log(device.uuid);
+  // basic usage
+  log("TTS:" + TTS);
+  log("TTSVoice:" + TTSVoice);
+  TTS.speak("你好, 世界繞著P3轉!").then(
+    function () {
+      log("speak success");
+    },
+    function (reason) {
+      log(reason);
+    }
+  );
+  // or with more options
+  TTS.getVoices().then(
+    function (voices) {
+      // Array of voices [{name:'', identifier: '', language: ''},..] see TS-declarations
+      voices.forEach(function(voice){
+        for(var key in voice){
+          log(key + ' : ' + voice[key])
+        }
+      });
+    },
+    function (reason) {
+      log(reason);
+    }
+  );
+};
 
 //create btn
 
