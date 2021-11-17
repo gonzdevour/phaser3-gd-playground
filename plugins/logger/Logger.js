@@ -21,6 +21,7 @@ class Logger {
 
     log(text) {
         this.print.innerHTML += `${text}<br>`;
+        this.print.scrollTop = this.print.scrollHeight - this.print.clientHeight;
         return this;
     }
 

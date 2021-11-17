@@ -54,13 +54,34 @@ document.addEventListener(
     log(navigator.notification);
     navigator.notification.alert(
       "You are the winner!", // message
-      function () { log("alertDismissed" ); }, // callback
+      function () {
+        log("alertDismissed");
+      }, // callback
       "Game Over", // title
       "Done" // buttonName
     );
     log("device:");
     log(device.cordova);
     log(device.uuid);
+    // basic usage
+    TTS.speak("hello, world!").then(
+      function () {
+        log("speak success");
+      },
+      function (reason) {
+        log(reason);
+      }
+    );
+    // or with more options
+    TTS.getVoices().then(
+      function (voices) {
+        // Array of voices [{name:'', identifier: '', language: ''},..] see TS-declarations
+        log(voices);
+      },
+      function (reason) {
+        log(reason);
+      }
+    );
   },
   false
 );

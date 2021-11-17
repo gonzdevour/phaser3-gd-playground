@@ -10,7 +10,12 @@ class dialog {
     navigator.notification.confirm(
       "You are the winner!", // message
       //this.confirm, // callback to invoke with index of button pressed
-      function () { log("confirmed"); },
+      //function () { log("confirmed"); },
+      () => {
+        //用箭頭函數保證this
+        log("--arrow function--");
+        this.confirm;
+      },
       "Game Over", // title
       ["Restart", "Exit"] // buttonLabels
     );
@@ -21,16 +26,13 @@ class dialog {
   }
   prompt() {
     log("on dialog_prompt");
-    var fn = function() {
-        navigator.notification.prompt(
-            "Please enter your name", // message
-            this.onPrompt, // callback to invoke
-            "Registration", // title
-            ["Ok", "Exit"], // buttonLabels
-            "Jane Doe" // defaultText
-          );
-    };
-    fn();
+    navigator.notification.prompt(
+        "Please enter your name", // message
+        this.onPrompt, // callback to invoke
+        "Registration", // title
+        ["Ok", "Exit"], // buttonLabels
+        "Jane Doe" // defaultText
+        );
   }
   alert() {
     log("on dialog_alert");
