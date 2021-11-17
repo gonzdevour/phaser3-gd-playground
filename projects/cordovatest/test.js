@@ -45,8 +45,8 @@ document.addEventListener(
 
 var cdvInit = function(){
   var player = new Media(
-    "assets/sound/right.wav",
-    //"assets/sound/right.ogg",
+    "assets/sound/what.opus",
+    //"assets/sound/right.wav",
     function playSuccess() {
       log("media success");
       player.release();
@@ -72,14 +72,19 @@ var cdvInit = function(){
   // basic usage
   log("TTS:" + JSON.stringify(TTS));
   //log("TTSVoice:" + TTSVoice);
-  TTS.speak("你好, 世界繞著P3轉!").then(
-    function () {
-      log("speak success");
-    },
-    function (reason) {
-      log(reason);
-    }
-  );
+  TTS
+      .speak({
+        text: "火影忍者跑著去總統府洗澡",
+        identifier: "com.apple.ttsbundle.siri_female_zh-CN_compact",
+        locale: "zh-TW",
+        rate: 0.75,
+        pitch: 0.9,
+        cancel: true
+      }).then(function () {
+    log('speak success');
+  }, function (reason) {
+    log(reason);
+  });
   // or with more options
   TTS.getVoices().then(
     function (voices) {
