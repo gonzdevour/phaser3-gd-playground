@@ -11,8 +11,11 @@ class dialog {
     log("on dialog_show");
     navigator.notification.confirm(
       "You are the winner!", // message
-      this.onConfirm.bind(this),
-      //function () { log("confirmed"); },
+      //this.onConfirm.bind(this),
+      function (btnIdx) { 
+          log("confirmed");
+          _dialog.onConfirm(btnIdx);
+      },
       "Game Over", // title
       ["Restart", "Exit"] // buttonLabels
     );
