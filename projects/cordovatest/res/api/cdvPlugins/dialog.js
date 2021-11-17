@@ -11,7 +11,7 @@ class dialog {
     log("on dialog_show");
     navigator.notification.confirm(
       "You are the winner!", // message
-      onConfirm.bind(_dialog),
+      _dialog.onConfirm,
       "Game Over", // title
       ["Restart", "Exit"] // buttonLabels
     );
