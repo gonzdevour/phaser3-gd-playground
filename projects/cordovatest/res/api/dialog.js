@@ -1,12 +1,20 @@
-//cdvPlugin: dialog
+import { getOS } from "./os.js";
+//get OS status
+var OS = getOS();
 
-class dialog {
+//dialog
+
+class cdv_dialog {
   constructor() {}
+  onConfirm(btnIdx) {
+    log("finally confirmed!");
+    log("btnIdx:" + btnIdx);
+  }
   show() {
     log("on dialog_show");
     navigator.notification.confirm(
       "You are the winner!", // message
-      onConfirm,
+      onConfirm.bind(this),
       "Game Over", // title
       ["Restart", "Exit"] // buttonLabels
     );
@@ -36,4 +44,36 @@ class dialog {
   }
 }
 
-export { dialog };
+class p3_dialog {
+  constructor() {}
+  onConfirm(btnIdx) {
+    log("finally confirmed!");
+    log("btnIdx:" + btnIdx);
+  }
+  show() {
+    log("on dialog_show");
+  }
+  onPrompt(results) {
+    log("on dialog_onPrompt");
+    alert("You selected button number " + results.buttonIndex + " and entered " + results.input1);
+  }
+  prompt() {
+    log("on dialog_prompt");
+  }
+  alert() {
+  }
+}
+
+function dialogInit(){
+  var dialog;
+  if (OS.cordova) {
+      log("init cdv dialog plugin");
+      dialog = new cdv_dialog();
+  } else {
+    log("use rex dialog")
+    dialog = new p3_dialog();
+  }
+  return dialog;
+}
+
+export { p3_dialog, cdv_dialog, dialogInit };

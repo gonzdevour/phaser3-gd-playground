@@ -1,47 +1,44 @@
+import { getOS } from "./os.js";
+//get OS status
+var OS = getOS();
+
 //speech
 
 class cdv_speechSynthesis {
-  constructor(language, voiceName) {
-    this.utter = new SpeechSynthesisUtterance();
-    this.utter.lang = language;
-    synth.addEventListener("voiceschanged", () => {
-      //用箭頭函數保證this
-      log("--voices on changed--");
-      this.setVoice(voiceName);
-    });
-  }
-  setVoice(voiceName) {
-    var voices = synth.getVoices();
-    log("show available voices");
-    log(voices);
-    var foundVoices = voices.filter(function (voice) {
-      return voice.name == voiceName;
-    });
-    if (foundVoices.length === 1) {
-      this.utter.voice = foundVoices[0];
-      log(this.utter.voice.name);
-    }
+  constructor(language, identifier) {
+    this.language = language;
+    this.identifier = identifier;
   }
   say(words) {
-    synth.cancel();
-    this.utter.text = words;
-    synth.speak(this.utter);
+    TTS
+    .speak({
+      text: words,
+      identifier: "com.apple.ttsbundle.siri_female_zh-CN_compact",
+      locale: "zh-TW",
+      rate: 0,
+      pitch: 0,
+      cancel: true
+    }).then(function () {
+    log('speak success');
+    }, function (reason) {
+    log(reason);
+    });
   }
 }
 
 class speechSynthesis {
   constructor(language, voiceName) {
-    const synth = window.speechSynthesis;
+    this.synth = window.speechSynthesis;
     this.utter = new SpeechSynthesisUtterance();
     this.utter.lang = language;
-    synth.addEventListener("voiceschanged", () => {
+    this.synth.addEventListener("voiceschanged", () => {
       //用箭頭函數保證this
       log("--voices on changed--");
       this.setVoice(voiceName);
     });
   }
   setVoice(voiceName) {
-    var voices = synth.getVoices();
+    var voices = this.synth.getVoices();
     log("show available voices");
     log(voices);
     var foundVoices = voices.filter(function (voice) {
@@ -53,10 +50,31 @@ class speechSynthesis {
     }
   }
   say(words) {
-    synth.cancel();
+    this.synth.cancel();
     this.utter.text = words;
-    synth.speak(this.utter);
+    this.synth.speak(this.utter);
   }
 }
 
-export { speechSynthesis, cdv_speechSynthesis };
+function speechInit(){
+  var speech;
+  if (OS.cordova) {
+    //speech
+    if (OS.iOS) {
+      log("init ios speech")
+      speech = new cdv_speechSynthesis("zh-TW", "com.apple.ttsbundle.siri_female_zh-CN_compact");
+    } else if (OS.android){
+      log("init android speech")
+  
+    } else {
+      log("speech not support")
+    }  
+  } else {
+    //speech
+    log("init web speech")
+    speech = new speechSynthesis("zh-TW", "Google 國語（臺灣）");
+  }
+  return speech;
+}
+
+export { speechSynthesis, cdv_speechSynthesis, speechInit };

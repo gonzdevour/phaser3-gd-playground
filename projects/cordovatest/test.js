@@ -1,9 +1,13 @@
 import "phaser";
 import InitLog from "../../plugins/logger/InitLog.js";
 import AllPlugins from "../../plugins/AllPlugins.js";
-//import * as gfn from "./res/api/index.js";
-//import speech from "./res/api/speech.js";
-import { speechSynthesis, cdvp } from "./res/api/index.js";
+import { 
+  getOS,
+  dialogInit, 
+  speechInit,
+  soundInit,
+  admobInit, } from "./res/api/index.js";
+
 
 const COLOR_PRIMARY = 0x4e342e;
 const COLOR_LIGHT = 0x7b5e57;
@@ -21,112 +25,28 @@ InitLog({
   opacity: 0.7,
   active: true,
 });
-
 log("logger start");
 
-//speech init
+//get OS status
 
-//var speech = new speechSynthesis("zh-TW", "Google 國語（臺灣）");
-
-//cordova plugins init
-var tb_audio = undefined;
-//dialog
-var dialog = new cdvp.dialog();
-//var media = undefined;
-
-document.addEventListener(
-  "deviceready",
-  () => {
-    log("cordova deviceready");
-    cdvInit();
-    admobInit();
-  },
-  false
-);
-
-var cdvInit = function(){
-
-  var player = new Media(
-    "assets/sound/what.mp3",
-    //"assets/sound/right.wav",
-    function playSuccess() {
-      log("media success");
-      player.release();
-    },
-    function playError(err) {
-      log("uh oh: " + err.code);
-    }
-  );
-  //player.play();
-  log("dialog obj:");
-  log("device:");
-  log(device.cordova);
-  log(device.uuid);
-  // basic usage
-  log("TTS:" + JSON.stringify(TTS));
-  //log("TTSVoice:" + TTSVoice);
-  TTS
-      .speak({
-        text: "火影忍者光著身子去總統府洗澡",
-        identifier: "com.apple.ttsbundle.siri_female_zh-CN_compact",
-        locale: "zh-TW",
-        rate: 0,
-        pitch: 0,
-        cancel: true
-      }).then(function () {
-    log('speak success');
-  }, function (reason) {
-    log(reason);
-  });
-  // or with more options
-  TTS.getVoices().then(
-    function (voices) {
-      // Array of voices [{name:'', identifier: '', language: ''},..] see TS-declarations
-      voices.forEach(function(voice){
-        for(var key in voice){
-          log(key + ' : ' + voice[key])
-        }
-      });
-    },
-    function (reason) {
-      log(reason);
-    }
-  );
-};
-
-//dialog
-
-function onConfirm(btnIdx) {
-  log("finally confirmed!");
-  log("btnIdx:" + btnIdx);
-}
-
-//admob init
-
-function admobInit(){
-  // select the right Ad Id according to platform
-  var admobid = {};
-  if( /(android)/i.test(navigator.userAgent) ) { // for android & amazon-fireos
-    admobid = {
-      banner: 'ca-app-pub-9463460868384198/9749832066', // or DFP format "/6253334/dfp_example_ad"
-      interstitial: 'ca-app-pub-9463460868384198/2226565269'
-    };
-  } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
-    admobid = {
-      banner: 'ca-app-pub-9463460868384198/1587436860', // or DFP format "/6253334/dfp_example_ad"
-      interstitial: 'ca-app-pub-9463460868384198/3064170064'
-    };
-  } else { // for windows phone
-    admobid = {
-      banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
-      interstitial: 'ca-app-pub-xxx/kkk'
-    };
+var OS = getOS();
+for(var key in OS){
+  if (OS[key]) {
+    log(key + ' : ' + OS[key])
   }
-  if(AdMob) AdMob.createBanner({
-    adId: admobid.banner,
-    position: AdMob.AD_POSITION.BOTTOM_CENTER,
-    autoShow: true });
 }
+
+var speech;   // speechSynthesis
+var dialog;   // cordova dialog
+var sound;    // web/cdv_media sound player
+var tb_audio; // rex-csv2JSON table
+
+var apiInit = function(){
+  sound = soundInit();
+  speech = speechInit();
+  dialog = dialogInit();
+  admobInit();
+};
 
 //create btn
 
@@ -168,6 +88,22 @@ class Test extends Phaser.Scene {
     this.load.image("confirm", "assets/img/confirm.png");
     this.load.image("eraser", "assets/img/eraser.png");
     this.load.image("yes", "assets/img/yes.png");
+    //init api
+    if (OS.cordova) {
+      document.addEventListener(
+        "deviceready",
+        () => {
+          log("cordova deviceready");
+          log("cdv_device:");
+          log(device.cordova);
+          log(device.uuid);
+          apiInit();
+        },
+        false
+      );
+    } else {
+      apiInit();
+    }
   }
 
   create() {
@@ -175,9 +111,9 @@ class Test extends Phaser.Scene {
 
     var btns = {};
     var keys = [
-        { txt: "火影忍者", fn: dialog.show, say: "火影忍者跑去總統府洗澡" },
-        { txt: "老虎", fn: dialog.alert, say: "老虎掌海底" },
-        { txt: "馬桶", fn: dialog.prompt, say: "馬桶" },
+        { txt: "火影忍者", fn: function(){dialog.show();}, say: "火影忍者跑去總統府洗澡" },
+        { txt: "老虎", fn: function(){dialog.alert();}, say: "老虎掌海底" },
+        { txt: "馬桶", fn: function(){dialog.prompt();}, say: "馬桶" },
         { txt: "葉公好龍", fn: dialog.prompt, say: "葉公好龍鑷子" },
       ],
       key,
@@ -228,17 +164,9 @@ class Test extends Phaser.Scene {
       .on(
         "button.click",
         function (button, index, pointer, event) {
-          //audio.play("ok");
-          /*           if (!!window.cordova) {
-            media = new Media(tb_audio.get("ok", "ogg"));
-            media.play();
-            log("cordova media play");
-          } else {
-            this.sound.play("ok");
-          } */
           navigator.vibrate(3000);
-          this.sound.play("ok");
-          //speech.say(button.say);
+          //sound.play("ok");
+          speech.say(button.say);
           var fn = button.fn;
           fn();
         },
