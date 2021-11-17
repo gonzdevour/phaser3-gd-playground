@@ -45,7 +45,7 @@ document.addEventListener(
 
 var cdvInit = function(){
   var player = new Media(
-    "assets/sound/what.opus",
+    "assets/sound/what.mp3",
     //"assets/sound/right.wav",
     function playSuccess() {
       log("media success");
@@ -77,8 +77,8 @@ var cdvInit = function(){
         text: "火影忍者跑著去總統府洗澡",
         identifier: "com.apple.ttsbundle.siri_female_zh-CN_compact",
         locale: "zh-TW",
-        rate: 0.75,
-        pitch: 0.9,
+        rate: 1.2,
+        pitch: 1,
         cancel: true
       }).then(function () {
     log('speak success');
