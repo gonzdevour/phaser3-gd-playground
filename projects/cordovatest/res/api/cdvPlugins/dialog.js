@@ -9,13 +9,8 @@ class dialog {
     log("on dialog_show");
     navigator.notification.confirm(
       "You are the winner!", // message
-      //this.confirm, // callback to invoke with index of button pressed
+      confirm.bind(this), // callback to invoke with index of button pressed
       //function () { log("confirmed"); },
-      () => {
-        //用箭頭函數保證this
-        log("--arrow function--");
-        this.confirm;
-      },
       "Game Over", // title
       ["Restart", "Exit"] // buttonLabels
     );
