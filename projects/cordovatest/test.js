@@ -70,8 +70,8 @@ var cdvInit = function(){
   log(device.cordova);
   log(device.uuid);
   // basic usage
-  log("TTS:" + TTS);
-  log("TTSVoice:" + TTSVoice);
+  log("TTS:" + JSON.stringify(TTS));
+  //log("TTSVoice:" + TTSVoice);
   TTS.speak("你好, 世界繞著P3轉!").then(
     function () {
       log("speak success");
