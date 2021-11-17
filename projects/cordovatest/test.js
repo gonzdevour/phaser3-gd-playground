@@ -94,6 +94,13 @@ var cdvInit = function(){
   );
 };
 
+//dialog
+
+function onConfirm(btnIdx) {
+  log("finally confirmed!");
+  log("btnIdx:" + btnIdx);
+}
+
 //admob init
 
 function admobInit(){
