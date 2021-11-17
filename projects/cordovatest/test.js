@@ -55,7 +55,7 @@ var cdvInit = function(){
       log("uh oh: " + err.code);
     }
   );
-  player.play();
+  //player.play();
   log("dialog obj:");
   log(navigator.notification);
   navigator.notification.alert(
@@ -77,8 +77,8 @@ var cdvInit = function(){
         text: "火影忍者跑著去總統府洗澡",
         identifier: "com.apple.ttsbundle.siri_female_zh-CN_compact",
         locale: "zh-TW",
-        rate: 1.2,
-        pitch: 1,
+        rate: 0,
+        pitch: 0,
         cancel: true
       }).then(function () {
     log('speak success');
