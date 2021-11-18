@@ -166,11 +166,11 @@ class Test extends Phaser.Scene {
         "button.click",
         function (button, index, pointer, event) {
           navigator.vibrate(3000);
-          //sound.play("ok");
           //this.sound.play("ok");
           speech.say(button.say);
           var fn = button.fn;
           fn();
+          sound.play("ok");
         },
         this
       );
