@@ -41,8 +41,8 @@ var dialog;   // cordova dialog
 var sound;    // web/cdv_media sound player
 var tb_audio; // rex-csv2JSON table
 
-var apiInit = function(){
-  sound = soundInit();
+var apiInit = function(scene, tb_audio){
+  sound = soundInit(scene, tb_audio);
   speech = speechInit();
   dialog = dialogInit();
   admobInit();
@@ -97,12 +97,12 @@ class Test extends Phaser.Scene {
           log("cdv_device:");
           log(device.cordova);
           log(device.uuid);
-          apiInit();
+          apiInit(scene, tb_audio);
         },
         false
       );
     } else {
-      apiInit();
+      apiInit(this, tb_audio);
     }
   }
 
@@ -166,6 +166,7 @@ class Test extends Phaser.Scene {
         function (button, index, pointer, event) {
           navigator.vibrate(3000);
           //sound.play("ok");
+          this.sound.play("ok");
           speech.say(button.say);
           var fn = button.fn;
           fn();
