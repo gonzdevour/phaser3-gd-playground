@@ -115,7 +115,7 @@ class Test extends Phaser.Scene {
         { txt: "火影忍者", fn: function(){dialog.show();}, say: "火影忍者跑去總統府洗澡" },
         { txt: "老虎", fn: function(){dialog.alert();}, say: "老虎掌海底" },
         { txt: "馬桶", fn: function(){dialog.prompt();}, say: "馬桶" },
-        { txt: "葉公好龍", fn: dialog.prompt, say: "葉公好龍鑷子" },
+        { txt: "葉公好龍", fn: function(){dialog.prompt();}, say: "葉公好龍鑷子" },
       ],
       key,
       btnsRow = [],
@@ -166,8 +166,8 @@ class Test extends Phaser.Scene {
         "button.click",
         function (button, index, pointer, event) {
           navigator.vibrate(3000);
-          //sound.play("ok");
-          this.sound.play("ok");
+          sound.play("ok");
+          //this.sound.play("ok");
           speech.say(button.say);
           var fn = button.fn;
           fn();

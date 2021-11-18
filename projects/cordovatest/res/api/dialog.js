@@ -14,7 +14,7 @@ class cdv_dialog {
     log("on dialog_show");
     navigator.notification.confirm(
       "You are the winner!", // message
-      onConfirm.bind(this),
+      this.onConfirm,
       "Game Over", // title
       ["Restart", "Exit"] // buttonLabels
     );
