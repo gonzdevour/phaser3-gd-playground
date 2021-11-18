@@ -89,6 +89,7 @@ class Test extends Phaser.Scene {
     this.load.image("eraser", "assets/img/eraser.png");
     this.load.image("yes", "assets/img/yes.png");
     //init api
+    var _scene = this;
     if (OS.cordova) {
       document.addEventListener(
         "deviceready",
@@ -97,12 +98,12 @@ class Test extends Phaser.Scene {
           log("cdv_device:");
           log(device.cordova);
           log(device.uuid);
-          apiInit(scene, tb_audio);
+          apiInit(_scene, tb_audio);
         },
         false
       );
     } else {
-      apiInit(this, tb_audio);
+      apiInit(_scene, tb_audio);
     }
   }
 
