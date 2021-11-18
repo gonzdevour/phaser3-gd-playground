@@ -10,19 +10,36 @@ class cdv_speechSynthesis {
     this.identifier = identifier;
   }
   say(words) {
-    TTS
-    .speak({
+    TTS.speak({
       text: words,
       identifier: "com.apple.ttsbundle.siri_female_zh-CN_compact",
       locale: "zh-TW",
       rate: 0,
       pitch: 0,
-      cancel: true
-    }).then(function () {
-    log('speak success');
-    }, function (reason) {
-    log(reason);
-    });
+      cancel: true,
+    }).then(
+      function () {
+        log("speak success");
+      },
+      function (reason) {
+        log(reason);
+      }
+    );
+  }
+  getVoice() {
+    TTS.getVoices().then(
+      // Array of voices [{name:'', identifier: '', language: ''},..] see TS-declarations
+      function (voices) {
+        voices.forEach(function (voice) {
+          for (var key in voice) {
+            log(key + " : " + voice[key]);
+          }
+        });
+      },
+      function (reason) {
+        log(reason);
+      }
+    );
   }
 }
 
@@ -56,22 +73,23 @@ class speechSynthesis {
   }
 }
 
-function speechInit(){
+function speechInit() {
   var speech;
   if (OS.cordova) {
     //speech
     if (OS.iOS) {
-      log("init ios speech")
+      log("init ios speech");
       speech = new cdv_speechSynthesis("zh-TW", "com.apple.ttsbundle.siri_female_zh-CN_compact");
-    } else if (OS.android){
-      log("init android speech")
-  
+    } else if (OS.android) {
+      log("init android speech");
+      speech = new cdv_speechSynthesis("zh-TW", "");
     } else {
-      log("speech not support")
-    }  
+      log("speech not support");
+    }
+    speech.getVoice();
   } else {
     //speech
-    log("init web speech")
+    log("init web speech");
     speech = new speechSynthesis("zh-TW", "Google 國語（臺灣）");
   }
   return speech;
