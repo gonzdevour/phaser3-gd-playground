@@ -86,7 +86,7 @@ function speechInit() {
     } else {
       log("speech not support");
     }
-    speech.getVoice();
+    //speech.getVoice();
   } else {
     //speech
     log("init web speech");

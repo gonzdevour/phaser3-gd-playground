@@ -41,8 +41,8 @@ var dialog;   // cordova dialog
 var sound;    // web/cdv_media sound player
 var tb_audio; // rex-csv2JSON table
 
-var apiInit = function(scene, tb_audio){
-  sound = soundInit(scene, tb_audio);
+var apiInit = function(_scene, tb_audio){
+  sound = soundInit(_scene, tb_audio);
   speech = speechInit();
   dialog = dialogInit();
   admobInit();

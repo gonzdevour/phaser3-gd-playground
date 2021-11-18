@@ -7,6 +7,7 @@ var OS = getOS();
 class cdv_sound {
   constructor(tb_audio) {
     this.tb = tb_audio;
+    log(this.tb)
   }
   play(key, config) {
     log(this.tb.get(key, "mp3"));
