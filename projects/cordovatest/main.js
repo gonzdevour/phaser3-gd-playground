@@ -1,7 +1,7 @@
 import "phaser";
 import InitLog from "../../plugins/logger/InitLog.js";
 import AllPlugins from "../../plugins/AllPlugins.js";
-import { getOS, dialogInit, speechInit, soundInit, admobInit } from "./res/api/index.js";
+import { loading, getOS } from "./res/api/index.js";
 
 const COLOR_PRIMARY = 0x4e342e;
 const COLOR_LIGHT = 0x7b5e57;
@@ -35,13 +35,6 @@ var dialog; // cordova dialog
 var sound; // web/cdv_media sound player
 var tb_audio; // rex-csv2JSON table
 
-var apiInit = function (_scene, tb_audio) {
-  sound = soundInit(_scene, tb_audio);
-  speech = speechInit();
-  dialog = dialogInit();
-  admobInit();
-};
-
 //create btn
 
 function createButton(scene, key) {
@@ -64,50 +57,17 @@ class Test extends Phaser.Scene {
     });
   }
   preload() {
-
-    //Load image file
-    this.load.image("confirm", "assets/img/confirm.png");
-    this.load.image("eraser", "assets/img/eraser.png");
-    this.load.image("yes", "assets/img/yes.png");
-
-    //ready api
-    var apiReady = function(_scene, _tb_audio){
-      log("api ready");
-      if (OS.cordova) {
-        document.addEventListener(
-          "deviceready",
-          () => {
-            log("cordova deviceready");
-            log("cdv_device:");
-            log(device.cordova);
-            log(device.uuid);
-            log("dvcrdy: " + _tb_audio);
-            apiInit(_scene, _tb_audio);
-          },
-          false
-        );
-      } else {
-        apiInit(_scene, _tb_audio);
-      }
-    };
-
-    //load audio file after loading csv table
-    var loadAudio = function (key, filetype, data) {
-      log("loadAudio from csv");
-      tb_audio = this.plugins.get("rexCsvToHashTable").add().loadCSV(data);
-      tb_audio.eachRow("key", function (tb_audio, rowKey, colKey, value) {
-        // Load sound file
-        this.load.audio(rowKey, [tb_audio.get(rowKey, "ogg"), tb_audio.get(rowKey, "m4a")]);
-        //this.load.on("filecomplete-audio-" + rowKey, function(){log("filecomplete-audio-" + rowKey)}, this)
-      },this);
-      apiReady(this, tb_audio);
-    };
-
-    // Load csv file
-    this.load.text("audiosrc", "assets/audiosrc.csv");
-    this.load.rexAwait(this.load.on("filecomplete-text-audiosrc", loadAudio, this));
+    var _scene = this;
+    async function load() {
+      var api = await loading(_scene, tb_audio);
+      sound = api.sound;
+      dialog = api.dialog;
+      speech = api.speech;
+      console.log("api:" + api);
+    }
+    load();
   }
-
+  
   create() {
     var background = this.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK);
 
