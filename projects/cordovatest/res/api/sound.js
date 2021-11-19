@@ -7,7 +7,7 @@ var OS = getOS();
 class cdv_sound {
   constructor(tb_audio) {
     this.tb = tb_audio;
-    log(this.tb)
+    log("this.tb: " + this.tb)
   }
   play(key, config) {
     log(this.tb.get(key, "mp3"));
@@ -31,6 +31,7 @@ class p3_sound {
     this.scene = scene;
   }
   play(key, config) {
+    log("p3audio play " + key );
     this.scene.sound.play(key, config);
   }
 }
@@ -39,6 +40,7 @@ function soundInit(scene, tb_audio) {
   var sound;
   if (OS.cordova) {
     log("init media plugin");
+    log("init: " + tb_audio);
     sound = new cdv_sound(tb_audio);
   } else {
     log("use p3 audio");
