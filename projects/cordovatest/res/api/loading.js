@@ -48,7 +48,7 @@ var loading = function (scene, tb_audio) {
     //load audio file after loading csv table
     var loadAudio = function (key, filetype, data) {
       log("loadAudio from csv");
-      tb_audio = this.plugins.get("rexCsvToHashTable").add().loadCSV(data);
+      tb_audio = scene.plugins.get("rexCsvToHashTable").add().loadCSV(data);
       tb_audio.eachRow(
         "key",
         function (tb_audio, rowKey, colKey, value) {
