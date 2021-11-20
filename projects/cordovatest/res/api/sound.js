@@ -51,4 +51,4 @@ function soundInit(scene, tb_audio) {
   return sound;
 }
 
-export { p3_sound, cdv_sound, soundInit };
+export { soundInit };

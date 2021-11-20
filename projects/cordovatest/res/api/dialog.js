@@ -76,4 +76,4 @@ function dialogInit(){
   return dialog;
 }
 
-export { p3_dialog, cdv_dialog, dialogInit };
+export { dialogInit };

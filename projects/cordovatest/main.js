@@ -34,6 +34,8 @@ var speech; // speechSynthesis
 var dialog; // cordova dialog
 var sound; // web/cdv_media sound player
 var tb_audio; // rex-csv2JSON table
+var iap;
+var ads;
 
 //create btn
 
@@ -41,12 +43,11 @@ function createButton(scene, key) {
   var btn = scene.rexUI.add.label({
     background: scene.rexUI.add.roundRectangle(0, 0, 100, 500, 10, COLOR_PRIMARY).setStrokeStyle(2, COLOR_LIGHT),
     text: scene.add.text(0, 0, key.txt, {
-      fontSize: 24,
+      fontSize: 28,
     }),
     align: "center",
   });
   btn.fn = key.fn; //callback
-  btn.say = key.say; //voice text
   return btn;
 }
 
@@ -63,12 +64,14 @@ class Test extends Phaser.Scene {
       sound = api.sound;
       dialog = api.dialog;
       speech = api.speech;
+      iap = api.iap;
+      ads = api.ads;
       console.log("api:" + api);
       onLoadSuccess();
     }
-    this.load.rexAwait(load)
+    this.load.rexAwait(load);
   }
-  
+
   create() {
     var background = this.rexUI.add.roundRectangle(0, 0, 0, 0, 20, COLOR_DARK);
 
@@ -78,29 +81,58 @@ class Test extends Phaser.Scene {
           txt: "火影忍者",
           fn: function () {
             dialog.show();
+            speech.say("火影忍者跑去總統府洗澡");
           },
-          say: "火影忍者跑去總統府洗澡",
         },
         {
           txt: "老虎",
           fn: function () {
             dialog.alert();
+            speech.say("老虎掌海底");
           },
-          say: "老虎掌海底",
         },
         {
           txt: "馬桶",
           fn: function () {
             dialog.prompt();
+            speech.say("馬桶");
           },
-          say: "馬桶",
         },
         {
-          txt: "葉公好龍",
+          txt: "購買道具1",
           fn: function () {
-            dialog.prompt();
+            iap.order("gems.lv1.cp");
           },
-          say: "葉公好龍鑷子",
+        },
+        {
+          txt: "移除廣告",
+          fn: function () {
+            iap.order("removeads.cp");
+          },
+        },
+        {
+          txt: "準備整頁廣告",
+          fn: function () {
+            ads.prepareInter();
+          },
+        },
+        {
+          txt: "彈出整頁廣告",
+          fn: function () {
+            ads.showInter();
+          },
+        },
+        {
+          txt: "準備獎勵廣告",
+          fn: function () {
+            ads.prepareRwv();
+          },
+        },
+        {
+          txt: "彈出獎勵廣告",
+          fn: function () {
+            ads.showRwv();
+          },
         },
       ],
       key,
@@ -155,7 +187,6 @@ class Test extends Phaser.Scene {
           //this.sound.play("ok");
           log("clicked");
           sound.play("ok");
-          speech.say(button.say);
           var fn = button.fn;
           fn();
         },
