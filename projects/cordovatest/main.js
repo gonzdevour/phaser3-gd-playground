@@ -101,18 +101,21 @@ class Test extends Phaser.Scene {
         {
           txt: "購買道具1",
           fn: function () {
+            sound.play("ok");
             iap.order("gems.lv1.cp");
           },
         },
         {
           txt: "移除廣告",
           fn: function () {
+            sound.play("ok");
             iap.order("removeads.cp");
           },
         },
         {
           txt: "準備整頁廣告",
           fn: function () {
+            if (navigator){navigator.vibrate(3000);};
             ads.prepareInter();
           },
         },
@@ -125,6 +128,7 @@ class Test extends Phaser.Scene {
         {
           txt: "準備獎勵廣告",
           fn: function () {
+            if (navigator){navigator.vibrate(3000);};
             ads.prepareRwv();
           },
         },
@@ -183,10 +187,7 @@ class Test extends Phaser.Scene {
       .on(
         "button.click",
         function (button, index, pointer, event) {
-          //navigator.vibrate(3000);
-          //this.sound.play("ok");
           log("clicked");
-          sound.play("ok");
           var fn = button.fn;
           fn();
         },
