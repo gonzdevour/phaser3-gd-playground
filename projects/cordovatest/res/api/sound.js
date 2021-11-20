@@ -11,7 +11,7 @@ class cdv_sound {
   }
   play(key, config) {
     var root = window.location.pathname;
-    var fileSrc = root.substring(0, root.lastIndexOf('/')) + this.tb.get(key, "mp3");
+    var fileSrc = root.substring(0, root.lastIndexOf('/')+1) + this.tb.get(key, "mp3");
     log(fileSrc);
     var sound = new Media(
       fileSrc,
