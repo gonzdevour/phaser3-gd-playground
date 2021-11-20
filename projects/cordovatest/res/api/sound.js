@@ -10,9 +10,11 @@ class cdv_sound {
     log("this.tb: " + this.tb)
   }
   play(key, config) {
-    log(this.tb.get(key, "mp3"));
+    var root = window.location.pathname;
+    var fileSrc = root.substring(0, root.lastIndexOf('/')) + this.tb.get(key, "mp3");
+    log(fileSrc);
     var sound = new Media(
-      this.tb.get(key, "mp3"),
+      fileSrc,
       //"assets/sound/right.wav",
       function playSuccess() {
         log("media success");

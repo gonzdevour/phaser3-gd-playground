@@ -58,14 +58,15 @@ class Test extends Phaser.Scene {
   }
   preload() {
     var _scene = this;
-    async function load() {
+    async function load(onLoadSuccess, onLoaderror) {
       var api = await loading(_scene, tb_audio);
       sound = api.sound;
       dialog = api.dialog;
       speech = api.speech;
       console.log("api:" + api);
+      onLoadSuccess();
     }
-    load();
+    this.load.rexAwait(load)
   }
   
   create() {
