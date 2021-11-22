@@ -10,21 +10,38 @@ class cdv_sound {
     log("this.tb: " + this.tb)
   }
   play(key, config) {
-    var root = window.location.pathname;
-    var fileSrc = root.substring(0, root.lastIndexOf('/')+1) + this.tb.get(key, "mp3");
-    log(fileSrc);
-    var sound = new Media(
-      fileSrc,
-      //"assets/sound/right.wav",
+    var se = new Media(
+      this.getSrc(key),
       function playSuccess() {
-        log("media success");
-        sound.release();
+        log("media play success");
+        se.release();
       },
       function playError(err) {
         log("media err: " + err.code);
       }
     );
-    sound.play(config);
+    se.play(config);
+  }
+  loop(key, config) {
+    var se = new Media(
+      this.getSrc(key),
+      function playSuccess() {
+        log("media loop success");
+        se.seek(0);
+        se.play(config);
+      },
+      function playError(err) {
+        log("media err: " + err.code);
+      }
+    );
+    se.play(config);
+    return se;
+  }
+  getSrc(key) {
+    var root = window.location.pathname;
+    var fileSrc = root.substring(0, root.lastIndexOf('/')+1) + this.tb.get(key, "mp3");
+    log(fileSrc);
+    return fileSrc;
   }
 }
 
@@ -34,6 +51,11 @@ class p3_sound {
   }
   play(key, config) {
     log("p3audio play " + key );
+    this.scene.sound.play(key, config);
+  }
+  loop(key, config) {
+    log("p3audio loop " + key );
+    config.loop = true;
     this.scene.sound.play(key, config);
   }
 }

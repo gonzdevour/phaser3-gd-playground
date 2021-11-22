@@ -1,11 +1,14 @@
+import EE from 'eventemitter3';
 import { getOS } from "./os.js";
 //get OS status
 var OS = getOS();
 
 //admob
 
-class cdv_ads {
+class cdv_ads extends EE{
   constructor() {
+    super();
+    var ads = this;
     this.testMode = true; //上架時要切換為false
     this.admobid = {};
     if (OS.android) {
@@ -31,19 +34,19 @@ class cdv_ads {
       };
     }
     document.addEventListener("onAdLoaded", function (e) {
-      this.onEvent(e);
+      ads.emit("onAdLoaded", e);
     });
     document.addEventListener("onAdFailLoad", function (e) {
-      this.onEvent(e);
+      ads.emit("onAdFailLoad", e);
     });
     document.addEventListener("onAdPresent", function (e) {
-      this.onEvent(e);
+      ads.emit("onAdPresent", e);
     });
     document.addEventListener("onAdDismiss", function (e) {
-      this.onEvent(e);
+      ads.emit("onAdDismiss", e);
     });
     document.addEventListener("onAdLeaveApp", function (e) {
-      this.onEvent(e);
+      ads.emit("onAdLeaveApp", e);
     });
   }
   /* Banner位置設定：
@@ -131,9 +134,11 @@ class cdv_ads {
   }
 }
 
-class p3_ads {
+class p3_ads extends EE{
   //目前沒有網頁用的廣告服務
   constructor() {
+    super();
+    var ads = this;
     this.testMode = true; //上架時要切換為false
     this.admobid = {};
     this.admobid = {

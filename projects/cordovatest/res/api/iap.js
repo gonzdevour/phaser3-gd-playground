@@ -1,13 +1,17 @@
+import EE from 'eventemitter3';
 import { getOS } from "./os.js";
 //get OS status
 var OS = getOS();
 
 //iap
 
-class cdv_purchase {
-  constructor() {}
+class cdv_purchase extends EE {
+  constructor() {
+    super();
+  }
   init() {
     log("init iap");
+    var iap = this;
     if (store) {
       // fovea receipt validator
       store.validator =
@@ -21,11 +25,7 @@ class cdv_purchase {
         log("product loaded " + p.id);
       });
       store.when("product").updated(function (p) {
-        log("iap_updated");
-        log(p.id);
-        log(p.title);
-        log(p.priceMicros);
-        log(p.currency);
+        iap.emit("productUpdated", p);
       });
       store.when("product").approved(function (p) {
         log("product approved " + p.id);
@@ -36,15 +36,13 @@ class cdv_purchase {
         p.finish();
       });
       store.when("product").unverified(function (p) {
-        log("product unverified " + p.id);
+        iap.emit("productUnverified", p);
       });
       store.when("product").finished(function (p) {
-        log("product finished " + p.id);
+        iap.emit("productFinished", p);
       });
       store.error(function (e) {
-        log("iap error");
-        log(e.code);
-        log(e.message);
+        iap.emit("error", e);
       });
       // product register
       store.register({
@@ -93,13 +91,15 @@ class cdv_purchase {
   }
 }
 
-class p3_purchase {
-  constructor() {}
+class p3_purchase extends EE {
+  constructor() {
+    super();
+  }
   init() {
     log("init iap");
   }
   order(itemID) {
-    log("iap order");
+    log("iap order " + itemID);
   }
   refresh() {
     log("iap refresh");
