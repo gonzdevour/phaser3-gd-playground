@@ -7,7 +7,7 @@ class Test extends Phaser.Scene {
     });
   }
   preload() {
-    this.load.audio("ok", ["assets/sound/right.mp3"]);
+    this.load.audio("ok", ["assets/sound/right.m4a","assets/sound/right.ogg"]);
   }
 
   create() {
@@ -31,7 +31,7 @@ var config = {
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
   audio: {
-    disableWebAudio: true,
+    disableWebAudio: false,
   },
   scene: Test,
 };
