@@ -29,7 +29,8 @@ class cdv_purchase extends EE {
       });
       store.when("product").approved(function (p) {
         log("product approved " + p.id);
-        p.verify();
+        //p.verify();//fovea目前只支援一個app，觀望。
+        p.finish();
       });
       store.when("product").verified(function (p) {
         log("product verified " + p.id);
@@ -40,6 +41,9 @@ class cdv_purchase extends EE {
       });
       store.when("product").finished(function (p) {
         iap.emit("productFinished", p);
+      });
+      store.when("product").cancelled(function(p) {
+        iap.emit("orderCancelled", p.id);
       });
       store.error(function (e) {
         iap.emit("error", e);
@@ -87,6 +91,12 @@ class cdv_purchase extends EE {
     log("iap refresh");
     if (store) {
       store.refresh();
+    }
+  }
+  restore() {
+    log("iap restore");
+    if (store.restore) {
+      store.restore();
     }
   }
 }
