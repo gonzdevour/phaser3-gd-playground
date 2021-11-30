@@ -8,15 +8,17 @@ class IAP extends EE {
 
         var self = this;
         // fovea receipt validator
-        store.validator = "https://validator.fovea.cc/v1/validate?appName=com.playone.cp&apiKey=6b024545-4f20-4c11-9848-a30a9682823c";
+        //store.validator = "https://validator.fovea.cc/v1/validate?appName=com.playone.cp&apiKey=6b024545-4f20-4c11-9848-a30a9682823c";
         // Route events
         RouteProductEvent(this, 'registered');
         RouteProductEvent(this, 'loaded');
         RouteProductEvent(this, 'updated');
-        RouteProductEvent(this, 'approved', function (p) { p.verify(); });
+        //RouteProductEvent(this, 'approved', function (p) { p.verify(); }); //fovea wait and see
+        RouteProductEvent(this, 'approved', function (p) { p.finish(); });
         RouteProductEvent(this, 'verified', function (p) { p.finish(); });
         RouteProductEvent(this, 'unverified');
         RouteProductEvent(this, 'finished');
+        RouteProductEvent(this, 'cancelled');
 
         store.error(function (error) {
             self.emit('error', error);
@@ -27,7 +29,7 @@ class IAP extends EE {
     }
 
     register(id, type, alias) {
-        // Register products
+        // Register products //給一組含id,type,alias的JSON物件array
         if (Array.isArray(id)) {
             var products = id;
             for (var i = 0, cnt = products.length; i < cnt; i++) {
@@ -36,7 +38,7 @@ class IAP extends EE {
             return this;
         }
 
-        // Register a product
+        // Register a product//直接給一個含id,type,alias的JSON物件
         if (typeof (id) === 'object') {
             var product = id;
             id = product.id;
@@ -44,7 +46,7 @@ class IAP extends EE {
             alias = product.alias;
         }
 
-        if (alias === undefined) {
+        if (alias === undefined) { //不給alias時，自動以id為alias
             alias = id;
         }
 
@@ -61,6 +63,13 @@ class IAP extends EE {
         // it's first refresh. Nothing will happen if we do not call store.refresh()
         this.store.refresh();
         return this;
+    }
+
+    restore() {
+        if (this.store.restore) { //如果有支援回購才執行
+            this.store.restore();
+            return this;
+        }
     }
 }
 

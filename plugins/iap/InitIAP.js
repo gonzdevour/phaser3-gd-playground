@@ -26,6 +26,10 @@ var InitIAP = function () {
         var message = `product unverified ${p.id}`;
         iap.emit('log', message);
     })
+    iap.on('cancelled', function (p) {
+        var message = `purchase cancelled ${p.id}`;
+        iap.emit('log', message);
+    })
     iap.on('error', function (error) {
         var message = `product error ${error.code}, ${error.message}`;
         iap.emit('log', message);
