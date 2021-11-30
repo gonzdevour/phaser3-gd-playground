@@ -1,10 +1,17 @@
-import IAP from './IAP.js';
+import purchase_cdv from './purchase_cdv.js';
+import purchase_web from './purchase_web.js';
+import { getOS } from "../os.js";
+//get OS status
+var OS = getOS();
 
 var InitIAP = function () {
     // We must wait for the "deviceready" event to fire
     // before we can use the store object.
-    var iap = new IAP(store);
-
+    if (OS.cordova && store) {
+        var iap = new purchase_cdv(store);
+    } else {
+        var iap = new purchase_web();
+    }
     // Register log event
     iap.on('registered', function (p) {
         var message = `product registered ${p.id}`;
