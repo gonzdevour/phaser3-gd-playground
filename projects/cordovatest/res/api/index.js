@@ -1,4 +1,4 @@
-import { getOS } from "./os.js";
+import { getOS } from "../../../../plugins/os.js";
 import { loading } from "./loading.js";
 
 

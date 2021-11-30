@@ -3,7 +3,7 @@ import { speechInit } from "./speech.js";
 import { dialogInit } from "./dialog.js";
 import { admobInit } from "./admob.js";
 import { iapInit } from "./iap.js";
-import { getOS } from "./os.js";
+import { getOS } from "../../../../plugins/os.js";
 //get OS status
 var OS = getOS();
 
