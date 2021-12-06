@@ -54,17 +54,6 @@ class Question {
         }
     }
 
-    static FromJSON(model, json) {
-        var db = model.db[json.db];
-
-        return new Question({
-            title: json.title,
-            word: db.words.queryByID(json.word),
-            character: db.characters.queryByID(json.character),
-            choices: json.choices
-        })
-    }
-
     getPolyphonyCharacter() {
         var characters = this.word.getCharacters(1);
         return (characters) ? characters[this.characterIndex] : null;
