@@ -21,7 +21,14 @@ class Quiz {
 
         var questionJSONList = json.questions;
         for (var i = 0, cnt = questionJSONList.length; i < cnt; i++) {
-            var question = Question.FromJSON(this.model, questionJSONList[i]);
+            var questionJSON = questionJSONList[i];
+            var db = this.model.db[questionJSON.db];
+            var question = new Question({
+                title: questionJSON.title,
+                word: db.words.queryByID(questionJSON.word),
+                character: db.characters.queryByID(questionJSON.character),
+                choices: questionJSON.choices
+            })
             this.addQuestion(question);
         }
         this.questionIndex = json.questionIndex;
