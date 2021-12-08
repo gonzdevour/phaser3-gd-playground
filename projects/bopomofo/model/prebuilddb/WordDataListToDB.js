@@ -43,10 +43,19 @@ var WordDataToDB = function (wordData) {
 
             // Build json data of characterDoc
             var characterData = ParseBopomofo(pinyin, { character: word.charAt(c) });
+
             // FindOne or insert json data, return characterDoc
             var characterDoc = GetCharacterDoc(characterData, CharactersCollection);
+
             // Insert characterDocID into wordData.pid[p]
             characterDocIDList.push(characterDoc.$loki);
+
+            // Update characterDoc.freq
+            if (characterDoc.freq > wordData.freq) {
+                characterDoc.freq = wordData.freq;
+                CharactersCollection.update(characterDoc);
+            }
+
             hasValidPinyin = true;
 
             // Add characterDoc for binding later

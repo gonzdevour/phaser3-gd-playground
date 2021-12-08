@@ -14,6 +14,7 @@
     - vowel
     - tone
     - wid : ID list of wordDoc
+    - freq : Min wordDoc.freq
 - words
     - word
     - freq
