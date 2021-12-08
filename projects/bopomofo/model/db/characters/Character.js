@@ -13,21 +13,16 @@ const GetRandomItem = Phaser.Utils.Array.GetRandom;
 class Character {
     constructor(dbWrap, doc) {
         this.dbWrap = dbWrap;
+        this.dbId = this.dbWrap.id;
         this.doc = doc;
+        this.id = this.doc.$loki;
 
         this.character = doc.character;
         this.initials = doc.initials;
         this.media = doc.media;
         this.vowel = doc.vowel;
         this.tone = doc.tone;
-    }
-
-    get id() {
-        return this.doc.$loki;
-    }
-
-    get dbId() {
-        return this.dbWrap.id;
+        this.freq = doc.freq;
     }
 
     getWords(wordCount) {

@@ -16,6 +16,15 @@ var Query = function (dbWrap, filter, sortMode) {
                 .compoundsort(['initials', 'media', 'vowel', 'tone'])
                 .data();
             break;
+
+        case 2: // 'freq'
+            docArray = characterCollection
+                .chain()
+                .find(filter)
+                .simplesort('freq')
+                .data();
+            break;
+
         default:
             docArray = characterCollection.find(filter);
             break;
@@ -29,7 +38,8 @@ var Query = function (dbWrap, filter, sortMode) {
 }
 const SortMode = {
     'none': 0,
-    'bopomofo': 1
+    'bopomofo': 1,
+    'freq': 2
 }
 
 export default Query;

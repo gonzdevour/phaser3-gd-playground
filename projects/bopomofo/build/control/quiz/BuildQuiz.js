@@ -6,7 +6,7 @@ const Shuffle = Phaser.Utils.Array.Shuffle;
 var BuildQuiz = function (model) {
     var quizConfig = model.getQuizConfig();
 
-    // See build/quizconfigpanel/CreateDatabaseSelectPanel.js
+    // See build/view/quizconfigpanel/CreateDatabaseSelectPanel.js
     var dbName = quizConfig.database;
     var db;
     switch (dbName) {
@@ -19,7 +19,7 @@ var BuildQuiz = function (model) {
             break;
     }
 
-    // See build/quizconfigpanel/CreateEnhancementSelectPanel.js
+    // See build/view/quizconfigpanel/CreateEnhancementSelectPanel.js
     var enhancementMode = quizConfig.enhancement;
     var filter;   // Query character-collection
     var choices;  // Set choice buttons
@@ -40,14 +40,20 @@ var BuildQuiz = function (model) {
 
     var characters = db.characters.query(
         filter,
-        'bopomofo'
     );
 
-    // See build/quizconfigpanel/CreateQuizModePanel.js
+    // See build/view/quizconfigpanel/CreateQuizModePanel.js
     var quizMode = quizConfig.mode;
     switch (quizMode) {
         case '隨機':
             Shuffle(characters);
+            break;
+
+        case '依序':
+            // Or sort by freq in characters.query(...)
+            characters.sort(function(characterA, characterB){
+                return characterA.freq - characterB.freq;
+            })
             break;
 
         case '測驗':
