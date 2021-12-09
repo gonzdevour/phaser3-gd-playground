@@ -1,17 +1,52 @@
-+  db
++ db
   + characters
     + query
-      + GetBopomofoFilter.js
-      + GetCombinedRhyme.js
       + index.js
+      ```
+      整理所有Query方法 
+      //被characters.js引入
+      ``` 
       + Query.js
       ```
-      宣告functions，將對loki character collection的控制包進functions裡，用來查找並回傳帶有dwWrap和doc的new character:
+      用filter條件在characterCollection中查出字docArray後，以sortMode排序，最後map成new Character array。
+
+      sortMode:
+      case 1: bopomofo
+      case 2: freq //依序模式
+      default
+
+      //被index.js引入
       ```  
+      + GetBopomofoFilter.js
+      ```
+      傳入注音，建立此注音的查找JSON
+      //被QuryByBopomofo.js引入並執行
+      ``` 
+      + GetCombinedRhyme.js
+      ```
+      以media與vowel皆不為空值為條件的查找JSON
+      //被BuildQuiz.js引入並執行
+      ``` 
       + QueryByBopomofo.js
+      ```
+      依注音查找字集合
+      //被index.js引入
+      ``` 
       + QueryByID.js
+      ```
+      依ID查找字doc
+      //被index.js引入
+      ``` 
       + QueryCharacter.js
+      ```
+      依字查找字doc
+      //被index.js引入
+      ```        
       + QueryRandomCharacter.js
+      ```
+      查找隨機字doc
+      //被index.js引入
+      ```         
     + character.js
     ```
     傳入dbWrap,doc，依doc建立的character class:
@@ -37,7 +72,7 @@
     queryCharacter(character)//取得某字的doc
     queryRandomCharacter()//取得隨機字doc
     queryByID(id)//取得某ID的字doc
-    queryByBopomofo(bopomofo)//依注音取字doc
+    queryByBopomofo(bopomofo)//依注音取字集doc
     getAll(sortMode)
     //被DBWrap.js引入
     //被Question.js呼叫(query)
@@ -85,11 +120,13 @@
 ```
 + CreateDB.js
 ```
+  引入loki.js
   add字庫collection，欄位(indices)：
   ['character', 'initials', 'media', 'vowel', 'tone']
   add詞庫collection，欄位(indices)：
   ['word', 'freq']
 //被DBWrap.js引入
+//被PrebuildDB.js引入
 ```  
 + GetCollectionMethod.js
 ```
