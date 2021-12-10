@@ -1,6 +1,7 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import CreateTitleLabel from './CreateTitleLabel.js';
 import ModalDialogPromise from '../modeldialog/ModalDialogPromise.js';
+import { QuizModeOptions } from './Options.js'
 
 const PanelName = 'mode';
 const GetValue = Phaser.Utils.Objects.GetValue;
@@ -11,11 +12,12 @@ var CreateQuizModePanel = function (scene, config) {
         CreateHelpDialog(panel);
     });
 
-    var buttons = [
-        CreateOptionLabel(scene, '隨機'),
-        CreateOptionLabel(scene, '依序'),
-        CreateOptionLabel(scene, '測驗'),
-    ]
+    var buttons = [];
+    for (var i = 0, cnt = QuizModeOptions.length; i < cnt; i++) {
+        buttons.push(
+            CreateOptionLabel(scene, QuizModeOptions[i])
+        )
+    }
     var choices = scene.rexUI.add.fixWidthButtons({
         align: 'justify',
         // justifyPercentage: 1,

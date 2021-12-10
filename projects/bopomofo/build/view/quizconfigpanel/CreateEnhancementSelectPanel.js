@@ -1,6 +1,7 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import CreateTitleLabel from './CreateTitleLabel.js';
 import ModalDialogPromise from '../modeldialog/ModalDialogPromise.js';
+import { EnhanceOptions } from './Options.js'
 
 const PanelName = 'enhancement';
 const GetValue = Phaser.Utils.Objects.GetValue;
@@ -9,17 +10,12 @@ var CreateEnhancementSelectPanel = function (scene, config) {
     // Build UI
     var title = CreateTitleLabel(scene, '強化練習');
 
-    var buttons = [
-        CreateOptionLabel(scene, 'ㄓㄗ'),
-        CreateOptionLabel(scene, 'ㄔㄘ'),
-        CreateOptionLabel(scene, 'ㄕㄙ'),
-        CreateOptionLabel(scene, 'ㄛㄡ'),
-        CreateOptionLabel(scene, 'ㄝㄟ'),
-        CreateOptionLabel(scene, 'ㄢㄣ'),
-        CreateOptionLabel(scene, 'ㄣㄥ'),
-        CreateOptionLabel(scene, '結合韻'),
-        CreateOptionLabel(scene, '無'),
-    ]
+    var buttons = [];
+    for (var i = 0, cnt = EnhanceOptions.length; i < cnt; i++) {
+        buttons.push(
+            CreateOptionLabel(scene, EnhanceOptions[i])
+        )
+    }
     var choices = scene.rexUI.add.fixWidthButtons({
         align: 'justify',
         // justifyPercentage: 1,
