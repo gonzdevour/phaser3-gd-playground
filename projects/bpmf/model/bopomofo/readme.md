@@ -4,6 +4,7 @@
   2. 建立isInitial, isMedia, isVowel, isTone函數，傳入單一符號可判斷其是否屬於initial, media, vowel, tone並回傳boolean
   ```
   //被ParseBopomofo.js引入
+  //被db/characters/query/GetBopomofoFilters.js引入
   ```
 
 + ParseBopomofo.js
