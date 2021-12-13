@@ -3,6 +3,7 @@ import { speechInit } from "./speech.js";
 import { dialogInit } from "./dialog.js";
 import { admobInit } from "./admob.js";
 import { iapInit } from "./iap.js";
+import { idfaInit } from "./idfa.js";
 import { getOS } from "../../../../plugins/os.js";
 //get OS status
 var OS = getOS();
@@ -23,6 +24,7 @@ var loading = function (scene, tb_audio) {
       api.dialog = dialogInit();
       api.iap = iapInit();
       api.ads = admobInit();
+      api.idfa = idfaInit();
       resolve(api);
     };
 

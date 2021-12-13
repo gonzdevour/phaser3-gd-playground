@@ -3,6 +3,16 @@ import ParseChoiceConfig from './ParseChoiceConfig.js';
 
 const GetValue = Phaser.Utils.Objects.GetValue;
 
+/*     
+    在BuildQuiz.js執行：
+    model.quiz.addQuestion({
+        title: '', // TODO
+        character: characters[i],
+        choices: choices
+    }) 
+    由new Question接收
+*/
+
 class Question {
     constructor(config) {
         var title = GetValue(config, 'title', '');

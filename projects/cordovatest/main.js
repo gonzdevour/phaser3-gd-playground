@@ -33,6 +33,7 @@ var sound; // web/cdv_media sound player
 var tb_audio; // rex-csv2JSON table
 var iap;
 var ads;
+var idfa;
 
 class Test extends Phaser.Scene {
   constructor() {
@@ -49,6 +50,7 @@ class Test extends Phaser.Scene {
       speech = api.speech;
       iap = api.iap;
       ads = api.ads;
+      idfa = api.idfa;
       console.log("api:" + api);
       onLoadSuccess();
     }
@@ -163,6 +165,12 @@ class Test extends Phaser.Scene {
           txt: "彈出獎勵廣告",
           fn: function () {
             ads.showRwv();
+          },
+        },
+        {
+          txt: "IDFA",
+          fn: function () {
+            idfa.getInfo();
           },
         },
       ];

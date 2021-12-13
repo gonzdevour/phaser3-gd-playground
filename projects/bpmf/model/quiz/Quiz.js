@@ -45,6 +45,16 @@ class Quiz {
         return (this.questionIndex >= this.questions.length);
     }
 
+
+    /*     
+    在BuildQuiz.js執行：
+    model.quiz.addQuestion({
+        title: '', // TODO
+        character: characters[i],
+        choices: choices
+    }) 
+    由new Question接收
+    */
     addQuestion(config) {
         var question;
         if (config instanceof Question) {

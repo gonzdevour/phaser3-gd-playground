@@ -1,12 +1,13 @@
+import { GetValue } from '../../../../../../phaser3-rex-notes/plugins/utils/object/GetValue.js';
+import { Shuffle } from '../../../../../../phaser3-rex-notes/plugins/utils/array/Shuffle.js';
 import { Bopomofo } from '../../bopomofo/Bopomofo.js';
 
+//各複製一份array list
+//物件, 陣列的import是匯入同一個物件，所以如果不用slice複製一份的話會改到原本的內容。
 const initialsList = Bopomofo.initials.slice();
 const mediaList = Bopomofo.media.slice();
 const vowelList = Bopomofo.vowel.slice();
 const toneList = Bopomofo.tone.slice();
-
-const GetValue = Phaser.Utils.Objects.GetValue;
-const Shuffle = Phaser.Utils.Array.Shuffle;
 
 var CreateChoices = function (config) {
     var answer = GetValue(config, 'answer');

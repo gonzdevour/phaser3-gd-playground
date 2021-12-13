@@ -7,7 +7,7 @@ const GetValue = Phaser.Utils.Objects.GetValue;
 
 class Model {
     constructor(config) { //從CreateModel傳入config: {db: [this.cache.text.get("db0"), this.cache.text.get("db1")];}
-        var jsonList = GetValue(config, 'db', []); //jsonList = 取出db中的array，若無值則設為[]
+        var jsonList = GetValue(config, 'db', []); //jsonList = 取出db中的array[db0, db1]，若無值則設為[]
         this.db = [];
         for (var i = 0, cnt = jsonList.length; i < cnt; i++) { //db0, db1，兩者為.compress壓縮字串
             var dbWrap = new DBWrap(this, jsonList[i]) //用DBWrap解壓縮後，傳入Model.db array裡
