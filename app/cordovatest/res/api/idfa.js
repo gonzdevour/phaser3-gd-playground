@@ -14,10 +14,10 @@ class cdv_idfa {
         log(info);
         if (!info.trackingLimited) {
           return info.idfa || info.aaid;
-        } else if (info.trackingPermission === cordova.plugins.idfa.TRACKING_PERMISSION_NOT_DETERMINED) {
-          return cordova.plugins.idfa.requestPermission().then((result) => {
-            if (result === cordova.plugins.idfa.TRACKING_PERMISSION_AUTHORIZED) {
-              return cordova.plugins.idfa.getInfo().then((info) => {
+        } else if (info.trackingPermission === idfaPlugin.TRACKING_PERMISSION_NOT_DETERMINED) {
+          return idfaPlugin.requestPermission().then((result) => {
+            if (result === idfaPlugin.TRACKING_PERMISSION_AUTHORIZED) {
+              return idfaPlugin.getInfo().then((info) => {
                 return info.idfa || info.aaid;
               });
             }

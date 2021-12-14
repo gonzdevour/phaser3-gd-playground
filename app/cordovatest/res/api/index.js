@@ -1,8 +1,8 @@
-//import speech from "./speech.js";
-import {speech} from "./speech.js";
-import {cdvPlugin} from "./cdvPlugin.js";
+import { getOS } from "../../../../plugins/os.js";
+import { loading } from "./loading.js";
+
 
 export { 
-    cdvPlugin, 
-    speech,
+    loading,
+    getOS,
 };
