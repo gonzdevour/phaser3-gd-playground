@@ -18,7 +18,10 @@ var CreateChoices = function (config) {
     var media = GetValue(config, 'media', ConstMedia);
     var vowel = GetValue(config, 'vowel', 5);
     var tone = GetValue(config, 'tone', ConstTone);
-    var shuffleChoices = GetValue(config, 'shuffleChoices', true);
+    var shuffleInitials = GetValue(config, 'shuffleInitials', true);
+    var shuffleMedia = GetValue(config, 'shuffleMedia', false);
+    var shuffleVowel = GetValue(config, 'shuffleVowel', true);
+    var shuffleTone = GetValue(config, 'shuffleTone', false);
 
     var choices = {
         initials: GetItems(answer.initials, initialsList, initials),
@@ -27,18 +30,17 @@ var CreateChoices = function (config) {
         tone: GetItems(answer.tone, toneList, tone),
     }
 
-    if (shuffleChoices) {
-        if (typeof (initials) === 'number') {
-            choices.initials = Shuffle(choices.initials);
-        }
-
-        //choices.media = Shuffle(choices.media);
-
-        if (typeof (vowel) === 'number') {
-            choices.vowel = Shuffle(choices.vowel);
-        }
-
-        //choices.tone = Shuffle(choices.tone);
+    if (shuffleInitials) {
+        Shuffle(choices.initials);
+    }
+    if (shuffleMedia) {
+        Shuffle(choices.media);
+    }
+    if (shuffleVowel) {
+        Shuffle(choices.vowel);
+    }
+    if (shuffleTone) {
+        Shuffle(choices.tone);
     }
 
     return choices;
