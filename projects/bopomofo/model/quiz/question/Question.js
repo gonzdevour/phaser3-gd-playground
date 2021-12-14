@@ -60,7 +60,7 @@ class Question {
     }
 
     createChoices() {
-        return this.answer.createChoices({ ...this.choicesConfig });
+        return this.answer.createChoices(this.choicesConfig);
     }
 
     setAnswer(character) {
