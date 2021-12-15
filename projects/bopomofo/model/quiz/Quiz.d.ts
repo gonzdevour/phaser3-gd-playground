@@ -8,6 +8,10 @@ declare class Quiz {
 
     clearQuestions(): this;
 
+    /**
+     * Add a question.
+     * @param config 
+     */
     addQuestion(
         config: Question.IConfig
     ): this;
