@@ -52,6 +52,12 @@ class Quiz {
         return (this.questionIndex >= this.questions.length);
     }
 
+    clearQuestions() {
+        this.questions.length = 0;
+        this.reset();
+        return this;
+    }
+
     addQuestion(config) {
         var question;
         if (config instanceof Question) {
@@ -65,12 +71,6 @@ class Quiz {
 
     shuffleQuestions() {
         Shuffle(this.questions);
-        return this;
-    }
-
-    clearQuestions() {
-        this.questions.length = 0;
-        this.reset();
         return this;
     }
 }

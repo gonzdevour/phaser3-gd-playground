@@ -10,16 +10,10 @@
 class Word {
     constructor(dbWrap, doc) {
         this.dbWrap = dbWrap;
+        this.dbId = this.dbWrap.id;
         this.doc = doc;
+        this.id = this.doc.$loki;
         this.word = this.doc.word;
-    }
-
-    get id() {
-        return this.doc.$loki;
-    }
-
-    get dbId() {
-        return this.dbWrap.id;
     }
 
     get polyphonyCount() {
