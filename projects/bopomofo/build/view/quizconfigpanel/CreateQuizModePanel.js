@@ -7,10 +7,10 @@ const PanelName = 'mode';
 const GetValue = Phaser.Utils.Objects.GetValue;
 
 var CreateQuizModePanel = function (scene, config) {
+    var panel;
+
     // Build UI
-    var title = CreateTitleLabel(scene, '出題模式', function () {
-        CreateHelpDialog(panel);
-    });
+    var title = CreateTitleLabel(scene, '出題模式');
 
     var buttons = [];
     for (var i = 0, cnt = QuizModeOptions.length; i < cnt; i++) {
@@ -31,7 +31,7 @@ var CreateQuizModePanel = function (scene, config) {
     })
     choices.value = GetValue(config, `radio.${PanelName}`, '隨機');
 
-    var panel = scene.rexUI.add.sizer({
+    panel = scene.rexUI.add.sizer({
         orientation: 'y',
         name: PanelName
     })
