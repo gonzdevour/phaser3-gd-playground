@@ -8,6 +8,12 @@ declare namespace Model {
     interface IConfig {
         db?: any
     }
+
+    interface IQuizConfig {
+        database: string,
+        enhancement: string,
+        mode: string
+    }
 }
 
 declare class Model {
@@ -18,4 +24,10 @@ declare class Model {
     db: DBWrap[];
     lsData: LocalStorageData;
     quiz: Quiz;
+
+    getQuizConfig(): Model.IQuizConfig;
+
+    setQuizConfig(
+        config: Model.IQuizConfig
+    ): this;
 }
