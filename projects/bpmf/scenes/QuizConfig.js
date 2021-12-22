@@ -18,7 +18,7 @@ class QuizConfig extends Base {
     }
 
     create() {
-        super.create();
+        super.create(); //Base: this.rexScaleOuter.scale();
         var quizConfigPanel = CreateQuizConfigPanel(this, {
             radio: this.model.getQuizConfig()
         })

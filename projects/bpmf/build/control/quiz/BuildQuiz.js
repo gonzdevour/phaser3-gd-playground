@@ -1,15 +1,18 @@
 import GetBopomofoFilter from '../../../model/db/characters/query/GetBopomofoFilter.js';
 import GetCombinedRhyme from '../../../model/db/characters/query/GetCombinedRhyme.js';
 
-const Shuffle = Phaser.Utils.Array.Shuffle;
+//utils
+import Shuffle from '../../../../../plugins/utils/array/Shuffle.js';
 
+//建立題組
+//被Quiz scene呼叫，從題庫建立題組回傳quiz，送到QuizPromise跟quizpanel組合
 var BuildQuiz = function (model) {
-    var quizConfig = model.getQuizConfig();
+    var quizConfig = model.getQuizConfig(); //從ls中取出紀錄並重建回QuizConfig
 
     // See build/view/quizconfigpanel/Options.js, DataBaseOptions
     var dbName = quizConfig.database;
     var db;
-    switch (dbName) {
+    switch (dbName) { //指定是哪一個題庫(每個題庫都已經prebuild好了)
         case '高頻詞庫':
             db = model.db[0];
             break;
@@ -20,44 +23,44 @@ var BuildQuiz = function (model) {
     }
 
     // See build/view/quizconfigpanel/Options.js, EnhanceOptions
-    var enhancementMode = quizConfig.enhancement;
-    var filter;   // Query character-collection
-    var choices;  // Set choice buttons
+    var enhancementMode = quizConfig.enhancement; //指定強化練習模式
+    var filter;   // 依強化練習模式建立篩選器
+    var choices;  // 依強化練習模式設定選項群
     switch (enhancementMode) {
-        case '無':
+        case '無': //模式為'無'時，篩選器是空物件，會篩出db全部的結果
             filter = {};
             break;
 
-        case '結合韻':
-            filter = GetCombinedRhyme();
+        case '結合韻': //模式為'結合韻'時，取出media不是空值，vowel也不是空值的docs
+            filter = GetCombinedRhyme(); //定義在model/db/characters/query/裡
             break;
 
-        default:
-            filter = GetBopomofoFilter(enhancementMode);
-            choices = enhancementMode;
+        default: //模式不是無也不是結合韻時，例如「ㄢㄣ」，則依此建立篩選器與選項群
+            filter = GetBopomofoFilter(enhancementMode); //篩出有ㄢ或ㄣ的docs
+            choices = enhancementMode; //以「ㄢㄣ」為固定的選項，此功能實現在quiz/question/ParseChoiceConfig裡
             break;
     }
 
-    var characters = db.characters.query(
+    var characters = db.characters.query( //在字庫中取出符合條件的字docs
         filter,
     );
 
     // See build/view/quizconfigpanel/Options.js, QuizModeOptions
-    var quizMode = quizConfig.mode;
+    var quizMode = quizConfig.mode; //篩出字docs後，指定出題模式
     switch (quizMode) {
         case '隨機':
-            Shuffle(characters);
+            Shuffle(characters); //隨機模式則洗牌字docs
             break;
 
         case '依序':
             // Or sort by freq in characters.query(...)
             characters.sort(function(characterA, characterB){
-                return characterA.freq - characterB.freq;
+                return characterA.freq - characterB.freq; //依序模式將docs依freq由小至大排列
             })
             break;
 
         case '測驗':
-            //TODO
+            //TODO //指定幾題，有分數等系統(可以修改這裡的規則)
             Shuffle(characters);
             break;
     }
@@ -65,8 +68,9 @@ var BuildQuiz = function (model) {
     // Now we have quiz characters
     // Clear and add these characters
     var quiz = model.quiz;
-    quiz.clearQuestions();
+    quiz.clearQuestions(); //清除之前的題組
 
+    //建立新題組：篩出來的字docs，每個字doc都出一題(可以修改這裡的規則)
     for (var i = 0, cnt = characters.length; i < cnt; i++) {
         quiz.addQuestion({
             title: '', // TODO

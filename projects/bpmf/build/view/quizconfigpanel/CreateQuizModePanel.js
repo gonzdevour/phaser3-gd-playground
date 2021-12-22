@@ -4,13 +4,13 @@ import ModalDialogPromise from '../modeldialog/ModalDialogPromise.js';
 import { QuizModeOptions } from './Options.js'
 
 const PanelName = 'mode';
-const GetValue = Phaser.Utils.Objects.GetValue;
+
+//utils
+import GetValue from '../../../../../plugins/utils/object/GetValue.js';
 
 var CreateQuizModePanel = function (scene, config) {
     // Build UI
-    var title = CreateTitleLabel(scene, '出題模式', function () {
-        CreateHelpDialog(panel);
-    });
+    var title = CreateTitleLabel(scene, '出題模式');
 
     var buttons = [];
     for (var i = 0, cnt = QuizModeOptions.length; i < cnt; i++) {
@@ -49,8 +49,8 @@ var CreateQuizModePanel = function (scene, config) {
         )
 
     // Add button callback
-    title.getElement('help').onClick(function () {
-        ModalDialogPromise(scene, {
+    title.getElement('help').onClick(function () { //取得在title的help按鈕(rexUI.add時在config中指定key:'help')，給予callback
+        ModalDialogPromise(scene, { //彈出此選單的說明
             title: '出題模式',
             content: 'Content',
             buttonMode: 1,

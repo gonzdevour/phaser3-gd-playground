@@ -1,9 +1,10 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
-import CreateDatabaseSelectPanel from './CreateDatabaseSelectPanel.js';
-import CreateEnhancementSelectPanel from './CreateEnhancementSelectPanel.js';
-import CreateQuizModePanel from "./CreateQuizModePanel.js";
+import CreateDatabaseSelectPanel from './CreateDatabaseSelectPanel.js'; //詞庫選單
+import CreateEnhancementSelectPanel from './CreateEnhancementSelectPanel.js'; //強化練習模式選單
+import CreateQuizModePanel from "./CreateQuizModePanel.js"; //出題模式選單
 
-const GetValue = Phaser.Utils.Objects.GetValue;
+//utils
+import GetValue from '../../../../../plugins/utils/object/GetValue.js';
 
 var CreateQuizConfigPanel = function (scene, config) {
     var viewport = scene.rexScaleOuter.outerViewport;
@@ -13,12 +14,12 @@ var CreateQuizConfigPanel = function (scene, config) {
     var height = GetValue(config, 'height', viewport.height);
 
     // Build UI
-    var databaseSelectPanel = CreateDatabaseSelectPanel(scene, config);
-    var enhancementSelectPanel = CreateEnhancementSelectPanel(scene, config);
-    var quizModePanel = CreateQuizModePanel(scene, config);
-    var buttonLabel = CreateLabel(scene, '開始練習');
+    var databaseSelectPanel = CreateDatabaseSelectPanel(scene, config); //詞庫選單
+    var enhancementSelectPanel = CreateEnhancementSelectPanel(scene, config); //強化練習模式選單
+    var quizModePanel = CreateQuizModePanel(scene, config); //出題模式選單
+    var buttonLabel = CreateLabel(scene, '開始練習'); //開始按鈕
 
-    var mainPanel = scene.rexUI.add.sizer({
+    var mainPanel = scene.rexUI.add.sizer({ //定位與排版
         x: x, y: y,
         width: width, height: height,
         orientation: 'y',
@@ -47,13 +48,13 @@ var CreateQuizConfigPanel = function (scene, config) {
 
     // Add button callback
     var subPanels = [databaseSelectPanel, enhancementSelectPanel, quizModePanel];
-    buttonLabel.onClick(function (button, gameObject, pointer, event) {
+    buttonLabel.onClick(function (button, gameObject, pointer, event) { //按下開始按鈕
         var result = {};
         for (var i = 0, cnt = subPanels.length; i < cnt; i++) {
             var subPanel = subPanels[i];
-            result[subPanel.name] = subPanel.getElement('choices').value
+            result[subPanel.name] = subPanel.getElement('choices').value //取得各選單的選擇
         }
-        mainPanel.emit('startQuiz', result);
+        mainPanel.emit('startQuiz', result); //回傳各選單的選擇結果，呼叫測驗開始
     })
 
     return mainPanel;

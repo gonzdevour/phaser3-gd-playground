@@ -1,6 +1,7 @@
 import Word from './Word.js';
 
-const GetRandomItem = Phaser.Utils.Array.GetRandom;
+//utils
+import  GetRandomItem  from '../../../../../plugins/utils/array/GetRandom.js';
 
 var Query = function (dbWrap, filter) {
     var wordCollection = dbWrap.wordCollection;//從wordCollection裡取值

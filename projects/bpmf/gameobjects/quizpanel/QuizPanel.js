@@ -2,7 +2,9 @@ import UI from '../../../../plugins/ui-components.js';
 
 const Sizer = UI.Sizer;
 const Buttons = UI.Buttons;
-const GetValue = Phaser.Utils.Objects.GetValue;
+
+//utils
+import GetValue from '../../../../plugins/utils/object/GetValue.js';
 
 class QuizPanel extends Sizer {
     constructor(scene, config) {

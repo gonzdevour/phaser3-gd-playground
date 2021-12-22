@@ -1,12 +1,4 @@
-import DBWrap from './db/DBWrap.js';
-import Quiz from './quiz/Quiz.js';
-import LocalStorageData from '../../../../phaser3-rex-notes/plugins/localstorage-data.js';
-import { DefaultData, DefaultQuizConfig } from './DefaultData.js'
-
-//utils
-import GetValue from '../../../plugins/utils/object/GetValue.js';
-
-/* 
+```
 Model
   .db[0,1]
     .loki的函數群
@@ -84,43 +76,4 @@ Model
     .clearQuestions() //清空questions array，題號歸0
   .getQuizConfig() //從ls中取出紀錄並重建回QuizConfig
   .setQuizConfig(config) //將QuizConfig存入ls
-*/
-
-
-class Model {
-    constructor(config) { //從CreateModel傳入config: {db: [this.cache.text.get("db0"), this.cache.text.get("db1")];}
-        var jsonList = GetValue(config, 'db', []); //jsonList = 取出db中的array[db0, db1]，若無值則設為[]
-        this.db = [];
-        for (var i = 0, cnt = jsonList.length; i < cnt; i++) { //db0, db1，兩者為.compress壓縮字串
-            var dbWrap = new DBWrap(this, jsonList[i]) //用DBWrap解壓縮compress後，傳入Model.db array裡
-            this.db.push(dbWrap);
-        }
-
-        this.lsData = new LocalStorageData({ //初始化建立ls，儲存遊戲名稱和預設值
-            name: 'bopomofo',
-            default: DefaultData //{database: '高頻詞庫',enhancement: '無',mode: '隨機'}
-        })
-
-        // 同時間只能有一個題組在執行
-        this.quiz = new Quiz(this);
-    }
-
-    getQuizConfig() { //從ls中取出紀錄並重建回QuizConfig
-        var dataManager = this.lsData;
-        var result = {};
-        for (var key in DefaultQuizConfig) { //使用DefaultQuizConfig的key結構
-            result[key] = dataManager.get(key)
-        }
-        return result;
-    }
-
-    setQuizConfig(config) { //將QuizConfig存入ls
-        var dataManager = this.lsData;
-        for (var key in DefaultQuizConfig) { //使用DefaultQuizConfig的key結構
-            dataManager.set(key, config[key]);
-        }
-        return this;
-    }
-}
-
-export default Model;
+```

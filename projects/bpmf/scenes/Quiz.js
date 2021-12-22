@@ -3,7 +3,7 @@ import Base from './Base.js';
 import { QuizSceneKey } from './Const.js';
 import CreateQuizPanel from '../build/view/quizpanel/CreateQuizPanel.js';
 import BuildQuiz from '../build/control/quiz/BuildQuiz.js';
-import QuizPromise from '../build/control/quiz/QuizPromose.js';
+import QuizPromise from '../build/control/quiz/QuizPromise.js';
 
 // Run quiz
 class Quiz extends Base {
@@ -29,14 +29,14 @@ class Quiz extends Base {
     }
 
     create() {
-        super.create();
-        var quizPanel = CreateQuizPanel(this).layout();
+        super.create(); //Base: this.rexScaleOuter.scale();
+        var quizPanel = CreateQuizPanel(this).layout(); //先建立Quiz面板
 
         console.log(`${quizPanel.width}x${quizPanel.height}`)
 
-        var quiz = BuildQuiz(this.model);
+        var quiz = BuildQuiz(this.model); //再建立Quiz題組
 
-        QuizPromise(quizPanel, quiz)
+        QuizPromise(quizPanel, quiz) //組合Quiz面板與題組並啟動流程、偵測結束
             .then(function () {
                 console.log('Quiz complete');
             })

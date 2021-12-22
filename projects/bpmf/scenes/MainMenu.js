@@ -16,12 +16,12 @@ class MainMenu extends Base {
     }
 
     create() {
-        super.create();
+        super.create(); //Base: this.rexScaleOuter.scale();
         var mainMenu = CreateMainMenuPanel(this).layout()
-            .on('button.mode-select', function () {
+            .on('button.mode-select', function () { //模式選擇
                 this.scene.start(QuizConfigSceneKey);
             }, this)
-            .on('button.continue', function () {
+            .on('button.continue', function () { //繼續遊戲
                 this.scene.start(QuizSceneKey);
             }, this)
             .on('button.config', function () {

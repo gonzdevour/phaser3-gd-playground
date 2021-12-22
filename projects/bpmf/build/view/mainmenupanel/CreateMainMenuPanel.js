@@ -2,7 +2,8 @@ import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackgro
 import { Style } from '../style/style.js';
 import CreateWord from '../quizpanel/CreateWord.js';
 
-const GetValue = Phaser.Utils.Objects.GetValue;
+//utils
+import GetValue from '../../../../../plugins/utils/object/GetValue.js';
 
 var CreateMainMenuPanel = function (scene, config) {
     var viewport = scene.rexScaleOuter.outerViewport;

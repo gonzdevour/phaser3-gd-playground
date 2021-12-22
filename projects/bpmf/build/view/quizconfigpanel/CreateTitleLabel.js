@@ -1,6 +1,6 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 
-var CreateTitleLabel = function (scene, text) {
+var CreateTitleLabel = function (scene, text) { //title, help
     return scene.rexUI.add.overlapSizer({
         space: { top: 10, bottom: 10 }
     })

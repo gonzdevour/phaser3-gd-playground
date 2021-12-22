@@ -4,6 +4,7 @@ import { BootSceneKey, MainMenuSceneKey } from './Const.js';
 import CreateModel from '../build/model/CreateModel.js';
 
 // Preload global data
+// 在Boot scene透過Base scene建立跨scene存在的Model
 class Boot extends Base {
     constructor() {
         super({

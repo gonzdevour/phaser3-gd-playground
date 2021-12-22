@@ -1,14 +1,15 @@
 import Answer from '../answer/Answer.js';
 import ParseChoiceConfig from './ParseChoiceConfig.js';
 
-const GetValue = Phaser.Utils.Objects.GetValue;
+//utils
+import GetValue from '../../../../../plugins/utils/object/GetValue.js';
 
 /*     
     在BuildQuiz.js執行：
     model.quiz.addQuestion({
-        title: '', // TODO
-        character: characters[i],
-        choices: choices
+        title: '',
+        character: ,
+        choices: choices //undefined或模式字串
     }) 
     由new Question接收
 */
@@ -20,6 +21,7 @@ class Question {
         var character = GetValue(config, 'character');
         var characterIndex;
 
+        //出題的模式：給詞取隨機字|給詞&字序號|給字取隨機詞|給詞&字
         if (character && (word === undefined)) { //若config有字無詞
             // Create word from given character //以字找詞
             word = character.getRandomWord(); //以字找隨機詞
@@ -51,10 +53,11 @@ class Question {
         this.characterIndex = characterIndex;
         // Answer, choices
         this.answer = (new Answer()).setAnswer(character);
+        //例如強化練習模式'ㄓㄗ'會轉換為config = { initials: 'ㄓㄗ' }
         this.choicesConfig = ParseChoiceConfig(GetValue(config, 'choices'));
     }
 
-    toJSON() {
+    toJSON() { //把Question物件還原回設定值JSON(再存進LS)
         return {
             word: this.word.id,
             character: this.character.id,
@@ -68,8 +71,8 @@ class Question {
     //在Quiz.js引入class後用var question = Question.FromJSON()呼叫，回傳question物件。
     //這是因為new Querion和Question.FromJSON()傳入的參數不一致，
     //所以需要static來重組內外物件。
-    static FromJSON(model, json) {
-        var db = model.db[json.db];
+    static FromJSON(model, json) { //從JSON重建Question物件(再組合回Quiz)
+        var db = model.db[json.db]; //指定db。json.db: this.character.dbId
 
         return new Question({
             title: json.title,
@@ -79,22 +82,39 @@ class Question {
         })
     }
 
-    getPolyphonyCharacter() { //取出破音字
-        var characters = this.word.getCharacters(1); //取出
+    getPolyphonyCharacter() { //取出破音詞的拼音組合
+        var characters = this.word.getCharacters(1); //從詞取出第二組拼音組合
         return (characters) ? characters[this.characterIndex] : null;
     }
-
+/* 
+    在SetupQuizPanel呼叫question.createChoices()
+    var SetupQuizPanel = function (quizPanel, question, onSubmit) {
+        // Fill quizPanel
+        quizPanel
+            .clearChoices()
+            .setTitle(question.title)
+            .setWord(question.characters)
+            .setChoicesText(question.createChoices())
+            .layout() 
+*/
     createChoices() {
-        return this.answer.createChoices({ ...this.choicesConfig });
+        return this.answer.createChoices( this.choicesConfig ); //例如強化練習模式'ㄓㄗ'會轉換為config = { initials: 'ㄓㄗ' }
+        //這裡原本是寫成：
+        //return this.answer.createChoices( { ...this.choicesConfig } );
+        //因為物件或陣列透過變數直接複製會指向原物件，所以如果createChoices時會修改config值的話，
+        //Question.choiceConfig也會一起變動導致往後取值錯誤，
+        //透過...將this.choicesConfig「去括號」後再給括號，就會以新物件的形式複製this.choicesConfig
+        //就不用擔心在之後的函數中被改動，這是一個防呆的機制。
+        //但是因為createChoices並不會修改此config值，所以刪除上述寫法。
     }
 
     setAnswer(character) {
-        this.answer.setAnswer(character);
+        this.answer.setAnswer(character); //設定答案
         return this;
     }
 
     verify(input) {
-        return this.answer.verify(input);
+        return this.answer.verify(input); //比對答案
     }
 }
 
