@@ -4,8 +4,7 @@ var ModalDialogPromise = function (scene, config) {
     var dialog = CreateModalDialog(scene, config)
         .layout()
         .on('button.click', function (button, groupName, index, pointer, event) {
-            // To invoke modal.requestClose(result)
-            dialog.emit('modal.requestClose', { index: index });
+            scene.rexUI.modalClose(dialog, { index: index });
         })
 
     config.manualClose = (config.buttonMode !== 0);
