@@ -23,12 +23,12 @@ var CreateDatabaseSelectPanel = function (scene, config) {
         expand: true,
         space: { item: 20 },
         buttons: buttons,
-        setValueCallback: function (button, value, previousValue) {
+        setButtonStateCallback: function (button, value, previousValue) {
             button.getElement('button.background')
                 .setFillStyle((value) ? 0x8B4513 : undefined)
         },
     })
-    choices.value = GetValue(config, `radio.${PanelName}`, '高頻詞庫');
+    choices.setSelectedButtonName(GetValue(config, `radio.${PanelName}`, '高頻詞庫'));
 
     var panel = scene.rexUI.add.sizer({
         orientation: 'y',

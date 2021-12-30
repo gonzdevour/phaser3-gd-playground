@@ -22,12 +22,12 @@ var CreateEnhancementSelectPanel = function (scene, config) {
         space: { line: 30, item: 30 },
         type: 'radio',
         buttons: buttons,
-        setValueCallback: function (button, value, previousValue) {
+        setButtonStateCallback: function (button, value, previousValue) {
             button.getElement('background')
                 .setFillStyle((value) ? 0x8B4513 : undefined)
         },
-    })
-    choices.value = GetValue(config, `radio.${PanelName}`, '無');
+    })    
+    choices.setSelectedButtonName(GetValue(config, `radio.${PanelName}`, '無'));
 
     var panel = scene.rexUI.add.sizer({
         orientation: 'y',
