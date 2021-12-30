@@ -13,7 +13,7 @@ class Bopomofo extends Sizer {
         super(scene, config);
         scene.add.existing(this);
 
-        var background = GetValue(config, 'background');
+        var background = GetValue(config, 'background'); //config有background就設定background
         if (background) {
             this.addBackground(background);
         }
@@ -23,7 +23,7 @@ class Bopomofo extends Sizer {
         var vowel = GetValue(config, 'vowel');        // Label, or text
         var tone = GetValue(config, 'tone');          // Label, or text
         var tone0 = GetValue(config, 'tone0');        // Label, or text
-        var bopomofoSizer = new Sizer(scene, {
+        var bopomofoSizer = new Sizer(scene, { //先排直的
             orientation: 'y',
             align: 'center'
         })
@@ -44,7 +44,7 @@ class Bopomofo extends Sizer {
                 { proportion: 0, expand: false }
             )
 
-        this
+        this //再排橫的
             .add(
                 bopomofoSizer,
                 { proportion: 0, expand: false }
@@ -54,7 +54,7 @@ class Bopomofo extends Sizer {
                 { proportion: 0, expand: false }
             )
 
-        this
+        this //建立索引，之後可以用getElement取回
             .addChildrenMap('background', background)
             .addChildrenMap('initials', initials)
             .addChildrenMap('media', media)
@@ -120,9 +120,9 @@ class Bopomofo extends Sizer {
 var SetText = function (item, text) {
     item.setText(text);
     if ((!text) || (text === '')) {
-        item.hide();
+        item.hide(); //不加入layout排版
     } else {
-        item.show();
+        item.show(); //加入layout排版
     }
 }
 

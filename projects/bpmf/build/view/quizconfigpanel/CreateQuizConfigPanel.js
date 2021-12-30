@@ -6,6 +6,15 @@ import CreateQuizModePanel from "./CreateQuizModePanel.js"; //出題模式選單
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
 
+/*
+QuizConfig.js:
+    var quizConfigPanel = CreateQuizConfigPanel(this, {
+        radio: this.model.getQuizConfig() //這裡的config，從model的現存參數來
+    })
+→
+CreateQuizConfigPanel.js:
+    CreateQuizConfigPanel(scene, config) 
+ */
 var CreateQuizConfigPanel = function (scene, config) {
     var viewport = scene.rexScaleOuter.outerViewport;
     var x = GetValue(config, 'x', viewport.centerX);
@@ -42,7 +51,7 @@ var CreateQuizConfigPanel = function (scene, config) {
             buttonLabel,
             {
                 proportion: 0, expand: true, align: 'center',
-                padding: { left: 80, right: 80 }
+                padding: { left: 80, right: 80, bottom:80 } //label在sizer子區塊中的天地
             }
         )
 
@@ -65,7 +74,8 @@ var CreateLabel = function (scene, text) {
         background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
         // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
         text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
-        align: 'center'
+        align: 'center',
+        space: { top: 20, bottom: 20 } //text在label中的天地
     });
 }
 

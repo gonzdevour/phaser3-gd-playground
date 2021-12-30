@@ -3,16 +3,27 @@ import Character from '../../../gameobjects/character/Character.js'
 import { Initials, Media, Vowel } from '../../../model/bopomofo/Bopomofo.js'
 import { Style } from '../style/style.js';
 
+/*
+從build\control\quiz\QuizPromise.js取得作答結果並呼叫：
+
+result: 
+    var verifyResult = {
+        result: isPass, //是否通過
+        input: result, //答案內容
+        word: question.word,//題目詞
+        character: (isPass && polyphonyCharacter) ? polyphonyCharacter : question.character //題目字
+    }
+*/
 var QuizResultModalPromise = function (scene, result, onCloseCallback) {
-    if (result.result) {  // Pass
+    if (result.result) {  // 答對回傳content:打勾圖片
         return ModalDialogPromise(scene, {
             content: scene.add.image(0, 0, 'yes').setDisplaySize(540, 540),
             background: null
         })
 
-    } else {  // Fails
+    } else {  // 答對回傳content:正確答案Character
         // TODO: Style Character
-        var characterUI = new Character(scene, {
+        var characterUI = new Character(scene, { //character label和BopomofoSizer組成CharacterSizer
             // background: CreateRoundRectangleBackground(scene),
             character: scene.rexUI.add.label({
                 height: (55 * 3) + 2,  // Min height
@@ -22,18 +33,18 @@ var QuizResultModalPromise = function (scene, result, onCloseCallback) {
                 space: { left: 5, right: 5, top: 5, bottom: 5 }
             }),
 
-            bopomofo: {
-                initials: CreatePhonologyLabel(scene, Initials),
+            bopomofo: { //這些label之後會以config傳入new Bopomofo排好後回傳BopomofoSizer
+                initials: CreatePhonologyLabel(scene, Initials), //param1是testString
                 media: CreatePhonologyLabel(scene, Media),
                 vowel: CreatePhonologyLabel(scene, Vowel),
                 tone: CreateToneLabel(scene),
                 tone0: CreateTone0Label(scene),
             }
         })
-            .setCharacter(result.character)
+            .setCharacter(result.character) //設定character label的bbcodeText
 
         return ModalDialogPromise(scene, {
-            content: characterUI,
+            content: characterUI, //在Modal Dialog的content處放CharacterSizer
         })
     }
 }

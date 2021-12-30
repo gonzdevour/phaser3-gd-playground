@@ -5,6 +5,7 @@ import CreateWord from '../quizpanel/CreateWord.js';
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
 
+//建立首頁面板，註冊按鈕onClick-emit事件，回傳overlapSizer，在MainMenu scene用on接收事件後處理start scene
 var CreateMainMenuPanel = function (scene, config) {
     var viewport = scene.rexScaleOuter.outerViewport;
     var x = GetValue(config, 'x', viewport.centerX);
@@ -12,15 +13,17 @@ var CreateMainMenuPanel = function (scene, config) {
     var width = GetValue(config, 'width', viewport.width);
     var height = GetValue(config, 'height', viewport.height);
 
-    // Not the top-most sizer
+    //建立最下層的sizer
     var mainMenuPanel = scene.rexUI.add.sizer({
         orientation: 'y',
     })
 
-    // Add Logo, replace it.
+    //建立logo物件
     var logo = scene.rexUI.add.BBCodeText(0, 0, 'Logo', { fontFamily: 'DFKai-SB', fontSize: 60 });
 
     // TODO: style
+    
+    //建立標題字(使用quiz中的注音排版)
     var word = CreateWord(scene)
         .setWord([
             { character: '注', initials: 'ㄓ', media: 'ㄨ', vowel: '', tone: 'ˋ' },
@@ -29,7 +32,7 @@ var CreateMainMenuPanel = function (scene, config) {
             { character: '作', initials: 'ㄗ', media: 'ㄨ', vowel: 'ㄛ', tone: 'ˋ' }
         ])
 
-    // Add buttons
+    //建立選項按鈕
     // TODO: set width & height in scene.rexUI.add.label({...})
     var btnModeSelect = CreateLabel(scene, '模式選擇');
     var btnContinue = CreateLabel(scene, '繼續練習');
@@ -52,10 +55,11 @@ var CreateMainMenuPanel = function (scene, config) {
             {}
         )
 
-    // More buttons...
+    //建立config和help按鈕
     var btnConfig = CreateLabel(scene, '*');
     var btnHelp = CreateLabel(scene, '?');
 
+    //將config和help按鈕放在mainMenuPanel上面，整個組成overlapSizer(用來處理align的sizer)
     var backgroundOverlapSizer = scene.rexUI.add.overlapSizer({
     })
         .add(
@@ -71,12 +75,15 @@ var CreateMainMenuPanel = function (scene, config) {
             { align: 'right-top', expand: false }
         )
 
-
+    //幫按鈕註冊onClick時要發射的事件
+    //RouteClickEvent(gameObject, eventName, eventEmitter)
+    //※注意overlapSizer是eventEmitter
     RouteClickEvent(btnModeSelect, 'button.mode-select', backgroundOverlapSizer);
     RouteClickEvent(btnContinue, 'button.continue', backgroundOverlapSizer);
     RouteClickEvent(btnConfig, 'button.config', backgroundOverlapSizer);
     RouteClickEvent(btnHelp, 'button.help', backgroundOverlapSizer);
 
+    //建立ChildrenMap，讓backgroundOverlapSizer.getElement('key')可以取得這個sizer的子物件
     backgroundOverlapSizer
         .addChildrenMap('logo', logo)
         .addChildrenMap('btnModeSelect', btnModeSelect)
@@ -84,6 +91,7 @@ var CreateMainMenuPanel = function (scene, config) {
         .addChildrenMap('btnConfig', btnConfig)
         .addChildrenMap('btnHelp', btnHelp)
 
+    //回傳時順便設定位置和大小界限
     return backgroundOverlapSizer.setPosition(x, y).setMinSize(width, height);
 }
 
@@ -96,6 +104,9 @@ var CreateLabel = function (scene, text, img, pos) {
     });
 }
 
+//onClick是sizer的method，Label是一種sizer
+//emit是所有p3 gameObject都有的method，從ee3導入
+//※這裡設計成：按下Label時，觸發backgroundOverlapSizery在MainMenu scene掛載的.on('eventName', callback)
 var RouteClickEvent = function (gameObject, eventName, eventEmitter) {
     gameObject.onClick(function (button, gameObject, pointer, event) {
         eventEmitter.emit(eventName, gameObject, pointer, event);

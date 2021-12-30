@@ -17,7 +17,7 @@
   執行SetupQuizPanel(組合quiz吐出的新question和quizpanel)並等待作答結果回傳
 
   QuizResultModalPromise:
-  顯示/確認專用的訊息彈出工具
+  顯示/確認專用的訊息彈出工具的promise
   ``` 
   + SetupQuizPanel.js
   ``` 
@@ -36,6 +36,9 @@
 ### view
   + mainmenupanel 
     + CreateMainMenuPanel.js
+    ```
+    建立首頁面板，註冊按鈕onClick-emit事件，回傳overlapSizer到MainMenu scene再用on接收事件後處理start scene
+    ``` 
   + modeldialog
     + CreateModalDialog.js
     + ModalDialogPromise.js

@@ -18,23 +18,33 @@ class MainMenu extends Base {
     create() {
         super.create(); //Base: this.rexScaleOuter.scale();
         var mainMenu = CreateMainMenuPanel(this).layout()
+        //on button clicked事件宣告在build/view/mainmenupanel/CreateMainMenuPanel.js
+        //on button clicked後emit以下事件：
             .on('button.mode-select', function () { //模式選擇
                 this.scene.start(QuizConfigSceneKey);
             }, this)
             .on('button.continue', function () { //繼續遊戲
                 this.scene.start(QuizSceneKey);
             }, this)
-            .on('button.config', function () {
+            .on('button.config', function () { //todo
                 console.log('button.config')
             }, this)
-            .on('button.help', function () {
+            .on('button.help', function () { //todo
                 console.log('button.help')
             }, this)
 
         console.log(`${mainMenu.width}x${mainMenu.height}`)
 
-        var logo = mainMenu.getElement('logo');
-        this.rexUI.easeMoveFrom(logo, 1000, undefined, '-=200', 'Cubic');
+        var logo = mainMenu.getElement('logo'); //從mainMenu取得logo物件
+        this.rexUI.easeMoveFrom(logo, 1000, undefined, '-=200', 'Cubic'); //排好版之後再開始tween
+    
+var s = 
+                      `
+                      高頻：參照教育部公布之詞頻總表
+                      常用：分類整理生活中的常見用詞\
+                      `;
+        console.log("tl test:");
+        console.log(s);
 
     }
 
