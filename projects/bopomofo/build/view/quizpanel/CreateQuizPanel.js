@@ -37,7 +37,19 @@ var CreateQuizPanel = function (scene, config) {
         expand: {
             footer: true
         }
-    });
+    })
+
+    // TODO: Add addition buttons on quiz panel's word block
+    quizPanel.getElement('wordBlock')
+        .add(
+            CreateLabel(scene),
+            {
+                key: 'Btn',
+                align: 'right-top',
+                expand: false,
+                offsetX: -40, offsetY: 40
+            }
+        )
 
     // Integrated events
     quizPanel.getElement('footer')
@@ -80,6 +92,13 @@ var CreateQuizPanel = function (scene, config) {
         })
 
     return quizPanel;
+}
+
+var CreateLabel = function (scene) {
+    return scene.rexUI.add.label({
+        width: 100, height: 100,
+        background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),        
+    });
 }
 
 export default CreateQuizPanel;
