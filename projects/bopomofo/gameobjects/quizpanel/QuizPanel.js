@@ -27,10 +27,10 @@ class QuizPanel extends Sizer {
             )
         }
 
-        var wordBlock = new OverlapSizer(scene);
+        var wordArea = new OverlapSizer(scene);
         var word = GetValue(config, 'word');
         var spaceWord = GetValue(config, 'space.word', 0);
-        wordBlock.add(word, {
+        wordArea.add(word, {
             key: 'word',
             align: 'center',
             expand: false,
@@ -42,7 +42,7 @@ class QuizPanel extends Sizer {
 
         this
             .add(
-                wordBlock,
+                wordArea,
                 {
                     proportion: 0, expand: true, align: 'center'
                 }
@@ -72,7 +72,7 @@ class QuizPanel extends Sizer {
             .addChildrenMap('background', background)
             .addChildrenMap('title', title)
             .addChildrenMap('word', word)
-            .addChildrenMap('wordBlock', wordBlock)
+            .addChildrenMap('wordArea', wordArea)
             .addChildrenMap('choices', choices)
             .addChildrenMap('footer', footer)
     }
@@ -131,8 +131,8 @@ class QuizPanel extends Sizer {
     }
 
     addToWordBlock(gameObject, config) {
-        // Add gameObject to wordBlock, an OverlapSizer
-        this.getElement('wordBlock').add(gameObject, config);
+        // Add gameObject to wordArea, an OverlapSizer
+        this.getElement('wordArea').add(gameObject, config);
         return this;
     }
 }

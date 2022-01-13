@@ -40,7 +40,7 @@ var CreateQuizPanel = function (scene, config) {
     })
 
     // TODO: Add addition buttons on quiz panel's word block
-    quizPanel.getElement('wordBlock')
+    quizPanel.getElement('wordArea')
         .add(
             CreateLabel(scene),
             {
@@ -97,7 +97,7 @@ var CreateQuizPanel = function (scene, config) {
 var CreateLabel = function (scene) {
     return scene.rexUI.add.label({
         width: 100, height: 100,
-        background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),        
+        background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
     });
 }
 
