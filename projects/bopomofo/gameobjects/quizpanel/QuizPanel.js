@@ -2,6 +2,7 @@ import UI from '../../../../plugins/ui-components.js';
 
 const Sizer = UI.Sizer;
 const Buttons = UI.Buttons;
+const OverlapSizer = UI.OverlapSizer;
 const GetValue = Phaser.Utils.Objects.GetValue;
 
 class QuizPanel extends Sizer {
@@ -26,18 +27,24 @@ class QuizPanel extends Sizer {
             )
         }
 
+        var wordArea = new OverlapSizer(scene);
         var word = GetValue(config, 'word');
         var spaceWord = GetValue(config, 'space.word', 0);
+        wordArea.add(word, {
+            key: 'word',
+            align: 'center',
+            expand: false,
+            padding: { bottom: spaceWord }
+        })
 
         var choices = GetValue(config, 'choices');
         var spaceChoices = GetValue(config, 'space.choices', 0);
 
         this
             .add(
-                word,
+                wordArea,
                 {
-                    proportion: 0, expand: false, align: 'center',
-                    padding: { bottom: spaceWord }
+                    proportion: 0, expand: true, align: 'center'
                 }
             )
             .add(
@@ -65,6 +72,7 @@ class QuizPanel extends Sizer {
             .addChildrenMap('background', background)
             .addChildrenMap('title', title)
             .addChildrenMap('word', word)
+            .addChildrenMap('wordArea', wordArea)
             .addChildrenMap('choices', choices)
             .addChildrenMap('footer', footer)
     }
@@ -119,6 +127,12 @@ class QuizPanel extends Sizer {
 
     setCharacterColor(index, color) {
         this.getElement('word').setCharacterColor(index, color);
+        return this;
+    }
+
+    addToWordBlock(gameObject, config) {
+        // Add gameObject to wordArea, an OverlapSizer
+        this.getElement('wordArea').add(gameObject, config);
         return this;
     }
 }
