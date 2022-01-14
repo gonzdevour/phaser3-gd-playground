@@ -6,9 +6,13 @@ import CreateActions from "./CreateActions.js";
 import { QuizPanel } from '../../../gameobjects/quizpanel.js';
 import { Style } from "../style/style.js";
 
-const GetValue = Phaser.Utils.Objects.GetValue;
+//utils
+import GetValue from '../../../../../plugins/utils/object/GetValue.js';
 
+//建立quizPanel並掛上事件，這裡的物件群都不帶內容(除了title之外)
+//物件群內容在build/control/quiz/SetupQuizPanel中依QuizPromise的參數而設定
 var CreateQuizPanel = function (scene, config) {
+    console.log('CreateQuizPanel config:' + '\n' + JSON.stringify(config));
     var viewport = scene.rexScaleOuter.outerViewport;
     var x = GetValue(config, 'x', viewport.centerX);
     var y = GetValue(config, 'y', viewport.centerY);
@@ -22,13 +26,13 @@ var CreateQuizPanel = function (scene, config) {
 
         background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
 
-        title: CreateTitle(scene),
+        title: CreateTitle(scene, config),
         word: CreateWord(scene),
         choices: CreateChoices(scene),
         footer: CreateActions(scene),
 
         space: {
-            title: 10,
+            title: 0,
             word: 10,
             choices: 10,
             bottom: 10,
@@ -38,6 +42,21 @@ var CreateQuizPanel = function (scene, config) {
             footer: true
         }
     });
+
+    // TODO: Add addition buttons on quiz panel's word block
+    quizPanel.getElement('wordArea')
+        .add(
+            CreateLabel(scene, '發音')
+                .onClick( function (button, index, pointer, event) {
+                    quizPanel.emit('ttsSpeak', scene);
+                }),
+            {
+                key: 'btnSpeak',
+                align: 'left-top',
+                expand: false,
+                offsetX: 20, offsetY: 20
+            }
+        )    
 
     // Integrated events
     quizPanel.getElement('footer')
@@ -80,6 +99,24 @@ var CreateQuizPanel = function (scene, config) {
         })
 
     return quizPanel;
+}
+
+var CreateLabel = function (scene, text, img, pos) {
+    return scene.rexUI.add.label({
+        background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
+        // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
+        text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+        space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
+    });
+}
+
+//onClick是sizer的method，Label是一種sizer
+//emit是所有p3 gameObject都有的method，從ee3導入
+//※這裡設計成：按下Label時，觸發backgroundOverlapSizery在MainMenu scene掛載的.on('eventName', callback)
+var RouteClickEvent = function (gameObject, eventName, eventEmitter) {
+    gameObject.onClick(function (button, gameObject, pointer, event) {
+        eventEmitter.emit(eventName, gameObject, pointer, event);
+    })
 }
 
 export default CreateQuizPanel;

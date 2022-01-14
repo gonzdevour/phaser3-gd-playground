@@ -15,7 +15,7 @@ class Quiz extends Base {
     }
 
     preload() {
-        // Load sound file
+/*         // Load sound file
         this.load.audio('ok', [
             'assets/sound/right.ogg',
             'assets/sound/right.m4a'
@@ -25,12 +25,12 @@ class Quiz extends Base {
         this.load.image('eraser', 'assets/img/eraser.png');
 
         // Test-pass dialog
-        this.load.image('yes', 'assets/img/yes.png');
+        this.load.image('yes', 'assets/img/yes.png'); */
     }
 
     create() {
         super.create(); //Base: this.rexScaleOuter.scale();
-        var quizPanel = CreateQuizPanel(this).layout(); //先建立Quiz面板
+        var quizPanel = CreateQuizPanel(this, this.model.getQuizConfig()).layout(); //先建立Quiz面板
 
         console.log(`${quizPanel.width}x${quizPanel.height}`)
 

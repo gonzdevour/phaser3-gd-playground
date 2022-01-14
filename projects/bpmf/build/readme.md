@@ -34,30 +34,67 @@
   在build-db.js被呼叫，將csv重組後建立db並壓縮後另存為.compress檔，提供boot scene讀入。※注意PrebuildDB相關功能雖然屬於model資料夾，但methods並未納入model物件下。
   ``` 
 ### view
-  + mainmenupanel 
+  + 首頁面板 - mainmenupanel  
     + CreateMainMenuPanel.js
     ```
     建立首頁面板，註冊按鈕onClick-emit事件，回傳overlapSizer到MainMenu scene再用on接收事件後處理start scene
     ``` 
-  + modeldialog
+  + 彈出式對話框 - modeldialog
     + CreateModalDialog.js
+    ```
+    被ModalDialogPromise呼叫，
+    建立dialog子元件群後組成rexUI dialog
+    ``` 
     + ModalDialogPromise.js
-  + quizconfigpanel
+    ```
+    將dialog再包裝為modal，並建立promise
+    (dialog收到button.click事件後，執行關閉modal的指令)
+    ``` 
+  + 選擇面板 - quizconfigpanel
     + CreateDatabaseSelectPanel.js
+    ```
+    題庫選擇面板：
+    建立database buttons，以buttons.value = button.name觸發button的setValueCallback，執行改變button外觀。同時buttons.value也代表選中了哪個選項。
+    ``` 
     + CreateEnhancementSelectPanel.js
-    + CreateQuizConfigPanel.js
+    ```
+    強化練習模式選擇面板：
+    同上，建立enhancement buttons
+    ``` 
     + CreateQuizModelPanel.js
+    ```
+    出題模式選擇面板：
+    同上，建立mode buttons
+    ``` 
+    + CreateQuizConfigPanel.js
+    ```
+    組合上面三個面板，建立開始練習按鈕以回傳面板選擇結果給scene/QuizConfig.js
+    ``` 
     + CreateTitleLabel.js
+    ```
+    輔助三面板上方建立title和help按鈕，help按鈕會在各面板建立時用getElement('help').onClick來褂上ModalDialogPromise(彈出式訊息面板)
+    ``` 
     + Option.js
-  + quizpanel
+    ```
+    三面板的所有可能選項，預設值放在model/DefaultData.js
+    ``` 
+  + 題目與作答面板 - quizpanel
     + CreateActions.js
+    ```
+    建立橫向左右對齊的清除與送出按鈕
+    ``` 
     + CreateCharacter.js
+    ```
+    建立字與注音的label群後，透過gameobjects/Character.js的new Character(包含new Bopomofo)進行排列。
+    
+    ※注意這個階段並不給予text內容，而只是將組件排版
+    ``` 
     + CreateChoices.js
     + CreateQuizPanel.js
     + CreateTitle.js
     + CreateWord.js
     + QuizResultModalPromise.js
-  + style
+  + 輔助樣式 - style
     + CreateButtonBackground.js
     + CreateRoundRectangleBackground.js
     + CreateText.js

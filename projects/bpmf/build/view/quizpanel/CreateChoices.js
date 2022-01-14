@@ -48,6 +48,7 @@ var CreateChoices = function (scene) {
         )
     }
 
+    //on button.click → setData → on changedata-key → emit select/unselect
     var choices = new Choices(scene, config);
 
     choices

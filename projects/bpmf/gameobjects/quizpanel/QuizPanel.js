@@ -1,3 +1,4 @@
+import { OverlapSizer } from '../../../../../phaser3-rex-notes/templates/ui/ui-components.js';
 import UI from '../../../../plugins/ui-components.js';
 
 const Sizer = UI.Sizer;
@@ -30,16 +31,22 @@ class QuizPanel extends Sizer {
 
         var word = GetValue(config, 'word');
         var spaceWord = GetValue(config, 'space.word', 0);
+        var wordArea = new OverlapSizer(scene);
+        wordArea.add(word, {
+            key: 'word',
+            align: 'center',
+            expand: false,
+            padding: { bottom: spaceWord }
+        })
 
         var choices = GetValue(config, 'choices');
         var spaceChoices = GetValue(config, 'space.choices', 0);
 
         this
             .add(
-                word,
+                wordArea,
                 {
-                    proportion: 0, expand: false, align: 'center',
-                    padding: { bottom: spaceWord }
+                    proportion: 1, expand: true, align: 'center',
                 }
             )
             .add(
@@ -67,6 +74,7 @@ class QuizPanel extends Sizer {
             .addChildrenMap('background', background)
             .addChildrenMap('title', title)
             .addChildrenMap('word', word)
+            .addChildrenMap('wordArea', wordArea)
             .addChildrenMap('choices', choices)
             .addChildrenMap('footer', footer)
     }

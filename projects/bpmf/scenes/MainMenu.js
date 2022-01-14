@@ -37,14 +37,6 @@ class MainMenu extends Base {
 
         var logo = mainMenu.getElement('logo'); //從mainMenu取得logo物件
         this.rexUI.easeMoveFrom(logo, 1000, undefined, '-=200', 'Cubic'); //排好版之後再開始tween
-    
-var s = 
-                      `
-                      高頻：參照教育部公布之詞頻總表
-                      常用：分類整理生活中的常見用詞\
-                      `;
-        console.log("tl test:");
-        console.log(s);
 
     }
 

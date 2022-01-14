@@ -1,6 +1,7 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import { Style } from '../style/style.js';
 
+//建立橫向左右對齊的清除與送出按鈕
 var CreateActions = function (scene) {
     return scene.rexUI.add.buttons({
         orientation: 'x',
@@ -10,7 +11,7 @@ var CreateActions = function (scene) {
             CreateLabel(scene, '送出答案', 'confirm', 'right'),
         ],
         space: {
-            left: 10, right: 10, top: 0, bottom: 0, item: 10
+            left: 20, right: 20, top: 10, bottom: 10, item: 10
         }
     })
 }

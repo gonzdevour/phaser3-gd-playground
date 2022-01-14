@@ -32,7 +32,7 @@ var CreateQuizConfigPanel = function (scene, config) {
         x: x, y: y,
         width: width, height: height,
         orientation: 'y',
-        space: { item: 40 }
+        space: { item: 30 }
     })
         .add(
             databaseSelectPanel,
@@ -61,8 +61,20 @@ var CreateQuizConfigPanel = function (scene, config) {
         var result = {};
         for (var i = 0, cnt = subPanels.length; i < cnt; i++) {
             var subPanel = subPanels[i];
+            /* 
+            subPanel.name: 'database'|'enhancement'|'mode'
+            choices.value: button.name，就是options的各項目
+            
+            如果是預設值的話：
+            result = {
+                database: '高頻詞庫', //指定詞庫種類
+                enhancement: '無', //強化練習模式
+                mode: '隨機' //依序|隨機|測驗
+            }
+            */
             result[subPanel.name] = subPanel.getElement('choices').value //取得各選單的選擇
         }
+        //startQuiz掛在scene/QuizConfig.js
         mainPanel.emit('startQuiz', result); //回傳各選單的選擇結果，呼叫測驗開始
     })
 

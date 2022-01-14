@@ -3,8 +3,8 @@ const Style = {
 
         title: {
             fontFamily: 'DFKai-SB',
-            fontSize: 32,
-            fixedHeight: 48,
+            fontSize: 48,
+            fixedHeight: 60,
             valign: 'center',
             testString: '回'
         },

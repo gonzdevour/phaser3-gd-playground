@@ -12,6 +12,7 @@ const PanelName = 'database'; //用來取得config.database|enhancement|mode的k
 QuizConfig.js:
     var quizConfigPanel = CreateQuizConfigPanel(this, {
         radio: this.model.getQuizConfig() 
+
         //這裡的config，從model的現存參數來，預設值為：
         //var DefaultQuizConfig = {
         //    database: '高頻詞庫', //指定詞庫種類
@@ -56,6 +57,8 @@ const DataBaseOptions = [
     })
 
     /* 
+    radio是哪裡來的？請見最上方的注解。
+    目前的config結構為：
     config: 
         {radio: {
                 database: '高頻詞庫', //指定詞庫種類
@@ -68,7 +71,8 @@ const DataBaseOptions = [
     buttons.value = key //選取button.name == key的button
     https://rexrainbow.github.io/phaser3-rex-notes/docs/site/ui-buttons/#radio
 
-    從config取得詞庫名稱，choices.value選擇button.name == 詞庫名稱的button，觸發該button底板變色效果
+    從config取得詞庫名稱，choices.value選擇button.name == 詞庫名稱的button，
+    觸發choices的setValueCallback並傳入該button，執行該button的底板變色效果
     */
     //2021.12.30新增buttons.setSelectedButtonName方法，功能與buttons.value相同
     //choices.value = GetValue(config, `radio.${PanelName}`, '高頻詞庫');
@@ -86,22 +90,21 @@ const DataBaseOptions = [
             choices,
             {
                 proportion: 0, align: 'center', expand: true,
-                padding: { left: 80, right: 80, top: 40 },
+                padding: { left: 80, right: 80, top: 30 },
                 key: 'choices'
             }
         )
 
     // help button callback
+    // content原本用``樣版字面值。``的\可以取消換行，但會把空格也帶進來。用\n比較清爽
+    // 注意width只有設定最小寬度的功能，如果排版後大於width，會以排版大小為準
     title.getElement('help').onClick(function () {
         ModalDialogPromise(scene, {
             title: '詞庫選擇',
-            content: `
-                      高頻：參照教育部公布之詞頻總表
-                      常用：分類整理生活中的常見用詞\
-                      `,
+            content: '高頻：參照教育部公布之詞頻總表\n常用：分類整理生活中的常見用詞',
             buttonMode: 1,
 
-            width: scene.rexScaleOuter.outerViewport.width-50,
+            width: scene.viewport.width-50,
         })
     })
 
@@ -117,16 +120,27 @@ const DataBaseOptions = [
 CreateOptionLabel(scene, option.description, option.title)
 */
 var CreateOptionLabel = function (scene, title, text) {
+    //原本是為了組合desc和label所以建sizer，既然現在不需要desc，
+    //這邊應該直接add label就行了。
     return scene.rexUI.add.sizer({
         orientation: 'y',
-        space: { item: 10 },
-        // !! Important: name will be used as option name in choices sizer
+        space: { item: 10 }, //sizer內沒有複數物件，這個參數應該也不再需要
+        /*
+        ※魔法！radio的操作：
+        buttons.value //取得選中的button.name
+        buttons.value = key //選取button.name == key的button
+        CreateOptionLabel會建立buttons的button，
+        所以這邊的button.name會被buttons.value作為選取的索引值，
+        參數名稱必須為name。
+         */
         name: text //option.title
     })
-/*         .add( //option.description bbcodeText
+        /*說明功能跟help button重複，為了排版一致與美觀，刪除
+           .add( //option.description bbcodeText
             scene.rexUI.add.BBCodeText(0, 0, title, { fontFamily: 'DFKai-SB', fontSize: 50 }),
             { align: 'center', key: 'title' }
-        ) */
+        )
+        */
         .add( //option.title label
             scene.rexUI.add.label({
                 orientation: 'y',

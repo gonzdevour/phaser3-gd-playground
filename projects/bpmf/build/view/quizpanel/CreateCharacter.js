@@ -3,6 +3,8 @@ import { Character } from '../../../gameobjects/quizpanel.js';
 import { Initials, Media, Vowel } from '../../../model/bopomofo/Bopomofo.js'
 import { Style } from '../style/style.js';
 
+//建立字與注音的label群後，透過gameobjects/Character.js的new Character(包含new Bopomofo)進行排列
+//注意這個階段並不給予text內容，而只是將組件排版
 var CreateCharacter = function (scene,) {
     var characterUI = new Character(scene, {
         background: CreateRoundRectangleBackground(scene),
@@ -27,6 +29,7 @@ var CreateCharacter = function (scene,) {
     return characterUI;
 }
 
+//建立注音label
 var CreatePhonologyLabel = function (scene, testString) {
     return scene.rexUI.add.label({
         // background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
@@ -38,6 +41,7 @@ var CreatePhonologyLabel = function (scene, testString) {
     })
 }
 
+//建立音調label
 var CreateToneLabel = function (scene) {
     return scene.rexUI.add.label({
         // background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
@@ -49,6 +53,7 @@ var CreateToneLabel = function (scene) {
     })
 }
 
+//建立輕聲label(在上方置中所以獨立出來)
 var CreateTone0Label = function (scene) {
     return scene.rexUI.add.label({
         // background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),

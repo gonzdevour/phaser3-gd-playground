@@ -46,6 +46,8 @@ Model
         .getWords(wordCount)
         .getRandomWord()
   .lsData
+  .speech
+  .sound
   .quiz
     .model
     .questions //題組array
@@ -100,6 +102,10 @@ class Model {
             name: 'bopomofo',
             default: DefaultData //{database: '高頻詞庫',enhancement: '無',mode: '隨機'}
         })
+
+        var apiList = GetValue(config, 'api', undefined);
+        this.speech = apiList.speech; //初始化語音
+        this.sound = apiList.sound; //初始化音效
 
         // 同時間只能有一個題組在執行
         this.quiz = new Quiz(this);

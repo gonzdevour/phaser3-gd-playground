@@ -12,15 +12,24 @@ var CreateQuizModePanel = function (scene, config) {
     // Build UI
     var title = CreateTitleLabel(scene, '出題模式');
 
+    /* 
+    const QuizModeOptions = [
+    '隨機',
+    '依序',
+    '測驗'
+    ]
+    */
     var buttons = [];
     for (var i = 0, cnt = QuizModeOptions.length; i < cnt; i++) {
         buttons.push(
             CreateOptionLabel(scene, QuizModeOptions[i])
         )
     }
+    //fixWidthButtons可以自動換行排列button
     var choices = scene.rexUI.add.fixWidthButtons({
         align: 'justify',
         // justifyPercentage: 1,
+        // justify在rexUI中的規則是：當該行元素超過justifyPercentage時自動換行，否則左右對齊
         space: { line: 30, item: 30 },
         type: 'radio',
         buttons: buttons,
@@ -29,11 +38,14 @@ var CreateQuizModePanel = function (scene, config) {
                 .setFillStyle((value) ? 0x8B4513 : undefined)
         },
     })
+
+    //choices.value用法請見CreateDatabaseSelectPanel.js
+    //將buttons radio的選項以預設值做設定
     choices.value = GetValue(config, `radio.${PanelName}`, '隨機');
 
     var panel = scene.rexUI.add.sizer({
         orientation: 'y',
-        name: PanelName
+        name: PanelName //'mode'
     })
         .add(
             title,
@@ -43,7 +55,7 @@ var CreateQuizModePanel = function (scene, config) {
             choices,
             {
                 proportion: 0, align: 'center', expand: true,
-                padding: { left: 80, right: 80, top: 40 },
+                padding: { left: 80, right: 80, top: 30 },
                 key: 'choices'
             }
         )
@@ -52,10 +64,10 @@ var CreateQuizModePanel = function (scene, config) {
     title.getElement('help').onClick(function () { //取得在title的help按鈕(rexUI.add時在config中指定key:'help')，給予callback
         ModalDialogPromise(scene, { //彈出此選單的說明
             title: '出題模式',
-            content: 'Content',
+            content: '隨機：從詞庫中隨機挑選題目\n依序：依詞語的常用順序出題\n測驗：指定範圍與題數後進行測驗(施工中)',
             buttonMode: 1,
 
-            width: 500,
+            width: scene.viewport.width-50,
         })
     })
 

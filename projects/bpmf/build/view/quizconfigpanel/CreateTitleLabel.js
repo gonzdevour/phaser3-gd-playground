@@ -11,10 +11,11 @@ var CreateTitleLabel = function (scene, text) { //title, help按鈕
                 align: 'center', expand: false, key: 'title',
             }
         )
+        //help按鈕會在各面板建立時用getElement('help').onClick來褂上ModalDialogPromise
         .add(
             CreateHelpButton(scene),
             {
-                align: 'right', offsetX: -20, expand: false, key: 'help', //帶key才偵測得到是按了哪個鈕
+                align: 'right', offsetX: -20, expand: false, key: 'help', //帶key才抓得到是按了哪個鈕
             }
         )
 }

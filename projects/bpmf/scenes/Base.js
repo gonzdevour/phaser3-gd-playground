@@ -38,8 +38,12 @@ class Base extends Phaser.Scene {
     get model() { //get: 'this.model'時觸發
         return Model;
     }
+    get viewport() { //簡化呼叫
+        return this.rexScaleOuter.outerViewport; 
+    }
 
     create() {
+        //scale outer
         this.rexScaleOuter.scale();
     }
 }

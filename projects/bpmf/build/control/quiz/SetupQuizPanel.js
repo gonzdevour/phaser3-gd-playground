@@ -4,7 +4,7 @@ var SetupQuizPanel = function (quizPanel, question, onSubmit) {
     // Fill quizPanel，從這裡開始跟view扯上關係
     quizPanel
         .clearChoices() //清除選項群
-        .setTitle(question.title) //設定標題
+        //.setTitle(question.title) //設定標題
         .setWord(question.characters) //用字array設定詞
         .setChoicesText(question.createChoices()) //建立選項群並設定選項文字
         .layout() //排版
@@ -12,6 +12,11 @@ var SetupQuizPanel = function (quizPanel, question, onSubmit) {
     // Note: make sure 'submit' is emitted (OK button clicked)    
     quizPanel
         .setData('focusCharacterIndex', question.characterIndex) // See CreateQuizPanel.js
+        .on('ttsSpeak', function (scene) {
+            //debugger;
+            console.log('ttsSpeak:' + question.word.word);
+            scene.model.speech.say(question.word.word);
+        })
         .once('submit', function (result) { //callback回傳答案
             var isPass = question.verify(result); //比對答案
             if (!isPass) { // 如果答案沒通過，檢查是不是破音詞
