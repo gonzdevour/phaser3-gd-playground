@@ -11,7 +11,9 @@ var SetupQuizPanel = function (quizPanel, question, onSubmit) {
 
     // Note: make sure 'submit' is emitted (OK button clicked)    
     quizPanel
-        .setData('focusCharacterIndex', question.characterIndex) // See CreateQuizPanel.js
+        //CreateQuizPanel.js會幫quizPanel掛上'changedata-focusCharacterIndex'事件
+        //當字(題目)切換時，該字會變色並清除該字旁邊的注音。
+        .setData('focusCharacterIndex', question.characterIndex)
         .on('ttsSpeak', function (scene) {
             //debugger;
             console.log('ttsSpeak:' + question.word.word);

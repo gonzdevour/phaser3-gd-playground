@@ -19,7 +19,7 @@ const Buttons = UI.Buttons;
             left: 10, right: 10, top: 10, bottom: 10, row: 10, column: 10
         }
     }
-    傳進這裡時，initials, media, vowel, tone都是label array
+    傳進這裡時，initials, media, vowel, tone都已經是以常數指定個數的label array
 */
 
 class Choices extends Sizer {
@@ -145,7 +145,7 @@ class Choices extends Sizer {
         return this;
     }
 
-    //取得目前選項狀態
+    //取得目前選項選取狀態JSON
     getChoiceResult(out) {
         if (out === undefined) {
             out = {};

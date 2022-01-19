@@ -83,19 +83,47 @@
     ```
     建立橫向左右對齊的清除與送出按鈕
     ``` 
+    + CreateTitle.js
+    ```
+    建立標題label組件
+        
+    ``` 
     + CreateCharacter.js
     ```
     建立字與注音的label群後，透過gameobjects/Character.js的new Character(包含new Bopomofo)進行排列。
     
-    ※注意這個階段並不給予text內容，而只是將組件排版
+    ※注意Create階段並不給予text內容，而只是將組件排版，以下同。
+    ``` 
+    + CreateWord.js
+    ``` 
+    建立character群後存入config array，再以config建立new Word並layout
     ``` 
     + CreateChoices.js
+    ```
+    先依常數建立choices組件，如需增減按鈕數如強化模式僅指定2或3個initials/vowels時，會在choice class執行setChoicesText時判斷是否有值來控制組件的hide/show，接著在SetupQuizPanel時，執行quizPanel.layout()就會看到組件增減變化
+    ``` 
     + CreateQuizPanel.js
-    + CreateTitle.js
-    + CreateWord.js
+    ```
+    將title, word, choices, actions組合起來成為quizPanel，同時在上述各組件掛上操作與數值變化事件。
+    ``` 
     + QuizResultModalPromise.js
+    ```
+    答對回傳打勾圖片，答錯回傳正確答案的character物件，以Modal形式顯示
+    ``` 
   + 輔助樣式 - style
     + CreateButtonBackground.js
+    ```
+    用canvas技巧畫出choices按鈕的裝飾
+    ``` 
     + CreateRoundRectangleBackground.js
+    ```
+    圓角按鈕底圖
+    ``` 
     + CreateText.js
+    ```
+    沒用到
+    ``` 
     + Style.js
+    ```
+    panel在create階段用到的樣式表
+    ``` 

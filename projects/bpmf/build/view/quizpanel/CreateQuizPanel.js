@@ -18,10 +18,12 @@ var CreateQuizPanel = function (scene, config) {
     var y = GetValue(config, 'y', viewport.centerY);
     var width = GetValue(config, 'width', viewport.width);
     var height = GetValue(config, 'height', viewport.height);
+    var displayWidth = width>height?(height/1.6):width;
+    var displayHeight = height;
 
     var quizPanel = new QuizPanel(scene, {
         x: x, y: y,
-        width: width, height: height,
+        width: displayWidth, height: displayHeight,
         orientation: 'y',
 
         background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
@@ -43,7 +45,7 @@ var CreateQuizPanel = function (scene, config) {
         }
     });
 
-    // TODO: Add addition buttons on quiz panel's word block
+    //在word區塊的overlapSizer上添加語音按鈕
     quizPanel.getElement('wordArea')
         .add(
             CreateLabel(scene, '發音')
@@ -58,10 +60,10 @@ var CreateQuizPanel = function (scene, config) {
             }
         )    
 
-    // Integrated events
+    //清除答案與送出答案
     quizPanel.getElement('footer')
         .on('button.click', function (button, index, pointer, event) {
-            switch (index) {
+            switch (index) { //index是button在buttons裡的產生順序
 
                 case 0: // Clear button
                     quizPanel.clearChoices();
@@ -76,25 +78,28 @@ var CreateQuizPanel = function (scene, config) {
             }
         })
 
-    // Focus character
+    //在SetupQuizPanel時，會quizPanel.setData('focusCharacterIndex', question.characterIndex)
+    //此時接收到事件的字會變色並清除該字旁邊的注音
     quizPanel
         .setData('focusCharacterIndex', null)
         .on('changedata-focusCharacterIndex', function (gameObject, value, previousValue) {
             quizPanel
-                .setWordColor(Style.quizPanel.word.normalColor)
-                .setCharacterColor(value, Style.quizPanel.word.focusColor)
-                .clearCharacterBopomofo(value)
+                .setWordColor(Style.quizPanel.word.normalColor) //重設所有字的顏色
+                .setCharacterColor(value, Style.quizPanel.word.focusColor) //設定題目字的顏色
+                .clearCharacterBopomofo(value) //清除題目字旁邊的注音
         })
 
-    // Set bopomofo of focus character
+    //選項選取狀態改變時，設定題目字旁邊的注音
     quizPanel.getElement('choices')
         .on('change', function (result) {
             var index = quizPanel.getData('focusCharacterIndex');
-            if (index == null) {
+            if (index == null) { //題目字必須存在
                 return;
             }
             quizPanel
+                //取得目前選項選取狀態JSON，設定題目字旁邊的注音
                 .setCharacterBopomofo(index, quizPanel.getChoiceResult())
+                //※注意gameobjects/bopomofo/Bopomofo.js的setText自訂函數會用show/hide控制排版
                 .layoutCharacter(index)
         })
 

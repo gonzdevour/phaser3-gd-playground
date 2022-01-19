@@ -33,14 +33,14 @@ class Word extends Sizer {
             .addChildrenMap('characters', characters)
     }
 
-    setWord(characters) {
+    setWord(characters) { //超出詞長的character組件不加入排版
         var items = this.getElement('characters');
         var charactersLength = characters.length;
         for (var i = 0, cnt = items.length; i < cnt; i++) {
             if (i < charactersLength) {
-                items[i].show().setCharacter(characters[i])
+                items[i].show().setCharacter(characters[i]) //加入排版
             } else {
-                items[i].hide();
+                items[i].hide(); //不加入排版
             }
         }
         return this;

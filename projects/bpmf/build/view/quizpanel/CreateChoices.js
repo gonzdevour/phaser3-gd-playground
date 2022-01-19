@@ -8,6 +8,9 @@ const MaxMediaButtons = 3;
 const MaxVowelButtons = 5;
 const MaxToneButtons = 5;
 
+//先依常數建立choices組件，如需增減按鈕數如強化模式僅指定2或3個initials/vowels時，
+//會在choice class執行setChoicesText時判斷是否有值來控制組件的hide/show，
+//接著在SetupQuizPanel時，執行quizPanel.layout()就會看到組件增減變化
 var CreateChoices = function (scene) {
     var config = {
         background: CreateRoundRectangleBackground(scene, 0, undefined, 0xffffff, 2),
@@ -21,28 +24,28 @@ var CreateChoices = function (scene) {
     }
 
     var initials = config.initials;
-    for (var i = 0; i < MaxInitialsButtons; i++) {
+    for (var i = 0; i < MaxInitialsButtons; i++) { //建立5個initials選項(無內容)存入該config array
         initials.push(
             CreateLabel(scene, Style.quizPanel.choice.phonology)
         )
     }
 
     var media = config.media;
-    for (var i = 0; i < MaxMediaButtons; i++) {
+    for (var i = 0; i < MaxMediaButtons; i++) { //建立3個media選項(無內容)存入該config array
         media.push(
             CreateLabel(scene, Style.quizPanel.choice.phonology)
         )
     }
 
     var vowel = config.vowel;
-    for (var i = 0; i < MaxVowelButtons; i++) {
+    for (var i = 0; i < MaxVowelButtons; i++) { //建立5個vowel選項(無內容)存入該config array
         vowel.push(
             CreateLabel(scene, Style.quizPanel.choice.phonology)
         )
     }
 
     var tone = config.tone;
-    for (var i = 0; i < MaxToneButtons; i++) {
+    for (var i = 0; i < MaxToneButtons; i++) { //建立5個tone選項(無內容)存入該config array
         tone.push(
             CreateLabel(scene, Style.quizPanel.choice.tone)
         )

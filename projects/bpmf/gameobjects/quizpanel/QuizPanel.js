@@ -98,7 +98,7 @@ class QuizPanel extends Sizer {
         return this;
     }
 
-    setCharacterBopomofo(index, config) {
+    setCharacterBopomofo(index, config) { //傳入bopomofo JSON給詞，依字序設定character的bopomofo
         this.getElement('word').setCharacterBopomofo(index, config);
         return this;
     }
@@ -118,7 +118,7 @@ class QuizPanel extends Sizer {
         return this;
     }
 
-    getChoiceResult(out) {
+    getChoiceResult(out) { //取得目前選項選取狀態JSON
         return this.getElement('choices').getChoiceResult(out);
     }
 

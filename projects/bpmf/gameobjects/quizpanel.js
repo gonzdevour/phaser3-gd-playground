@@ -16,6 +16,7 @@
 
 */
 
+//整理gameobjects用的index，以便匯入時使用import {OOO} from <path>/quizpanel.js
 import Character from "./character/Character.js";
 import Word from "./word/Word.js";
 import Choices from "./choices/Choices.js";
