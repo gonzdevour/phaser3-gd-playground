@@ -22,6 +22,7 @@ class QuizConfig extends Base {
         var quizConfigPanel = CreateQuizConfigPanel(this, {
             radio: this.model.getQuizConfig()
         })
+            .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
             .layout()
             // .drawBounds(this.add.graphics(), 0xff0000)
             .on('startQuiz', function (result) {

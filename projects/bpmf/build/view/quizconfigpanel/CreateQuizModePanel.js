@@ -8,7 +8,7 @@ const PanelName = 'mode';
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
 
-var CreateQuizModePanel = function (scene, config) {
+var CreateQuizModePanel = function (scene, config) {   
     // Build UI
     var title = CreateTitleLabel(scene, '出題模式');
 

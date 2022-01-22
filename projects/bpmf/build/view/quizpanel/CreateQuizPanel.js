@@ -11,13 +11,15 @@ import GetValue from '../../../../../plugins/utils/object/GetValue.js';
 
 //建立quizPanel並掛上事件，這裡的物件群都不帶內容(除了title之外)
 //物件群內容在build/control/quiz/SetupQuizPanel中依QuizPromise的參數而設定
-var CreateQuizPanel = function (scene, config) {
+var CreateQuizPanel = function (scene, config) {  
     console.log('CreateQuizPanel config:' + '\n' + JSON.stringify(config));
     var viewport = scene.rexScaleOuter.outerViewport;
     var x = GetValue(config, 'x', viewport.centerX);
     var y = GetValue(config, 'y', viewport.centerY);
     var width = GetValue(config, 'width', viewport.width);
     var height = GetValue(config, 'height', viewport.height);
+
+    //直橫版尺寸調整
     var displayWidth = width>height?(height/1.6):width;
     var displayHeight = height;
 

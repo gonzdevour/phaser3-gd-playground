@@ -34,6 +34,7 @@ var CreateQuizConfigPanel = function (scene, config) {
         orientation: 'y',
         space: { item: 30 }
     })
+        .addBackground(CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2))
         .add(
             databaseSelectPanel,
             { proportion: 0, expand: true, align: 'center' }

@@ -9,7 +9,7 @@ var CreateCharacter = function (scene,) {
     var characterUI = new Character(scene, {
         background: CreateRoundRectangleBackground(scene),
         character: scene.rexUI.add.label({
-            height: (55 * 3) + 2,  // Min height
+            height: (55 * 3) + 2,  // Min height，字佔據的高度不能小於3個疊起來的注音+輕聲符號
             background: CreateRoundRectangleBackground(scene),
             text: scene.rexUI.add.BBCodeText(0, 0, '', Style.quizPanel.word.character),
             align: 'right',
@@ -24,6 +24,7 @@ var CreateCharacter = function (scene,) {
             tone0: CreateTone0Label(scene),
         }
     })
+    //先layout一次，以layout結果作為MinSize，往後如果再layout就不會小於這個Size
     characterUI.layout().setMinSize(characterUI.width, characterUI.height);
 
     return characterUI;
@@ -61,7 +62,7 @@ var CreateTone0Label = function (scene) {
         // Set fixedWidth, fixedHeight for all kinds of text input
 
         align: 'center',
-        space: { left: 0, right: 0, top: -8, bottom: 0 }
+        space: { left: 4, right: 0, top: -30, bottom: 0 }
     })
 }
 

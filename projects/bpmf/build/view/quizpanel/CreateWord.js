@@ -26,7 +26,8 @@ var CreateWord = function (scene, config) {
     }
 
     var word = new Word(scene, wordConfig)
-    word.layout().setMinHeight(word.height) // Height won't less then current height
+    //先layout一次，以layout結果作為MinHeight，往後如果字數少於4且再layout時，就不會小於這個高度
+    word.layout().setMinHeight(word.height)
     return word;
 }
 

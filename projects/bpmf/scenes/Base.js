@@ -39,7 +39,13 @@ class Base extends Phaser.Scene {
         return Model;
     }
     get viewport() { //簡化呼叫
-        return this.rexScaleOuter.outerViewport; 
+        //直橫版尺寸調整
+        var v = this.rexScaleOuter.outerViewport;
+        var vw = v.width;
+        var vh = v.height;       
+        v.displayWidth = vw>vh?(vh/1.6):vw;
+        v.displayHeight = vh;
+        return v; 
     }
 
     create() {

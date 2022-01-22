@@ -71,7 +71,8 @@ var BuildQuiz = function (model) {
     quiz.clearQuestions(); //清除之前的題組
 
     //建立新題組：篩出來的字docs，每個字doc都出一題(可以修改這裡的規則)
-    for (var i = 0, cnt = characters.length; i < cnt; i++) {
+    var quizCnt = quizMode='測驗'?quizConfig.count:characters.length;
+    for (var i = 0, cnt = quizCnt; i < cnt; i++) {
         quiz.addQuestion({
             title: '', // TODO
             character: characters[i],

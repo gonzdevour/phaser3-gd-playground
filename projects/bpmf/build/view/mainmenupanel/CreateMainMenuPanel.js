@@ -18,6 +18,9 @@ var CreateMainMenuPanel = function (scene, config) {
         orientation: 'y',
     })
 
+    //建立背景物件
+    var background = CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2);
+
     //建立logo物件
     var logo = scene.rexUI.add.BBCodeText(0, 0, 'Logo', { fontFamily: 'DFKai-SB', fontSize: 60 });
 
@@ -34,8 +37,8 @@ var CreateMainMenuPanel = function (scene, config) {
 
     //建立選項按鈕
     // TODO: set width & height in scene.rexUI.add.label({...})
-    var btnModeSelect = CreateLabel(scene, '模式選擇');
-    var btnContinue = CreateLabel(scene, '繼續練習');
+    var btnModeSelect = CreateActionLabel(scene, '模式選擇', undefined, 20);
+    var btnContinue = CreateActionLabel(scene, '繼續練習', undefined, 20);
 
     mainMenuPanel
         .add(
@@ -56,12 +59,13 @@ var CreateMainMenuPanel = function (scene, config) {
         )
 
     //建立config和help按鈕
-    var btnConfig = CreateLabel(scene, '*');
-    var btnHelp = CreateLabel(scene, '?');
+    var btnConfig = CreateHelpLabel(scene, '', 'cfg', {tl:0,tr:10,bl:10,br:0});
+    var btnHelp = CreateHelpLabel(scene, '', 'info', {tl:0,tr:10,bl:10,br:0});
 
     //將config和help按鈕放在mainMenuPanel上面，整個組成overlapSizer(用來處理align的sizer)
     var backgroundOverlapSizer = scene.rexUI.add.overlapSizer({
     })
+        .addBackground(background)
         .add(
             mainMenuPanel,
             { align: 'center', expand: false }
@@ -95,11 +99,20 @@ var CreateMainMenuPanel = function (scene, config) {
     return backgroundOverlapSizer.setPosition(x, y).setMinSize(width, height);
 }
 
-var CreateLabel = function (scene, text, img, pos) {
+var CreateActionLabel = function (scene, text, img, radius, pos) {
     return scene.rexUI.add.label({
-        background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
-        // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
-        text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+        background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
+        icon: !img?undefined:scene.add.image(0, 0, img).setDisplaySize(90, 90),
+        text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+        space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
+    });
+}
+
+var CreateHelpLabel = function (scene, text, img, radius, pos) {
+    return scene.rexUI.add.label({
+        //background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
+        icon: !img?undefined:scene.add.image(0, 0, img).setDisplaySize(90, 90),
+        text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
     });
 }

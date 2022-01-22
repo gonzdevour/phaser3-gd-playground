@@ -19,7 +19,8 @@ var QuizResultModalPromise = function (scene, result, onCloseCallback) {
         scene.model.sound.play('ok');
         return ModalDialogPromise(scene, {
             content: scene.add.image(0, 0, 'yes').setDisplaySize(540, 540),
-            background: null
+            background: null,
+            buttonMode: 0,
         })
 
     } else {  // 答對回傳content:正確答案Character
@@ -31,7 +32,7 @@ var QuizResultModalPromise = function (scene, result, onCloseCallback) {
                 // background: CreateRoundRectangleBackground(scene),
                 text: scene.rexUI.add.BBCodeText(0, 0, '', Style.quizPanel.word.character),
                 align: 'right',
-                space: { left: 5, right: 5, top: 5, bottom: 5 }
+                space: { left: 50, right: 5, top: 5, bottom: 5 } //left給50是為了讓整個Character在dialog中往右移
             }),
 
             bopomofo: { //這些label之後會以config傳入new Bopomofo排好後回傳BopomofoSizer
@@ -46,6 +47,7 @@ var QuizResultModalPromise = function (scene, result, onCloseCallback) {
 
         return ModalDialogPromise(scene, {
             content: characterUI, //在Modal Dialog的content處放CharacterSizer
+            buttonMode: 1,
         })
     }
 }

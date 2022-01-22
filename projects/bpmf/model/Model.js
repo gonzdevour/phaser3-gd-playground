@@ -115,7 +115,8 @@ class Model {
         var dataManager = this.lsData;
         var result = {};
         for (var key in DefaultQuizConfig) { //使用DefaultQuizConfig的key結構
-            result[key] = dataManager.get(key)
+            var data = dataManager.get(key);
+            result[key] = !!data?data:DefaultQuizConfig[key]
         }
         return result;
     }

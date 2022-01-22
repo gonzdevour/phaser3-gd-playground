@@ -15,6 +15,7 @@ var Config2Text = function (config) {
         database:    config.database,
         enhancement: config.enhancement == '無' ? '' : ('|強化' + config.enhancement),
         mode:        '|' + config.mode + '模式：',
+        count: '1/' + config.count,
     };
     var text = '';
     for(var key in config){

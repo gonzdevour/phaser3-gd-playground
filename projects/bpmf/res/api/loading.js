@@ -12,14 +12,15 @@ var OS = getOS();
 
 var loading = function (scene, tb_audio) {
   return new Promise(function (resolve, reject) {
-    // Load db file
+    //Load db file
     scene.load.text('db0', 'assets/db0.compress');
     scene.load.text('db1', 'assets/db1.compress');
-    //action btn image
+    //btn image
     scene.load.image('confirm', 'assets/img/confirm.png');
     scene.load.image('eraser', 'assets/img/eraser.png');
-    // Test-pass dialog
     scene.load.image('yes', 'assets/img/yes.png');
+    scene.load.image('cfg', 'assets/img/cfg.png');
+    scene.load.image('info', 'assets/img/info.png');
 
     //之後應該會想不起來為什麼會加tb_audio：
     //tb_audio是記錄音效路徑用的字典，p3本體load audio後無法取得路徑，

@@ -30,7 +30,10 @@ class Quiz extends Base {
 
     create() {
         super.create(); //Base: this.rexScaleOuter.scale();
-        var quizPanel = CreateQuizPanel(this, this.model.getQuizConfig()).layout(); //先建立Quiz面板
+        var quizPanel = CreateQuizPanel(this, this.model.getQuizConfig());
+        quizPanel
+            .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
+            .layout(); //先建立Quiz面板
 
         console.log(`${quizPanel.width}x${quizPanel.height}`)
 

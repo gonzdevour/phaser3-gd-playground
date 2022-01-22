@@ -93,10 +93,12 @@
     建立字與注音的label群後，透過gameobjects/Character.js的new Character(包含new Bopomofo)進行排列。
     
     ※注意Create階段並不給予text內容，而只是將組件排版，以下同。
+    但為了避免bopomofo空值時Character區域被擠壓，所以在這裡給組件一個常數來設定MinSize
     ``` 
     + CreateWord.js
     ``` 
     建立character群後存入config array，再以config建立new Word並layout
+    為了避免字數少於4時word區域被擠壓，所以在這裡給組件一個常數來設定MinHeight
     ``` 
     + CreateChoices.js
     ```
