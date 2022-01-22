@@ -97,12 +97,10 @@ class Model {
             var dbWrap = new DBWrap(this, jsonList[i]) //用DBWrap解壓縮compress後，傳入Model.db array裡
             this.db.push(dbWrap);
         }
-
         this.lsData = new LocalStorageData({ //初始化建立ls，儲存遊戲名稱和預設值
             name: 'bopomofo',
             default: DefaultData //{database: '高頻詞庫',enhancement: '無',mode: '隨機'}
         })
-
         var apiList = GetValue(config, 'api', undefined);
         this.speech = apiList.speech; //初始化語音
         this.sound = apiList.sound; //初始化音效
@@ -115,8 +113,7 @@ class Model {
         var dataManager = this.lsData;
         var result = {};
         for (var key in DefaultQuizConfig) { //使用DefaultQuizConfig的key結構
-            var data = dataManager.get(key);
-            result[key] = !!data?data:DefaultQuizConfig[key]
+            result[key] = dataManager.get(key);
         }
         return result;
     }
