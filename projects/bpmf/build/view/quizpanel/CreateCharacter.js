@@ -48,7 +48,6 @@ var CreateToneLabel = function (scene) {
         // background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
         text: scene.rexUI.add.BBCodeText(0, 0, '', Style.quizPanel.word.tone),
         // Set fixedWidth, fixedHeight for all kinds of text input
-
         align: 'left',
         space: { left: 0, right: 0, top: 0, bottom: 0 }
     })

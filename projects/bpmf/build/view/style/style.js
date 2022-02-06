@@ -9,6 +9,16 @@ const Style = {
             testString: '回'
         },
 
+        qidxtext: {
+            fontFamily: 'DFKai-SB',
+            fontSize: 48,
+            lineSpacing: 20,
+            fixedHeight: 120,
+            valign: 'center',
+            halign: 'right',
+            testString: '回'
+        },
+
         word: {
             character: {
                 fontFamily: 'DFKai-SB',

@@ -4,11 +4,13 @@ var SetupQuizPanel = function (quizPanel, question, onSubmit) {
     // Fill quizPanel，從這裡開始跟view扯上關係
     quizPanel
         .clearChoices() //清除選項群
-        //.setTitle(question.title) //設定標題
+        .setQIndexText('第' + question.questionIndex + '題' + '\n' + '共' + question.questionTotal + '題')
+        //.setTitle(question.questionIndex) //設定標題
         .setWord(question.characters) //用字array設定詞
         .setChoicesText(question.createChoices()) //建立選項群並設定選項文字
         .layout() //排版
-
+        .drawBounds(quizPanel.debugGraphics, 0xff0000)
+        //debugger;
     // Note: make sure 'submit' is emitted (OK button clicked)    
     quizPanel
         //CreateQuizPanel.js會幫quizPanel掛上'changedata-focusCharacterIndex'事件

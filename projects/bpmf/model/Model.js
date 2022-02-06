@@ -97,9 +97,11 @@ class Model {
             var dbWrap = new DBWrap(this, jsonList[i]) //用DBWrap解壓縮compress後，傳入Model.db array裡
             this.db.push(dbWrap);
         }
-        this.lsData = new LocalStorageData({ //初始化建立ls，儲存遊戲名稱和預設值
+        //初始化建立ls(lsd plugin)，如果default:undefined會存入所有ls key-content。否則會依預設值的key存入原本在ls內的值，有key無值時存入預設值。
+        this.lsData = new LocalStorageData({
             name: 'bopomofo',
-            default: DefaultData //{database: '高頻詞庫',enhancement: '無',mode: '隨機'}
+            default: DefaultData, //{database: '高頻詞庫',enhancement: '無',mode: '隨機'}
+            reset: true, //初始化時重設lsData為DefaultData，正式版要記得關掉
         })
         var apiList = GetValue(config, 'api', undefined);
         this.speech = apiList.speech; //初始化語音

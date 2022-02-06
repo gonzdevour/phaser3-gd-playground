@@ -12,6 +12,8 @@ class QuizPanel extends Sizer {
         super(scene, config);
         scene.add.existing(this);
 
+        this.debugGraphics = scene.add.graphics();
+
         var background = GetValue(config, 'background');
         if (background) {
             this.addBackground(background);
@@ -105,6 +107,11 @@ class QuizPanel extends Sizer {
 
     layoutCharacter(index) {
         this.getElement('word.characters')[index].layout();
+        return this;
+    }
+
+    setQIndexText(data) {
+        this.getElement('wordArea.qidxtext').setText(data);
         return this;
     }
 

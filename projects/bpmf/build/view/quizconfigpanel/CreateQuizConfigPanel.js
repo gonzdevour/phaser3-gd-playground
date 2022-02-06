@@ -76,7 +76,7 @@ var CreateQuizConfigPanel = function (scene, config) {
             result[subPanel.name] = subPanel.getElement('choices').value //取得各選單的選擇
         }
         result.count = config.radio.count; //題數設定
-        debugger;
+        //debugger;
         //startQuiz掛在scene/QuizConfig.js
         mainPanel.emit('startQuiz', result); //回傳各選單的選擇結果，加上題數設定，呼叫測驗開始
     })

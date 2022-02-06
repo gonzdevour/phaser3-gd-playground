@@ -23,6 +23,8 @@ var CreateQuizPanel = function (scene, config) {
     var displayWidth = width>height?(height/1.6):width;
     var displayHeight = height;
 
+    var qidxtext = CreateTextLabel(scene, '');
+
     var quizPanel = new QuizPanel(scene, {
         x: x, y: y,
         width: displayWidth, height: displayHeight,
@@ -60,7 +62,16 @@ var CreateQuizPanel = function (scene, config) {
                 expand: false,
                 offsetX: 20, offsetY: 20
             }
-        )    
+        )
+        .add(
+            qidxtext,{
+                key: 'qidxtext',
+                align: 'right-top',
+                expand: false,
+                //offsetX: 20, offsetY: 20
+            }
+        )
+        .addChildrenMap('qidxtext', qidxtext)    
 
     //清除答案與送出答案
     quizPanel.getElement('footer')
@@ -115,6 +126,15 @@ var CreateLabel = function (scene, text, img, pos) {
         text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
     });
+}
+
+var CreateTextLabel = function (scene, text, img, radius, pos) {
+    return scene.rexUI.add.label({
+        //background: CreateRoundRectangleBackground(scene, Style.quizPanel.top.round, undefined, 0xffffff, 2),
+        //icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(2, 0x0000ff),
+        text: scene.rexUI.add.BBCodeText(0, 0, text, Style.quizPanel.qidxtext),
+        space: { left: 20, right: 20, top: 20, bottom: 20, icon: 0 }
+    })
 }
 
 //onClick是sizer的method，Label是一種sizer

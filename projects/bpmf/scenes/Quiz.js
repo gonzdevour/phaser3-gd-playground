@@ -33,7 +33,7 @@ class Quiz extends Base {
         var quizPanel = CreateQuizPanel(this, this.model.getQuizConfig());
         quizPanel
             .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
-            .layout(); //先建立Quiz面板
+            .layout() //先建立Quiz面板
 
         console.log(`${quizPanel.width}x${quizPanel.height}`)
 

@@ -42,6 +42,8 @@ class Quiz {
         }
         var question = this.questions[this.questionIndex]; //取得題庫的第N個
         this.questionIndex++; //將題號設定為N+1
+        question.questionIndex = this.questionIndex;//把題號存進question裡讓quizPanel可以取得
+        question.questionTotal = this.questions.length;//把總題數存進question裡讓quizPanel可以取得
         return question;
     }
 
