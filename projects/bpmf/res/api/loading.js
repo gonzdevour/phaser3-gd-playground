@@ -21,8 +21,10 @@ var loading = function (scene, tb_audio) {
     scene.load.image('confirm', 'assets/img/confirm.png');
     scene.load.image('eraser', 'assets/img/eraser.png');
     scene.load.image('yes', 'assets/img/yes.png');
+    scene.load.image('right', 'assets/img/right.png');
     scene.load.image('cfg', 'assets/img/cfg.png');
     scene.load.image('info', 'assets/img/info.png');
+    scene.load.image('arrowL', 'assets/img/arrowL.png');
 
     scene.load.on("filecomplete", function(key,type,data){
       if (key = 'language') {};

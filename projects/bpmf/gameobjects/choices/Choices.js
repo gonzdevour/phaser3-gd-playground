@@ -69,7 +69,7 @@ class Choices extends Sizer {
                 .addChildrenMap(groupName, buttons)
                 .addChildrenMap(`${groupName}Sizer`, buttonsSizer)
 
-            //這邊的按鈕行為不用buttons的radio屬性處理，就是因為「第二次按下為取消」的需求
+            //這邊的按鈕行為不用buttons的radio屬性(type:'radio')處理，就是因為line99「第二次按下為取消」的需求
             this
                 .on(`changedata-${groupName}`, function (gameObject, value, previousValue) {
                     if (value === previousValue) { //前值與後值相同，不處理
@@ -96,7 +96,9 @@ class Choices extends Sizer {
 
             //gameObject內建data，setData(key,value)觸發gameObject.on('changedata-key')
             if (prevButtonIndex === index) {
-                this.setData(groupName, -1); //按了同一個按鈕時為取消此按鈕
+                if (groupName != 'tone') {
+                    this.setData(groupName, -1); //按了同一個按鈕時為取消此按鈕(音調除外，音調不可為空)
+                }
             } else {
                 this.setData(groupName, index);
             }

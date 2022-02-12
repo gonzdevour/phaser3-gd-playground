@@ -1,4 +1,5 @@
 import CreateRoundRectangleBackground from "../style/CreateRoundRectangleBackground.js";
+import CreateSysPanel from "../syspanel/CreateSysPanel.js";
 import CreateTitle from "./CreateTitle.js";
 import CreateWord from "./CreateWord.js";
 import CreateChoices from "./CreateChoices.js";
@@ -49,6 +50,18 @@ var CreateQuizPanel = function (scene, config) {
         }
     });
 
+    var sysPanel = CreateSysPanel(scene, config)
+    .setPosition(x, y)
+    .setMinSize(width, height)
+    .layout();
+
+    //請求返回上一頁
+    sysPanel.getElement('btnHome')
+        .onClick( function (button, index, pointer, event) {
+            sysPanel.emit('reqBack', scene);
+        })
+
+
     //在word區塊的overlapSizer上添加語音按鈕
     quizPanel.getElement('wordArea')
         .add(
@@ -58,9 +71,9 @@ var CreateQuizPanel = function (scene, config) {
                 }),
             {
                 key: 'btnSpeak',
-                align: 'left-top',
+                align: 'left-bottom',
                 expand: false,
-                offsetX: 20, offsetY: 20
+                offsetX: 20, offsetY: -20
             }
         )
         .add(
@@ -71,7 +84,7 @@ var CreateQuizPanel = function (scene, config) {
                 //offsetX: 20, offsetY: 20
             }
         )
-        .addChildrenMap('qidxtext', qidxtext)    
+        //.addChildrenMap('qidxtext', qidxtext)    
 
     //清除答案與送出答案
     quizPanel.getElement('footer')

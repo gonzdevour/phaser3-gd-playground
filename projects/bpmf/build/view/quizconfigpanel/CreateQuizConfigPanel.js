@@ -26,7 +26,19 @@ var CreateQuizConfigPanel = function (scene, config) {
     var databaseSelectPanel = CreateDatabaseSelectPanel(scene, config); //詞庫選單
     var enhancementSelectPanel = CreateEnhancementSelectPanel(scene, config); //強化練習模式選單
     var quizModePanel = CreateQuizModePanel(scene, config); //出題模式選單
-    var buttonLabel = CreateLabel(scene, '開始練習'); //開始按鈕
+    var buttonLabel = CreateTextLabel(scene, '開始練習'); //開始按鈕
+
+    var btnHome = CreateLabel(scene, '返回', 'arrowL');
+    var screenArea = scene.rexUI.add.overlapSizer({})
+        .add(btnHome, {
+            key: 'btnHome',
+            align: 'left-top',
+            expand: false,
+            //offsetX: 20, offsetY: 20
+        })
+        .setPosition(x, y)
+        .setMinSize(width, height)
+        .layout();
 
     var mainPanel = scene.rexUI.add.sizer({ //定位與排版
         x: x, y: y,
@@ -84,7 +96,16 @@ var CreateQuizConfigPanel = function (scene, config) {
     return mainPanel;
 }
 
-var CreateLabel = function (scene, text) {
+var CreateLabel = function (scene, text, img ) {
+    return scene.rexUI.add.label({
+        //background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
+        icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
+        //text: scene.rexUI.add.BBCodeText(0, 0, text, Style.quizPanel.action.submit),
+        //space: { left: 15, right: 5, top: 5, bottom: 5, icon: 10 }
+    });
+}
+
+var CreateTextLabel = function (scene, text) {
     return scene.rexUI.add.label({
         background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
         // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
