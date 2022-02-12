@@ -1,3 +1,3 @@
-const Pack = require('../../plugins/packfolder/root/Pack.js');
+const PackFolder = require('../../plugins/packfolder/PackFolder.js');
 
-Pack('assets/', 'assets/pack.json');
+PackFolder('assets/', 'assets/pack.json');
