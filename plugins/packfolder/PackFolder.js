@@ -2,13 +2,22 @@ const dirTree = require("directory-tree");
 const fs = require('fs');
 const PackSubFolders = require('./PackSubFolders.js');
 
-var PackFolder = function (root, outFile) {
+const DefaultConfig = {
+    relatedPathFrom: '',
+}
+var PackFolder = function (root, outFile, config) {
     if (outFile === undefined) {
         outFile = 'pack.json';
     }
 
-    var tree = dirTree("assets", { attributes: ['type'] });
-    var result = PackSubFolders(tree);
+    if (config === undefined) {
+        config = {};
+    }
+
+    config = { ...DefaultConfig, ...config };
+
+    var tree = dirTree(root, { attributes: ['type'] });
+    var result = PackSubFolders(tree, config);
     if (result.files) {
         result = { packKey: result };
     }

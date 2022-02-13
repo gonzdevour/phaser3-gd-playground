@@ -4,8 +4,7 @@ set main=main.js
 set htmlTemplate=index.tmpl
 set assets=assets
 set root=root
-
-call node pack.js
+set packFolderOutput=assets/pack.json
 cd ..
 cd ..
 npm run dev

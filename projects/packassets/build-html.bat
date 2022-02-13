@@ -1,13 +1,12 @@
 @echo off
-set dist=./app/export-html-test
+set dist=./app/packassets-test
 rem set postfix=timestamp
 set project=./projects/packassets
 set main=main.js
 set htmlTemplate=index.tmpl
 set assets=assets
 set root=root
-
-call node pack.js
+set packFolderOutput=assets/pack.json
 cd ..
 cd ..
 npm run production

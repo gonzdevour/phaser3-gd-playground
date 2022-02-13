@@ -1,13 +1,11 @@
+const fs = require('fs')
 const path = require('path');
 const webpack = require('webpack');
 // const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-
-// Phaser webpack config
-const phaserModule = path.join(__dirname, '/node_modules/phaser/');
-const phaser = path.join(phaserModule, 'src/phaser.js');
+const PackFolder = require('./plugins/packfolder/PackFolder.js');
 
 var dist = process.env.dist;
 var postfix = process.env.postfix || false;
@@ -22,15 +20,96 @@ var projectMain = process.env.main || 'main.js'; // Entery js
 var htmlTemplate = process.env.htmlTemplate || 'index.tmpl'; // Template of index.html
 var assetsFolder = process.env.assets || 'assets'; // Map to assets folder
 var rootAssetsFolder = process.env.root || 'root'; // Map to root folder
+var packFolderOutput = process.env.packFolderOutput || false;
+
 if (projectRoot) {
     projectRoot = path.resolve(__dirname, projectRoot);
     projectMain = path.resolve(projectRoot, projectMain);
     htmlTemplate = path.resolve(projectRoot, htmlTemplate);
     assetsFolder = path.resolve(projectRoot, assetsFolder);
     rootAssetsFolder = path.resolve(projectRoot, rootAssetsFolder);
+
+    if (packFolderOutput) {
+        packFolderOutput = path.resolve(projectRoot, packFolderOutput);
+    }
 }
 
 const distFolder = path.resolve(__dirname, dist);
+console.log(`Export to ${distFolder}`)
+
+var plugins = [];
+
+if (packFolderOutput) {
+    plugins.push({
+        apply: (compiler) => {
+            compiler.hooks.beforeRun.tap('PackFolderPlugin', () => {
+                PackFolder(assetsFolder, packFolderOutput, {
+                    relatedPathFrom: projectRoot
+                });
+                console.log(`PackFolder ${assetsFolder}`);
+            });
+        },
+    });
+}
+
+plugins.push(
+    new webpack.DefinePlugin({
+        __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
+        WEBGL_RENDERER: true, // I did this to make webpack work, but I'm not really sure it should always be true
+        CANVAS_RENDERER: true // I did this to make webpack work, but I'm not really sure it should always be true
+    })
+)
+
+// Don't clean dist folder
+// plugins.push(
+//     new CleanWebpackPlugin([distFolder])
+// )
+
+plugins.push(
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+)
+
+plugins.push(
+    new HtmlWebpackPlugin({
+        filename: distFolder + '/index.html',
+        template: htmlTemplate,
+        chunks: ['app'],
+        chunksSortMode: 'manual',
+        // minify: {
+        //     removeAttributeQuotes: true,
+        //     collapseWhitespace: true,
+        //     html5: true,
+        //     minifyCSS: true,
+        //     minifyJS: true,
+        //     minifyURLs: true,
+        //     removeComments: true,
+        //     removeEmptyAttributes: true
+        // },
+        hash: true
+    })
+)
+
+if (fs.existsSync(assetsFolder)) {
+    plugins.push(
+        new CopyWebpackPlugin([
+            {
+                from: assetsFolder,
+                to: distFolder + '/assets/'
+            }
+        ])
+    )
+}
+
+if (fs.existsSync(rootAssetsFolder)) {
+    plugins.push(
+        new CopyWebpackPlugin([
+            {
+                from: rootAssetsFolder,
+                to: distFolder
+            }
+        ])
+    )
+}
 
 module.exports = {
     mode: 'production',
@@ -69,42 +148,7 @@ module.exports = {
             })
         ]
     },
-    plugins: [
-        new webpack.DefinePlugin({
-            __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')),
-            WEBGL_RENDERER: true, // I did this to make webpack work, but I'm not really sure it should always be true
-            CANVAS_RENDERER: true // I did this to make webpack work, but I'm not really sure it should always be true
-        }),
-        // new CleanWebpackPlugin([distFolder]), // Don't clean dist folder
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-        new HtmlWebpackPlugin({
-            filename: distFolder + '/index.html',
-            template: htmlTemplate,
-            chunks: ['app'],
-            chunksSortMode: 'manual',
-            // minify: {
-            //     removeAttributeQuotes: true,
-            //     collapseWhitespace: true,
-            //     html5: true,
-            //     minifyCSS: true,
-            //     minifyJS: true,
-            //     minifyURLs: true,
-            //     removeComments: true,
-            //     removeEmptyAttributes: true
-            // },
-            hash: true
-        }),
-        new CopyWebpackPlugin([
-            {
-                from: assetsFolder,
-                to: distFolder + '/assets/'
-            },
-            {
-                from: rootAssetsFolder,
-                to: distFolder
-            }
-        ])
-    ],
+    plugins: plugins,
     module: {
         rules: [
             {

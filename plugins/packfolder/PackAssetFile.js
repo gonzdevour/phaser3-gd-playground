@@ -1,6 +1,7 @@
+const GetURL = require('./GetURL.js');
 const path = require('path');
 
-var PackAssetFile = function (type, fObj) {
+var PackAssetFile = function (type, fObj, fObjs, config) {
     var result;
     switch (type) {
         case 'image':
@@ -8,7 +9,7 @@ var PackAssetFile = function (type, fObj) {
             result = {
                 type: type,
                 key: path.parse(fObj.name).name,
-                url: fObj.path.replace(/\\/gi, '/')
+                url: GetURL(fObj.path, config.relatedPathFrom)
             }
             break;
     }

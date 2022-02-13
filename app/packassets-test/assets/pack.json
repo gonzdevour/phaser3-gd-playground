@@ -1,0 +1,26 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "image",
+        "key": "bolt",
+        "url": "assets/image/bolt.png"
+      },
+      {
+        "type": "image",
+        "key": "key",
+        "url": "assets/image/key.png"
+      },
+      {
+        "type": "image",
+        "key": "person",
+        "url": "assets/image/person.png"
+      },
+      {
+        "type": "text",
+        "key": "csvArray",
+        "url": "assets/text/csvArray.csv"
+      }
+    ]
+  }
+}

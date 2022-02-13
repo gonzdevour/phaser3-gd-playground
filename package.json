@@ -36,7 +36,7 @@
         "webpack": "^4.46.0",
         "webpack-cli": "^3.3.12",
         "webpack-node-externals": "1.7.2",
-        "directory-tree": "3.2.1"
+        "directory-tree": "^3.2.1"
     },
     "dependencies": {
         "enable3d": "0.0.14",

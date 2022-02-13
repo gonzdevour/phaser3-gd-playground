@@ -1,7 +1,7 @@
 const PackAssetFolder = require('./PackAssetFolder.js');
 
 const LoaderTypes = ['image', 'text'];
-var PackSubFolders = function (tree) {
+var PackSubFolders = function (tree, config) {
     var subFolders = tree.children.filter(function (child) {
         return child.type === 'directory';
     });
@@ -14,14 +14,14 @@ var PackSubFolders = function (tree) {
     if (assetsFolders.length > 0) {
         var files = [];
         assetsFolders.forEach(function (child) {
-            files.push(...PackAssetFolder(child));
+            files.push(...PackAssetFolder(child, config));
         })
         result.files = files;
     } else {
         subFolders.forEach(function (child) {
             var name = child.name;
             if (LoaderTypes.indexOf(name) === -1) {
-                result[name] = PackSubFolders(child);
+                result[name] = PackSubFolders(child, config);
             }
         })
     }
