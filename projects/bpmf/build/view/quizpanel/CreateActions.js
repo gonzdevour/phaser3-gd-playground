@@ -6,9 +6,9 @@ var CreateActions = function (scene) {
     return scene.rexUI.add.buttons({
         orientation: 'x',
         buttons: [
-            CreateLabel(scene, '清除選取', 'eraser', 'left'),
+            CreateLabel(scene, '清除選取', 'eraser'),
             scene.rexUI.add.space(),
-            CreateLabel(scene, '送出答案', 'confirm', 'right'),
+            CreateLabel(scene, '送出答案', 'confirm'),
         ],
         space: {
             left: 20, right: 20, top: 10, bottom: 10, item: 10
@@ -16,7 +16,7 @@ var CreateActions = function (scene) {
     })
 }
 
-var CreateLabel = function (scene, text, img, pos) {
+var CreateLabel = function (scene, text, img) {
     return scene.rexUI.add.label({
         background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
         icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),

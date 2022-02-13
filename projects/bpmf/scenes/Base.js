@@ -49,6 +49,14 @@ class Base extends Phaser.Scene {
     }
 
     create() {
+
+        this.sysPanel = this.rexUI.add.overlapSizer({})
+            .setPosition(this.viewport.centerX, this.viewport.centerY)
+            .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
+            .layout()
+
+    }
+    scaleOuter() {
         //scale outer
         this.rexScaleOuter.scale();
     }

@@ -1,5 +1,4 @@
 import CreateRoundRectangleBackground from "../style/CreateRoundRectangleBackground.js";
-import CreateSysPanel from "../syspanel/CreateSysPanel.js";
 import CreateTitle from "./CreateTitle.js";
 import CreateWord from "./CreateWord.js";
 import CreateChoices from "./CreateChoices.js";
@@ -49,18 +48,6 @@ var CreateQuizPanel = function (scene, config) {
             footer: true
         }
     });
-
-    var sysPanel = CreateSysPanel(scene, config)
-    .setPosition(x, y)
-    .setMinSize(width, height)
-    .layout();
-
-    //請求返回上一頁
-    sysPanel.getElement('btnHome')
-        .onClick( function (button, index, pointer, event) {
-            sysPanel.emit('reqBack', scene);
-        })
-
 
     //在word區塊的overlapSizer上添加語音按鈕
     quizPanel.getElement('wordArea')

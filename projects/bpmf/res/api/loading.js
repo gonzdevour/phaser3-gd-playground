@@ -21,6 +21,7 @@ var loading = function (scene, tb_audio) {
     scene.load.image('confirm', 'assets/img/confirm.png');
     scene.load.image('eraser', 'assets/img/eraser.png');
     scene.load.image('yes', 'assets/img/yes.png');
+    scene.load.image('no', 'assets/img/no.png');
     scene.load.image('right', 'assets/img/right.png');
     scene.load.image('cfg', 'assets/img/cfg.png');
     scene.load.image('info', 'assets/img/info.png');

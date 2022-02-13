@@ -1,11 +1,10 @@
 import 'phaser';
 import Base from './Base.js';
 import { MainMenuSceneKey, QuizConfigSceneKey, QuizSceneKey } from './Const.js';
+import ModalDialogPromise from '../build/view/modeldialog/ModalDialogPromise.js';
 import CreateQuizPanel from '../build/view/quizpanel/CreateQuizPanel.js';
 import BuildQuiz from '../build/control/quiz/BuildQuiz.js';
 import QuizPromise from '../build/control/quiz/QuizPromise.js';
-import ModalDialogPromise from '../build/view/modeldialog/ModalDialogPromise.js';
-import CreateSysPanel from "../build/view/syspanel/CreateSysPanel.js";
 
 // Run quiz
 class Quiz extends Base {
@@ -31,7 +30,7 @@ class Quiz extends Base {
     }
 
     create() {
-        super.create(); //Base: this.rexScaleOuter.scale();
+        super.scaleOuter(); //Base: this.rexScaleOuter.scale();
 
         var quizPanel = CreateQuizPanel(this, this.model.getQuizConfig());
         quizPanel
@@ -46,31 +45,38 @@ class Quiz extends Base {
             .then(function () {
                 console.log('Quiz complete');
             })
-
+        
+        super.create(); //create sysPanel
         var _scene = this;
-
-        var sysPanel = CreateSysPanel(_scene)
-            .setPosition(_scene.viewport.centerX, _scene.viewport.centerY)
-            .setMinSize(_scene.viewport.displayWidth, _scene.viewport.displayHeight)
-            .layout()
-
         //返回上一頁
-        var btnHome = sysPanel.getElement('btnHome');
-        btnHome
-            .on('reqBack', function () {
+        var btnHome = CreateLabel(_scene, '返回', 'arrowL')
+            .onClick( function (button, gameObject, pointer, event) {
                 console.log('reqBack')
                 ModalDialogPromise(_scene, {
                     //title: '使用說明',
-                    content: '確定要返回選單畫面嗎？',
+                    content: '確定要返回選單頁面嗎？',
                     buttonMode: 2, //default:none|1:yes|2:yes&no
                     callbackYes: function(){ _scene.scene.start(QuizConfigSceneKey) },
         
                     width: _scene.viewport.width-50,
                 })
-            }, this)
+            })
+        this.sysPanel
+            .add(btnHome,{ align: 'left-top', expand: false, key:'btnHome' })
+            .layout()
+
     }
 
     update() { }
+}
+
+var CreateLabel = function (scene, text, img ) {
+    return scene.rexUI.add.label({
+        //background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
+        icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
+        //text: scene.rexUI.add.BBCodeText(0, 0, text, Style.quizPanel.action.submit),
+        //space: { left: 0, right: 0, top: 10, bottom: 10, icon: 0 }
+    });
 }
 
 export default Quiz;
