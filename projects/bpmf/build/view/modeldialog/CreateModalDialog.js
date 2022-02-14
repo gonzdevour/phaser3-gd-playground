@@ -69,7 +69,7 @@ var CreateModalDialog = function (scene, config) {
     }
 
     if (config.space === undefined) { //設定Modal的padding和字物件間距
-        config.space = { left: 40, right: 40, top: 40, bottom: 40, item: 20 };
+        config.space = { left: 40, right: 40, top: 40, bottom: 40, item: 40 };
     }
 /*
 以上建立了： 

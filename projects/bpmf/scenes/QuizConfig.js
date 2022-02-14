@@ -38,7 +38,11 @@ class QuizConfig extends Base {
         //返回上一頁
         var btnHome = CreateLabel(_scene, '返回', 'arrowL')
             .onClick( function (button, gameObject, pointer, event) {
-                _scene.scene.start(MainMenuSceneKey);
+                _scene.scene.transition({
+                    target: MainMenuSceneKey,
+                    duration: 1000,
+                });
+                //_scene.scene.start(MainMenuSceneKey);
             })
         this.sysPanel
             .add(btnHome,{ align: 'left-top', expand: false, key:'btnHome' })

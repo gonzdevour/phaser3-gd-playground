@@ -64,7 +64,7 @@ var CreateQuizModePanel = function (scene, config) {
     title.getElement('help').onClick(function () { //取得在title的help按鈕(rexUI.add時在config中指定key:'help')，給予callback
         ModalDialogPromise(scene, { //彈出此選單的說明
             title: '出題模式',
-            content: '隨機：詞庫隨機出題\n依序：依常用度出題\n測驗：指定範圍進行測驗(施工中)',
+            content: '隨機：詞庫隨機出題\n依序：依常用度出題\n測驗：指定範圍進行測驗\n\n[color=gray]※測驗模式施工中[/color]',
             buttonMode: 1,
 
             width: scene.viewport.width-50,

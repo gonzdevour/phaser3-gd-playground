@@ -17,6 +17,8 @@ class MainMenu extends Base {
     }
 
     create() {
+        console.log('Lang=' + this.language);
+
         var _scene = this;
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
         var mainMenu = CreateMainMenuPanel(this);
@@ -42,7 +44,12 @@ class MainMenu extends Base {
                 console.log('button.help')
                 ModalDialogPromise(_scene, {
                     title: '使用說明',
-                    content: '高頻：參照教育部公布之詞頻總表\n常用：分類整理生活中的常見用詞',
+                    content: 
+`「注音習作」是以注音符號測驗
+的方式認識常用字詞的工具，有
+語音輔助學習，亦可指定易混淆
+的聲韻進行強化訓練。適合幼小
+銜接以及國語初學者使用。`,
                     buttonMode: 1,
         
                     width: _scene.viewport.width-50,
@@ -54,7 +61,7 @@ class MainMenu extends Base {
         var logo = mainMenu.getElement('logo'); //從mainMenu取得logo物件
         this.rexUI.easeMoveFrom(logo, 1000, undefined, '-=200', 'Cubic'); //排好版之後再開始tween
 
-        //super.create(); //create sysPanel
+        super.create(); //create sysPanel
 
     }
 

@@ -101,7 +101,7 @@ const DataBaseOptions = [
     title.getElement('help').onClick(function () {
         ModalDialogPromise(scene, {
             title: '詞庫選擇',
-            content: '高頻：參照教育部公布之詞頻總表\n常用：分類整理生活中的常見用詞',
+            content: '高頻：參照教育部之詞頻總表\n常用：分類整理生活常見用詞',
             buttonMode: 1,
 
             width: scene.viewport.width-50,

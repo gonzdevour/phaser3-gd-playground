@@ -48,12 +48,26 @@ class Base extends Phaser.Scene {
         return v; 
     }
 
+    get language() {
+        var userLang = navigator.language || navigator.userLanguage;
+        return userLang;
+    }
+
     create() {
 
         this.sysPanel = this.rexUI.add.overlapSizer({})
             .setPosition(this.viewport.centerX, this.viewport.centerY)
             .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
             .layout()
+
+        this.events.on('transitionstart', function (fromScene, duration) {
+            this.cameras.main.fadeIn(duration);
+            fromScene.cameras.main.fadeOut(duration);
+        }, this);
+
+/*         this.events.on('transitionout', function (fromScene, duration) {
+            this.cameras.main.fadeOut(duration);
+        }, this); */
 
     }
     scaleOuter() {
