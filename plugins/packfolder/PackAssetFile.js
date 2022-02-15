@@ -16,7 +16,21 @@ var PackAssetFile = function (type, child, config, totalPackResults) {
             if (!packResult) {
                 packResult = { type: type, key: key, url: [] }
             }
+
             packResult.url.push(url);
+            break;
+
+        case 'atlas':
+            packResult = totalPackResults[key];
+            if (!packResult) {
+                packResult = { type: type, key: key }
+            }
+
+            if (GetExtend(child.name) === '.json') {
+                packResult.atlasURL = url;
+            } else {
+                packResult.textureURL = url;
+            }
             break;
     }
 
@@ -25,6 +39,10 @@ var PackAssetFile = function (type, child, config, totalPackResults) {
 
 var GetKey = function (name) {
     return path.parse(name).name;
+}
+
+var GetExtend = function (name) {
+    return path.extname(name);
 }
 
 var GetURL = function (path, relatedPathFrom) {

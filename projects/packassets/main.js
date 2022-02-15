@@ -12,19 +12,43 @@ class Test extends Phaser.Scene {
     }
 
     create() {
-        this.add.image(300, 300, 'key');
-        this.add.image(400, 300, 'person');
-        this.add.image(500, 300, 'bolt');
-
-        console.log(this.cache.text.get('csvArray'));
-
-        this.input.on('pointerdown', function () {
-            this.sound.play('right');
-        }, this)
+        LoadImageTesting(this);
+        LoadTextTesting(this);
+        LoadAudioTesting(this);
+        LoadAtlasTesting(this);
     }
 
     update() { }
 }
+
+var LoadImageTesting = function (scene) {
+    scene.add.image(300, 300, 'key');
+    scene.add.image(400, 300, 'person');
+    scene.add.image(500, 300, 'bolt');
+}
+
+var LoadTextTesting = function (scene) {
+    console.log(scene.cache.text.get('csvArray'));
+}
+
+var LoadAudioTesting = function (scene) {
+    scene.input.on('pointerdown', function () {
+        scene.sound.play('right');
+    }, this)
+}
+
+var LoadAtlasTesting = function (scene) {
+    scene.anims.create({
+        key: 'idle',
+        frames: scene.anims.generateFrameNames('knight', { prefix: 'idle/frame', start: 0, end: 5, zeroPad: 4 }),
+        frameRate: 8,
+        repeat: -1
+    });
+
+    scene.add.sprite(400, 200, 'knight').play('idle');
+}
+
+
 
 var config = {
     type: Phaser.AUTO,

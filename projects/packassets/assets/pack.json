@@ -2,6 +2,12 @@
   "packKey": {
     "files": [
       {
+        "type": "atlas",
+        "key": "knight",
+        "atlasURL": "assets/atlas/knight.json",
+        "textureURL": "assets/atlas/knight.png"
+      },
+      {
         "type": "audio",
         "key": "right",
         "url": [
