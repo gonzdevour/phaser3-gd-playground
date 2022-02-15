@@ -6,11 +6,6 @@ var PackAssetFile = function (type, child, config, totalPackResults) {
 
     var packResult;
     switch (type) {
-        case 'image':
-        case 'text':
-            packResult = { type: type, key: key, url: url };
-            break;
-
         case 'audio':
             packResult = totalPackResults[key];
             if (!packResult) {
@@ -31,6 +26,10 @@ var PackAssetFile = function (type, child, config, totalPackResults) {
             } else {
                 packResult.textureURL = url;
             }
+            break;
+
+        default: // image,text,json,xml,svg,html,css,sceneFile,script,glsl
+            packResult = { type: type, key: key, url: url };
             break;
     }
 
