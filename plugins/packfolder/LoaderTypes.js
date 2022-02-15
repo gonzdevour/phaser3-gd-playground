@@ -1,6 +1,7 @@
 const LoaderTypes = [
-    'image', 'text', 'json',
+    'image', 'text', 'json', 'animation',
     'xml', 'svg', 'html', 'css', 'sceneFile', 'script', 'glsl',
+    'tilemapTiledJSON', 'tilemapCSV',
 
     'audio',
     'atlas',

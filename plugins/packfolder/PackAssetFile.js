@@ -28,7 +28,9 @@ var PackAssetFile = function (type, child, config, totalPackResults) {
             }
             break;
 
-        default: // image,text,json,xml,svg,html,css,sceneFile,script,glsl
+        default:
+            // image,text,json,animation,xml,svg,html,
+            // css,sceneFile,script,glsl,tilemapTiledJSON,tilemapCSV
             packResult = { type: type, key: key, url: url };
             break;
     }
