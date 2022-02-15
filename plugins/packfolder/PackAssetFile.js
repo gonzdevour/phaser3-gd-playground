@@ -1,6 +1,6 @@
 const path = require('path');
 
-var PackAssetFile = function (type, child, config, result) {
+var PackAssetFile = function (type, child, config, totalPackResults) {
     var key = GetKey(child.name);
     var url = GetURL(child.path, config.relatedPathFrom);
 
@@ -12,7 +12,7 @@ var PackAssetFile = function (type, child, config, result) {
             break;
 
         case 'audio':
-            packResult = result[key];
+            packResult = totalPackResults[key];
             if (!packResult) {
                 packResult = { type: type, key: key, url: [] }
             }
