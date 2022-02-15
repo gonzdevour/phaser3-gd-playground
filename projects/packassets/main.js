@@ -12,6 +12,8 @@ class Test extends Phaser.Scene {
     }
 
     create() {
+        console.log(this.cache.json.get('pack'));
+
         LoadImageTesting(this);
         LoadTextTesting(this);
         LoadAudioTesting(this);
