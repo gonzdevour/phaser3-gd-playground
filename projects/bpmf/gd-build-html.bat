@@ -6,6 +6,7 @@ set main=main.js
 set htmlTemplate=gd-index.tmpl
 set assets=assets
 set root=root
+set packFolderOutput=assets/pack.json
 cd ..
 cd ..
 npm run production

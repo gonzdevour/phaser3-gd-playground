@@ -20,7 +20,8 @@ InitLog({
 log("logger start");
 
 var api;
-var tb_audio;
+var assetPack = {};
+var audioUrls;
 
 // Preload global data
 // 在Boot scene透過Base scene建立跨scene存在的Model
@@ -33,33 +34,55 @@ class Boot extends Base {
     }
 
     preload() {
-        //loading
-        var _scene = this;
-        async function load(onLoadSuccess, onLoaderror) {
-          api = await loading(_scene, tb_audio);
-/*           sound = api.sound;
-          dialog = api.dialog;
-          speech = api.speech;
-          iap = api.iap;
-          ads = api.ads;
-          idfa = api.idfa; */
-          console.log("api:" + api);
-          onLoadSuccess();
-        }
-        this.load.rexAwait(load);
+        //load pack
+        this.load.pack('pack', 'assets/pack.json');
     }
 
     create() {
-        //create model
-        this.model = CreateModel({
-            db: [
-                this.cache.text.get('db0'),
-                this.cache.text.get('db1'),
-            ],
-            api
+        //asset url dict 
+        var pack = this.cache.json.get('pack')
+        pack.packKey.files.forEach(function(item){
+            assetPack[item.type] = assetPack[item.type] == undefined?{}:assetPack[item.type];
+            assetPack[item.type][item.key] = assetPack[item.type][item.key] == undefined?{}:assetPack[item.type][item.key];
+            if (item.type == 'audio') {
+                item.url.forEach(function(extUrl){
+                    var ext = extUrl.split(".").pop();
+                    assetPack[item.type][item.key][ext] = extUrl;
+                });
+            } else {
+                assetPack[item.type][item.key].url = item.url;
+            }
         });
+        console.log('assetPack:' + '\n' + JSON.stringify(assetPack));
 
-        this.scene.start(MainMenuSceneKey);
+        var _scene = this;
+
+        var modelInit = function(_scene){
+            //create model
+            _scene.model = CreateModel({
+                db: [
+                    _scene.cache.text.get('db0'),
+                    _scene.cache.text.get('db1'),
+                ],
+                api
+            });
+            _scene.scene.start(MainMenuSceneKey);
+        };
+
+        async function load() {
+            api = await loading(_scene, assetPack['audio']);
+/*           sound = api.sound;
+            dialog = api.dialog;
+            speech = api.speech;
+            iap = api.iap;
+            ads = api.ads;
+            idfa = api.idfa; */
+            console.log("api:" + api);
+            modelInit(_scene);
+        }
+        load();
+        //this.load.rexAwait(load);
+
     }
 
     update() { }
