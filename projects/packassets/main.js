@@ -17,6 +17,10 @@ class Test extends Phaser.Scene {
         this.add.image(500, 300, 'bolt');
 
         console.log(this.cache.text.get('csvArray'));
+
+        this.input.on('pointerdown', function () {
+            this.sound.play('right');
+        }, this)
     }
 
     update() { }
