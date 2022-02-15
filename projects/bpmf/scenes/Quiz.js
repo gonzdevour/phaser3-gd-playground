@@ -46,7 +46,7 @@ class Quiz extends Base {
                 console.log('Quiz complete');
             })
         
-        super.create(); //create sysPanel
+        super.create(); //createSysPanel & setupTransition
         var _scene = this;
         //返回上一頁
         var btnHome = CreateLabel(_scene, '返回', 'arrowL')
@@ -56,7 +56,7 @@ class Quiz extends Base {
                     //title: '使用說明',
                     content: '確定要返回選單頁面嗎？',
                     buttonMode: 2, //default:none|1:yes|2:yes&no
-                    callbackYes: function(){ _scene.scene.start(QuizConfigSceneKey) },
+                    callbackYes: function(){ _scene.transitionTo( QuizConfigSceneKey, 500 ) },
         
                     width: _scene.viewport.width-50,
                 })

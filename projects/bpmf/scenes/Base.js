@@ -54,25 +54,52 @@ class Base extends Phaser.Scene {
     }
 
     create() {
+        this.createSysPanel();
+        this.setupTransition();
+    }
 
+    scaleOuter() {
+        //scale outer
+        this.rexScaleOuter.scale();
+    }
+
+    createSysPanel() {
         this.sysPanel = this.rexUI.add.overlapSizer({})
             .setPosition(this.viewport.centerX, this.viewport.centerY)
             .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
             .layout()
+    }
+    setupTransition() {
+        this.events.on('transitionout', function (toScene, duration) {
+            var fromScene = this;
+            fromScene.tweens.add({
+                targets: fromScene.cameras.main,
+                alpha: { start: 1, to: 0 },
+                delay: 0,
+                duration: (duration / 2),
+                repeat: 0,
+            });
 
-        this.events.on('transitionstart', function (fromScene, duration) {
-            this.cameras.main.fadeIn(duration);
-            fromScene.cameras.main.fadeOut(duration);
+            toScene.tweens.add({
+                targets: toScene.cameras.main,
+                alpha: { start: 0, to: 1 },
+                delay: (duration / 2),
+                duration: (duration / 2),
+                repeat: 0,
+            });
         }, this);
 
-/*         this.events.on('transitionout', function (fromScene, duration) {
-            this.cameras.main.fadeOut(duration);
-        }, this); */
-
+        this.events.on('transitioncomplete', function () {
+            var sceneKey = this.sys.config.key;
+            console.log(`${sceneKey} transition complete`);
+        }, this);
     }
-    scaleOuter() {
-        //scale outer
-        this.rexScaleOuter.scale();
+
+    transitionTo(sceneKey, duration) {
+        this.scene.transition({
+            target: sceneKey,
+            duration: duration,
+        });
     }
 }
 export default Base;

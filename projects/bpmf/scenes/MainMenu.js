@@ -29,10 +29,7 @@ class MainMenu extends Base {
         //on button clicked事件宣告在build/view/mainmenupanel/CreateMainMenuPanel.js
         //on button clicked後emit以下事件：
             .on('button.mode-select', function () { //模式選擇
-                this.scene.transition({
-                    target: QuizConfigSceneKey,
-                    duration: 1000,
-                });
+                this.transitionTo( QuizConfigSceneKey,500 );
             }, this)
             .on('button.continue', function () { //繼續遊戲
                 this.scene.start(QuizSceneKey);
@@ -61,7 +58,7 @@ class MainMenu extends Base {
         var logo = mainMenu.getElement('logo'); //從mainMenu取得logo物件
         this.rexUI.easeMoveFrom(logo, 1000, undefined, '-=200', 'Cubic'); //排好版之後再開始tween
 
-        super.create(); //create sysPanel
+        super.create(); //createSysPanel & setupTransition
 
     }
 

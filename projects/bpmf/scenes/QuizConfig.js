@@ -28,21 +28,17 @@ class QuizConfig extends Base {
             .on('startQuiz', function (result) {
                 console.log(result);
                 this.model.setQuizConfig(result);
-                this.scene.start(QuizSceneKey);
+                this.transitionTo(QuizSceneKey,500 );
             }, this)
 
         console.log(`${quizConfigPanel.width}x${quizConfigPanel.height}`)
 
-        super.create(); //create sysPanel
+        super.create(); //createSysPanel & setupTransition
         var _scene = this;
         //返回上一頁
         var btnHome = CreateLabel(_scene, '返回', 'arrowL')
             .onClick( function (button, gameObject, pointer, event) {
-                _scene.scene.transition({
-                    target: MainMenuSceneKey,
-                    duration: 1000,
-                });
-                //_scene.scene.start(MainMenuSceneKey);
+                _scene.transitionTo(MainMenuSceneKey,500);
             })
         this.sysPanel
             .add(btnHome,{ align: 'left-top', expand: false, key:'btnHome' })

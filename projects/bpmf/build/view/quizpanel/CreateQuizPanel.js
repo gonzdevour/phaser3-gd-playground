@@ -53,7 +53,7 @@ var CreateQuizPanel = function (scene, config) {
     quizPanel.getElement('wordArea')
         .add(
             CreateLabel(scene, '發音')
-                .onClick( function (button, index, pointer, event) {
+                .onClick( function (button, gameObject, pointer, event) {
                     quizPanel.emit('ttsSpeak', scene);
                 }),
             {
