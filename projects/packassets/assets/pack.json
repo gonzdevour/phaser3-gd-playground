@@ -2,6 +2,14 @@
   "packKey": {
     "files": [
       {
+        "type": "audio",
+        "key": "right",
+        "url": [
+          "assets/audio/right.m4a",
+          "assets/audio/right.ogg"
+        ]
+      },
+      {
         "type": "image",
         "key": "bolt",
         "url": "assets/image/bolt.png"

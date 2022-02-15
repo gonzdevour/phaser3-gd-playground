@@ -2,15 +2,18 @@ const PackAssetFile = require('./PackAssetFile.js');
 
 var PackAssetFolder = function (tree, config) {
     var type = tree.name;
-    var result = tree.children.map(function (child, index, children) {
-        return (child.type === 'file') ? PackAssetFile(type, child, children, config) : null;
-    });
+    var result = {};
 
-    result = result.filter(function (child) {
-        return child;
-    });
+    tree.children.forEach(function (child) {
+        if (child.type === 'file') {
+            var packResult = PackAssetFile(type, child, config, result);
+            if (packResult) {
+                result[packResult.key] = packResult;
+            }
+        }
+    })
 
-    return result;
+    return Object.values(result);
 }
 
 module.exports = PackAssetFolder;
