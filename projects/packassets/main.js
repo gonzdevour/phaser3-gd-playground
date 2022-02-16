@@ -8,6 +8,7 @@ class Test extends Phaser.Scene {
     }
 
     preload() {
+        // All assets are loaded from this pack.json
         this.load.pack('pack', 'assets/pack.json');
 
         this.load.once('filecomplete-packfile-pack', function (key, type, data) {
@@ -18,12 +19,15 @@ class Test extends Phaser.Scene {
             console.log(`filecomplete-${type}-${key}`);
         })
 
-        this.load.on('progress', function (progress) {
-            console.log(`progress...${progress * 100}%`);
-        });
+        this.load.on('progress', function (progress) { 
+            // Pack.json is loaded, it's time to load assets
+            if (this.cache.json.has('pack')) {
+                console.log(`progress...${progress * 100}%`);
+            }
+        }, this);
 
         this.load.on('fileprogress', function (file, progress) {
-            console.log(`fileprogress...${progress * 100}% : ${file.key}`);
+            // console.log(`fileprogress...${progress * 100}% : ${file.key}`);
         });
 
     }
