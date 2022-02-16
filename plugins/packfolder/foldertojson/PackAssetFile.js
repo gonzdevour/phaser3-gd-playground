@@ -4,25 +4,22 @@ const yaml = require('js-yaml');
 
 var PackAssetFile = function (type, child, config, totalPackResults) {
     var key = GetKey(child.name);
+    var packResult = totalPackResults[key];
+    if (!packResult) {
+        packResult = { type: type, key: key };
+    }
+
     var url = GetURL(child.path, config.relatedPathFrom);
 
-    var packResult;
     switch (type) {
         case 'audio':
-            packResult = totalPackResults[key];
-            if (!packResult) {
-                packResult = { type: type, key: key, url: [] }
+            if (!packResult.url) {
+                packResult.url = [];
             }
-
             packResult.url.push(url);
             break;
 
         case 'atlas':
-            packResult = totalPackResults[key];
-            if (!packResult) {
-                packResult = { type: type, key: key }
-            }
-
             if (GetExtend(child.name) === '.json') {
                 packResult.atlasURL = url;
             } else {
@@ -31,11 +28,6 @@ var PackAssetFile = function (type, child, config, totalPackResults) {
             break;
 
         case 'bitmapFont':
-            packResult = totalPackResults[key];
-            if (!packResult) {
-                packResult = { type: type, key: key }
-            }
-
             if (GetExtend(child.name) === '.xml') {
                 packResult.fontDataURL = url;
             } else {
@@ -44,13 +36,11 @@ var PackAssetFile = function (type, child, config, totalPackResults) {
             break;
 
         case 'spritesheet':
-            packResult = totalPackResults[key];
-            if (!packResult) {
-                packResult = { type: type, key: key }
-            }
-
             if (GetExtend(child.name) === config.configYamlExtension) {
-                packResult = { ...packResult, ...GetYamlObject(child.path) };
+                var packConfig = GetYamlObject(child.path);
+                for (var k in packConfig) {
+                    packResult[k] = packConfig[k];
+                }
             } else {
                 packResult.url = url;
             }
@@ -59,7 +49,7 @@ var PackAssetFile = function (type, child, config, totalPackResults) {
         default:
             // image,text,json,animation,xml,svg,html,
             // css,sceneFile,script,glsl,tilemapTiledJSON,tilemapCSV
-            packResult = { type: type, key: key, url: url };
+            packResult.url = url;
             break;
     }
 

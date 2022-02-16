@@ -21,16 +21,6 @@
         "url": "assets/image/bolt.png"
       },
       {
-        "type": "image",
-        "key": "key",
-        "url": "assets/image/key.png"
-      },
-      {
-        "type": "image",
-        "key": "person",
-        "url": "assets/image/person.png"
-      },
-      {
         "type": "spritesheet",
         "key": "explosion",
         "url": "assets/spritesheet/explosion.png",

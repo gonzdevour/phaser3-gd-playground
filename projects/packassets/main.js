@@ -44,9 +44,7 @@ class Test extends Phaser.Scene {
 }
 
 var LoadImageTesting = function (scene) {
-    scene.add.image(300, 300, 'key');
-    scene.add.image(400, 300, 'person');
-    scene.add.image(500, 300, 'bolt');
+    scene.add.image(300, 300, 'bolt');
 }
 
 var LoadTextTesting = function (scene) {
@@ -67,7 +65,7 @@ var LoadAtlasTesting = function (scene) {
         repeat: -1
     });
 
-    scene.add.sprite(300, 200, 'knight').play('idle');
+    scene.add.sprite(400, 300, 'knight').play('idle');
 }
 
 var LoadSpriteSheetTesting = function (scene) {
@@ -80,7 +78,7 @@ var LoadSpriteSheetTesting = function (scene) {
 
     scene.anims.create(config);
 
-    scene.add.sprite(400, 200, 'explosion').play('explodeAnimation');
+    scene.add.sprite(500, 300, 'explosion').play('explodeAnimation');
 }
 
 
