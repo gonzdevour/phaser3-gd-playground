@@ -1,4 +1,4 @@
-{
+const PackJSON = {
   "packKey": {
     "files": [
       {
@@ -38,3 +38,4 @@
     ]
   }
 }
+export default PackJSON;
