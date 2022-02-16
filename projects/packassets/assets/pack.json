@@ -31,6 +31,16 @@
         "url": "assets/image/person.png"
       },
       {
+        "type": "spritesheet",
+        "key": "explosion",
+        "url": "assets/spritesheet/explosion.png",
+        "frameConfig": {
+          "frameWidth": 64,
+          "frameHeight": 64,
+          "endFrame": 23
+        }
+      },
+      {
         "type": "text",
         "key": "csvArray",
         "url": "assets/text/csvArray.csv"

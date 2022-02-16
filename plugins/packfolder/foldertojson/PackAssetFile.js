@@ -1,4 +1,6 @@
 const path = require('path');
+const fs = require('fs');
+const yaml = require('js-yaml');
 
 var PackAssetFile = function (type, child, config, totalPackResults) {
     var key = GetKey(child.name);
@@ -41,6 +43,19 @@ var PackAssetFile = function (type, child, config, totalPackResults) {
             }
             break;
 
+        case 'spritesheet':
+            packResult = totalPackResults[key];
+            if (!packResult) {
+                packResult = { type: type, key: key }
+            }
+
+            if (GetExtend(child.name) === '.yml') {
+                packResult = { ...packResult, ...GetYamlObject(child.path) };
+            } else {
+                packResult.url = url;
+            }
+            break;
+
         default:
             // image,text,json,animation,xml,svg,html,
             // css,sceneFile,script,glsl,tilemapTiledJSON,tilemapCSV
@@ -59,11 +74,16 @@ var GetExtend = function (name) {
     return path.extname(name);
 }
 
-var GetURL = function (path, relatedPathFrom) {
+var GetURL = function (filePath, relatedPathFrom) {
     if (relatedPathFrom !== '') {
-        path = path.replace(relatedPathFrom, '');
+        filePath = filePath.replace(relatedPathFrom, '');
     }
-    return path.replace(/\\/gi, '/').replace(/^(\/)/, '');
+    return filePath.replace(/\\/gi, '/').replace(/^(\/)/, '');
+}
+
+var GetYamlObject = function (filePath) {
+    const content = fs.readFileSync(filePath, 'utf8');
+    return yaml.load(content);
 }
 
 

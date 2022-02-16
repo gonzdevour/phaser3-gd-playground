@@ -37,6 +37,7 @@ class Test extends Phaser.Scene {
         LoadTextTesting(this);
         LoadAudioTesting(this);
         LoadAtlasTesting(this);
+        LoadSpriteSheetTesting(this);
     }
 
     update() { }
@@ -66,7 +67,20 @@ var LoadAtlasTesting = function (scene) {
         repeat: -1
     });
 
-    scene.add.sprite(400, 200, 'knight').play('idle');
+    scene.add.sprite(300, 200, 'knight').play('idle');
+}
+
+var LoadSpriteSheetTesting = function (scene) {
+    var config = {
+        key: 'explodeAnimation',
+        frames: scene.anims.generateFrameNumbers('explosion', { start: 0, end: 23, first: 23 }),
+        frameRate: 20,
+        repeat: -1
+    };
+
+    scene.anims.create(config);
+
+    scene.add.sprite(400, 200, 'explosion').play('explodeAnimation');
 }
 
 
