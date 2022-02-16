@@ -49,7 +49,7 @@ var PackAssetFile = function (type, child, config, totalPackResults) {
                 packResult = { type: type, key: key }
             }
 
-            if (GetExtend(child.name) === '.yml') {
+            if (GetExtend(child.name) === config.configYamlExtension) {
                 packResult = { ...packResult, ...GetYamlObject(child.path) };
             } else {
                 packResult.url = url;

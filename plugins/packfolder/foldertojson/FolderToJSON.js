@@ -3,6 +3,7 @@ const PackSubFolders = require('./PackSubFolders.js');
 
 const DefaultConfig = {
     relatedPathFrom: '',
+    configYamlExtension: '.yml'
 }
 var FolderToJSON = function (root, config) {
     if (config === undefined) {
