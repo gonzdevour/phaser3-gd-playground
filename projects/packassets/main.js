@@ -9,6 +9,18 @@ class Test extends Phaser.Scene {
 
     preload() {
         this.load.pack('pack', 'assets/pack.json');
+
+        this.load.once('filecomplete-packfile-pack', function (key, type, data) {
+            console.log('filecomplete-packfile-pack');
+        })
+
+        this.load.on('filecomplete', function (key, type, data) {
+            console.log(`filecomplete-${type}-${key}`);
+        })
+
+        this.load.on('progress', function (progress) {
+            console.log(`Loading...${progress * 100}%`);
+        });
     }
 
     create() {
