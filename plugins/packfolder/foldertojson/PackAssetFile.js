@@ -28,6 +28,19 @@ var PackAssetFile = function (type, child, config, totalPackResults) {
             }
             break;
 
+        case 'bitmapFont':
+            packResult = totalPackResults[key];
+            if (!packResult) {
+                packResult = { type: type, key: key }
+            }
+
+            if (GetExtend(child.name) === '.xml') {
+                packResult.fontDataURL = url;
+            } else {
+                packResult.textureURL = url;
+            }
+            break;
+
         default:
             // image,text,json,animation,xml,svg,html,
             // css,sceneFile,script,glsl,tilemapTiledJSON,tilemapCSV

@@ -1,4 +1,5 @@
 import 'phaser';
+import PackJSON from './assets/pack.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -8,24 +9,22 @@ class Test extends Phaser.Scene {
     }
 
     preload() {
-        // All assets are loaded from this pack.json
-        this.load.pack('pack', 'assets/pack.json');
+        this.load.pack('pack', PackJSON);
 
         this.load.once('filecomplete-packfile-pack', function (key, type, data) {
             console.log('filecomplete-packfile-pack');
-
-            // Pack.json is loaded, it's time to load assets
-            this.load.on('progress', function (progress) {
-                console.log(`progress...${progress * 100}%`);
-            }, this);
-        }, this)
+        })
 
         this.load.on('filecomplete', function (key, type, data) {
             console.log(`filecomplete-${type}-${key}`);
         })
 
+        this.load.on('progress', function (progress) {
+            console.log(`progress...${progress * 100}%`);
+        });
+
         this.load.on('fileprogress', function (file, progress) {
-            // console.log(`fileprogress...${progress * 100}% : ${file.key}`);
+            console.log(`fileprogress...${progress * 100}% : ${file.key}`);
         });
 
     }
