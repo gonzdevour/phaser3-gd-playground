@@ -5,6 +5,7 @@ const LoaderTypes = [
 
     'audio',
     'atlas',
+    'bitmapFont',
 ];
 
 module.exports = LoaderTypes;

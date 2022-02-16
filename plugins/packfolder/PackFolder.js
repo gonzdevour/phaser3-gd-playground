@@ -1,26 +1,12 @@
-const dirTree = require("directory-tree");
+const FolderToJSON = require('./foldertojson/FolderToJSON.js');
 const fs = require('fs');
-const PackSubFolders = require('./PackSubFolders.js');
 
-const DefaultConfig = {
-    relatedPathFrom: '',
-}
 var PackFolder = function (root, outFile, config) {
     if (outFile === undefined) {
         outFile = 'pack.json';
     }
 
-    if (config === undefined) {
-        config = {};
-    }
-
-    config = { ...DefaultConfig, ...config };
-
-    var tree = dirTree(root, { attributes: ['type'] });
-    var result = PackSubFolders(tree, config);
-    if (result.files) {
-        result = { packKey: result };
-    }
+    var result = FolderToJSON(root, config);
 
     try {
         fs.writeFileSync(outFile, JSON.stringify(result, undefined, 2));

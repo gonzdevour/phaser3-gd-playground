@@ -19,8 +19,13 @@ class Test extends Phaser.Scene {
         })
 
         this.load.on('progress', function (progress) {
-            console.log(`Loading...${progress * 100}%`);
+            console.log(`progress...${progress * 100}%`);
         });
+
+        this.load.on('fileprogress', function (file, progress) {
+            console.log(`fileprogress...${progress * 100}% : ${file.key}`);
+        });
+
     }
 
     create() {
