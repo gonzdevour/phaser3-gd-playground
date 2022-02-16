@@ -96,6 +96,7 @@ class Base extends Phaser.Scene {
     }
 
     transitionTo(sceneKey, duration) {
+        console.log(`transition to ${sceneKey}`)
         this.scene.transition({
             target: sceneKey,
             duration: duration,

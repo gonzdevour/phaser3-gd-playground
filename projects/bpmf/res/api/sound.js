@@ -9,7 +9,7 @@ class cdv_sound {
     this.urls = audioUrls;
     log("this.urls: " + this.urls)
   }
-  play(key, config) {
+  play(scene, key, config) {
     var se = new Media(
       this.getSrc(key),
       function playSuccess() {
@@ -22,7 +22,7 @@ class cdv_sound {
     );
     se.play(config);
   }
-  loop(key, config) {
+  loop(scene, key, config) {
     var se = new Media(
       this.getSrc(key),
       function playSuccess() {
@@ -47,21 +47,20 @@ class cdv_sound {
 }
 
 class p3_sound {
-  constructor(scene) {
-    this.scene = scene;
+  constructor() {
   }
-  play(key, config) {
+  play(scene, key, config) {
     log("p3audio play " + key );
-    this.scene.sound.play(key, config);
+    scene.sound.play(key, config);
   }
-  loop(key, config) {
+  loop(scene, key, config) {
     log("p3audio loop " + key );
     config.loop = true;
-    this.scene.sound.play(key, config);
+    scene.sound.play(key, config);
   }
 }
 
-function soundInit(scene, audioUrls) {
+function soundInit(audioUrls) {
   var sound;
   if (OS.cordova) {
     log("init media plugin");
@@ -69,7 +68,7 @@ function soundInit(scene, audioUrls) {
     sound = new cdv_sound(audioUrls);
   } else {
     log("use p3 audio");
-    sound = new p3_sound(scene);
+    sound = new p3_sound();
   }
   return sound;
 }

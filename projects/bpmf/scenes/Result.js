@@ -1,14 +1,14 @@
 import 'phaser';
 import Base from './Base.js';
-import { MainMenuSceneKey, QuizConfigSceneKey, QuizSceneKey } from './Const.js';
-import CreateMainMenuPanel from '../build/view/mainmenupanel/CreateMainMenuPanel.js';
+import { MainMenuSceneKey, QuizConfigSceneKey, QuizSceneKey, ResultSceneKey } from './Const.js';
+import CreateResultPanel from '../build/view/resultpanel/CreateResultPanel.js';
 import ModalDialogPromise from '../build/view/modeldialog/ModalDialogPromise.js';
 
-// Main menu
-class MainMenu extends Base {
+// Result
+class Result extends Base {
     constructor() {
         super({
-            key: MainMenuSceneKey
+            key: ResultSceneKey
         })
 
     }
@@ -21,7 +21,7 @@ class MainMenu extends Base {
 
         var _scene = this;
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
-        var mainMenu = CreateMainMenuPanel(this);
+        var mainMenu = CreateResultPanel(this);
         mainMenu
             .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
             .layout()
@@ -66,4 +66,4 @@ class MainMenu extends Base {
     update() { }
 }
 
-export default MainMenu;
+export default Result;

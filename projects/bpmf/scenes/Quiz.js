@@ -1,6 +1,6 @@
 import 'phaser';
 import Base from './Base.js';
-import { MainMenuSceneKey, QuizConfigSceneKey, QuizSceneKey } from './Const.js';
+import { MainMenuSceneKey, QuizConfigSceneKey, QuizSceneKey, ResultSceneKey } from './Const.js';
 import ModalDialogPromise from '../build/view/modeldialog/ModalDialogPromise.js';
 import CreateQuizPanel from '../build/view/quizpanel/CreateQuizPanel.js';
 import BuildQuiz from '../build/control/quiz/BuildQuiz.js';
@@ -30,6 +30,7 @@ class Quiz extends Base {
     }
 
     create() {
+        var _scene = this;
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
 
         var quizPanel = CreateQuizPanel(this, this.model.getQuizConfig());
@@ -41,13 +42,14 @@ class Quiz extends Base {
 
         var quiz = BuildQuiz(this.model); //再建立Quiz題組
 
+        super.create(); //createSysPanel & setupTransition
         QuizPromise(quizPanel, quiz) //組合Quiz面板與題組並啟動流程、偵測結束
             .then(function () {
                 console.log('Quiz complete');
+                //_scene.transitionTo( ResultSceneKey, 500 )
+                _scene.scene.start(ResultSceneKey);
             })
         
-        super.create(); //createSysPanel & setupTransition
-        var _scene = this;
         //返回上一頁
         var btnHome = CreateLabel(_scene, '返回', 'arrowL')
             .onClick( function (button, gameObject, pointer, event) {

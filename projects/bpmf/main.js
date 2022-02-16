@@ -5,6 +5,7 @@ import Boot from './scenes/Boot.js';
 import MainMenu from './scenes/MainMenu.js';
 import QuizConfig from './scenes/QuizConfig.js';
 import Quiz from './scenes/Quiz.js';
+import Result from './scenes/Result.js';
 
 var config = {
     type: Phaser.AUTO,
@@ -16,7 +17,7 @@ var config = {
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     plugins: AllPlugins,
-    scene: [Boot, MainMenu, QuizConfig, Quiz]
+    scene: [Boot, MainMenu, QuizConfig, Quiz, Result]
 };
 
 var game = new Phaser.Game(config);

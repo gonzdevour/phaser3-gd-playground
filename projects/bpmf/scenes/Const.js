@@ -5,10 +5,12 @@ const BootSceneKey = 'boot';
 const MainMenuSceneKey = 'main-menu';
 const QuizConfigSceneKey = 'quiz-config';
 const QuizSceneKey = 'quiz';
+const ResultSceneKey = 'result';
 
 export {
     BootSceneKey,
     MainMenuSceneKey,
     QuizConfigSceneKey,
     QuizSceneKey,
+    ResultSceneKey,
 }
