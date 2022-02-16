@@ -1,0 +1,1 @@
+在有scaleOuter plugin的viewport以前所採用的取得viewport方法

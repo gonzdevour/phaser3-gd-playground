@@ -1,0 +1,79 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "audio",
+        "key": "right",
+        "url": [
+          "assets/audio/right.m4a",
+          "assets/audio/right.ogg"
+        ]
+      },
+      {
+        "type": "image",
+        "key": "arrowL",
+        "url": "assets/image/arrowL.png"
+      },
+      {
+        "type": "image",
+        "key": "cfg",
+        "url": "assets/image/cfg.png"
+      },
+      {
+        "type": "image",
+        "key": "confirm",
+        "url": "assets/image/confirm.png"
+      },
+      {
+        "type": "image",
+        "key": "eraser",
+        "url": "assets/image/eraser.png"
+      },
+      {
+        "type": "image",
+        "key": "info",
+        "url": "assets/image/info.png"
+      },
+      {
+        "type": "image",
+        "key": "no",
+        "url": "assets/image/no.png"
+      },
+      {
+        "type": "image",
+        "key": "right",
+        "url": "assets/image/right.png"
+      },
+      {
+        "type": "image",
+        "key": "yes",
+        "url": "assets/image/yes.png"
+      },
+      {
+        "type": "text",
+        "key": "audiosrc",
+        "url": "assets/text/audiosrc.csv"
+      },
+      {
+        "type": "text",
+        "key": "db0",
+        "url": "assets/text/db0.compress"
+      },
+      {
+        "type": "text",
+        "key": "db1",
+        "url": "assets/text/db1.compress"
+      },
+      {
+        "type": "text",
+        "key": "language",
+        "url": "assets/text/language.csv"
+      },
+      {
+        "type": "text",
+        "key": "words",
+        "url": "assets/text/words.csv"
+      }
+    ]
+  }
+}
