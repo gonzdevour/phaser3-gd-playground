@@ -23,12 +23,12 @@
       {
         "type": "spritesheet",
         "key": "explosion",
-        "url": "assets/spritesheet/explosion.png",
         "frameConfig": {
           "frameWidth": 64,
           "frameHeight": 64,
           "endFrame": 23
-        }
+        },
+        "url": "assets/spritesheet/explosion.png"
       },
       {
         "type": "text",
