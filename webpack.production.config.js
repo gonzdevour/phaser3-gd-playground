@@ -21,6 +21,8 @@ var htmlTemplate = process.env.htmlTemplate || 'index.tmpl'; // Template of inde
 var assetsFolder = process.env.assets || 'assets'; // Map to assets folder
 var rootAssetsFolder = process.env.root || 'root'; // Map to root folder
 var packFolderOutput = process.env.packFolderOutput || false;
+var packFolderConfigExtension = process.env.packFolderConfigExt || '.cfg';
+
 
 if (projectRoot) {
     projectRoot = path.resolve(__dirname, projectRoot);
@@ -44,7 +46,8 @@ if (packFolderOutput) {
         apply: (compiler) => {
             compiler.hooks.beforeRun.tap('PackFolderPlugin', () => {
                 PackFolder(assetsFolder, packFolderOutput, {
-                    relatedPathFrom: projectRoot
+                    relatedPathFrom: projectRoot,
+                    configYamlExtension: packFolderConfigExtension
                 });
                 console.log(`PackFolder ${assetsFolder}`);
             });
@@ -90,11 +93,18 @@ plugins.push(
 )
 
 if (fs.existsSync(assetsFolder)) {
+    var ignore;
+    if (packFolderOutput) {
+        var ignoreFile = `**/*${packFolderConfigExtension}`;
+        console.log(`Ignore pack-config-file '${ignoreFile}'`)
+        ignore = [ignoreFile];
+    }
     plugins.push(
         new CopyWebpackPlugin([
             {
                 from: assetsFolder,
-                to: distFolder + '/assets/'
+                to: distFolder + '/assets/',
+                ignore: ignore,  // Might change at latest version
             }
         ])
     )
