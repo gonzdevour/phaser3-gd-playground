@@ -11,12 +11,16 @@ declare class Base {
     constructor(
         model: Model,
         dataManager: LocalStorageData,
-        defaultData: { [key: string]: unknown }
+        defaultData: { [key: string]: any }
     );
+    data: LocalStorageData;
 
-    get(key: string): unknown;
-    get(): { [key: string]: unknown };
+    get(key: string): any;
+    get(): { [key: string]: any };
 
-    set(key: string, value: unknown): this;
-    set(data: { [key: string]: unknown }): this;
+    set(key: string, value: any): this;
+    set(data: { [key: string]: any }): this;
+
+    getDefaultValue(key: string): any;
+    getDefaultValue(): { [key: string]: any };
 }
