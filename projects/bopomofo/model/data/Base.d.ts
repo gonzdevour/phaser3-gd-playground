@@ -10,7 +10,7 @@ declare namespace Base {
 declare class Base {
     constructor(
         model: Model,
-        dataManager: LocalStorageData,
+        dataManager: string | LocalStorageData,
         defaultData: { [key: string]: any }
     );
     data: LocalStorageData;

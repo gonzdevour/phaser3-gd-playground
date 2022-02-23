@@ -1,15 +1,19 @@
 import LocalStorageData from '../../../../../phaser3-rex-notes/plugins/localstorage-data.js';
 
 class Base {
-    constructor(model, name, defaultData) {
+    constructor(model, dataManager, defaultData) {
         // Ability to access other data object
         this.model = model;
 
         // Storage of data
-        this.data = new LocalStorageData({
-            name: name,
-            default: defaultData
-        });
+        if (typeof (dataManager) === 'string') {
+            var name = dataManager;
+            dataManager = new LocalStorageData({
+                name: name,
+                default: defaultData
+            });
+        }
+        this.data = dataManager;
 
         // Define keys belong this data object
         this.defaultData = defaultData;
