@@ -20,45 +20,24 @@ class Base {
     }
 
     get(key) {
-        var dataManager = this.data;
         var result;
         if (typeof (key) === 'string') {
-            // Can't get key which is not belong this data object
-            if (key in this.defaultData) {
-                result = dataManager.get(key);
-            }
-
+            result = this.data.get(key);
         } else {
-            result = {};
-            for (var key in this.defaultData) {
-                result[key] = dataManager.get(key);
-            }
+            result = this.data.getAll();
         }
 
         return result;
     }
 
     set(key, value) {
-        var dataManager = this.data;
-        if (typeof (key) === 'string') {
-            // Can't set key which is not belong this data object
-            if (key in this.defaultData) {
-                dataManager.set(key, value);
-            }
-
-        } else {
-            var data = key;
-            for (var key in this.defaultData) {
-                dataManager.set(key, data[key]);
-            }
-        }
+        this.data.set(key, value);
         return this;
     }
 
     getDefaultValue(key) {
         var result;
         if (typeof (key) === 'string') {
-            // Can't get key which is not belong this data object
             result = this.defaultData[key]
 
         } else {
