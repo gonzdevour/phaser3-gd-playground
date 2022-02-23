@@ -1,5 +1,7 @@
-//清理上一題，並將新題目與panel組合起來，以作答callback回傳給QuizPromise
+//utils
+import Add from '../../../../../plugins/utils/array/Add.js';
 
+//清理上一題，並將新題目與panel組合起來，以作答callback回傳給QuizPromise
 var SetupQuizPanel = function (quizPanel, question, onSubmit) {
     // Fill quizPanel，從這裡開始跟view扯上關係
     quizPanel
@@ -37,12 +39,37 @@ var SetupQuizPanel = function (quizPanel, question, onSubmit) {
                 character: (isPass && polyphonyCharacter) ? polyphonyCharacter : question.character //題目字
             }
 
+            record(quizPanel.scene.model.appData, verifyResult);
+
             if (onSubmit) { //如果有傳入callback function
                 onSubmit(verifyResult); //呼叫callback，完成QuizPanelPromise，讓QuizPromise吐出next question循環
             }
         })
 
     return quizPanel;
+}
+
+var record = function(appData, verifyResult){
+    var isPass = verifyResult.result;
+    if (!isPass) { //如果沒通過，則將結果暫存在model.appData.reviewList裡，最後會整理合併於lsData的record.reviewList
+        appData.curWrongCnt ++;
+        var resultToSave = {
+            input: verifyResult.input, //bopomofo
+            word: verifyResult.word.word,
+            character: verifyResult.character.character,
+        }
+        Add(appData.curWrongList, resultToSave);
+        Add(appData.record.wrongList, resultToSave);
+        console.log('X');
+
+    } else { //如果通過，則將詞暫存在model.appData.correctList裡，最後會整理合併於lsData的record.correctList
+        appData.curRightCnt ++;
+        Add(appData.curRightList, verifyResult.word.word);
+        Add(appData.record.rightList, verifyResult.word.word);
+        console.log('O');
+    }
+    appData.save(appData.record);
+    appData.log();
 }
 
 export default SetupQuizPanel;

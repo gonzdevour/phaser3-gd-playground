@@ -4,15 +4,23 @@ var DefaultQuizConfig = {
     database: '高頻詞庫', //指定詞庫種類
     enhancement: '無', //強化練習模式
     mode: '隨機', //依序|隨機|測驗
-    count: 3,
+    qcount: 3, //題數
 }
 
-var DefaultData = Object.assign( //恰巧等於DefaultQuizConfig的複製(物件與陣列不能用var複製否則會指向同一物件)
+var DefaultRecord = {
+    wrongList: [], //複習詞表(答錯紀錄)
+    rightList: [], //答對過的詞
+}
+
+//將上面的物件全部複製組成一個物件(物件與陣列不能用var複製否則會指向同一物件)
+var DefaultData = Object.assign(
     {},
-    DefaultQuizConfig
+    DefaultQuizConfig,
+    DefaultRecord,
 );
 
 export {
     DefaultData,
-    DefaultQuizConfig
+    DefaultQuizConfig,
+    DefaultRecord,
 }

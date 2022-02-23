@@ -1,6 +1,7 @@
 import DBWrap from './db/DBWrap.js';
 import Quiz from './quiz/Quiz.js';
 import LocalStorageData from '../../../../phaser3-rex-notes/plugins/localstorage-data.js';
+import AppData from './appdata/AppData.js';
 import { DefaultData, DefaultQuizConfig } from './DefaultData.js'
 
 //utils
@@ -45,6 +46,7 @@ Model
         .dbId //dbWrap.id
         .getWords(wordCount)
         .getRandomWord()
+  .appData
   .lsData
   .speech
   .sound
@@ -97,15 +99,19 @@ class Model {
             var dbWrap = new DBWrap(this, jsonList[i]) //用DBWrap解壓縮compress後，傳入Model.db array裡
             this.db.push(dbWrap);
         }
-        //初始化建立ls(lsd plugin)，如果default:undefined會存入所有ls key-content。否則會依預設值的key存入原本在ls內的值，有key無值時存入預設值。
+        //初始化建立ls(lsd plugin而不是純ls)，如果default:undefined會存入所有ls key-content。否則會依預設值的key存入原本在ls內的值，有key無值時存入預設值。
         this.lsData = new LocalStorageData({
             name: 'bopomofo',
-            default: DefaultData, //{database: '高頻詞庫',enhancement: '無',mode: '隨機'}
+            default: DefaultData, //以defaultData中的key為索引，有值時略過，無值時存入該value為預設值
             reset: true, //初始化時重設lsData為DefaultData，正式版要記得關掉
         })
+        //appData初始化，傳入lsData，用於紀錄全域變數
+        this.appData = new AppData(this.lsData);
+
+        //將api控制權交給model。因為各api有可能在測試時不存在，所以必須做undefined處理
         var apiList = GetValue(config, 'api', undefined);
-        this.speech = apiList.speech; //初始化語音
-        this.sound = apiList.sound; //初始化音效
+        this.speech = GetValue(apiList, 'speech', undefined);//初始化語音
+        this.sound = GetValue(apiList, 'sound', undefined); //初始化音效
 
         // 同時間只能有一個題組在執行
         this.quiz = new Quiz(this);

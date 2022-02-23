@@ -5,7 +5,7 @@ import QuizResultModalPromise from '../../view/quizpanel/QuizResultModalPromise.
 var QuizPromise = async function (quizPanel, quiz) {
     while (!quiz.isLastQuestion) { //如果不是最後一題
         var result = await QuizPanelPromise(quizPanel, quiz.nextQuestion);//清理上一題，將下一題與panel組合起來，回傳上一題作答結果
-        console.log(result);
+        //console.log(result);
         await QuizResultModalPromise(quizPanel.scene, result); //顯示上一題作答結果(傳入scene和config給彈出面板Modal)
     }
     //最後一題，回傳結束

@@ -37,7 +37,7 @@ class Question {
             characterIndex = character;
             var characters = word.getCharacters();//以詞取出所有字
             character = characters[characterIndex];//取得題目字
-        } else if (word && character) { //若config有字又有詞
+        } else if (word && character) { //若config有詞又有字
             // Check if word contains character
             characterIndex = word.getCharacterIndex(character);//設定字在詞裡的序號
             if (characterIndex === -1) { //如果字沒有在詞裡面

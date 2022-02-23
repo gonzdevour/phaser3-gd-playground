@@ -33,24 +33,29 @@ class Quiz extends Base {
         var _scene = this;
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
 
+        //重置關卡紀錄
+        this.model.appData.load().reset();
+        console.log(this.model.appData)
+
+        //先建立Quiz面板
         var quizPanel = CreateQuizPanel(this, this.model.getQuizConfig());
         quizPanel
             .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
-            .layout() //先建立Quiz面板
-
+            .layout()
         //console.log(`${quizPanel.width}x${quizPanel.height}`)
 
-        var quiz = BuildQuiz(this.model); //再建立Quiz題組
+        //再建立Quiz題組
+        var quiz = BuildQuiz(this.model);
 
-        super.create(); //createSysPanel & setupTransition
-        QuizPromise(quizPanel, quiz) //組合Quiz面板與題組並啟動流程、偵測結束
+        //組合Quiz面板與題組並啟動流程、偵測結束
+        QuizPromise(quizPanel, quiz)
             .then(function () {
                 console.log('Quiz complete');
                 //_scene.transitionTo( ResultSceneKey, 500 )
                 _scene.scene.start(ResultSceneKey);
             })
         
-        //返回上一頁
+        //返回上一頁按鈕
         var btnHome = CreateLabel(_scene, '返回', 'arrowL')
             .onClick( function (button, gameObject, pointer, event) {
                 console.log('reqBack')
@@ -63,6 +68,8 @@ class Quiz extends Base {
                     width: _scene.viewport.width-50,
                 })
             })
+
+        super.create(); //createSysPanel & setupTransition
         this.sysPanel
             .add(btnHome,{ align: 'left-top', expand: false, key:'btnHome' })
             .layout()

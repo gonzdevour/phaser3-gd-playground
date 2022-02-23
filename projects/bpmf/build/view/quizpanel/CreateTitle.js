@@ -1,5 +1,6 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import { Style } from '../style/style.js';
+import GetValue from '../../../../../plugins/utils/object/GetValue.js';
 
 var CreateTitle = function (scene, config) {
     var title = scene.rexUI.add.sizer({
@@ -20,15 +21,19 @@ var CreateTitle = function (scene, config) {
 }
 
 var Config2Text = function (config) {
+    //設定預設值避免未傳值時出錯
+    var txtDb = GetValue(config,'database','');
+    var txtEh = GetValue(config,'enhancement','');
+    var txtMd = GetValue(config,'mode','');
+
     var dict = {
-        database:    config.database,
-        enhancement: config.enhancement == '無' ? '' : ('|強化' + config.enhancement),
-        mode:        '|' + config.mode + '模式',
-        count: '',
-        //count: '1/' + config.count,
+        database:    txtDb,
+        enhancement: txtEh == '無' ? '' : ('|強化' + txtEh),
+        mode:        '|' + txtMd + '模式',
+        //qcount: '1/' + config.qcount,
     };
     var text = '';
-    for(var key in config){
+    for(var key in dict){
         text += dict[key];
         //console.log(key + ' - ' + config[key])
     }

@@ -23,7 +23,7 @@ var QuizResultModalPromise = function (scene, result, onCloseCallback) {
             buttonMode: 0,
         })
 
-    } else {  // 答對回傳content:正確答案Character
+    } else {  // 答錯回傳content:正確答案Character
         // TODO: Style Character
         var characterUI = new Character(scene, { //character label和BopomofoSizer組成CharacterSizer
             // background: CreateRoundRectangleBackground(scene),

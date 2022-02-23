@@ -1,9 +1,15 @@
 import 'phaser';
 import AllPlugins from '../../plugins/AllPlugins.js';
+import Base from './scenes/Base.js';
+import { MainMenuSceneKey, QuizConfigSceneKey, QuizSceneKey, ResultSceneKey } from './scenes/Const.js';
+import ModalDialogPromise from './build/view/modeldialog/ModalDialogPromise.js';
+import CreateQuizPanel from './build/view/quizpanel/CreateQuizPanel.js';
 import CreateModel from './build/model/CreateModel.js';
 import BuildQuiz from './build/control/quiz/BuildQuiz.js';
-import CreateQuizPanel from './build/view/quizpanel/CreateQuizPanel.js';
-import QuizPromise from './build/quiz/QuizPromose.js';
+import QuizPromise from './build/control/quiz/QuizPromise.js';
+
+var api;
+var assetPack = {};
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -15,19 +21,19 @@ class Test extends Phaser.Scene {
 
     preload() {
         // Load db file
-        this.load.text('db0', 'assets/db0.compress');
-        this.load.text('db1', 'assets/db1.compress');
+        this.load.text('db0', 'assets/text/db0.compress');
+        this.load.text('db1', 'assets/text/db1.compress');
 
         // Load sound file
         this.load.audio('ok', [
-            'assets/sound/right.ogg',
-            'assets/sound/right.m4a'
+            'assets/audio/right.ogg',
+            'assets/audio/right.m4a'
         ]);
         //Load image file
-        this.load.image('confirm', 'assets/img/confirm.png');
-        this.load.image('eraser', 'assets/img/eraser.png');
+        this.load.image('confirm', 'assets/image/confirm.png');
+        this.load.image('eraser', 'assets/image/eraser.png');
 
-        this.load.image('yes', 'assets/img/yes.png');
+        this.load.image('yes', 'assets/image/yes.png');
     }
 
     create() {
@@ -35,7 +41,8 @@ class Test extends Phaser.Scene {
             db: [
                 this.cache.text.get('db0'),
                 this.cache.text.get('db1'),
-            ]
+            ],
+            api
         })
 
         this.rexScaleOuter.scale();
@@ -56,7 +63,7 @@ class Test extends Phaser.Scene {
         quiz
             .clearQuestions()
             .addQuestion({
-                word: model.db[1].words.queryWord('嘗試')[0]
+                word: model.db[1].words.queryWord('蘋果')[0]
             })
             .addQuestion({
                 word: model.db[1].words.queryWord('松柏常青')[0]

@@ -52,7 +52,7 @@ var CreateQuizPanel = function (scene, config) {
     //在word區塊的overlapSizer上添加語音按鈕
     quizPanel.getElement('wordArea')
         .add(
-            CreateLabel(scene, '發音')
+            CreateLabel(scene, '發音', 'speak')
                 .onClick( function (button, gameObject, pointer, event) {
                     quizPanel.emit('ttsSpeak', scene);
                 }),
@@ -122,9 +122,9 @@ var CreateQuizPanel = function (scene, config) {
 var CreateLabel = function (scene, text, img, pos) {
     return scene.rexUI.add.label({
         background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
-        // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
+        icon: scene.add.image(0, 0, img).setDisplaySize(45, 60),
         text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
-        space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
+        space: { left: 20, right: 0, top: 20, bottom: 20, icon: 10 }
     });
 }
 

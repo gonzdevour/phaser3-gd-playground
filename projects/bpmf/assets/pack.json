@@ -46,6 +46,11 @@
       },
       {
         "type": "image",
+        "key": "speak",
+        "url": "assets/image/speak.png"
+      },
+      {
+        "type": "image",
         "key": "yes",
         "url": "assets/image/yes.png"
       },

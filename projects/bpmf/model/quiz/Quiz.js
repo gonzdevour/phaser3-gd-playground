@@ -5,6 +5,7 @@ import Shuffle from '../../../../plugins/utils/array/Shuffle.js';
 
 
 //被Model.js呼叫，Quiz是一個設定好的題庫陣列
+//作答時，將作答相關的變數存在Quiz物件上：
 
 class Quiz {
     constructor(model) {
