@@ -21,14 +21,14 @@
         "url": "assets/image/bolt.png"
       },
       {
-        "type": "image",
-        "key": "key",
-        "url": "assets/image/key.png"
-      },
-      {
-        "type": "image",
-        "key": "person",
-        "url": "assets/image/person.png"
+        "type": "spritesheet",
+        "key": "explosion",
+        "frameConfig": {
+          "frameWidth": 64,
+          "frameHeight": 64,
+          "endFrame": 23
+        },
+        "url": "assets/spritesheet/explosion.png"
       },
       {
         "type": "text",

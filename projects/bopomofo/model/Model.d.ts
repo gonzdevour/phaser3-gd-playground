@@ -1,5 +1,6 @@
 import DBWrap from './db/DBWrap';
 import LocalStorageData from '../../../../phaser3-rex-notes/plugins/localstorage-data';
+import QuizConfig from './data/QuizConfig';
 import Quiz from './quiz/Quiz';
 
 export default Model;
@@ -23,11 +24,6 @@ declare class Model {
 
     db: DBWrap[];
     lsData: LocalStorageData;
+    quizConfig: QuizConfig;
     quiz: Quiz;
-
-    getQuizConfig(): Model.IQuizConfig;
-
-    setQuizConfig(
-        config: Model.IQuizConfig
-    ): this;
 }

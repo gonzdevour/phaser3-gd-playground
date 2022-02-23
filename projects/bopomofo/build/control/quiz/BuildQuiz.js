@@ -4,7 +4,7 @@ import GetCombinedRhyme from '../../../model/db/characters/query/GetCombinedRhym
 const Shuffle = Phaser.Utils.Array.Shuffle;
 
 var BuildQuiz = function (model) {
-    var quizConfig = model.getQuizConfig();
+    var quizConfig = model.quizConfig.get();
 
     // See build/view/quizconfigpanel/Options.js, DataBaseOptions
     var dbName = quizConfig.database;
@@ -51,7 +51,7 @@ var BuildQuiz = function (model) {
 
         case '依序':
             // Or sort by freq in characters.query(...)
-            characters.sort(function(characterA, characterB){
+            characters.sort(function (characterA, characterB) {
                 return characterA.freq - characterB.freq;
             })
             break;
