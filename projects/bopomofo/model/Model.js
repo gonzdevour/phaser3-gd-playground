@@ -1,7 +1,8 @@
 import DBWrap from './db/DBWrap.js';
 import Quiz from './quiz/Quiz.js';
 import LocalStorageData from '../../../../phaser3-rex-notes/plugins/localstorage-data.js';
-import { DefaultData, DefaultQuizConfig } from './DefaultData.js'
+import QuizConfig from './data/QuizConfig.js';
+import { DefaultData } from './DefaultData.js'
 
 const GetValue = Phaser.Utils.Objects.GetValue;
 
@@ -19,25 +20,10 @@ class Model {
             default: DefaultData
         })
 
+        this.quizConfig = new QuizConfig(this, this.lsData);
+
         // Only one quiz (series of question) is running one time
         this.quiz = new Quiz(this);
-    }
-
-    getQuizConfig() {
-        var dataManager = this.lsData;
-        var result = {};
-        for (var key in DefaultQuizConfig) {
-            result[key] = dataManager.get(key)
-        }
-        return result;
-    }
-
-    setQuizConfig(config) {
-        var dataManager = this.lsData;
-        for (var key in DefaultQuizConfig) {
-            dataManager.set(key, config[key]);
-        }
-        return this;
     }
 }
 

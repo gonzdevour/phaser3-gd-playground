@@ -44,7 +44,7 @@ class Test extends Phaser.Scene {
         console.log(`${quizPanel.width}x${quizPanel.height}`)
 
         // Set quizConfig manually
-        // model.setQuizConfig({
+        // model.quizConfig.set({
         //     database: '常用詞庫',
         //     enhancement:'ㄔㄘ',
         //     mode: '依序'
