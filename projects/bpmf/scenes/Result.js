@@ -28,16 +28,13 @@ class Result extends Base {
         //    .drawBounds(this.add.graphics(), 0xff0000)
         //on button clicked事件宣告在build/view/mainmenupanel/CreateMainMenuPanel.js
         //on button clicked後emit以下事件：
-            .on('button.mode-select', function () { //模式選擇
+            .on('button.retry', function () { //繼續遊戲
+                this.transitionTo(QuizSceneKey, 500);
+            }, this)
+            .on('button.back', function () { //模式選擇
                 this.transitionTo( QuizConfigSceneKey,500 );
             }, this)
-            .on('button.continue', function () { //繼續遊戲
-                this.scene.start(QuizSceneKey);
-            }, this)
-            .on('button.config', function () { //todo
-                console.log('button.config')
-            }, this)
-            .on('button.help', function () { //todo
+            .on('button.review', function () { //開啟review modalPromise
                 _scene.sound.play('right');
                 console.log('button.help')
                 ModalDialogPromise(_scene, {
@@ -48,8 +45,7 @@ class Result extends Base {
 語音輔助學習，亦可指定易混淆
 的聲韻進行強化訓練。適合幼小
 銜接以及國語初學者使用。`,
-                    buttonMode: 1,
-        
+                    buttonMode: 1,        
                     width: _scene.viewport.width-50,
                 })
             }, this)

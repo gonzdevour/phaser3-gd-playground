@@ -26,19 +26,33 @@ var CreateResultPanel = function (scene, config) {
 
     // TODO: style
     
-    //建立標題字(使用quiz中的注音排版)
-    var word = CreateWord(scene)
-        .setWord([
-            { character: '注', initials: 'ㄓ', media: 'ㄨ', vowel: '', tone: 'ˋ' },
-            { character: '音', initials: '', media: 'ㄧ', vowel: 'ㄣ', tone: '' },
-            { character: '習', initials: 'ㄒ', media: 'ㄧ', vowel: '', tone: 'ˊ' },
-            { character: '作', initials: 'ㄗ', media: 'ㄨ', vowel: 'ㄛ', tone: 'ˋ' }
-        ])
+    //建立統計數據
+    var appdata = scene.model.appData;
+    var result = {};
+    result.rightCnt = appdata.curRightCnt;
+    result.wrongCnt = appdata.curWrongCnt;
+    result.totalCnt = result.rightCnt + result.wrongCnt;
+    result.rightPercent = Math.round(100*result.rightCnt/result.totalCnt);
+    result.time = 180;
+    //建立統計字串
+    var resultTxt = `
+測驗題數
+${result.rightCnt}/${result.totalCnt}
+
+作答時間
+${result.time}秒
+
+正確率
+${result.rightPercent}%
+`
+
+    var labelResult = CreateTextLabel(scene, resultTxt);
 
     //建立選項按鈕
     // TODO: set width & height in scene.rexUI.add.label({...})
-    var btnModeSelect = CreateActionLabel(scene, '模式選擇', undefined, 20);
-    var btnContinue = CreateActionLabel(scene, '繼續練習', undefined, 20);
+    var btnReview = CreateActionLabel(scene, '生字複習', undefined, 20);
+    var btnRetry = CreateActionLabel(scene, '重新挑戰', undefined, 20);
+    var btnBack = CreateActionLabel(scene, '返回選單', undefined, 20);
 
     mainMenuPanel
         .add(
@@ -46,21 +60,25 @@ var CreateResultPanel = function (scene, config) {
             {}
         )
         .add(
-            word,
+            labelResult,
             {}
         )
         .add(
-            btnModeSelect,
+            btnReview,
             { padding: { top: 20, bottom: 20 } }
         )
         .add(
-            btnContinue,
-            {}
+            btnRetry,
+            { padding: { top: 20, bottom: 20 } }
+        )
+        .add(
+            btnBack,
+            { padding: { top: 20, bottom: 20 } }
         )
 
     //建立config和help按鈕
-    var btnConfig = CreateHelpLabel(scene, '', 'cfg', {tl:0,tr:10,bl:10,br:0});
-    var btnHelp = CreateHelpLabel(scene, '', 'info', {tl:0,tr:10,bl:10,br:0});
+    //var btnConfig = CreateHelpLabel(scene, '', 'cfg', {tl:0,tr:10,bl:10,br:0});
+    //var btnHelp = CreateHelpLabel(scene, '', 'info', {tl:0,tr:10,bl:10,br:0});
 
     //將config和help按鈕放在mainMenuPanel上面，整個組成overlapSizer(用來處理align的sizer)
     var backgroundOverlapSizer = scene.rexUI.add.overlapSizer({
@@ -70,30 +88,28 @@ var CreateResultPanel = function (scene, config) {
             mainMenuPanel,
             { align: 'center', expand: false }
         )
-        .add(
+/*         .add(
             btnConfig,
             { align: 'left-bottom', expand: false, }
         )
         .add(
             btnHelp,
             { align: 'right-top', expand: false }
-        )
+        ) */
 
     //幫按鈕註冊onClick時要發射的事件
     //RouteClickEvent(gameObject, eventName, eventEmitter)
     //※注意overlapSizer是eventEmitter
-    RouteClickEvent(btnModeSelect, 'button.mode-select', backgroundOverlapSizer);
-    RouteClickEvent(btnContinue, 'button.continue', backgroundOverlapSizer);
-    RouteClickEvent(btnConfig, 'button.config', backgroundOverlapSizer);
-    RouteClickEvent(btnHelp, 'button.help', backgroundOverlapSizer);
+    RouteClickEvent(btnReview, 'button.review', backgroundOverlapSizer);
+    RouteClickEvent(btnRetry, 'button.retry', backgroundOverlapSizer);
+    RouteClickEvent(btnBack, 'button.back', backgroundOverlapSizer);
 
     //建立ChildrenMap，讓backgroundOverlapSizer.getElement('key')可以取得這個sizer的子物件
     backgroundOverlapSizer
         .addChildrenMap('logo', logo)
-        .addChildrenMap('btnModeSelect', btnModeSelect)
-        .addChildrenMap('btnContinue', btnContinue)
-        .addChildrenMap('btnConfig', btnConfig)
-        .addChildrenMap('btnHelp', btnHelp)
+        .addChildrenMap('btnReview', btnReview)
+        .addChildrenMap('btnRetry', btnRetry)
+        .addChildrenMap('btnBack', btnBack)
 
     //回傳時順便設定位置和大小界限
     return backgroundOverlapSizer.setPosition(x, y).setMinSize(width, height);
@@ -115,6 +131,15 @@ var CreateHelpLabel = function (scene, text, img, radius, pos) {
         text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
     });
+}
+
+var CreateTextLabel = function (scene, text, img, radius, pos) {
+    return scene.rexUI.add.label({
+        //background: CreateRoundRectangleBackground(scene, Style.quizPanel.top.round, undefined, 0xffffff, 2),
+        //icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(2, 0x0000ff),
+        text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 , align: 'center', lineSpacing: 10,}),
+        space: { left: 15, right: 15, top: 10, bottom: 10, icon: 0 }
+    })
 }
 
 //onClick是sizer的method，Label是一種sizer

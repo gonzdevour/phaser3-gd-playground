@@ -32,7 +32,7 @@ class MainMenu extends Base {
                 this.transitionTo( QuizConfigSceneKey,500 );
             }, this)
             .on('button.continue', function () { //繼續遊戲
-                this.scene.start(QuizSceneKey);
+                this.transitionTo( QuizSceneKey,500 );
             }, this)
             .on('button.config', function () { //todo
                 console.log('button.config')
