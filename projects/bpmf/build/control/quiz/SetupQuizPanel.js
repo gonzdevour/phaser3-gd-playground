@@ -1,5 +1,8 @@
 //utils
-import Add from '../../../../../plugins/utils/array/Add.js';
+import ArrAdd from '../../../../../plugins/utils/array/ArrAdd.js'; //array push內容不重複的item
+import ArrRemove from '../../../../../plugins/utils/array/ArrRemove.js'; //array remove item(s)
+import ArrAddOrUpdateItemIfKeyExist from '../../../../../plugins/utils/array/ArrAddOrUpdateItemIfKeyExist.js'; //傳入object，如果array中物件的indexKey重複則update，未重複則push
+import ArrRemoveItemIfKeyExist from '../../../../../plugins/utils/array/ArrRemoveItemIfKeyExist.js'; //傳入object，如果array中物件的indexKey重複則remove
 
 //清理上一題，並將新題目與panel組合起來，以作答callback回傳給QuizPromise
 var SetupQuizPanel = function (quizPanel, question, onSubmit) {
@@ -36,7 +39,7 @@ var SetupQuizPanel = function (quizPanel, question, onSubmit) {
                 result: isPass, //是否通過
                 input: result, //答案內容
                 word: question.word,//題目詞
-                character: (isPass && polyphonyCharacter) ? polyphonyCharacter : question.character //題目字
+                character: (isPass && polyphonyCharacter) ? polyphonyCharacter : question.character //題目字(含bopomofo)
             }
 
             record(quizPanel.scene.model.appData, verifyResult);
@@ -50,26 +53,32 @@ var SetupQuizPanel = function (quizPanel, question, onSubmit) {
 }
 
 var record = function(appData, verifyResult){
+    var resultToSave = {
+        //input: verifyResult.input, //bopomofo，使用者的錯誤作答
+        word: verifyResult.word.word,
+        character: verifyResult.character.character,
+    }
     var isPass = verifyResult.result;
+
     if (!isPass) { //如果沒通過，則將結果暫存在model.appData.reviewList裡，最後會整理合併於lsData的record.reviewList
-        appData.curWrongCnt ++;
-        var resultToSave = {
-            input: verifyResult.input, //bopomofo
-            word: verifyResult.word.word,
-            character: verifyResult.character.character,
-        }
-        Add(appData.curWrongList, resultToSave);
-        Add(appData.record.wrongList, resultToSave);
+        appData.curWrongCnt = appData.curWrongCnt + 1;
+        MoveItemBetweenList(appData.curRightList, appData.curWrongList, resultToSave);//將作答紀錄Add到本局的錯誤作答列表，如果本局中答對過則刪除本局的答對紀錄
+        MoveItemBetweenList(appData.record.rightList, appData.record.wrongList, resultToSave);///將作答紀錄Add到紀錄中的錯誤作答列表，如果紀錄中答對過則刪除答對紀錄
         console.log('X');
 
     } else { //如果通過，則將詞暫存在model.appData.correctList裡，最後會整理合併於lsData的record.correctList
-        appData.curRightCnt ++;
-        Add(appData.curRightList, verifyResult.word.word);
-        Add(appData.record.rightList, verifyResult.word.word);
+        appData.curRightCnt = appData.curRightCnt + 1;
+        MoveItemBetweenList(appData.curWrongList, appData.curRightList, resultToSave);//將作答紀錄Add到本局的正確作答列表，如果本局中答錯過則刪除本局的答錯紀錄
+        MoveItemBetweenList(appData.record.wrongList, appData.record.rightList, resultToSave);///將作答紀錄Add到紀錄中的正確作答列表，如果紀錄中答錯過則刪除答錯紀錄
         console.log('O');
     }
     appData.save(appData.record);
     appData.log();
+}
+
+var MoveItemBetweenList = function(fromList,toList,item){
+    ArrAdd(toList, item);
+    ArrRemove(fromList, item);
 }
 
 export default SetupQuizPanel;

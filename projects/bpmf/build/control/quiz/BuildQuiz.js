@@ -71,11 +71,13 @@ var BuildQuiz = function (model) {
     quiz.clearQuestions(); //清除之前的題組
 
     //建立新題組：篩出來的字docs，每個字doc都出一題(可以修改這裡的規則)
-    var quizCnt = quizMode='測驗'?quizConfig.qcount:characters.length;
+    var charactersLength = characters.length;
+    var qConfigCount = quizConfig.qcount;
+    var quizCnt = quizMode='測驗'?qConfigCount:charactersLength;
     for (var i = 0, cnt = quizCnt; i < cnt; i++) {
         quiz.addQuestion({
             title: '', // TODO
-            character: characters[i],
+            character: characters[i%charactersLength],//取餘數的用意是：如果題庫小於需出題數，以題庫數取餘數循環出題
             choices: choices
         })
     }

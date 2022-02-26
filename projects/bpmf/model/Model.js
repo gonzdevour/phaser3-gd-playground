@@ -2,7 +2,7 @@ import DBWrap from './db/DBWrap.js';
 import Quiz from './quiz/Quiz.js';
 import LocalStorageData from '../../../../phaser3-rex-notes/plugins/localstorage-data.js';
 import AppData from './appdata/AppData.js';
-import { DefaultData, DefaultQuizConfig } from './DefaultData.js'
+import { DefaultData, DefaultQuizConfig, DefaultRecord } from './DefaultData.js'
 
 //utils
 import GetValue from '../../../plugins/utils/object/GetValue.js';
@@ -103,7 +103,7 @@ class Model {
         this.lsData = new LocalStorageData({
             name: 'bopomofo',
             default: DefaultData, //以defaultData中的key為索引，有值時略過，無值時存入該value為預設值
-            reset: true, //初始化時重設lsData為DefaultData，正式版要記得關掉
+            //reset: true, //初始化時重設lsData為DefaultData，正式版要記得關掉
         })
         //appData初始化，傳入lsData，用於紀錄全域變數
         this.appData = new AppData(this.lsData);

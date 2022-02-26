@@ -27,7 +27,7 @@
  *
  * @return {array} The input array.
  */
-var Add = function (array, item, limit, callback, context)
+var ArrAdd = function (array, item, limit, callback, context)
 {
     if (context === undefined) { context = array; }
 
@@ -101,4 +101,4 @@ var Add = function (array, item, limit, callback, context)
     return item;
 };
 
-module.exports = Add;
+module.exports = ArrAdd;

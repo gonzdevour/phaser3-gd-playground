@@ -33,7 +33,7 @@ class Quiz extends Base {
         var _scene = this;
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
 
-        //重置關卡紀錄
+        //重置關卡紀錄。因為從lsData讀入的appData.record會影響BuildQuiz，所以這個步驟必須在BuidQuiz之前
         this.model.appData.load().reset();
         console.log(this.model.appData)
 

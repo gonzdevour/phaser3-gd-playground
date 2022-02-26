@@ -3,7 +3,7 @@ import { DefaultRecord } from "../DefaultData";
 class AppData {
   constructor(dataManager) {
       this.lsData = dataManager;
-      this.record = DefaultRecord; //過去的作答紀錄
+      this.record = DefaultRecord; //過去的作答紀錄，包含wrongList和rightList
       this.curRightCnt = 0; //目前的正確作答數
       this.curWrongCnt = 0; //目前的錯誤作答數
       this.curRightList = []; //目前從正確作答中紀錄的所有詞組成的陣列

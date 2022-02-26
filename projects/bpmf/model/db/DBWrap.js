@@ -29,6 +29,8 @@ class DBWrap {
         // Note: db won't be deserialized later, thus reference of collection won't change.
         this.wordCollection = GetWordCollection(this.db);
         this.characterCollection = GetCharacterCollection(this.db);
+        //console.log(this.wordCollection.data[0])//試印第一個Word
+        //console.log(this.characterCollection.data[0])//試印第一個Character
 
         this.words = new Words(this);
         this.characters = new Characters(this);
