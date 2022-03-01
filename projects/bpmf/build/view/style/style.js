@@ -1,4 +1,49 @@
 const Style = {
+    reviewPanel: {
+        word: {
+            character: {
+                fontFamily: 'DFKai-SB',
+                fontSize: 48,
+                fixedWidth: 50,
+                fixedHeight: 50,
+                halign: 'center',
+                valign: 'center',
+                testString: '回'
+            },
+            phonology: {
+                fontFamily: 'DFKai-SB',
+                fontSize: 16,
+                fixedWidth: 18,
+                fixedHeight: 20,
+                halign: 'right',
+                valign: 'center',
+                testString: '回'
+            },
+            tone: {
+                fontFamily: 'DFKai-SB',
+                fontSize: 16,
+                fixedWidth: 18,
+                fixedHeight: 10,
+                halign: 'left',
+                valign: 'center',
+                testString: 'ˊˇˋ'
+            },
+            tone0: {
+                fontFamily: 'DFKai-SB',
+                fontSize: 16,
+                fixedWidth: 18,
+                fixedHeight: 10,
+                halign: 'center',
+                valign: 'bottom',
+                testString: '˙'
+            },
+
+            normalColor: 'white',
+            focusColor: 'chocolate',
+            characterSizerHeight: 0.5*((55 * 3) + 2),
+        },
+    },
+
     quizPanel: {
 
         title: {
@@ -59,6 +104,7 @@ const Style = {
 
             normalColor: 'white',
             focusColor: 'chocolate',
+            characterSizerHeight: (55 * 3) + 2,
         },
 
         choice: {

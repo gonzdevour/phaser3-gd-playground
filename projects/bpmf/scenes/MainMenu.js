@@ -1,6 +1,6 @@
 import 'phaser';
 import Base from './Base.js';
-import { MainMenuSceneKey, QuizConfigSceneKey, QuizSceneKey } from './Const.js';
+import { MainMenuSceneKey, QuizConfigSceneKey, QuizSceneKey, ResultSceneKey } from './Const.js';
 import CreateMainMenuPanel from '../build/view/mainmenupanel/CreateMainMenuPanel.js';
 import ModalDialogPromise from '../build/view/modeldialog/ModalDialogPromise.js';
 
@@ -21,6 +21,7 @@ class MainMenu extends Base {
 
         var _scene = this;
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
+
         var mainMenu = CreateMainMenuPanel(this);
         mainMenu
             .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
@@ -32,7 +33,8 @@ class MainMenu extends Base {
                 this.transitionTo( QuizConfigSceneKey,500 );
             }, this)
             .on('button.continue', function () { //繼續遊戲
-                this.transitionTo( QuizSceneKey,500 );
+                //this.transitionTo( QuizSceneKey,500 );
+                this.transitionTo( ResultSceneKey,500 );
             }, this)
             .on('button.config', function () { //todo
                 console.log('button.config')
@@ -48,8 +50,7 @@ class MainMenu extends Base {
 語音輔助學習，亦可指定易混淆
 的聲韻進行強化訓練。適合幼小
 銜接以及國語初學者使用。`,
-                    buttonMode: 1,
-        
+                    buttonMode: 1,        
                     width: _scene.viewport.width-50,
                 })
             }, this)

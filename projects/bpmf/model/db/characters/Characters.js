@@ -14,7 +14,7 @@ class Characters { //從dbWrap建立characters db的查詢methods
         return Query(this.dbWrap, filter, sortMode);
     }
 
-    queryCharacter(character) {
+    queryCharacter(character) { //傳入character字串
         return QueryCharacter(this.dbWrap, character);
     }
 

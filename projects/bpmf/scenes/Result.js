@@ -2,6 +2,7 @@ import 'phaser';
 import Base from './Base.js';
 import { MainMenuSceneKey, QuizConfigSceneKey, QuizSceneKey, ResultSceneKey } from './Const.js';
 import CreateResultPanel from '../build/view/resultpanel/CreateResultPanel.js';
+import CreateReviewPanel from '../build/view/resultpanel/CreateReviewPanel.js';
 import ModalDialogPromise from '../build/view/modeldialog/ModalDialogPromise.js';
 
 // Result
@@ -21,6 +22,11 @@ class Result extends Base {
 
         var _scene = this;
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
+
+        //取得作答紀錄
+        this.model.appData.load().reset();
+        console.log(this.model.appData)
+
         var mainMenu = CreateResultPanel(this);
         mainMenu
             .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
@@ -38,13 +44,8 @@ class Result extends Base {
                 _scene.sound.play('right');
                 console.log('button.help')
                 ModalDialogPromise(_scene, {
-                    title: '使用說明',
-                    content: 
-`「注音習作」是以注音符號測驗
-的方式認識常用字詞的工具，有
-語音輔助學習，亦可指定易混淆
-的聲韻進行強化訓練。適合幼小
-銜接以及國語初學者使用。`,
+                    title: '複習列表',
+                    content: CreateReviewPanel(_scene,{wrongList: _scene.model.appData.record.wrongList}),
                     buttonMode: 1,        
                     width: _scene.viewport.width-50,
                 })

@@ -21,6 +21,7 @@ var BuildQuiz = function (model) {
             db = model.db[1];
             break;
     }
+    model.currentDB = db;//每次BuildQuiz時建立參照以避免使用index
 
     // See build/view/quizconfigpanel/Options.js, EnhanceOptions
     var enhancementMode = quizConfig.enhancement; //指定強化練習模式

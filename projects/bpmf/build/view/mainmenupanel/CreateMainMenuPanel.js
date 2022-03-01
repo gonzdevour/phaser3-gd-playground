@@ -13,6 +13,15 @@ var CreateMainMenuPanel = function (scene, config) {
     var width = GetValue(config, 'width', viewport.width);
     var height = GetValue(config, 'height', viewport.height);
 
+    //Style指定
+    var wordConfig = {
+        orientation: 'y',
+        background: CreateRoundRectangleBackground(scene),
+        space: { left: 30, right: 0, top: 0, bottom: 0, item: 0 },
+        style: GetValue(Style, 'quizPanel'),
+        maxCharacters: 4, //1個詞最多支援4個字
+        characters: [],
+    }
     //建立最下層的sizer
     var mainMenuPanel = scene.rexUI.add.sizer({
         orientation: 'y',
@@ -27,14 +36,13 @@ var CreateMainMenuPanel = function (scene, config) {
     // TODO: style
     
     //建立標題字(使用quiz中的注音排版)
-    var word = CreateWord(scene)
+    var word = CreateWord(scene, wordConfig)
         .setWord([
             { character: '注', initials: 'ㄓ', media: 'ㄨ', vowel: '', tone: 'ˋ' },
             { character: '音', initials: '', media: 'ㄧ', vowel: 'ㄣ', tone: '' },
             { character: '習', initials: 'ㄒ', media: 'ㄧ', vowel: '', tone: 'ˊ' },
             { character: '作', initials: 'ㄗ', media: 'ㄨ', vowel: 'ㄛ', tone: 'ˋ' }
         ])
-
     //建立選項按鈕
     // TODO: set width & height in scene.rexUI.add.label({...})
     var btnModeSelect = CreateActionLabel(scene, '模式選擇', undefined, 20);

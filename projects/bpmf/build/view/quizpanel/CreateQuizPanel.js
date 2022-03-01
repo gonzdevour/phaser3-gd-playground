@@ -9,6 +9,9 @@ import { Style } from "../style/style.js";
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
 
+//Style指定
+let quizPanelStyle = Style.quizPanel;
+
 //建立quizPanel並掛上事件，這裡的物件群都不帶內容(除了title之外)
 //物件群內容在build/control/quiz/SetupQuizPanel中依QuizPromise的參數而設定
 var CreateQuizPanel = function (scene, config) {  
@@ -23,6 +26,16 @@ var CreateQuizPanel = function (scene, config) {
     var displayWidth = width>height?(height/1.6):width;
     var displayHeight = height;
 
+    //word style指定
+    var wordConfig = {
+        orientation: 'y',
+        background: CreateRoundRectangleBackground(scene),
+        space: { left: 30, right: 0, top: 0, bottom: 0, item: 0 },
+        style: GetValue(Style, 'quizPanel'),
+        maxCharacters: 4, //1個詞最多支援4個字
+        characters: [],
+    }
+
     var qidxtext = CreateTextLabel(scene, '');
 
     var quizPanel = new QuizPanel(scene, {
@@ -33,7 +46,7 @@ var CreateQuizPanel = function (scene, config) {
         background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
 
         title: CreateTitle(scene, config),
-        word: CreateWord(scene),
+        word: CreateWord(scene, wordConfig),
         choices: CreateChoices(scene),
         footer: CreateActions(scene),
 
@@ -97,8 +110,8 @@ var CreateQuizPanel = function (scene, config) {
         .setData('focusCharacterIndex', null)
         .on('changedata-focusCharacterIndex', function (gameObject, value, previousValue) {
             quizPanel
-                .setWordColor(Style.quizPanel.word.normalColor) //重設所有字的顏色
-                .setCharacterColor(value, Style.quizPanel.word.focusColor) //設定題目字的顏色
+                .setWordColor(quizPanelStyle.word.normalColor) //重設所有字的顏色
+                .setCharacterColor(value, quizPanelStyle.word.focusColor) //設定題目字的顏色
                 .clearCharacterBopomofo(value) //清除題目字旁邊的注音
         })
 
@@ -132,7 +145,7 @@ var CreateTextLabel = function (scene, text, img, radius, pos) {
     return scene.rexUI.add.label({
         //background: CreateRoundRectangleBackground(scene, Style.quizPanel.top.round, undefined, 0xffffff, 2),
         //icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(2, 0x0000ff),
-        text: scene.rexUI.add.BBCodeText(0, 0, text, Style.quizPanel.qidxtext),
+        text: scene.rexUI.add.BBCodeText(0, 0, text, quizPanelStyle.qidxtext),
         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 0 }
     })
 }

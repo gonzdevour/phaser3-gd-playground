@@ -5,7 +5,7 @@ class Words { //從dbWrap建立words db的查詢methods
         this.dbWrap = dbWrap;
     }
 
-    queryWord(word) {
+    queryWord(word) { //傳入word字串
         return QueryWord(this.dbWrap, word);
     }
 
