@@ -19,7 +19,8 @@ var CreateReviewPanel = function (scene, config) {
     background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
     panel: {
         child: scene.rexUI.add.fixWidthSizer({
-            space: { left: 10, right: 10, top: 30, bottom: 10, item: 10, line: 10, }}
+            space: { left: 10, right: 10, top: 30, bottom: 10, item: 10, line: 10, },
+          }
         ),
         mask: {
             padding: 1
@@ -50,27 +51,37 @@ var CreateReviewPanel = function (scene, config) {
     background: CreateRoundRectangleBackground(scene),
     space: { left: 0, right: 0, top: 0, bottom: 0, item: 0 },
     style: GetValue(Style, 'reviewPanel'),
-    maxCharacters: 4, //1個詞最多支援4個字
+    maxCharacters: 2, //1個詞最多支援4個字
     characters: [],
 }
 
+  //測試用
+  wrongList = [];
+  for (let i = 0; i < 45; i++){
+    wrongList.push({word:'意義', character: '義'})
+  }
+
   wrongList.forEach(element => {
-/*     var word = CreateWord(scene, wordConfig)
-    .setWord([
-        { character: '注', initials: 'ㄓ', media: 'ㄨ', vowel: '', tone: 'ˋ' },
-    ]) */
-    var word = scene.rexUI.add.BBCodeText(0, 0, element.character, { 
+/*     var word = scene.rexUI.add.BBCodeText(0, 0, element.character, { 
       fontFamily: 'DFKai-SB', 
       fontSize: 60,
-}
-      );
-    console.log(element);
+      }
+    ); */
+    console.log(element.word);
+    var word = CreateWord(scene, wordConfig)
+      .setWord(scene.model.currentDB.words.queryWord(element.word)[0].getCharacters()) //queryWord取回array，所以一定要給index才能拿到Word物件
+
     sizer.add(word);
   });
 
+/*   for (let i = 0; i < 6; i++){
+    var word = CreateWord(scene, wordConfig)
+      .setWord(scene.model.currentDB.words.queryWord(element.word)[0].getCharacters())
+    sizer.add(word);
+  } */
+
   //排版
-  sizer.layout();
-  //sizer.drawBounds(scene.add.graphics(), 0xff0000);
+  scrollablePanel.layout();
   
   return scrollablePanel;
 }

@@ -21,6 +21,7 @@ var ModalDialogPromise = function (scene, config) {
         })
 
     config.manualClose = (config.buttonMode !== 0); //是否手動關閉，預設為true，可由CreateModalDialog設定buttonMode來控制
+    dialog.drawBounds(scene.add.graphics(), 0xff0000);
 
     //將dialog再包裝為modal，並建立promise
     return scene.rexUI.modalPromise(dialog, config);

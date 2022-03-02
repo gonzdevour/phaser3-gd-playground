@@ -1,7 +1,9 @@
 import UI from '../../../../plugins/ui-components.js';
 
+//utils
+import GetValue from '../../../../plugins/utils/object/GetValue.js';
+
 const Sizer = UI.Sizer;
-const GetValue = Phaser.Utils.Objects.GetValue;
 
 class Word extends Sizer {
     constructor(scene, config) {

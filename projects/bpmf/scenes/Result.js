@@ -27,6 +27,17 @@ class Result extends Base {
         this.model.appData.load().reset();
         console.log(this.model.appData)
 
+        //取得詞庫設定
+        var quizConfig = this.model.getQuizConfig(); //從ls中取出紀錄並重建回QuizConfig
+        switch (quizConfig.database) { //指定是哪一個題庫(每個題庫都已經prebuild好了)
+            case '高頻詞庫':
+                this.model.currentDB = this.model.db[0];
+                break; 
+            case '常用詞庫':
+                this.model.currentDB = this.model.db[1];
+                break;
+        }
+
         var mainMenu = CreateResultPanel(this);
         mainMenu
             .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
