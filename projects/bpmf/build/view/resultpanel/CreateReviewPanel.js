@@ -1,6 +1,7 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import { Style } from '../style/style.js';
 import CreateWord from '../quizpanel/CreateWord.js';
+import CreateModalKnob from '../modalKnob/CreateModalKnob.js';
 
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
@@ -16,7 +17,7 @@ var CreateReviewPanel = function (scene, config) {
     //width: scene.viewport.width-100, 
     height: scene.viewport.height*0.6,
     scrollMode: 0,
-    background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
+    background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2), // #ffffff
     panel: {
         child: scene.rexUI.add.fixWidthSizer({
             space: { left: 10, right: 10, top: 30, bottom: 10, item: 10, line: 10, },
@@ -40,45 +41,34 @@ var CreateReviewPanel = function (scene, config) {
   })
     .layout()
   //.drawBounds(this.add.graphics(), 0xff0000);
+  //因為這裡還沒完成modal的排版，所以drawBounds時未定位。要在modal時drawBounds才能正確顯示彈出時的狀態
+  
+  //建立讀取圈
+  var loadingCircle = CreateModalKnob(scene).setValue(0.4);
 
   //依wrongList建立詞
   var sizer = scrollablePanel.getElement('panel');
   var wrongList = GetValue(config, 'wrongList');
-
-  //Style指定
-  var wordConfig = {
-    orientation: 'y',
-    background: CreateRoundRectangleBackground(scene),
-    space: { left: 0, right: 0, top: 0, bottom: 0, item: 0 },
-    style: GetValue(Style, 'reviewPanel'),
-    maxCharacters: 2, //1個詞最多支援4個字
-    characters: [],
-}
-
-  //測試用
-  wrongList = [];
-  for (let i = 0; i < 45; i++){
-    wrongList.push({word:'意義', character: '義'})
-  }
-
-  wrongList.forEach(element => {
-/*     var word = scene.rexUI.add.BBCodeText(0, 0, element.character, { 
-      fontFamily: 'DFKai-SB', 
-      fontSize: 60,
-      }
-    ); */
+  /*
+  wrongList.forEach(function(element, index, arr){
+    //Style指定
+    var wordConfig = {
+      orientation: 'y',
+      background: CreateRoundRectangleBackground(scene, 10, 0x111111, 0xffffff, 2),
+      space: { left: 0, right: 0, top: 0, bottom: 0, item: 0 },
+      style: GetValue(Style, 'reviewPanel'),
+      maxCharacters: 4, //1個詞最多支援4個字
+      characters: [],
+    }
     console.log(element.word);
+    loadingCircle.value = (index+1)/arr.length;
+    //建立詞
     var word = CreateWord(scene, wordConfig)
       .setWord(scene.model.currentDB.words.queryWord(element.word)[0].getCharacters()) //queryWord取回array，所以一定要給index才能拿到Word物件
-
+    //將詞加入panel(fixWidthSizer)
     sizer.add(word);
   });
-
-/*   for (let i = 0; i < 6; i++){
-    var word = CreateWord(scene, wordConfig)
-      .setWord(scene.model.currentDB.words.queryWord(element.word)[0].getCharacters())
-    sizer.add(word);
-  } */
+  */
 
   //排版
   scrollablePanel.layout();
