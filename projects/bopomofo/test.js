@@ -1,5 +1,6 @@
 import 'phaser';
 import AllPlugins from '../../plugins/AllPlugins.js';
+import BuildFontTexture from './build/view/style/BuildFontTexture.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -13,6 +14,8 @@ class Test extends Phaser.Scene {
     }
 
     create() {
+        var key = BuildFontTexture(this);
+        this.add.image(384, 667, key, '__BASE');
     }
 
     update() { }
