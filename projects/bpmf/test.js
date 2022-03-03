@@ -1,7 +1,12 @@
+//env
 import 'phaser';
 import AllPlugins from '../../plugins/AllPlugins.js';
+import Base from './scenes/Base.js';
 
-class Test extends Phaser.Scene {
+//to test
+import CreateModalKnob from './build/view/modalKnob/CreateModalKnob.js';
+
+class Test extends Base {
     constructor() {
         super({
             key: 'test'
@@ -13,6 +18,7 @@ class Test extends Phaser.Scene {
     }
 
     create() {
+        CreateModalKnob(this);
     }
 
     update() { }
@@ -24,12 +30,11 @@ var config = {
     width: 768,
     height: 1334,
     scale: {
-        // mode: Phaser.Scale.ENVELOP,
-        mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.RESIZE, //scaleOuter plugin需要RESIZE mode
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     plugins: AllPlugins,
-    scene: Test
+    scene: [Test]
 };
 
 var game = new Phaser.Game(config);

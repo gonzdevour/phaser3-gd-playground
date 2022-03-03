@@ -25,8 +25,6 @@ var CreateModalKnob = function(scene, config){
         config = {};
     }
 
-    var knobText = GetValue(config, 'text', CreateKnobTextLabel(scene))
-
     var knob = scene.rexUI.add.knob({
         x: scene.viewport.centerX,
         y: scene.viewport.centerY,
@@ -43,7 +41,7 @@ var CreateModalKnob = function(scene, config){
         anticlockwise: GetValue(config, 'anticlockwise', false),
         //knobDepth: 0,
     
-        text: knobText,
+        text: CreateKnobTextLabel(scene), //如果預先產生的話就得處理排序/被蓋掉的問題
         textFormatCallback: GetValue(config, 'textFormatCallback', knobTextCallback),
         //textFormatCallbackScope: undefined,
     
