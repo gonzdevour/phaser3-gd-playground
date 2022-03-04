@@ -1,9 +1,10 @@
-const Image = Phaser.GameObjects.Image;
-class CharacterImage extends Image {
-    constructor(scene, x, y, font, text) {
-        super(scene, x, y, font, text);
+import { ColorNameToInteger } from '../../../../../phaser3-rex-notes/plugins/utils/color/ColorNameToInteger.js';
 
-        this._text = text;
+class CharacterImage extends Phaser.GameObjects.Image {
+    constructor(scene, x, y, font, text) {
+        super(scene, x, y, font);
+
+        this.setText(text);
     }
 
     get text() {
@@ -11,6 +12,10 @@ class CharacterImage extends Image {
     }
 
     set text(text) {
+        if (!text) {
+            text = '';
+        }
+
         this._text = text;
         this.setFrame(text);
     }
@@ -21,7 +26,7 @@ class CharacterImage extends Image {
     }
 
     setColor(color) {
-        this.setTint(color);
+        this.setTint(ColorNameToInteger(color));
         return this;
     }
 }

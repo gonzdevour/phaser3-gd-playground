@@ -1,6 +1,8 @@
 import 'phaser';
 import AllPlugins from '../../plugins/AllPlugins.js';
-import BuildFontTexture from './build/view/style/BuildFontTexture.js';
+import BuildFontTexture from './build/view/fonttexture/BuildFontTexture.js';
+import { Initials, Media, Vowel, Tone } from './model/bopomofo/Bopomofo.js';
+import { Style } from './build/view/style/style.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -14,7 +16,15 @@ class Test extends Phaser.Scene {
     }
 
     create() {
-        var key = BuildFontTexture(this);
+        var styles = Style.quizPanel.choice;
+        var key = BuildFontTexture(this, 'font0',
+            [
+                { characters: Initials, style: styles.phonology },
+                { characters: Media, style: styles.phonology },
+                { characters: Vowel, style: styles.phonology },
+                { characters: Tone, style: styles.tone },
+            ]
+        );
         this.add.image(384, 667, key, '__BASE');
     }
 
