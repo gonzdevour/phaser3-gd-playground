@@ -123,6 +123,7 @@ class Model {
         for (var key in DefaultQuizConfig) { //使用DefaultQuizConfig的key結構
             result[key] = dataManager.get(key);
         }
+        this.setCurrentDB(result);
         return result;
     }
 
@@ -133,6 +134,18 @@ class Model {
         }
         return this;
     }
+
+    setCurrentDB(config) { //將QuizConfig存入ls
+      switch (config.database) { //指定是哪一個題庫(每個題庫都已經prebuild好了)
+        case '高頻詞庫':
+            this.currentDB = this.db[0];
+            break; 
+        case '常用詞庫':
+            this.currentDB = this.db[1];
+            break;
+      }
+      return this;
+  }
 }
 
 export default Model;

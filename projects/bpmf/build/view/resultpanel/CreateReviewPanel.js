@@ -1,7 +1,6 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import { Style } from '../style/style.js';
 import CreateWord from '../quizpanel/CreateWord.js';
-import CreateModalKnob from '../modalKnob/CreateModalKnob.js';
 
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
@@ -42,9 +41,6 @@ var CreateReviewPanel = function (scene, config) {
     .layout()
   //.drawBounds(this.add.graphics(), 0xff0000);
   //因為這裡還沒完成modal的排版，所以drawBounds時未定位。要在modal時drawBounds才能正確顯示彈出時的狀態
-  
-  //建立讀取圈
-  var loadingCircle = CreateModalKnob(scene).setValue(0.4);
 
   //依wrongList建立詞
   var sizer = scrollablePanel.getElement('panel');
@@ -61,7 +57,6 @@ var CreateReviewPanel = function (scene, config) {
       characters: [],
     }
     console.log(element.word);
-    loadingCircle.value = (index+1)/arr.length;
     //建立詞
     var word = CreateWord(scene, wordConfig)
       .setWord(scene.model.currentDB.words.queryWord(element.word)[0].getCharacters()) //queryWord取回array，所以一定要給index才能拿到Word物件

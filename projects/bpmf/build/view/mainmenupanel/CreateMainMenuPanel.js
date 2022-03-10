@@ -1,6 +1,7 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import { Style } from '../style/style.js';
 import CreateWord from '../quizpanel/CreateWord.js';
+import RegisterLabelAsButton from '../../../behavior/Button/RegisterLabelAsButton.js';
 
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
@@ -87,13 +88,13 @@ var CreateMainMenuPanel = function (scene, config) {
             { align: 'right-top', expand: false }
         )
 
-    //幫按鈕註冊onClick時要發射的事件
+    //幫按鈕註冊onClick時要發射的事件，以及over/out時的反應
     //RouteClickEvent(gameObject, eventName, eventEmitter)
     //※注意overlapSizer是eventEmitter
-    RouteClickEvent(btnModeSelect, 'button.mode-select', backgroundOverlapSizer);
-    RouteClickEvent(btnContinue, 'button.continue', backgroundOverlapSizer);
-    RouteClickEvent(btnConfig, 'button.config', backgroundOverlapSizer);
-    RouteClickEvent(btnHelp, 'button.help', backgroundOverlapSizer);
+    RegisterLabelAsButton(btnModeSelect, 'button.mode-select', backgroundOverlapSizer);
+    RegisterLabelAsButton(btnContinue, 'button.continue', backgroundOverlapSizer);
+    RegisterLabelAsButton(btnConfig, 'button.config', backgroundOverlapSizer);
+    RegisterLabelAsButton(btnHelp, 'button.help', backgroundOverlapSizer);
 
     //建立ChildrenMap，讓backgroundOverlapSizer.getElement('key')可以取得這個sizer的子物件
     backgroundOverlapSizer
@@ -113,7 +114,7 @@ var CreateActionLabel = function (scene, text, img, radius, pos) {
         icon: !img?undefined:scene.add.image(0, 0, img).setDisplaySize(90, 90),
         text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
-    });
+    })
 }
 
 var CreateHelpLabel = function (scene, text, img, radius, pos) {
@@ -123,15 +124,6 @@ var CreateHelpLabel = function (scene, text, img, radius, pos) {
         text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
     });
-}
-
-//onClick是sizer的method，Label是一種sizer
-//emit是所有p3 gameObject都有的method，從ee3導入
-//※這裡設計成：按下Label時，觸發backgroundOverlapSizery在MainMenu scene掛載的.on('eventName', callback)
-var RouteClickEvent = function (gameObject, eventName, eventEmitter) {
-    gameObject.onClick(function (button, gameObject, pointer, event) {
-        eventEmitter.emit(eventName, gameObject, pointer, event);
-    })
 }
 
 export default CreateMainMenuPanel;

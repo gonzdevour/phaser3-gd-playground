@@ -2,6 +2,7 @@ import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackgro
 import CreateDatabaseSelectPanel from './CreateDatabaseSelectPanel.js'; //詞庫選單
 import CreateEnhancementSelectPanel from './CreateEnhancementSelectPanel.js'; //強化練習模式選單
 import CreateQuizModePanel from "./CreateQuizModePanel.js"; //出題模式選單
+import RegisterLabelAsButton from '../../../behavior/Button/RegisterLabelAsButton.js';
 
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
@@ -56,9 +57,20 @@ var CreateQuizConfigPanel = function (scene, config) {
             }
         )
 
-    // Add button callback
+    //幫按鈕註冊onClick時要發射的事件，以及over/out時的反應
+    //RegisterLabelAsButton(label, eventName, eventEmitter)
+    //※注意mainPanel是eventEmitter
+    RegisterLabelAsButton(buttonLabel, 'button.startQuiz', mainPanel);
     var subPanels = [databaseSelectPanel, enhancementSelectPanel, quizModePanel];
-    buttonLabel.onClick(function (button, gameObject, pointer, event) { //按下開始按鈕
+    for (var i = 0, cnt = subPanels.length; i < cnt; i++) {
+        var subPanel = subPanels[i];
+        subPanel.getElement('choices').buttons.forEach(function(btn,index,array){
+            RegisterLabelAsButton(btn);
+        })
+    }
+
+    // Add button callback
+    mainPanel.on('button.startQuiz', function (button, gameObject, pointer, event) { //按下開始按鈕
         var result = {};
         for (var i = 0, cnt = subPanels.length; i < cnt; i++) {
             var subPanel = subPanels[i];

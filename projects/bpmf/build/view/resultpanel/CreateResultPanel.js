@@ -1,6 +1,5 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
-import { Style } from '../style/style.js';
-import CreateWord from '../quizpanel/CreateWord.js';
+import RegisterLabelAsButton from '../../../behavior/Button/RegisterLabelAsButton.js';
 
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
@@ -97,12 +96,12 @@ ${result.rightPercent}%
             { align: 'right-top', expand: false }
         ) */
 
-    //幫按鈕註冊onClick時要發射的事件
-    //RouteClickEvent(gameObject, eventName, eventEmitter)
-    //※注意overlapSizer是eventEmitter
-    RouteClickEvent(btnReview, 'button.review', backgroundOverlapSizer);
-    RouteClickEvent(btnRetry, 'button.retry', backgroundOverlapSizer);
-    RouteClickEvent(btnBack, 'button.back', backgroundOverlapSizer);
+    //幫按鈕註冊onClick時要發射的事件，以及over/out時的反應
+    //RegisterLabelAsButton(gameObject, eventName, eventEmitter)
+    //※注意backgroundOverlapSizer是eventEmitter
+    RegisterLabelAsButton(btnReview, 'button.review', backgroundOverlapSizer);
+    RegisterLabelAsButton(btnRetry, 'button.retry', backgroundOverlapSizer);
+    RegisterLabelAsButton(btnBack, 'button.back', backgroundOverlapSizer);
 
     //建立ChildrenMap，讓backgroundOverlapSizer.getElement('key')可以取得這個sizer的子物件
     backgroundOverlapSizer
@@ -139,15 +138,6 @@ var CreateTextLabel = function (scene, text, img, radius, pos) {
         //icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(2, 0x0000ff),
         text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 , align: 'center', lineSpacing: 10,}),
         space: { left: 15, right: 15, top: 10, bottom: 10, icon: 0 }
-    })
-}
-
-//onClick是sizer的method，Label是一種sizer
-//emit是所有p3 gameObject都有的method，從ee3導入
-//※這裡設計成：按下Label時，觸發backgroundOverlapSizery在MainMenu scene掛載的.on('eventName', callback)
-var RouteClickEvent = function (gameObject, eventName, eventEmitter) {
-    gameObject.onClick(function (button, gameObject, pointer, event) {
-        eventEmitter.emit(eventName, gameObject, pointer, event);
     })
 }
 

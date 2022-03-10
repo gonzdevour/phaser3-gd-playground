@@ -7,21 +7,7 @@ import Shuffle from '../../../../../plugins/utils/array/Shuffle.js';
 //建立題組
 //被Quiz scene呼叫，從題庫建立題組回傳quiz，送到QuizPromise跟quizpanel組合
 var BuildQuiz = function (model) {
-    var quizConfig = model.getQuizConfig(); //從ls中取出紀錄並重建回QuizConfig
-
-    // See build/view/quizconfigpanel/Options.js, DataBaseOptions
-    var dbName = quizConfig.database;
-    var db;
-    switch (dbName) { //指定是哪一個題庫(每個題庫都已經prebuild好了)
-        case '高頻詞庫':
-            db = model.db[0];
-            break;
-
-        case '常用詞庫':
-            db = model.db[1];
-            break;
-    }
-    model.currentDB = db;//每次BuildQuiz時建立參照以避免使用index
+    var quizConfig = model.getQuizConfig(); //從ls中取出紀錄並重建回QuizConfig並設定currentDB
 
     // See build/view/quizconfigpanel/Options.js, EnhanceOptions
     var enhancementMode = quizConfig.enhancement; //指定強化練習模式
@@ -42,7 +28,7 @@ var BuildQuiz = function (model) {
             break;
     }
 
-    var characters = db.characters.query( //在字庫中取出符合條件的字docs
+    var characters = model.currentDB.characters.query( //在字庫中取出符合條件的字docs
         filter,
     );
 

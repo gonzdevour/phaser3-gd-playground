@@ -16,17 +16,6 @@ class Quiz extends Base {
     }
 
     preload() {
-/*         // Load sound file
-        this.load.audio('ok', [
-            'assets/sound/right.ogg',
-            'assets/sound/right.m4a'
-        ]);
-        //Load image file
-        this.load.image('confirm', 'assets/img/confirm.png');
-        this.load.image('eraser', 'assets/img/eraser.png');
-
-        // Test-pass dialog
-        this.load.image('yes', 'assets/img/yes.png'); */
     }
 
     create() {

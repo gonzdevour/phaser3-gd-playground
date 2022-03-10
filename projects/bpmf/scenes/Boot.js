@@ -2,6 +2,10 @@ import 'phaser';
 import Base from './Base.js';
 import { BootSceneKey, MainMenuSceneKey } from './Const.js';
 import CreateModel from '../build/model/CreateModel.js';
+import CreateKnob from '../build/view/style/CreateKnob.js';
+
+//loading
+
 
 //log
 import InitLog from "../../../plugins/logger/InitLog.js";
@@ -33,6 +37,7 @@ class Boot extends Base {
     }
 
     preload() {
+        var _scene = this;
         //load pack
         this.load.pack('pack', 'assets/pack.json');
         this.load.on('filecomplete-packfile-pack', function(key, filetype, data){
@@ -65,6 +70,43 @@ class Boot extends Base {
             }
             this.load.rexAwait(load);//參數:callback(onSuccess,onError)，要執行callback才會完成rexAwait
         }, this)
+
+        var ui = CreateKnob(this).layout();
+
+        ui.waitComplete = this.plugins.get('rexEventPromise').waitComplete;
+
+
+        this.plugins.get('rexLoadingProgress').add(ui, {
+            transitIn: function (gameObject) {
+                // Return a promise
+                return gameObject.popUpPromise(0);
+            },
+
+            transitionOut: function (gameObject) {
+                // Return a promise
+                return gameObject.waitComplete(_scene.tweens.add({
+                    targets: gameObject,
+                    ease: 'cubic',
+                    alpha: 1,
+                    duration: 300
+                    }))
+                    /*
+                    .then(function () {
+                        return gameObject.waitComplete(_scene.tweens.add({
+                            targets: gameObject,
+                            alpha: 0.3,
+                            duration: 3000
+                        }))
+                    })
+                    */
+            },
+
+            progress: function (gameObject, progress) {
+                // Present progress changing
+                gameObject.setValue(progress);
+            }
+        });
+        // ui will be destroyed after loading completed
 
     }
 

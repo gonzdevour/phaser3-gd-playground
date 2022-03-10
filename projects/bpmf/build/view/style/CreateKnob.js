@@ -9,7 +9,7 @@ config:{
     text
     knobTextCallback
     //色彩樣式
-    color
+    barColor
     trackColor
     centerColor
     thickness
@@ -19,7 +19,7 @@ config:{
 }
 */
 
-var CreateModalKnob = function(scene, config){
+var CreateKnob = function(scene, config){
 
     if (config == undefined){
         config = {};
@@ -31,12 +31,12 @@ var CreateModalKnob = function(scene, config){
         // anchor: undefined,
         width: 500,
         height: 500,    
-        background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, 0x4e342e).setStrokeStyle(1, 0x7b5e57),
+        //background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, 0x4e342e).setStrokeStyle(1, 0x7b5e57),
     
-        color: GetValue(config, 'color', 0x000000),
-        trackColor: GetValue(config, 'trackColor', 0xffffff),
-        centerColor: GetValue(config, 'centerColor', 0x000000),
-        thickness: GetValue(config, 'thickness', 0.2),
+        barColor: GetValue(config, 'barColor', 0xeeeeee),
+        trackColor: GetValue(config, 'trackColor', 0x111111),
+        //centerColor: GetValue(config, 'centerColor', 0x000000),
+        thickness: GetValue(config, 'thickness', 0.1),
         startAngle: GetValue(config, 'startAngle', 270)*DEG_TO_RAD,
         anticlockwise: GetValue(config, 'anticlockwise', false),
         //knobDepth: 0,
@@ -47,19 +47,19 @@ var CreateModalKnob = function(scene, config){
     
         input: 'click',
     
-        value: 0.5,
+        value: 0,
         //gap: undefined, //一格一格前進
         easeValue: {
-            duration: 0,
+            duration: 2000,
             ease: 'Linear'
         },
         //valuechangeCallback: function(newValue, oldValue, knob) {},
     
         space: {
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
+            left: 30,
+            right: 30,
+            top: 30,
+            bottom: 30,
         },
     
         enable: true,
@@ -68,21 +68,22 @@ var CreateModalKnob = function(scene, config){
         // draggable: false,
         // sizerEvents: false,
     })
-    .layout()
+    //.layout()//modal會layout所以不需要在建立時就layout
 
     return knob;
 }
 
 var CreateKnobTextLabel = function(scene){
-    scene.rexUI.add.label({
-        text: scene.add.text(0, 0, '', { fontSize: '30px'}),
-        icon: scene.add.image(0, 0, 'speak'),
-        space: {icon: 10},
+    var label = scene.rexUI.add.label({
+        text: scene.rexUI.add.BBCodeText(0, 0, '', { fontSize: '72px'}),
+        //icon: scene.add.image(0, 0, 'speak'),
+        space: {left: 20, icon: 10},
     })
+    return label;
 }
 
 var knobTextCallback = function (value) {
     return Math.floor(value * 100)+'%';
 }
 
-export default CreateModalKnob;
+export default CreateKnob;

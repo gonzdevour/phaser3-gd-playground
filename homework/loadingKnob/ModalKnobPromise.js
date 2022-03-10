@@ -1,4 +1,7 @@
-import CreateModalKnob from "./CreateModalKnob";
+import CreateKnob from "./build/view/style/CreateKnob";
+
+//utils
+import GetValue from '../../plugins/utils/object/GetValue.js';
 
 /*
 config:{
@@ -18,13 +21,11 @@ config:{
 */
 
 var ModalKnobPromise = function (scene, config) {
-    var knob = CreateModalKnob(scene, config)
+    config = !config?{}:config; 
+    var knob = CreateKnob(scene, config)
         .layout()
-        .on('loadingComplete', function () {
-            scene.rexUI.modalClose(knob, {});
-        })
-
-    config.manualClose = false;//不可手動關閉
+    config.returnKnob = knob;
+    config.manualClose = GetValue(config, 'manualClose', true);//不可自動關閉
     //knob.drawBounds(scene.add.graphics(), 0xff0000);
 
     //將knob再包裝為modal，並建立promise
