@@ -55,7 +55,82 @@ var CreateReviewPanel = function (scene, config) {
 
   //依wrongList建立詞
   var sizer = scrollablePanel.getElement('panel');
-  var wrongList = GetValue(config, 'wrongList');
+  //var wrongList = GetValue(config, 'wrongList');
+  var wrongList = [
+    {
+        "word": "意義",
+        "character": "義"
+    },
+    {
+        "word": "美好",
+        "character": "美"
+    },
+    {
+        "word": "豬八戒",
+        "character": "八"
+    },
+    {
+        "word": "拜訪",
+        "character": "訪"
+    },
+    {
+        "word": "答應",
+        "character": "答"
+    },
+    {
+        "word": "古代",
+        "character": "代"
+    },
+    {
+        "word": "哪裡",
+        "character": "裡"
+    },
+    {
+        "word": "課文",
+        "character": "文"
+    },
+    {
+        "word": "澆水",
+        "character": "澆"
+    },
+    {
+        "word": "建築物",
+        "character": "建"
+    },
+    {
+        "word": "無論",
+        "character": "無"
+    },
+    {
+        "word": "尋找",
+        "character": "尋"
+    },
+    {
+        "word": "臭屁",
+        "character": "臭"
+    },
+    {
+        "word": "麻煩",
+        "character": "煩"
+    },
+    {
+        "word": "什麼",
+        "character": "什"
+    },
+    {
+        "word": "多久",
+        "character": "久"
+    },
+    {
+        "word": "工匠",
+        "character": "匠"
+    },
+    {
+        "word": "安全",
+        "character": "全"
+    },
+  ]
+
   var wrongListButtonsArray = [];
 
   wrongList.forEach(function(element, index, arr){
@@ -91,8 +166,8 @@ var CreateReviewPanel = function (scene, config) {
 
   //fixWidthButtons可以自動換行排列button
   var wrongListButtons = scene.rexUI.add.fixWidthButtons({
-    align: 'justify',
-    justifyPercentage: 1,
+    //align: 'justify',
+    //justifyPercentage: 1,
     // justify在rexUI中的規則是：當該行元素超過justifyPercentage時自動換行，否則左右對齊
     space: { line: 30, item: 30 },
     type: 'radio',
@@ -148,6 +223,10 @@ var CreateReviewPanel = function (scene, config) {
     })
     .on('button.showWord', function(gameObject, pointer, event){
       //var txt = gameObject.getElement('text').getPlainText();
+
+      //if (!gameObject.getTopmostSizer().isInTouching()) {
+      //  return;
+      //}
       var txt = gameObject.wordTxt;
       console.log(txt)
       var wordChars = scene.model.currentDB.words.queryWord(txt)[0].getCharacters();
