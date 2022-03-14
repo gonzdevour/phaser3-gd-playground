@@ -1,8 +1,12 @@
+//ui components
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import CreateDatabaseSelectPanel from './CreateDatabaseSelectPanel.js'; //詞庫選單
 import CreateEnhancementSelectPanel from './CreateEnhancementSelectPanel.js'; //強化練習模式選單
 import CreateQuizModePanel from "./CreateQuizModePanel.js"; //出題模式選單
+
+//button behaviors
 import RegisterLabelAsButton from '../../../behavior/Button/RegisterLabelAsButton.js';
+import ModalDialogPromise from '../modeldialog/ModalDialogPromise.js';
 
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
@@ -15,7 +19,7 @@ QuizConfig.js:
 →
 CreateQuizConfigPanel.js:
     CreateQuizConfigPanel(scene, config) 
- */
+*/
 var CreateQuizConfigPanel = function (scene, config) {
     var viewport = scene.rexScaleOuter.outerViewport;
     var x = GetValue(config, 'x', viewport.centerX);
@@ -67,9 +71,42 @@ var CreateQuizConfigPanel = function (scene, config) {
         subPanel.getElement('choices').buttons.forEach(function(btn,index,array){
             RegisterLabelAsButton(btn);
         })
+        var btnHelp = subPanel.getElement('title.help');
+        RegisterLabelAsButton(btnHelp,'button.help', subPanel);
     }
 
-    // Add button callback
+    // button callback
+    
+    // content原本用``樣版字面值。``的\可以取消換行，但會把空格也帶進來。用\n比較清爽
+    // 注意width只有設定最小寬度的功能，如果排版後大於width，會以排版大小為準
+    databaseSelectPanel.on('button.help', function(button, gameObject, pointer, event){
+        ModalDialogPromise(scene, {
+            title: '詞庫選擇',
+            content: '高頻：參照教育部之詞頻總表\n常用：分類整理生活常見用詞',
+            buttonMode: 1,
+            width: scene.viewport.width-50,
+        })
+    });
+
+    enhancementSelectPanel.on('button.help', function(button, gameObject, pointer, event){
+        ModalDialogPromise(scene, {
+            title: '強化練習',
+            content: '針對容易混淆的讀音加強練習',
+            buttonMode: 1,
+            width: scene.viewport.width-50,
+        })
+    });
+
+    quizModePanel.on('button.help', function(button, gameObject, pointer, event){
+        ModalDialogPromise(scene, { //彈出此選單的說明
+            title: '出題模式',
+            content: '隨機：詞庫隨機出題\n依序：依常用度出題\n測驗：指定範圍進行測驗\n\n[color=gray]※測驗模式施工中[/color]',
+            buttonMode: 1,
+            width: scene.viewport.width-50,
+        })
+    });   
+
+
     mainPanel.on('button.startQuiz', function (button, gameObject, pointer, event) { //按下開始按鈕
         var result = {};
         for (var i = 0, cnt = subPanels.length; i < cnt; i++) {

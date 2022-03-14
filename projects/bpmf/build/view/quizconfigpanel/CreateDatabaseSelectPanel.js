@@ -84,7 +84,10 @@ const DataBaseOptions = [
     })
         .add(
             title,
-            { proportion: 0, align: 'center', expand: true, }
+            { 
+                proportion: 0, align: 'center', expand: true,
+                key: 'title'
+            }
         )
         .add(
             choices,
@@ -94,19 +97,6 @@ const DataBaseOptions = [
                 key: 'choices'
             }
         )
-
-    // help button callback
-    // content原本用``樣版字面值。``的\可以取消換行，但會把空格也帶進來。用\n比較清爽
-    // 注意width只有設定最小寬度的功能，如果排版後大於width，會以排版大小為準
-    title.getElement('help').onClick(function () {
-        ModalDialogPromise(scene, {
-            title: '詞庫選擇',
-            content: '高頻：參照教育部之詞頻總表\n常用：分類整理生活常見用詞',
-            buttonMode: 1,
-
-            width: scene.viewport.width-50,
-        })
-    })
 
     return panel
 

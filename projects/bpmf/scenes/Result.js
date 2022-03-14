@@ -28,15 +28,7 @@ class Result extends Base {
         console.log(this.model.appData)
 
         //取得詞庫設定
-        var quizConfig = this.model.getQuizConfig(); //從ls中取出紀錄並重建回QuizConfig
-        switch (quizConfig.database) { //指定是哪一個題庫(每個題庫都已經prebuild好了)
-            case '高頻詞庫':
-                this.model.currentDB = this.model.db[0];
-                break; 
-            case '常用詞庫':
-                this.model.currentDB = this.model.db[1];
-                break;
-        }
+        var quizConfig = this.model.getQuizConfig(); //從ls中取出紀錄並重建回QuizConfig並設定currentDB
 
         var mainMenu = CreateResultPanel(this);
         mainMenu
@@ -58,7 +50,7 @@ class Result extends Base {
                     title: '複習列表',
                     content: CreateReviewPanel(_scene,{wrongList: _scene.model.appData.record.wrongList}),
                     buttonMode: 1,        
-                    width: _scene.viewport.width-50,
+                    width: _scene.viewport.displayWidth-50,
                 })
             }, this)
 

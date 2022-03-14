@@ -52,6 +52,8 @@ var BuildQuiz = function (model) {
             break;
     }
 
+    console.log(characters[0]);
+
     // Now we have quiz characters
     // Clear and add these characters
     var quiz = model.quiz;

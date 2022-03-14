@@ -61,7 +61,10 @@ const EnhanceOptions = [
     })
         .add(
             title,
-            { proportion: 0, align: 'center', expand: true }
+            { 
+                proportion: 0, align: 'center', expand: true,
+                key: 'title'
+            }
         )
         .add(
             choices,
@@ -71,17 +74,6 @@ const EnhanceOptions = [
                 key: 'choices'
             }
         )
-
-    // Add button callback
-    title.getElement('help').onClick(function () {
-        ModalDialogPromise(scene, {
-            title: '強化練習',
-            content: '針對容易混淆的讀音加強練習',
-            buttonMode: 1,
-
-            width: scene.viewport.width-50,
-        })
-    })
 
     return panel;
 }

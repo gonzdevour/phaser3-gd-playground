@@ -1,6 +1,7 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import { Style } from '../style/style.js';
 import CreateWord from '../quizpanel/CreateWord.js';
+import RegisterLabelAsButton from '../../../behavior/Button/RegisterLabelAsButton.js';
 
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
@@ -19,7 +20,7 @@ var CreateReviewPanel = function (scene, config) {
     background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2), // #ffffff
     panel: {
         child: scene.rexUI.add.fixWidthSizer({
-            space: { left: 10, right: 10, top: 30, bottom: 10, item: 10, line: 10, },
+            space: { left: 10, right: 10, top: 30, bottom: 10, item: 30, line: 20, },
           }
         ),
         mask: {
@@ -31,7 +32,7 @@ var CreateReviewPanel = function (scene, config) {
         thumb: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 13, COLOR_LIGHT),
     },
     scroller: {
-      threshold: 10,
+      threshold: 5,
       slidingDeceleration: 5000,
       backDeceleration: 5000,
       pointerOutRelease: false,
@@ -45,6 +46,32 @@ var CreateReviewPanel = function (scene, config) {
   //依wrongList建立詞
   var sizer = scrollablePanel.getElement('panel');
   var wrongList = GetValue(config, 'wrongList');
+
+  wrongList.forEach(function(element, index, arr){
+    //建立縱向字串
+    var newStr = '';
+    for (var i = 0; i < element.word.length; i++) {
+      newStr = newStr + (i==0?'':'\n') + element.word.charAt(i);
+    }
+    //將詞內指定字著色
+    newStr = newStr.replace(element.character,'[color=chocolate]' + element.character + '[/color]');
+    //給予area
+    newStr = `[area=${element.word}]` + newStr + `[/area]`;
+    //以字串建立bbcode詞
+    /* 
+    var word = scene.rexUI.add.BBCodeText(0, 0, newStr, { fontFamily: 'DFKai-SB', fontSize: 72 })
+      .setInteractive()
+      .on('areaover', function (key) {
+        console.log(key);
+      })
+    */
+    var txtLabel = CreateTextLabel(scene, newStr);
+    RegisterLabelAsButton(txtLabel,'button.showWord',scrollablePanel);
+
+    //將詞加入panel(fixWidthSizer)
+    sizer.add(txtLabel);
+  });
+
   /*
   wrongList.forEach(function(element, index, arr){
     //Style指定
@@ -67,8 +94,21 @@ var CreateReviewPanel = function (scene, config) {
 
   //排版
   scrollablePanel.layout();
+  scrollablePanel.on('button.showWord', function(gameObject, pointer, event){ //function(button, gameObject, pointer, event)
+    console.log(gameObject.getElement('text').getPlainText())
+  })
   
   return scrollablePanel;
+}
+
+var CreateTextLabel = function (scene, text) {
+  return scene.rexUI.add.label({
+      background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
+      // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
+      text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 72 }),
+      align: 'center',
+      space: { top: 20, bottom: 20 } //text在label中的天地
+  });
 }
 
 export default CreateReviewPanel;

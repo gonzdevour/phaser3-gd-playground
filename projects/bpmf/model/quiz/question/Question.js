@@ -22,7 +22,8 @@ class Question {
         var characterIndex;
 
         //出題的模式：給詞取隨機字|給詞&字序號|給字取隨機詞|給詞&字
-        if (character && (word === undefined)) { //若config有字無詞
+        
+        if (character && (word === undefined)) { //若config有字無詞 ←[這就是目前的出題模式]
             // Create word from given character //以字找詞
             word = character.getRandomWord(); //以字找隨機詞
             characterIndex = word.getCharacterIndex(character); //設定字在詞裡的序號
