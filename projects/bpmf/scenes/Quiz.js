@@ -54,7 +54,7 @@ class Quiz extends Base {
                     buttonMode: 2, //default:none|1:yes|2:yes&no
                     callbackYes: function(){ _scene.transitionTo( QuizConfigSceneKey, 500 ) },
         
-                    width: _scene.viewport.width-50,
+                    width: _scene.viewport.displayWidth-50,
                 })
             })
 

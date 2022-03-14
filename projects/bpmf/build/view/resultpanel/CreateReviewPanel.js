@@ -11,6 +11,12 @@ const COLOR_LIGHT = 0x7b5e57;
 const COLOR_DARK = 0x260e04;
 
 var CreateReviewPanel = function (scene, config) {
+
+  var mainPanel = scene.rexUI.add.sizer({
+    orientation: 'x',
+    space: { item: 30 }
+  })
+
   //建立scrollablePanel+fixWidthSizer
   var scrollablePanel = scene.rexUI.add.scrollablePanel({
     //x: 400, y: 300, 
@@ -37,6 +43,10 @@ var CreateReviewPanel = function (scene, config) {
       backDeceleration: 5000,
       pointerOutRelease: false,
     },
+    mouseWheelScroller: {
+      focus: false,
+      speed: 1,
+    },
     space: { left: 10, right: 10, top: 10, bottom: 10, panel: 10,}
   })
     .layout()
@@ -46,6 +56,7 @@ var CreateReviewPanel = function (scene, config) {
   //依wrongList建立詞
   var sizer = scrollablePanel.getElement('panel');
   var wrongList = GetValue(config, 'wrongList');
+  var wrongListButtonsArray = [];
 
   wrongList.forEach(function(element, index, arr){
     //建立縱向字串
@@ -62,15 +73,37 @@ var CreateReviewPanel = function (scene, config) {
     var word = scene.rexUI.add.BBCodeText(0, 0, newStr, { fontFamily: 'DFKai-SB', fontSize: 72 })
       .setInteractive()
       .on('areaover', function (key) {
-        console.log(key);
+        console.log('areaover' + key);
       })
     */
     var txtLabel = CreateTextLabel(scene, newStr);
-    RegisterLabelAsButton(txtLabel,'button.showWord',scrollablePanel);
+    txtLabel.wordTxt = element.word; 
+    RegisterLabelAsButton(txtLabel,'button.showWord',mainPanel);
 
     //將詞加入panel(fixWidthSizer)
-    sizer.add(txtLabel);
+    //sizer.add(txtLabel);
+
+    //將詞加入button array
+    wrongListButtonsArray.push(txtLabel);
+
   });
+
+
+  //fixWidthButtons可以自動換行排列button
+  var wrongListButtons = scene.rexUI.add.fixWidthButtons({
+    align: 'justify',
+    justifyPercentage: 1,
+    // justify在rexUI中的規則是：當該行元素超過justifyPercentage時自動換行，否則左右對齊
+    space: { line: 30, item: 30 },
+    type: 'radio',
+    buttons: wrongListButtonsArray,
+    setValueCallback: function (button, value, previousValue) {
+        button.getElement('background')
+            .setFillStyle((value) ? 0x8B4513 : undefined)
+    },
+  })
+
+  sizer.add(wrongListButtons);
 
   /*
   wrongList.forEach(function(element, index, arr){
@@ -92,13 +125,36 @@ var CreateReviewPanel = function (scene, config) {
   });
   */
 
-  //排版
-  scrollablePanel.layout();
-  scrollablePanel.on('button.showWord', function(gameObject, pointer, event){ //function(button, gameObject, pointer, event)
-    console.log(gameObject.getElement('text').getPlainText())
-  })
-  
-  return scrollablePanel;
+  //建立詞
+  //Style指定
+  var wordConfig = {
+    orientation: 'y',
+    background: CreateRoundRectangleBackground(scene, 10, 0x111111, 0xffffff, 2),
+    space: { left: 30, right: 0, top: 0, bottom: 0, item: 0 },
+    style: GetValue(Style, 'quizPanel'),
+    maxCharacters: 4, //1個詞最多支援4個字
+    characters: [],
+  }
+  var word = CreateWord(scene, wordConfig);
+
+  mainPanel
+    .add(word,{
+      proportion: 0, align: 'center', expand: true,
+      key: 'word'      
+    })
+    .add(scrollablePanel,{
+      proportion: 1, align: 'center', expand: true,
+      key: 'scrollablePanel'
+    })
+    .on('button.showWord', function(gameObject, pointer, event){
+      //var txt = gameObject.getElement('text').getPlainText();
+      var txt = gameObject.wordTxt;
+      console.log(txt)
+      var wordChars = scene.model.currentDB.words.queryWord(txt)[0].getCharacters();
+      mainPanel.getElement('word').setWord(wordChars).layout();
+    })
+
+  return mainPanel;
 }
 
 var CreateTextLabel = function (scene, text) {

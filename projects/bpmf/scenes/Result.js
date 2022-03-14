@@ -22,6 +22,7 @@ class Result extends Base {
 
         var _scene = this;
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
+        this.input.topOnly = false;
 
         //取得作答紀錄
         this.model.appData.load().reset();

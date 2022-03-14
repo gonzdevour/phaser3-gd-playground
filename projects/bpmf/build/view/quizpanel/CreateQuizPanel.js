@@ -5,6 +5,7 @@ import CreateChoices from "./CreateChoices.js";
 import CreateActions from "./CreateActions.js";
 import { QuizPanel } from '../../../gameobjects/quizpanel.js';
 import { Style } from "../style/style.js";
+import RegisterLabelAsButton from "../../../behavior/Button/RegisterLabelAsButton.js";
 
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
@@ -63,13 +64,13 @@ var CreateQuizPanel = function (scene, config) {
     });
 
     //在word區塊的overlapSizer上添加語音按鈕
+
+    var btnSpeak = CreateLabel(scene, '發音', 'speak')
+    RegisterLabelAsButton(btnSpeak, 'ttsSpeak', quizPanel);
+
     quizPanel.getElement('wordArea')
         .add(
-            CreateLabel(scene, '發音', 'speak')
-                .onClick( function (button, gameObject, pointer, event) {
-                    quizPanel.emit('ttsSpeak', scene);
-                }),
-            {
+            btnSpeak,{
                 key: 'btnSpeak',
                 align: 'left-bottom',
                 expand: false,
@@ -147,15 +148,6 @@ var CreateTextLabel = function (scene, text, img, radius, pos) {
         //icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(2, 0x0000ff),
         text: scene.rexUI.add.BBCodeText(0, 0, text, quizPanelStyle.qidxtext),
         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 0 }
-    })
-}
-
-//onClick是sizer的method，Label是一種sizer
-//emit是所有p3 gameObject都有的method，從ee3導入
-//※這裡設計成：按下Label時，觸發backgroundOverlapSizery在MainMenu scene掛載的.on('eventName', callback)
-var RouteClickEvent = function (gameObject, eventName, eventEmitter) {
-    gameObject.onClick(function (button, gameObject, pointer, event) {
-        eventEmitter.emit(eventName, gameObject, pointer, event);
     })
 }
 

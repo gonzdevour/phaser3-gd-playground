@@ -15,10 +15,10 @@ var SetupQuizPanel = function (quizPanel, question, onSubmit) {
         //CreateQuizPanel.js會幫quizPanel掛上'changedata-focusCharacterIndex'事件
         //當字(題目)切換時，該字會變色並清除該字旁邊的注音。
         .setData('focusCharacterIndex', question.characterIndex)
-        .on('ttsSpeak', function (scene) {
+        .on('ttsSpeak', function (gameObject, pointer, event) {
             //debugger;
             console.log('ttsSpeak:' + question.word.word);
-            scene.model.speech.say(question.word.word);
+            gameObject.scene.model.speech.say(question.word.word);
         })
         .once('submit', function (result) { //callback回傳答案
             var isPass = question.verify(result); //比對答案

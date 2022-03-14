@@ -51,7 +51,7 @@ class MainMenu extends Base {
 的聲韻進行強化訓練。適合幼小
 銜接以及國語初學者使用。`,
                     buttonMode: 1,        
-                    width: _scene.viewport.width-50,
+                    width: _scene.viewport.displayWidth-50,
                 })
             }, this)
 
