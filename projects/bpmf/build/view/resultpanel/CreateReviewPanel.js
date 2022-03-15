@@ -34,8 +34,8 @@ var CreateReviewPanel = function (scene, config) {
         },
     },
     slider: {
-        track: scene.rexUI.add.roundRectangle(0, 0, 20, 10, 10, COLOR_DARK),
-        thumb: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 13, COLOR_LIGHT),
+        track: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, COLOR_DARK),
+        thumb: scene.rexUI.add.roundRectangle(0, 0, 10, 90, 10, COLOR_LIGHT),
     },
     scroller: {
       threshold: 5,
@@ -55,81 +55,7 @@ var CreateReviewPanel = function (scene, config) {
 
   //依wrongList建立詞
   var sizer = scrollablePanel.getElement('panel');
-  //var wrongList = GetValue(config, 'wrongList');
-  var wrongList = [
-    {
-        "word": "意義",
-        "character": "義"
-    },
-    {
-        "word": "美好",
-        "character": "美"
-    },
-    {
-        "word": "豬八戒",
-        "character": "八"
-    },
-    {
-        "word": "拜訪",
-        "character": "訪"
-    },
-    {
-        "word": "答應",
-        "character": "答"
-    },
-    {
-        "word": "古代",
-        "character": "代"
-    },
-    {
-        "word": "哪裡",
-        "character": "裡"
-    },
-    {
-        "word": "課文",
-        "character": "文"
-    },
-    {
-        "word": "澆水",
-        "character": "澆"
-    },
-    {
-        "word": "建築物",
-        "character": "建"
-    },
-    {
-        "word": "無論",
-        "character": "無"
-    },
-    {
-        "word": "尋找",
-        "character": "尋"
-    },
-    {
-        "word": "臭屁",
-        "character": "臭"
-    },
-    {
-        "word": "麻煩",
-        "character": "煩"
-    },
-    {
-        "word": "什麼",
-        "character": "什"
-    },
-    {
-        "word": "多久",
-        "character": "久"
-    },
-    {
-        "word": "工匠",
-        "character": "匠"
-    },
-    {
-        "word": "安全",
-        "character": "全"
-    },
-  ]
+  var wrongList = GetValue(config, 'wrongList');
 
   var wrongListButtonsArray = [];
 
@@ -155,21 +81,21 @@ var CreateReviewPanel = function (scene, config) {
     txtLabel.wordTxt = element.word; 
     RegisterLabelAsButton(txtLabel,'button.showWord',mainPanel);
 
-    //將詞加入panel(fixWidthSizer)
-    //sizer.add(txtLabel);
-
     //將詞加入button array
     wrongListButtonsArray.push(txtLabel);
 
+    //將詞加入panel(fixWidthSizer)
+    sizer.add(txtLabel);
+
   });
 
-
+  /* 
   //fixWidthButtons可以自動換行排列button
-  var wrongListButtons = scene.rexUI.add.fixWidthButtons({
+  var wrongListButtons = scene.rexUI.add.buttons({
     //align: 'justify',
     //justifyPercentage: 1,
     // justify在rexUI中的規則是：當該行元素超過justifyPercentage時自動換行，否則左右對齊
-    space: { line: 30, item: 30 },
+    //space: { line: 30, item: 30 },
     type: 'radio',
     buttons: wrongListButtonsArray,
     setValueCallback: function (button, value, previousValue) {
@@ -179,7 +105,7 @@ var CreateReviewPanel = function (scene, config) {
   })
 
   sizer.add(wrongListButtons);
-
+  */
   /*
   wrongList.forEach(function(element, index, arr){
     //Style指定
@@ -200,6 +126,14 @@ var CreateReviewPanel = function (scene, config) {
   });
   */
 
+  var wordPanel = scene.rexUI.add.sizer({
+    orientation: 'y',
+    space: { item: 30 }
+  })
+
+  var btnSearch = CreateActionLabel(scene, '搜尋', undefined, 20);
+  var btnDelete = CreateActionLabel(scene, '刪除', undefined, 20);
+
   //建立詞
   //Style指定
   var wordConfig = {
@@ -212,25 +146,50 @@ var CreateReviewPanel = function (scene, config) {
   }
   var word = CreateWord(scene, wordConfig);
 
-  mainPanel
+  wordPanel
     .add(word,{
       proportion: 0, align: 'center', expand: true,
-      key: 'word'      
+      key: 'word'     
+    })
+    .add(btnSearch,{
+      proportion: 0, align: 'center', expand: true,
+      key: 'btnSearch'     
+    })
+    .add(btnDelete,{
+      proportion: 0, align: 'center', expand: true,
+      key: 'btnDelete'     
+    })
+
+  mainPanel
+    .add(wordPanel,{
+      proportion: 0, align: 'center', expand: true,
+      key: 'wordPanel'      
     })
     .add(scrollablePanel,{
       proportion: 1, align: 'center', expand: true,
       key: 'scrollablePanel'
     })
     .on('button.showWord', function(gameObject, pointer, event){
+      if(mainPanel.buttonLastShowed != undefined){
+        mainPanel.buttonLastShowed.getElement('background').setFillStyle(undefined);
+      }
+      mainPanel.buttonLastShowed = gameObject;
+      mainPanel.buttonLastShowed.getElement('background').setFillStyle(0x8B4513);
+
       //var txt = gameObject.getElement('text').getPlainText();
 
-      //if (!gameObject.getTopmostSizer().isInTouching()) {
-      //  return;
-      //}
+      /* 
+      var topMostSizer = gameObject.getTopmostSizer();
+      var isInTouching = topMostSizer.isInTouching();
+      if (!gameObject.getTopmostSizer().isInTouching()) {
+        debugger;
+        return;
+      }
+      */
       var txt = gameObject.wordTxt;
       console.log(txt)
       var wordChars = scene.model.currentDB.words.queryWord(txt)[0].getCharacters();
-      mainPanel.getElement('word').setWord(wordChars).layout();
+      mainPanel.getElement('wordPanel.word').setWord(wordChars).layout();
     })
 
   return mainPanel;
@@ -243,6 +202,15 @@ var CreateTextLabel = function (scene, text) {
       text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 72 }),
       align: 'center',
       space: { top: 20, bottom: 20 } //text在label中的天地
+  });
+}
+
+var CreateActionLabel = function (scene, text, img, radius, pos) {
+  return scene.rexUI.add.label({
+      background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
+      icon: !img?undefined:scene.add.image(0, 0, img).setDisplaySize(90, 90),
+      text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+      space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
   });
 }
 
