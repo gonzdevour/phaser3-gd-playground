@@ -21,8 +21,8 @@ var loading = function (scene, audioUrls) {
       api.speech = speechInit();
       api.dialog = dialogInit();
       api.iap = iapInit();
-      api.ads = admobInit();
-      api.idfa = idfaInit();
+      //api.ads = admobInit();
+      //api.idfa = idfaInit();
       resolve(api);
     };
 
