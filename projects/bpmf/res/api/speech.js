@@ -59,8 +59,8 @@ class speechSynthesis {
   }
   setVoice(voiceName) {
     var voices = this.synth.getVoices();
-    log("show available voices");
-    log(voices);
+    //log("show available voices");
+    //log(voices);
     var foundVoices = voices.filter(function (voice) {
       return voice.name == voiceName;
     });

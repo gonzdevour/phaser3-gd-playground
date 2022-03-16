@@ -6,6 +6,7 @@
         "key": "right",
         "url": [
           "assets/audio/right.m4a",
+          "assets/audio/right.mp3",
           "assets/audio/right.ogg"
         ]
       },
