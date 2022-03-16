@@ -41,7 +41,7 @@ class cdv_sound {
     var root = window.location.pathname;
     //var fileSrc = root.substring(0, root.lastIndexOf('/')+1) + this.urls.get(key, "mp3");
     //var fileSrc = root.substring(0, root.lastIndexOf('/')+1) + this.urls[key]['mp3'];
-    var fileSrc = cordova.file.applicationDirectory + this.urls[key]['mp3'];
+    var fileSrc = cordova.file.applicationDirectory + 'www/' + this.urls[key]['mp3'];
     log(fileSrc);
     return fileSrc;
   }
