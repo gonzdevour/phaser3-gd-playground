@@ -17,7 +17,7 @@ var loading = function (scene, audioUrls) {
     //但cdv_audio(cordova media)要靠路徑才能正確播放
     var apiInit = function (scene, audioUrls) {
       var api = {};
-      api.sound = soundInit(scene, audioUrls);
+      api.sound = soundInit(audioUrls);
       api.speech = speechInit();
       api.dialog = dialogInit();
       api.iap = iapInit();

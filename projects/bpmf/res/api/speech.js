@@ -30,11 +30,14 @@ class cdv_speechSynthesis {
     TTS.getVoices().then(
       // Array of voices [{name:'', identifier: '', language: ''},..] see TS-declarations
       function (voices) {
+        /* 
         voices.forEach(function (voice) {
           for (var key in voice) {
             log(key + " : " + voice[key]);
           }
         });
+        */
+        log('Voices fetched')
       },
       function (reason) {
         log(reason);
