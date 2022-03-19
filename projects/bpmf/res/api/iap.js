@@ -118,7 +118,7 @@ class p3_purchase extends EE {
 
 function iapInit() {
   var iap;
-  if (OS.cordova) {
+  if (OS.cordova && (OS.iOS || OS.android)) {
     log("init cdv purchase plugin");
     iap = new cdv_purchase();
     iap.init();

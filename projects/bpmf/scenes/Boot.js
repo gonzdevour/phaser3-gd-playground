@@ -19,7 +19,7 @@ InitLog({
     fontSize: Math.round(window.innerWidth / 20) + "px",
     backgroundColor: "Navy",
     opacity: 0.7,
-    active: true,
+    active: false,
 });
 log("logger start");
 

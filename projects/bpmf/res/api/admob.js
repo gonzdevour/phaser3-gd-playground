@@ -177,7 +177,7 @@ class p3_ads extends EE{
 }
 
 function admobInit() {
-  if (OS.cordova) {
+  if (OS.cordova && (OS.iOS || OS.android)) {
     var ads = new cdv_ads();
     ads.createBanner();
   } else {

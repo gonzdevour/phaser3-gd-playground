@@ -66,7 +66,7 @@ class p3_dialog {
 
 function dialogInit(){
   var dialog;
-  if (OS.cordova) {
+  if (OS.cordova && (OS.iOS || OS.android)) {
       log("init cdv dialog plugin");
       dialog = new cdv_dialog();
   } else {

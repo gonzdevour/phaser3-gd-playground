@@ -78,7 +78,7 @@ class speechSynthesis {
 
 function speechInit() {
   var speech;
-  if (OS.cordova) {
+  if (OS.cordova && (OS.iOS || OS.android)) {
     //speech
     if (OS.iOS) {
       log("init ios speech");

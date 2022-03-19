@@ -38,12 +38,16 @@ class cdv_sound {
     return se;
   }
   getSrc(key) {
-    var root = window.location.pathname;
-    //var fileSrc = root.substring(0, root.lastIndexOf('/')+1) + this.urls.get(key, "mp3");
-    //var fileSrc = root.substring(0, root.lastIndexOf('/')+1) + this.urls[key]['mp3'];
-    //var fileSrc = cordova.file.applicationDirectory + 'www/' + this.urls[key]['mp3']; //路徑如上但有files:///開頭
-    //www/測試無效
-    var fileSrc = this.urls[key]['mp3'];
+    var fileSrc = '';
+    if (OS.android){
+      var root = window.location.pathname;
+      //var fileSrc = root.substring(0, root.lastIndexOf('/')+1) + this.urls.get(key, "mp3");
+      //var fileSrc = cordova.file.applicationDirectory + 'www/' + this.urls[key]['mp3']; //路徑如上但有files:///開頭
+      fileSrc = root.substring(0, root.lastIndexOf('/')+1) + this.urls[key]['mp3'];
+    } 
+    else if (OS.iOS){
+      fileSrc = this.urls[key]['mp3'];
+    }
     log(fileSrc);
     return fileSrc;
   }
@@ -77,7 +81,7 @@ class p3_sound {
 function soundInit(audioUrls) {
   log("audioUrls: " + JSON.stringify(audioUrls));
   var sound;
-  if (OS.cordova) {
+  if (OS.cordova && (OS.iOS || OS.android)) {
     log("use media plugin");
     sound = new cdv_sound(audioUrls);
   } else {

@@ -41,7 +41,7 @@ class web_idfa {
 
 function idfaInit() {
   var idfa;
-  if (OS.cordova) {
+  if (OS.cordova && (OS.iOS || OS.android)) {
     log("init cdv idfa");
     idfa = new cdv_idfa();
   } else {
