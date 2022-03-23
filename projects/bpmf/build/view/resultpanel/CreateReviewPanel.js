@@ -5,6 +5,7 @@ import RegisterLabelAsButton from '../../../behavior/Button/RegisterLabelAsButto
 
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
+import ArrRemoveItemIfKeyExist from '../../../../../plugins/utils/array/ArrRemoveItemIfKeyExist.js';
 
 const COLOR_PRIMARY = 0x4e342e;
 const COLOR_LIGHT = 0x7b5e57;
@@ -81,8 +82,8 @@ var CreateReviewPanel = function (scene, config) {
     txtLabel.wordTxt = element.word; 
     RegisterLabelAsButton(txtLabel,'button.showWord',mainPanel);
 
-    //將詞加入button array
-    wrongListButtonsArray.push(txtLabel);
+    //將詞加入button array，給fixWidthButton用(目前關閉)
+    //wrongListButtonsArray.push(txtLabel);
 
     //將詞加入panel(fixWidthSizer)
     sizer.add(txtLabel);
@@ -133,6 +134,8 @@ var CreateReviewPanel = function (scene, config) {
 
   var btnSearch = CreateActionLabel(scene, '搜尋', undefined, 20);
   var btnDelete = CreateActionLabel(scene, '刪除', undefined, 20);
+  RegisterLabelAsButton(btnSearch,'button.searchWord',mainPanel);
+  RegisterLabelAsButton(btnDelete,'button.deleteWord',mainPanel);
 
   //建立詞
   //Style指定
@@ -186,10 +189,26 @@ var CreateReviewPanel = function (scene, config) {
         return;
       }
       */
+      btnSearch.wordTxt = gameObject.wordTxt;
+      btnDelete.wordTxt = gameObject.wordTxt;
+      btnDelete.wordLabel = gameObject;
       var txt = gameObject.wordTxt;
       console.log(txt)
       var wordChars = scene.model.currentDB.words.queryWord(txt)[0].getCharacters();
       mainPanel.getElement('wordPanel.word').setWord(wordChars).layout();
+    })
+    .on('button.searchWord', function(gameObject, pointer, event){
+      if(gameObject.wordTxt != undefined){
+        var url = 'https://dict.revised.moe.edu.tw/search.jsp?md=1&word=' + gameObject.wordTxt;
+        window.open(url, '_blank').focus();
+      }
+    })
+    .on('button.deleteWord', function(gameObject, pointer, event){
+      if(gameObject.wordTxt != undefined){
+        //ArrRemoveItemIfKeyExist(wrongList,{'word':gameObject.wordTxt},'word');
+        //sizer.remove(gameObject.wordLabel);
+        mainPanel.layout();
+      }
     })
 
   return mainPanel;
