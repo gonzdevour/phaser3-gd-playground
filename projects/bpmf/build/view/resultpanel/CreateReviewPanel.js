@@ -17,15 +17,10 @@ var CreateReviewPanel = function (scene, config) {
   var mainPanel = scene.rexUI.add.sizer({
     orientation: 'x',
     space: { item: 30 },
-<<<<<<< HEAD
     sizerEvents: true,
   })
   .on('postlayout', function(){
     console.log('mainPanel postlayout')
-=======
-
-    sizerEvents: true
->>>>>>> 89357b9d161a8d6aeda0b945ca09f516e1c0e035
   })
 
   //建立scrollablePanel+fixWidthSizer
@@ -60,7 +55,6 @@ var CreateReviewPanel = function (scene, config) {
     },
     space: { left: 10, right: 10, top: 10, bottom: 10, panel: 10, }
   })
-<<<<<<< HEAD
   .once('sizer.postlayout', function(child, sizer){
     console.log('scrollablePanel postlayout');
     //因為scrollablePanel沒有給size，size只有最上層的modalDialog有傳入，所以當layout完成後，再次layout子sizer(scrollablePanel)，
@@ -69,8 +63,6 @@ var CreateReviewPanel = function (scene, config) {
     //child.setMinSize(child.width, child.height);
   })
   //.layout()
-=======
->>>>>>> 89357b9d161a8d6aeda0b945ca09f516e1c0e035
   //.drawBounds(this.add.graphics(), 0xff0000);
   //因為這裡還沒完成modal的排版，所以drawBounds時未定位。要在modal時drawBounds才能正確顯示彈出時的狀態
 
@@ -227,7 +219,6 @@ var CreateReviewPanel = function (scene, config) {
         window.open(url, '_blank').focus();
       }
     })
-<<<<<<< HEAD
     .on('button.deleteWord', function(gameObject, pointer, event){
       if(gameObject.wordTxt != undefined){
         ArrRemoveItemIfKeyExist(wrongList,{'word':gameObject.wordTxt},'word');
@@ -239,13 +230,6 @@ var CreateReviewPanel = function (scene, config) {
             sizer.remove(gameObject.wordLabel);
             sizer.getTopmostSizer().layout();
           })
-=======
-    .on('button.deleteWord', function (gameObject, pointer, event) {
-      if (gameObject.wordTxt != undefined) {
-        //ArrRemoveItemIfKeyExist(wrongList,{'word':gameObject.wordTxt},'word');
-        //sizer.remove(gameObject.wordLabel);
-        mainPanel.layout();
->>>>>>> 89357b9d161a8d6aeda0b945ca09f516e1c0e035
       }
     })
     .once('postlayout', function (children, sizer) {
