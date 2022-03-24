@@ -11,11 +11,16 @@ const COLOR_PRIMARY = 0x4e342e;
 const COLOR_LIGHT = 0x7b5e57;
 const COLOR_DARK = 0x260e04;
 
+//config: {wrongList: _scene.model.appData.record.wrongList}
 var CreateReviewPanel = function (scene, config) {
 
   var mainPanel = scene.rexUI.add.sizer({
     orientation: 'x',
-    space: { item: 30 }
+    space: { item: 30 },
+    sizerEvents: true,
+  })
+  .on('postlayout', function(){
+    console.log('mainPanel postlayout')
   })
 
   //建立scrollablePanel+fixWidthSizer
@@ -50,7 +55,14 @@ var CreateReviewPanel = function (scene, config) {
     },
     space: { left: 10, right: 10, top: 10, bottom: 10, panel: 10,}
   })
-    .layout()
+  .once('sizer.postlayout', function(child, sizer){
+    console.log('scrollablePanel postlayout');
+    //因為scrollablePanel沒有給size，size只有最上層的modalDialog有傳入，所以當layout完成後，再次layout子sizer(scrollablePanel)，
+    //會因為沒有預設size而以min size 0*0為基準來重新layout，大小就會與跟著modalDialog一起建立的scrollablePanel不同。
+    //解決：在mainPanel啟動sizerEvents後可掛上layout完成事件，完成後將大小設為min size，之後layout這區域時才能使用proportion
+    //child.setMinSize(child.width, child.height);
+  })
+  //.layout()
   //.drawBounds(this.add.graphics(), 0xff0000);
   //因為這裡還沒完成modal的排版，所以drawBounds時未定位。要在modal時drawBounds才能正確顯示彈出時的狀態
 
@@ -82,8 +94,8 @@ var CreateReviewPanel = function (scene, config) {
     txtLabel.wordTxt = element.word; 
     RegisterLabelAsButton(txtLabel,'button.showWord',mainPanel);
 
-    //將詞加入button array，給fixWidthButton用(目前關閉)
-    //wrongListButtonsArray.push(txtLabel);
+    //將詞加入button array，給fixWidthButton用(目前沒用)
+    wrongListButtonsArray.push(txtLabel);
 
     //將詞加入panel(fixWidthSizer)
     sizer.add(txtLabel);
@@ -131,6 +143,10 @@ var CreateReviewPanel = function (scene, config) {
     orientation: 'y',
     space: { item: 30 }
   })
+    .once('sizer.postlayout', function(child, sizer){
+      console.log('wordPanel postlayout');
+      child.setMinSize(child.width, child.height);
+    })
 
   var btnSearch = CreateActionLabel(scene, '搜尋', undefined, 20);
   var btnDelete = CreateActionLabel(scene, '刪除', undefined, 20);
@@ -205,9 +221,15 @@ var CreateReviewPanel = function (scene, config) {
     })
     .on('button.deleteWord', function(gameObject, pointer, event){
       if(gameObject.wordTxt != undefined){
-        //ArrRemoveItemIfKeyExist(wrongList,{'word':gameObject.wordTxt},'word');
-        //sizer.remove(gameObject.wordLabel);
-        mainPanel.layout();
+        ArrRemoveItemIfKeyExist(wrongList,{'word':gameObject.wordTxt},'word');
+        scene.model.appData.recordUpdate();
+        gameObject.wordLabel.scaleDownDestroyPromise(300,undefined,'Cubic')
+          .then(function() {
+            mainPanel.buttonLastShowed = undefined;
+            mainPanel.getElement('wordPanel.word').setWord([]);
+            sizer.remove(gameObject.wordLabel);
+            sizer.getTopmostSizer().layout();
+          })
       }
     })
 

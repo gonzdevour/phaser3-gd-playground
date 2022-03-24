@@ -30,7 +30,7 @@ class AppData {
   }
   save(config) { //將AppData的紀錄存入ls
       var dataManager = this.lsData;
-      for (var key in DefaultRecord) { //使用DefaultRecord的key結構
+      for (var key in DefaultRecord) { //使用DefaultRecord的key結構，判斷只有在DefaultRecord裡的key才會被存入
           dataManager.set(key, config[key]);
       }
       return this;
@@ -42,6 +42,10 @@ class AppData {
     console.log('curWrongCnt:' + this.curWrongCnt);
     console.log('curWrongList:' + JSON.stringify(this.curWrongList));
     console.log('record:' + JSON.stringify(this.record));
+  }
+  recordUpdate() { //將AppData.record的紀錄存入ls
+    this.save(this.record);
+    return this;
   }
   recordQuizResult(verifyResult) {
     //@SetupQuizPanel.js
@@ -69,7 +73,7 @@ class AppData {
         MoveItemBetweenList(this.record.wrongList, this.record.rightList, resultToSave);///將作答紀錄Add到紀錄中的正確作答列表，如果紀錄中答錯過則刪除答錯紀錄
         console.log('O');
     }
-    this.save(this.record);
+    this.recordUpdate();
     this.log();
     return this;
   }

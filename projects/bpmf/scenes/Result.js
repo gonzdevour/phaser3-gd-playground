@@ -24,13 +24,6 @@ class Result extends Base {
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
         this.input.topOnly = false;
 
-        //取得作答紀錄
-        this.model.appData.load().reset();
-        console.log(this.model.appData)
-
-        //取得詞庫設定
-        var quizConfig = this.model.getQuizConfig(); //從ls中取出紀錄並重建回QuizConfig並設定currentDB
-
         var mainMenu = CreateResultPanel(this);
         mainMenu
             .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)

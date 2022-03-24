@@ -3,6 +3,7 @@ import GetCombinedRhyme from '../../../model/db/characters/query/GetCombinedRhym
 
 //utils
 import Shuffle from '../../../../../plugins/utils/array/Shuffle.js';
+import ArrIfContainKeyValue from '../../../../../plugins/utils/array/ArrIsContainKeyValue.js';
 
 //建立題組
 //被Quiz scene呼叫，從題庫建立題組回傳quiz，送到QuizPromise跟quizpanel組合
@@ -52,7 +53,24 @@ var BuildQuiz = function (model) {
             break;
     }
 
-    console.log(characters[0]);
+    //印出第一個charcter物件，測試用
+    //console.log('characters[0].character：');
+    //console.log(characters[0].character);
+
+    //把考過的character移到最後面
+    var rightList = model.appData.record.rightList;
+    //篩出沒考過的(字不在rightList中的character物件群)
+    var undoneList = characters.filter(function(character, index, array){
+        return ArrIfContainKeyValue(rightList, 'character', character.character) == false;
+    });
+    //篩出考過的(字在rightList中的character物件群)
+    var doneList = characters.filter(function(character, index, array){
+        return ArrIfContainKeyValue(rightList, 'character', character.character) == true;
+    });
+    console.log('doneList');
+    console.log(doneList);
+    //組合兩組array，沒考過的在前面，考過的在後面
+    var arrangedChars = undoneList.concat(doneList);
 
     // Now we have quiz characters
     // Clear and add these characters
@@ -60,13 +78,13 @@ var BuildQuiz = function (model) {
     quiz.clearQuestions(); //清除之前的題組
 
     //建立新題組：篩出來的字docs，每個字doc都出一題(可以修改這裡的規則)
-    var charactersLength = characters.length;
+    var arrangedCharsLength = arrangedChars.length;
     var qConfigCount = quizConfig.qcount;
-    var quizCnt = quizMode='測驗'?qConfigCount:charactersLength;
+    var quizCnt = quizMode='測驗'?qConfigCount:arrangedCharsLength;
     for (var i = 0, cnt = quizCnt; i < cnt; i++) {
         quiz.addQuestion({
             title: '', // TODO
-            character: characters[i%charactersLength],//取餘數的用意是：如果題庫小於需出題數，以題庫數取餘數循環出題
+            character: arrangedChars[i%arrangedCharsLength],//取餘數的用意是：如果題庫小於需出題數，以題庫數取餘數循環出題
             choices: choices
         })
     }

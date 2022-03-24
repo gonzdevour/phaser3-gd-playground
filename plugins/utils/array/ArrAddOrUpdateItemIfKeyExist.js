@@ -19,7 +19,7 @@ var ArrAddOrUpdateItemIfKeyExist = function (array, item, indexKey)
     if (elementToUpdateCnt == 0){
         array.push(item); //如果item在目標array中找不到任何element有相同的indexKey，則新增item給array
     }
-    debugger;
+    //debugger;
     return array;
 };
 
