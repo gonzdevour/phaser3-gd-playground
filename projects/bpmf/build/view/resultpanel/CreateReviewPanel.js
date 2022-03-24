@@ -15,28 +15,30 @@ var CreateReviewPanel = function (scene, config) {
 
   var mainPanel = scene.rexUI.add.sizer({
     orientation: 'x',
-    space: { item: 30 }
+    space: { item: 30 },
+
+    sizerEvents: true
   })
 
   //建立scrollablePanel+fixWidthSizer
   var scrollablePanel = scene.rexUI.add.scrollablePanel({
     //x: 400, y: 300, 
     //width: scene.viewport.width-100, 
-    height: scene.viewport.height*0.6,
+    height: scene.viewport.height * 0.6,
     scrollMode: 0,
     background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2), // #ffffff
     panel: {
-        child: scene.rexUI.add.fixWidthSizer({
-            space: { left: 10, right: 10, top: 30, bottom: 10, item: 30, line: 20, },
-          }
-        ),
-        mask: {
-            padding: 1
-        },
+      child: scene.rexUI.add.fixWidthSizer({
+        space: { left: 10, right: 10, top: 30, bottom: 10, item: 30, line: 20, },
+      }
+      ),
+      mask: {
+        padding: 1
+      },
     },
     slider: {
-        track: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, COLOR_DARK),
-        thumb: scene.rexUI.add.roundRectangle(0, 0, 10, 90, 10, COLOR_LIGHT),
+      track: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, COLOR_DARK),
+      thumb: scene.rexUI.add.roundRectangle(0, 0, 10, 90, 10, COLOR_LIGHT),
     },
     scroller: {
       threshold: 5,
@@ -48,9 +50,8 @@ var CreateReviewPanel = function (scene, config) {
       focus: false,
       speed: 1,
     },
-    space: { left: 10, right: 10, top: 10, bottom: 10, panel: 10,}
+    space: { left: 10, right: 10, top: 10, bottom: 10, panel: 10, }
   })
-    .layout()
   //.drawBounds(this.add.graphics(), 0xff0000);
   //因為這裡還沒完成modal的排版，所以drawBounds時未定位。要在modal時drawBounds才能正確顯示彈出時的狀態
 
@@ -60,14 +61,14 @@ var CreateReviewPanel = function (scene, config) {
 
   var wrongListButtonsArray = [];
 
-  wrongList.forEach(function(element, index, arr){
+  wrongList.forEach(function (element, index, arr) {
     //建立縱向字串
     var newStr = '';
     for (var i = 0; i < element.word.length; i++) {
-      newStr = newStr + (i==0?'':'\n') + element.word.charAt(i);
+      newStr = newStr + (i == 0 ? '' : '\n') + element.word.charAt(i);
     }
     //將詞內指定字著色
-    newStr = newStr.replace(element.character,'[color=chocolate]' + element.character + '[/color]');
+    newStr = newStr.replace(element.character, '[color=chocolate]' + element.character + '[/color]');
     //給予area
     newStr = `[area=${element.word}]` + newStr + `[/area]`;
     //以字串建立bbcode詞
@@ -79,8 +80,8 @@ var CreateReviewPanel = function (scene, config) {
       })
     */
     var txtLabel = CreateTextLabel(scene, newStr);
-    txtLabel.wordTxt = element.word; 
-    RegisterLabelAsButton(txtLabel,'button.showWord',mainPanel);
+    txtLabel.wordTxt = element.word;
+    RegisterLabelAsButton(txtLabel, 'button.showWord', mainPanel);
 
     //將詞加入button array，給fixWidthButton用(目前關閉)
     //wrongListButtonsArray.push(txtLabel);
@@ -134,8 +135,8 @@ var CreateReviewPanel = function (scene, config) {
 
   var btnSearch = CreateActionLabel(scene, '搜尋', undefined, 20);
   var btnDelete = CreateActionLabel(scene, '刪除', undefined, 20);
-  RegisterLabelAsButton(btnSearch,'button.searchWord',mainPanel);
-  RegisterLabelAsButton(btnDelete,'button.deleteWord',mainPanel);
+  RegisterLabelAsButton(btnSearch, 'button.searchWord', mainPanel);
+  RegisterLabelAsButton(btnDelete, 'button.deleteWord', mainPanel);
 
   //建立詞
   //Style指定
@@ -150,30 +151,30 @@ var CreateReviewPanel = function (scene, config) {
   var word = CreateWord(scene, wordConfig);
 
   wordPanel
-    .add(word,{
+    .add(word, {
       proportion: 0, align: 'center', expand: true,
-      key: 'word'     
+      key: 'word'
     })
-    .add(btnSearch,{
+    .add(btnSearch, {
       proportion: 0, align: 'center', expand: true,
-      key: 'btnSearch'     
+      key: 'btnSearch'
     })
-    .add(btnDelete,{
+    .add(btnDelete, {
       proportion: 0, align: 'center', expand: true,
-      key: 'btnDelete'     
+      key: 'btnDelete'
     })
 
   mainPanel
-    .add(wordPanel,{
+    .add(wordPanel, {
       proportion: 0, align: 'center', expand: true,
-      key: 'wordPanel'      
+      key: 'wordPanel'
     })
-    .add(scrollablePanel,{
+    .add(scrollablePanel, {
       proportion: 1, align: 'center', expand: true,
       key: 'scrollablePanel'
     })
-    .on('button.showWord', function(gameObject, pointer, event){
-      if(mainPanel.buttonLastShowed != undefined){
+    .on('button.showWord', function (gameObject, pointer, event) {
+      if (mainPanel.buttonLastShowed != undefined) {
         mainPanel.buttonLastShowed.getElement('background').setFillStyle(undefined);
       }
       mainPanel.buttonLastShowed = gameObject;
@@ -197,18 +198,21 @@ var CreateReviewPanel = function (scene, config) {
       var wordChars = scene.model.currentDB.words.queryWord(txt)[0].getCharacters();
       mainPanel.getElement('wordPanel.word').setWord(wordChars).layout();
     })
-    .on('button.searchWord', function(gameObject, pointer, event){
-      if(gameObject.wordTxt != undefined){
+    .on('button.searchWord', function (gameObject, pointer, event) {
+      if (gameObject.wordTxt != undefined) {
         var url = 'https://dict.revised.moe.edu.tw/search.jsp?md=1&word=' + gameObject.wordTxt;
         window.open(url, '_blank').focus();
       }
     })
-    .on('button.deleteWord', function(gameObject, pointer, event){
-      if(gameObject.wordTxt != undefined){
+    .on('button.deleteWord', function (gameObject, pointer, event) {
+      if (gameObject.wordTxt != undefined) {
         //ArrRemoveItemIfKeyExist(wrongList,{'word':gameObject.wordTxt},'word');
         //sizer.remove(gameObject.wordLabel);
         mainPanel.layout();
       }
+    })
+    .once('postlayout', function (children, sizer) {
+      mainPanel.setMinSize(mainPanel.width, mainPanel.height);
     })
 
   return mainPanel;
@@ -216,20 +220,20 @@ var CreateReviewPanel = function (scene, config) {
 
 var CreateTextLabel = function (scene, text) {
   return scene.rexUI.add.label({
-      background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
-      // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
-      text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 72 }),
-      align: 'center',
-      space: { top: 20, bottom: 20 } //text在label中的天地
+    background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
+    // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
+    text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 72 }),
+    align: 'center',
+    space: { top: 20, bottom: 20 } //text在label中的天地
   });
 }
 
 var CreateActionLabel = function (scene, text, img, radius, pos) {
   return scene.rexUI.add.label({
-      background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
-      icon: !img?undefined:scene.add.image(0, 0, img).setDisplaySize(90, 90),
-      text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
-      space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
+    background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
+    icon: !img ? undefined : scene.add.image(0, 0, img).setDisplaySize(90, 90),
+    text: !text ? undefined : scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+    space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
   });
 }
 
