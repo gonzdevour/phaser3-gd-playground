@@ -19,7 +19,7 @@ const EnhanceOptions = [
 
 const QuizModeOptions = [
     '隨機',
-    '依序',
+    '頻次',
     '測驗'
 ]
 

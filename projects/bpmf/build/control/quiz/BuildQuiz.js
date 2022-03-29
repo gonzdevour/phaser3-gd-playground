@@ -40,10 +40,10 @@ var BuildQuiz = function (model) {
             Shuffle(characters); //隨機模式則洗牌字docs
             break;
 
-        case '依序':
+        case '頻次':
             // Or sort by freq in characters.query(...)
             characters.sort(function(characterA, characterB){
-                return characterA.freq - characterB.freq; //依序模式將docs依freq由小至大排列
+                return characterA.freq - characterB.freq; //頻次模式將docs依freq由小至大排列
             })
             break;
 
@@ -54,7 +54,7 @@ var BuildQuiz = function (model) {
     }
 
     //印出第一個charcter物件，測試用
-    //console.log('characters[0].character：');
+    //model.scene.log('characters[0].character：');
     //console.log(characters[0].character);
 
     //把考過的character移到最後面
@@ -67,8 +67,8 @@ var BuildQuiz = function (model) {
     var doneList = characters.filter(function(character, index, array){
         return ArrIfContainKeyValue(rightList, 'character', character.character) == true;
     });
-    console.log('doneList');
-    console.log(doneList);
+    //console.log('doneList');
+    //console.log(doneList);
     //組合兩組array，沒考過的在前面，考過的在後面
     var arrangedChars = undoneList.concat(doneList);
 

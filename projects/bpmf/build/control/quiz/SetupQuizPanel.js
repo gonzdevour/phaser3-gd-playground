@@ -8,15 +8,13 @@ var SetupQuizPanel = function (quizPanel, question, onSubmit) {
         .setWord(question.characters) //用字array設定詞
         .setChoicesText(question.createChoices()) //建立選項群並設定選項文字
         .layout() //排版
-        .drawBounds(quizPanel.debugGraphics, 0xff0000)
-        //debugger;
+    quizPanel.scene.drawBounds(quizPanel)
     // Note: make sure 'submit' is emitted (OK button clicked)    
     quizPanel
         //CreateQuizPanel.js會幫quizPanel掛上'changedata-focusCharacterIndex'事件
         //當字(題目)切換時，該字會變色並清除該字旁邊的注音。
         .setData('focusCharacterIndex', question.characterIndex)
         .on('ttsSpeak', function (gameObject, pointer, event) {
-            //debugger;
             console.log('ttsSpeak:' + question.word.word);
             gameObject.scene.model.speech.say(question.word.word);
         })

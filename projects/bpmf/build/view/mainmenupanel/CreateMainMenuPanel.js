@@ -32,7 +32,8 @@ var CreateMainMenuPanel = function (scene, config) {
     var background = CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2);
 
     //建立logo物件
-    var logo = scene.rexUI.add.BBCodeText(0, 0, 'Logo', { fontFamily: 'DFKai-SB', fontSize: 60 });
+    //var logo = scene.rexUI.add.BBCodeText(0, 0, 'Logo', { fontFamily: 'DFKai-SB', fontSize: 60 });
+    //scene.rexUI.easeMoveFrom(logo, 1000, undefined, '-=200', 'Cubic'); //排好版之後再開始tween
 
     // TODO: style
     
@@ -50,10 +51,6 @@ var CreateMainMenuPanel = function (scene, config) {
     var btnContinue = CreateActionLabel(scene, '繼續練習', undefined, 20);
 
     mainMenuPanel
-        .add(
-            logo,
-            {}
-        )
         .add(
             word,
             {}
@@ -98,7 +95,6 @@ var CreateMainMenuPanel = function (scene, config) {
 
     //建立ChildrenMap，讓backgroundOverlapSizer.getElement('key')可以取得這個sizer的子物件
     backgroundOverlapSizer
-        .addChildrenMap('logo', logo)
         .addChildrenMap('btnModeSelect', btnModeSelect)
         .addChildrenMap('btnContinue', btnContinue)
         .addChildrenMap('btnConfig', btnConfig)

@@ -12,7 +12,7 @@
 
       sortMode:
       case 1: bopomofo
-      case 2: freq //依序模式
+      case 2: freq //頻次模式
       default
 
       //被index.js引入

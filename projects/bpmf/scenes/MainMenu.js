@@ -17,10 +17,11 @@ class MainMenu extends Base {
     }
 
     create() {
-        console.log('Lang=' + this.language);
 
         var _scene = this;
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
+
+        _scene.log('Lang=' + this.language);
 
         var mainMenu = CreateMainMenuPanel(this);
         mainMenu
@@ -37,28 +38,38 @@ class MainMenu extends Base {
                 this.transitionTo( ResultSceneKey,500 );
             }, this)
             .on('button.config', function () { //todo
-                console.log('button.config')
+                this.log('button.config')
             }, this)
             .on('button.help', function () { //todo
                 _scene.sound.play('right');
-                console.log('button.help')
+                _scene.log('button.help')
                 ModalDialogPromise(_scene, {
                     title: '使用說明',
                     content: 
 `「注音習作」是以注音符號測驗
-的方式認識常用字詞的工具，有
-語音輔助學習，亦可指定易混淆
-的聲韻進行強化訓練。適合幼小
-銜接以及國語初學者使用。`,
-                    buttonMode: 1,        
+認識常用字詞的線上教具APP，有
+語音輔助，能指定易混淆的聲韻
+進行強化訓練。適合幼小銜接以
+及國語初學者使用。
+
+尊重考證、遵循教育部指引為本作
+一貫的開發原則。然而，字音形古
+今通塞、南北是非，所謂「正確答
+案」只存在一時一地，台灣本地習
+慣的發音若與部頒標準不一致時，
+本作則採兼容之立場，祈使用者透
+過練習，可更貼合日常實用。
+
+如有設計不周、內容錯漏，或有任
+何相關的建議與指導，請不吝聯絡
+敝團隊。`,
+                    buttonMode: 3,
+                    callbackMail: function(){ window.open('https://forms.gle/uc51sDPiUZ34Qiws9', '_blank').focus(); },        
                     width: _scene.viewport.displayWidth-50,
                 })
             }, this)
 
-        console.log(`${mainMenu.width}x${mainMenu.height}`)
-
-        var logo = mainMenu.getElement('logo'); //從mainMenu取得logo物件
-        this.rexUI.easeMoveFrom(logo, 1000, undefined, '-=200', 'Cubic'); //排好版之後再開始tween
+        //this.log(`${mainMenu.width}x${mainMenu.height}`)
 
         super.create(); //createSysPanel & setupTransition
 

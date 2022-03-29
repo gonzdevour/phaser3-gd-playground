@@ -4,6 +4,7 @@ import CSVToHashTablePlugin from '../../phaser3-rex-notes/plugins/csvtohashtable
 import AwaitLoaderPlugin from '../../phaser3-rex-notes/plugins/awaitloader-plugin.js';
 import LoadingProgressPlugin from '../../phaser3-rex-notes/plugins/loadingprogress-plugin.js';
 import EventPromisePlugin from '../../phaser3-rex-notes/plugins/eventpromise-plugin.js';
+import ClockPlugin from '../../phaser3-rex-notes/plugins/clock-plugin.js';
 
 export default {
     scene: [
@@ -38,6 +39,11 @@ export default {
         {
             key: 'rexLoadingProgress',
             plugin: LoadingProgressPlugin,
+            start: true
+        },
+        {
+            key: 'rexClock',
+            plugin: ClockPlugin,
             start: true
         },
     ]

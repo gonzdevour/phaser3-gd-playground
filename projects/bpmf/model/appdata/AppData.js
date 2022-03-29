@@ -7,12 +7,14 @@ class AppData {
   constructor(dataManager) {
       this.lsData = dataManager;
       this.record = DefaultRecord; //過去的作答紀錄，包含wrongList和rightList
+      this.curTimeElapsed = 0; //目前所花費的作答時間(ms)
       this.curRightCnt = 0; //目前的正確作答數
       this.curWrongCnt = 0; //目前的錯誤作答數
       this.curRightList = []; //目前從正確作答中紀錄的所有詞組成的陣列
       this.curWrongList = []; //目前從錯誤作答中紀錄的所有詞、字、輸入答案與正確答案等資料組成的陣列
   }
   reset() {
+      this.curTimeElapsed = 0;
       this.curRightCnt = 0;
       this.curWrongCnt = 0;
       this.curRightList = [];
@@ -65,16 +67,16 @@ class AppData {
         this.curWrongCnt = this.curWrongCnt + 1;
         MoveItemBetweenList(this.curRightList, this.curWrongList, resultToSave);//將作答紀錄Add到本局的錯誤作答列表，如果本局中答對過則刪除本局的答對紀錄
         MoveItemBetweenList(this.record.rightList, this.record.wrongList, resultToSave);///將作答紀錄Add到紀錄中的錯誤作答列表，如果紀錄中答對過則刪除答對紀錄
-        console.log('X');
+        //console.log('X');
 
     } else { //如果通過，則將詞暫存在model.appData.correctList裡，最後會整理合併於lsData的record.correctList
         this.curRightCnt = this.curRightCnt + 1;
         MoveItemBetweenList(this.curWrongList, this.curRightList, resultToSave);//將作答紀錄Add到本局的正確作答列表，如果本局中答錯過則刪除本局的答錯紀錄
         MoveItemBetweenList(this.record.wrongList, this.record.rightList, resultToSave);///將作答紀錄Add到紀錄中的正確作答列表，如果紀錄中答錯過則刪除答錯紀錄
-        console.log('O');
+        //console.log('O');
     }
     this.recordUpdate();
-    this.log();
+    //this.log();
     return this;
   }
 }

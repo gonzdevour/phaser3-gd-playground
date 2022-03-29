@@ -21,7 +21,7 @@ var CreateResultPanel = function (scene, config) {
     var background = CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2);
 
     //建立logo物件
-    var logo = scene.rexUI.add.BBCodeText(0, 0, 'Logo', { fontFamily: 'DFKai-SB', fontSize: 60 });
+    //var logo = scene.rexUI.add.BBCodeText(0, 0, 'Logo', { fontFamily: 'DFKai-SB', fontSize: 60 });
 
     // TODO: style
     
@@ -32,21 +32,35 @@ var CreateResultPanel = function (scene, config) {
     result.wrongCnt = appdata.curWrongCnt;
     result.totalCnt = result.rightCnt + result.wrongCnt;
     result.rightPercent = Math.round(100*result.rightCnt/result.totalCnt);
-    result.time = 180;
+    result.time = appdata.curTimeElapsed;
     //建立統計字串
-    var resultTxt = `
-測驗題數
-${result.rightCnt}/${result.totalCnt}
+    var resultTxtQcnt = `${result.rightCnt}/${result.totalCnt}`;
+    var resultTxtTElapsed = `${result.time}秒`;
+    var resultTxtRPct = `${result.rightPercent}%`;
 
-作答時間
-${result.time}秒
-
-正確率
-${result.rightPercent}%
-`
-
-    var labelResult = CreateTextLabel(scene, resultTxt);
-
+    //建立統計字串label
+    var labelQcnt = CreateTitleLabel(scene, '測驗題數');
+    var txtQcnt = CreateTextLabel(scene, resultTxtQcnt);
+    var labelTElapsed = CreateTitleLabel(scene, '作答時間');
+    var txtTElapsed = CreateTextLabel(scene, resultTxtTElapsed);
+    var labelRPct = CreateTitleLabel(scene, '正確率');
+    var txtRPct = CreateTextLabel(scene, resultTxtRPct)
+        .setData('t', 0)
+        .on('changedata-t', function (parent, value, previousValue) {
+            parent.setText(`${Math.floor(value * result.rightPercent)}%`);
+        })
+        .easeDataTo('t', 1, 1000)
+    /* 
+    scene.tweens.add({
+        targets: txtRPct.data.values,
+        t: 1,
+        ease: 'Linear',
+        duration: 1000,
+        repeat: 0,
+        yoyo: false
+    });
+     */
+    
     //建立選項按鈕
     // TODO: set width & height in scene.rexUI.add.label({...})
     var btnReview = CreateActionLabel(scene, '生字複習', undefined, 20);
@@ -55,12 +69,28 @@ ${result.rightPercent}%
 
     mainMenuPanel
         .add(
-            logo,
+            labelQcnt,
             {}
         )
         .add(
-            labelResult,
+            txtQcnt,
+            { padding: { bottom: 20 }}
+        )
+        .add(
+            labelTElapsed,
             {}
+        )
+        .add(
+            txtTElapsed,
+            { padding: { bottom: 20 }}
+        )
+        .add(
+            labelRPct,
+            {}
+        )
+        .add(
+            txtRPct,
+            { padding: { bottom: 100 }}
         )
         .add(
             btnReview,
@@ -105,7 +135,6 @@ ${result.rightPercent}%
 
     //建立ChildrenMap，讓backgroundOverlapSizer.getElement('key')可以取得這個sizer的子物件
     backgroundOverlapSizer
-        .addChildrenMap('logo', logo)
         .addChildrenMap('btnReview', btnReview)
         .addChildrenMap('btnRetry', btnRetry)
         .addChildrenMap('btnBack', btnBack)
@@ -139,6 +168,15 @@ var CreateTextLabel = function (scene, text, img, radius, pos) {
         text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 , align: 'center', lineSpacing: 10,}),
         space: { left: 15, right: 15, top: 10, bottom: 10, icon: 0 }
     })
+}
+
+var CreateTitleLabel = function (scene, text, img, radius, pos) {
+    return scene.rexUI.add.label({
+        //background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
+        icon: !img?undefined:scene.add.image(0, 0, img).setDisplaySize(90, 90),
+        text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+        space: { left: 20, right: 20, top: 10, bottom: 10, icon: 10 }
+    });
 }
 
 export default CreateResultPanel;

@@ -40,18 +40,22 @@ var CreateQuizConfigPanel = function (scene, config) {
         space: { item: 30 }
     })
         .addBackground(CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2))
+
         .add(
             databaseSelectPanel,
             { proportion: 0, expand: true, align: 'center' }
         )
+        
         .add(
             enhancementSelectPanel,
             { proportion: 0, expand: true, align: 'center', }
         )
+
         .add(
             quizModePanel,
             { proportion: 0, expand: true, align: 'center', }
         )
+        
         .addSpace()
         .add(
             buttonLabel,
@@ -60,6 +64,10 @@ var CreateQuizConfigPanel = function (scene, config) {
                 padding: { left: 80, right: 80, bottom:80 } //label在sizer子區塊中的天地
             }
         )
+
+    //隱藏暫時不用的panel(但是需要它們的選項設定值所以還是要建立)
+    //databaseSelectPanel.hide();
+    //quizModePanel.hide();
 
     //幫按鈕註冊onClick時要發射的事件，以及over/out時的反應
     //RegisterLabelAsButton(label, eventName, eventEmitter)
@@ -79,6 +87,7 @@ var CreateQuizConfigPanel = function (scene, config) {
     
     // content原本用``樣版字面值。``的\可以取消換行，但會把空格也帶進來。用\n比較清爽
     // 注意width只有設定最小寬度的功能，如果排版後大於width，會以排版大小為準
+
     databaseSelectPanel.on('button.help', function(gameObject, pointer, event){
         ModalDialogPromise(scene, {
             title: '詞庫選擇',
@@ -100,7 +109,7 @@ var CreateQuizConfigPanel = function (scene, config) {
     quizModePanel.on('button.help', function(gameObject, pointer, event){
         ModalDialogPromise(scene, { //彈出此選單的說明
             title: '出題模式',
-            content: '隨機：詞庫隨機出題\n依序：依常用度出題\n測驗：指定範圍進行測驗\n\n[color=gray]※測驗模式施工中[/color]',
+            content: '隨機：詞庫隨機出題\n頻次：依常用度出題\n測驗：指定範圍進行測驗\n\n[color=gray]※測驗模式施工中[/color]',
             buttonMode: 1,
             width: scene.viewport.displayWidth-50,
         })
@@ -119,10 +128,13 @@ var CreateQuizConfigPanel = function (scene, config) {
             result = {
                 database: '高頻詞庫', //指定詞庫種類
                 enhancement: '無', //強化練習模式
-                mode: '隨機' //依序|隨機|測驗
+                mode: '隨機' //頻次|隨機|測驗
             }
             */
-            result[subPanel.name] = subPanel.getElement('choices').value //取得各選單的選擇
+            var choiceValue =  subPanel.getElement('choices').value;
+            if (choiceValue != undefined){ //選項無值時(例如subPanel沒建立時)，禁止傳入undefined，應以預設值為準
+                result[subPanel.name] = choiceValue; //取得各選單的選擇
+            }
         }
         result.qcount = config.radio.qcount; //題數設定
         //debugger;

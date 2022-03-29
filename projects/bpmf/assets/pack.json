@@ -27,6 +27,11 @@
       },
       {
         "type": "image",
+        "key": "delete",
+        "url": "assets/image/delete.png"
+      },
+      {
+        "type": "image",
         "key": "eraser",
         "url": "assets/image/eraser.png"
       },
@@ -37,6 +42,11 @@
       },
       {
         "type": "image",
+        "key": "mail",
+        "url": "assets/image/mail.png"
+      },
+      {
+        "type": "image",
         "key": "no",
         "url": "assets/image/no.png"
       },
@@ -44,6 +54,11 @@
         "type": "image",
         "key": "right",
         "url": "assets/image/right.png"
+      },
+      {
+        "type": "image",
+        "key": "search",
+        "url": "assets/image/search.png"
       },
       {
         "type": "image",

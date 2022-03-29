@@ -24,14 +24,14 @@ class QuizConfig extends Base {
         })
             .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
             .layout()
-             .drawBounds(this.add.graphics(), 0xff0000)
             .on('startQuiz', function (result) {
-                console.log(result);
+                this.log(result);
                 this.model.setQuizConfig(result);
                 this.transitionTo(QuizSceneKey,500 );
             }, this)
 
-        console.log(`${quizConfigPanel.width}x${quizConfigPanel.height}`)
+        this.drawBounds(quizConfigPanel);
+        //this.log(`${quizConfigPanel.width}x${quizConfigPanel.height}`)
 
         super.create(); //createSysPanel & setupTransition
         var _scene = this;

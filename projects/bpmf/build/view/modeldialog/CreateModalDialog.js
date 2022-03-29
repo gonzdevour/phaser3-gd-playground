@@ -49,6 +49,13 @@ var CreateModalDialog = function (scene, config) {
         config.buttonMode = 0;
     }
     switch (config.buttonMode) {
+        case 3: // mail/ok按鈕
+            config.actions = [
+                CreateButton(scene, 'mail').onClick(config.callbackMail),
+                scene.rexUI.add.space(),
+                CreateButton(scene, 'yes'),
+            ];
+            break;
         case 2: // OK/Cancel按鈕
             config.actions = [
                 CreateButton(scene, 'yes').onClick(config.callbackYes),

@@ -66,7 +66,7 @@ var WordDataToDB = function (wordData) {
 
       //freq越小表示頻率越高或順序愈前面，一個character會在多個word裡出現但本身沒有freq值，
       //所以就用freq最小的那個word freq作為character freq。
-      //由於出題模式是以字庫為主的以字查詞方法，所以「依序模式」會用到character freq。
+      //由於出題模式是以字庫為主的以字查詞方法，所以「頻次模式」會用到character freq。
       if (characterDoc.freq > wordData.freq) {
         characterDoc.freq = wordData.freq;
         CharactersCollection.update(characterDoc);
