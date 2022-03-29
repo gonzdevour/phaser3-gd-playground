@@ -11,15 +11,16 @@ var SetupQuizPanel = function (quizPanel, question, onSubmit) {
     quizPanel
         .setData('focusCharacterIndex', question.characterIndex) // See CreateQuizPanel.js
         .once('submit', function (result) {
-            var isPass = question.verify(result);
+            let polyphonyCharacter = undefined;
+            let isPass = question.verify(result);
             if (!isPass) { // Verify polyphony
-                var polyphonyCharacter = question.getPolyphonyCharacter();
+                polyphonyCharacter = question.getPolyphonyCharacter();
                 if (polyphonyCharacter) { // Has polyphony
                     isPass = question.setAnswer(polyphonyCharacter).verify(result);
                 }
             }
 
-            var verifyResult = {
+            let verifyResult = {
                 result: isPass,
                 input: result,
                 word: question.word,

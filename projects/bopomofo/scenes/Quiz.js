@@ -36,7 +36,7 @@ class Quiz extends Base {
 
         var quiz = BuildQuiz(this.model);
 
-        QuizPromise(quizPanel, quiz)
+        QuizPromise(quizPanel, quiz, this.model)
             .then(function () {
                 console.log('Quiz complete');
             })

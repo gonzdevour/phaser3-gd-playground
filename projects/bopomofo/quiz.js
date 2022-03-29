@@ -62,7 +62,7 @@ class Test extends Phaser.Scene {
             //     word: model.db[1].words.queryWord('松柏常青')[0]
             // })
 
-        QuizPromise(quizPanel, quiz)
+        QuizPromise(quizPanel, quiz, model)
             .then(function () {
                 console.log('Quiz complete');
             })
