@@ -11,7 +11,7 @@ import QuizPromise from './build/control/quiz/QuizPromise.js';
 var api;
 var assetPack = {};
 
-class Test extends Phaser.Scene {
+class Test extends Base {
     constructor() {
         super({
             key: 'quiz'
@@ -54,7 +54,7 @@ class Test extends Phaser.Scene {
         // model.setQuizConfig({
         //     database: '常用詞庫',
         //     enhancement:'ㄔㄘ',
-        //     mode: '依序'
+        //     mode: '頻次'
         // })
         // var quiz = BuildQuiz(model);
 
@@ -63,10 +63,10 @@ class Test extends Phaser.Scene {
         quiz
             .clearQuestions()
             .addQuestion({
-                word: model.db[1].words.queryWord('蘋果')[0]
+                word: model.db[1].words.queryWord('厚薄')[0]
             })
             .addQuestion({
-                word: model.db[1].words.queryWord('松柏常青')[0]
+                word: model.db[1].words.queryWord('蘋果')[0]
             })
 
         QuizPromise(quizPanel, quiz)

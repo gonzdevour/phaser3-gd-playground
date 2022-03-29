@@ -4,9 +4,6 @@ import { BootSceneKey, MainMenuSceneKey } from './Const.js';
 import CreateModel from '../build/model/CreateModel.js';
 import CreateKnob from '../build/view/style/CreateKnob.js';
 
-//loading
-
-
 //log
 import InitLog from "../../../plugins/logger/InitLog.js";
 //api
@@ -55,7 +52,7 @@ class Boot extends Base {
                     assetPack[item.type][item.key].url = item.url;
                 }
             });
-            console.log('assetPack:' + '\n' + JSON.stringify(assetPack));
+            _scene.log('assetPack:' + '\n' + JSON.stringify(assetPack));
 
             async function load(onSuccess, onError) {
                 api = await loading(this, assetPack['audio']);
@@ -65,7 +62,7 @@ class Boot extends Base {
                 //iap = api.iap;
                 //ads = api.ads;
                 //idfa = api.idfa;
-                console.log("api:" + api);
+                _scene.log("api:" + api);
                 onSuccess();
             }
             this.load.rexAwait(load);//參數:callback(onSuccess,onError)，要執行callback才會完成rexAwait

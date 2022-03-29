@@ -20,7 +20,7 @@ var CreateReviewPanel = function (scene, config) {
     sizerEvents: true,
   })
   .on('postlayout', function(){
-    console.log('mainPanel postlayout')
+    scene.log('mainPanel postlayout')
   })
 
   //建立scrollablePanel+fixWidthSizer
@@ -56,7 +56,7 @@ var CreateReviewPanel = function (scene, config) {
     space: { left: 10, right: 10, top: 10, bottom: 10, panel: 10, }
   })
   .once('sizer.postlayout', function(child, sizer){
-    console.log('scrollablePanel postlayout');
+    scene.log('scrollablePanel postlayout');
     //因為scrollablePanel沒有給size，size只有最上層的modalDialog有傳入，所以當layout完成後，再次layout子sizer(scrollablePanel)，
     //會因為沒有預設size而以min size 0*0為基準來重新layout，大小就會與跟著modalDialog一起建立的scrollablePanel不同。
     //解決：在mainPanel啟動sizerEvents後可掛上layout完成事件，完成後將大小設為min size，之後layout這區域時才能使用proportion
@@ -87,7 +87,7 @@ var CreateReviewPanel = function (scene, config) {
     var word = scene.rexUI.add.BBCodeText(0, 0, newStr, { fontFamily: 'DFKai-SB', fontSize: 72 })
       .setInteractive()
       .on('areaover', function (key) {
-        console.log('areaover' + key);
+        scene.log('areaover' + key);
       })
     */
     var txtLabel = CreateTextLabel(scene, newStr);
@@ -130,7 +130,7 @@ var CreateReviewPanel = function (scene, config) {
       maxCharacters: 4, //1個詞最多支援4個字
       characters: [],
     }
-    console.log(element.word);
+    scene.log(element.word);
     //建立詞
     var word = CreateWord(scene, wordConfig)
       .setWord(scene.model.currentDB.words.queryWord(element.word)[0].getCharacters()) //queryWord取回array，所以一定要給index才能拿到Word物件
@@ -144,7 +144,7 @@ var CreateReviewPanel = function (scene, config) {
     space: { item: 30 }
   })
     .once('sizer.postlayout', function(child, sizer){
-      console.log('wordPanel postlayout');
+      scene.log('wordPanel postlayout');
       child.setMinSize(child.width, child.height);
     })
 
@@ -209,7 +209,7 @@ var CreateReviewPanel = function (scene, config) {
       btnDelete.wordTxt = gameObject.wordTxt;
       btnDelete.wordLabel = gameObject;
       var txt = gameObject.wordTxt;
-      console.log(txt)
+      scene.log(txt)
       var wordChars = scene.model.currentDB.words.queryWord(txt)[0].getCharacters();
       mainPanel.getElement('wordPanel.word').setWord(wordChars).layout();
     })

@@ -53,6 +53,10 @@ class Base extends Phaser.Scene {
         return userLang;
     }
 
+    get debugMode() {
+        return false;
+    }
+
     create() {
         this.createSysPanel();
         this.setupTransition();
@@ -69,6 +73,22 @@ class Base extends Phaser.Scene {
             .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
             .layout()
     }
+
+    drawBounds(sizer, color) {
+        if (color == undefined) {
+            color = 0xff0000;
+        }
+        if (this.debugMode) {
+            return sizer.drawBounds(this.add.graphics(), color)
+        }
+    }
+
+    log(msg) {
+        if (this.debugMode) {
+            console.log(msg);
+        }
+    }
+
     setupTransition() {
         this.events.on('transitionout', function (toScene, duration) {
             var fromScene = this;
@@ -91,12 +111,12 @@ class Base extends Phaser.Scene {
 
         this.events.on('transitioncomplete', function () {
             var sceneKey = this.sys.config.key;
-            console.log(`${sceneKey} transition complete`);
+            this.log(`${sceneKey} transition complete`);
         }, this);
     }
 
     transitionTo(sceneKey, duration) {
-        console.log(`transition to ${sceneKey}`)
+        this.log(`transition to ${sceneKey}`)
         this.scene.transition({
             target: sceneKey,
             duration: duration,

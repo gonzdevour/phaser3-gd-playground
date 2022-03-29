@@ -15,7 +15,7 @@ var CreateQuizModePanel = function (scene, config) {
     /* 
     const QuizModeOptions = [
     '隨機',
-    '依序',
+    '頻次',
     '測驗'
     ]
     */

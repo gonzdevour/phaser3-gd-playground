@@ -18,10 +18,11 @@ class Result extends Base {
     }
 
     create() {
-        console.log('Lang=' + this.language);
-
         var _scene = this;
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
+
+        _scene.log('Lang=' + this.language);
+
         this.input.topOnly = false;
 
         var mainMenu = CreateResultPanel(this);
@@ -39,7 +40,7 @@ class Result extends Base {
             }, this)
             .on('button.review', function () { //開啟review modalPromise
                 _scene.sound.play('right');
-                console.log('button.help')
+                _scene.log('button.help')
                 ModalDialogPromise(_scene, {
                     title: '複習列表',
                     content: CreateReviewPanel(_scene,{wrongList: _scene.model.appData.record.wrongList}),
@@ -48,10 +49,7 @@ class Result extends Base {
                 })
             }, this)
 
-        console.log(`${mainMenu.width}x${mainMenu.height}`)
-
-        var logo = mainMenu.getElement('logo'); //從mainMenu取得logo物件
-        this.rexUI.easeMoveFrom(logo, 1000, undefined, '-=200', 'Cubic'); //排好版之後再開始tween
+        //this.log(`${mainMenu.width}x${mainMenu.height}`)
 
         super.create(); //createSysPanel & setupTransition
 

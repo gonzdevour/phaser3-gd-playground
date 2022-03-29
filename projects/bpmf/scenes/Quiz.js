@@ -5,6 +5,7 @@ import ModalDialogPromise from '../build/view/modeldialog/ModalDialogPromise.js'
 import CreateQuizPanel from '../build/view/quizpanel/CreateQuizPanel.js';
 import BuildQuiz from '../build/control/quiz/BuildQuiz.js';
 import QuizPromise from '../build/control/quiz/QuizPromise.js';
+import Clock from '../../../../phaser3-rex-notes/plugins/clock.js';
 
 // Run quiz
 class Quiz extends Base {
@@ -22,16 +23,21 @@ class Quiz extends Base {
         var _scene = this;
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
 
+        //計時開始
+        var quizClock = new Clock(this);
+        quizClock.start();
+        _scene.log('quizClock start');
+
         //重置關卡紀錄。因為從lsData讀入的appData.record會影響BuildQuiz，所以這個步驟必須在BuidQuiz之前
         this.model.appData.load().reset();
-        console.log(this.model.appData)
+        _scene.log(this.model.appData)
 
         //先建立Quiz面板
         var quizPanel = CreateQuizPanel(this, this.model.getQuizConfig());
         quizPanel
             .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
             .layout()
-        //console.log(`${quizPanel.width}x${quizPanel.height}`)
+        //_scene.log(`${quizPanel.width}x${quizPanel.height}`)
 
         //再建立Quiz題組
         var quiz = BuildQuiz(this.model);
@@ -39,7 +45,8 @@ class Quiz extends Base {
         //組合Quiz面板與題組並啟動流程、偵測結束
         QuizPromise(quizPanel, quiz)
             .then(function () {
-                console.log('Quiz complete');
+                _scene.model.appData.curTimeElapsed = Math.round(quizClock.now/1000);
+                _scene.log('Quiz complete in ' + Math.round(quizClock.now/1000) + ' sec');
                 //_scene.transitionTo( ResultSceneKey, 500 )
                 _scene.scene.start(ResultSceneKey);
             })
@@ -47,7 +54,7 @@ class Quiz extends Base {
         //返回上一頁按鈕
         var btnHome = CreateLabel(_scene, '返回', 'arrowL')
             .onClick( function (button, gameObject, pointer, event) {
-                console.log('reqBack')
+                _scene.log('reqBack')
                 ModalDialogPromise(_scene, {
                     //title: '使用說明',
                     content: '確定要返回選單頁面嗎？',
