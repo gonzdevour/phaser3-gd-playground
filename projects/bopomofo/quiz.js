@@ -56,11 +56,11 @@ class Test extends Phaser.Scene {
         quiz
             .clearQuestions()
             .addQuestion({
-                word: model.db[1].words.queryWord('嘗試')[0]
+                word: model.db[1].words.queryWord('厚薄')[0]
             })
-            .addQuestion({
-                word: model.db[1].words.queryWord('松柏常青')[0]
-            })
+            // .addQuestion({
+            //     word: model.db[1].words.queryWord('松柏常青')[0]
+            // })
 
         QuizPromise(quizPanel, quiz)
             .then(function () {
