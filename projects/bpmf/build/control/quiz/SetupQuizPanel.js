@@ -19,16 +19,15 @@ var SetupQuizPanel = function (quizPanel, question, onSubmit) {
             gameObject.scene.model.speech.say(question.word.word);
         })
         .once('submit', function (result) { //callback回傳答案
-            let polyphonyCharacter = undefined;
-            let isPass = question.verify(result); //比對答案
+            var isPass = question.verify(result); //比對答案
             if (!isPass) { // 如果答案沒通過，檢查是不是破音詞
-                polyphonyCharacter = question.getPolyphonyCharacter(); //取出破音詞
+                var polyphonyCharacter = question.getPolyphonyCharacter(); //取出破音詞
                 if (polyphonyCharacter) { //如果有破音詞
                     isPass = question.setAnswer(polyphonyCharacter).verify(result);//比對破音詞
                 }
             }
 
-            let verifyResult = {
+            var verifyResult = {
                 result: isPass, //是否通過
                 input: result, //答案內容
                 word: question.word,//題目詞
