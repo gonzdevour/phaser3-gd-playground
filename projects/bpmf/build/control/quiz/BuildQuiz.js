@@ -54,8 +54,8 @@ var BuildQuiz = function (model) {
     }
 
     //印出第一個charcter物件，測試用
-    //model.scene.log('characters[0].character：');
-    //console.log(characters[0].character);
+    //console.log('characters[0]：' + '\n' + characters[0]);
+    //console.log('characters[0].character：' + '\n' + characters[0].character);
 
     //把考過的character移到最後面
     var rightList = model.appData.record.rightList;

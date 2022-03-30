@@ -34,6 +34,8 @@ class Answer {
 
     verify(input) {
         var answer = this.answer;
+        console.log('inp: ' + JSON.stringify(input));
+        console.log('ans: ' + JSON.stringify(answer));
         for (var i = 0, cnt = TypeNames.length; i < cnt; i++) {
             var typeName = TypeNames[i];
             if (answer[typeName] !== input[typeName]) { //input任一拼音與answer拼音不同回傳false

@@ -20,6 +20,7 @@ class Question {
         var word = GetValue(config, 'word');
         var character = GetValue(config, 'character');
         var characterIndex;
+        var characterPolyphonyIndex;
 
         //出題的模式：給詞取隨機字|給詞&字序號|給字取隨機詞|給詞&字
         
@@ -27,20 +28,24 @@ class Question {
             // Create word from given character //以字找詞
             word = character.getRandomWord(); //以字找隨機詞
             characterIndex = word.getCharacterIndex(character); //設定字在詞裡的序號
+            characterPolyphonyIndex = word.getCharacterPolyphonyIndex(character); //找出此字屬於此詞的第幾組破音詞
         } else if (word && (character === undefined)) { //若config有詞無字
             // Create character from given word //以詞找字
             // TODO: Weight of character in a word(weight未完成)
             var characters = word.getCharacters(); //以詞取出所有字
             characterIndex = Phaser.Math.Between(0, characters.length - 1);//隨機取一字
             character = characters[characterIndex];//取得題目字
+            characterPolyphonyIndex = word.getCharacterPolyphonyIndex(character); //找出此字屬於此詞的第幾組破音詞
         } else if (word && (typeof (character) === 'number')) { //若config有詞，字參數給數字
             // Get character according to index//依字序取字
             characterIndex = character;
             var characters = word.getCharacters();//以詞取出所有字
             character = characters[characterIndex];//取得題目字
+            characterPolyphonyIndex = word.getCharacterPolyphonyIndex(character); //找出此字屬於此詞的第幾組破音詞
         } else if (word && character) { //若config有詞又有字
             // Check if word contains character
             characterIndex = word.getCharacterIndex(character);//設定字在詞裡的序號
+            characterPolyphonyIndex = word.getCharacterPolyphonyIndex(character); //找出此字屬於此詞的第幾組破音詞
             if (characterIndex === -1) { //如果字沒有在詞裡面
                 // Error : Character is not in Word//報錯
             }
@@ -52,6 +57,7 @@ class Question {
         this.characters = word.getCharacters();
         this.character = character;
         this.characterIndex = characterIndex;
+        this.characterPolyphonyIndex = characterPolyphonyIndex;
         // Answer, choices
         this.answer = (new Answer()).setAnswer(character);
         //例如強化練習模式'ㄓㄗ'會轉換為config = { initials: 'ㄓㄗ' }
@@ -84,7 +90,8 @@ class Question {
     }
 
     getPolyphonyCharacter() { //取出破音詞的拼音組合
-        var characters = this.word.getCharacters(1); //從詞取出第二組拼音組合
+        var idx = this.characterPolyphonyIndex == 0?1:0;
+        var characters = this.word.getCharacters(idx); //從詞取出第二組拼音組合
         return (characters) ? characters[this.characterIndex] : null;
     }
 /* 

@@ -45,6 +45,21 @@ class Word {
         return characters; //[doc,doc,...]
     }
 
+    getCharacterPolyphonyIndex(character) { //以字來查此字為此詞中的第幾組破音詞
+        var characterDocID = character.doc.$loki; //用此字的doc.id來查
+        var pidLists = this.doc.pid, //Word.doc.pid是此詞的每一組破音的doc id array
+            characterIndex,
+            characterPolyphonyIndex;
+        for (var p = 0, pcnt = pidLists.length; p < pcnt; p++) {//對此詞的每組破音
+            characterIndex = pidLists[p].indexOf(characterDocID);//找出此字的doc.id是這組破音doc id array中的第幾個
+            if (characterIndex !== -1) {
+                characterPolyphonyIndex == p;//如果有查到則記錄是第幾組破音詞
+                break; //有查到就停止
+            }
+        }
+        return characterPolyphonyIndex;
+    }
+
     getCharacterIndex(character) { //以字來查此字為此詞中的第幾個字
         var characterDocID = character.doc.$loki; //用此字的doc.id來查
         var pidLists = this.doc.pid, //Word.doc.pid是此詞的每一組破音的doc id array
