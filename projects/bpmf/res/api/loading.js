@@ -3,6 +3,7 @@ import { speechInit } from "./speech.js";
 import { dialogInit } from "./dialog.js";
 import { admobInit } from "./admob.js";
 import { iapInit } from "./iap.js";
+import { iabInit } from "./iab.js";
 import { idfaInit } from "./idfa.js";
 import { getOS } from "../../../../plugins/os.js";
 //get OS status
@@ -17,6 +18,7 @@ var loading = function (scene, audioUrls) {
     //但cdv_audio(cordova media)要靠路徑才能正確播放
     var apiInit = function (scene, audioUrls) {
       var api = {};
+      api.iab = iabInit();
       api.sound = soundInit(audioUrls);
       api.speech = speechInit();
       api.dialog = dialogInit();

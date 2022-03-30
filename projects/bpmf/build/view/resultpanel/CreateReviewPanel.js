@@ -141,15 +141,16 @@ var CreateReviewPanel = function (scene, config) {
 
   var wordPanel = scene.rexUI.add.sizer({
     orientation: 'y',
-    space: { item: 30 }
+    space: { item: 30 },
+    sizerEvents: true,
   })
     .once('sizer.postlayout', function(child, sizer){
       scene.log('wordPanel postlayout');
       child.setMinSize(child.width, child.height);
     })
 
-  var btnSearch = CreateActionLabel(scene, '搜尋', undefined, 20);
-  var btnDelete = CreateActionLabel(scene, '刪除', undefined, 20);
+  var btnSearch = CreateActionLabel(scene, '搜尋', 'search', 20);
+  var btnDelete = CreateActionLabel(scene, '刪除', 'delete', 20);
   RegisterLabelAsButton(btnSearch, 'button.searchWord', mainPanel);
   RegisterLabelAsButton(btnDelete, 'button.deleteWord', mainPanel);
 
@@ -163,7 +164,11 @@ var CreateReviewPanel = function (scene, config) {
     maxCharacters: 4, //1個詞最多支援4個字
     characters: [],
   }
-  var word = CreateWord(scene, wordConfig);
+  var word = CreateWord(scene, wordConfig)
+    .once('sizer.postlayout', function(child, sizer){
+      console.log('word postlayout');
+      child.setMinSize(child.width, child.height);
+    })
 
   wordPanel
     .add(word, {
@@ -216,7 +221,7 @@ var CreateReviewPanel = function (scene, config) {
     .on('button.searchWord', function (gameObject, pointer, event) {
       if (gameObject.wordTxt != undefined) {
         var url = 'https://dict.revised.moe.edu.tw/search.jsp?md=1&word=' + gameObject.wordTxt;
-        window.open(url, '_blank').focus();
+        scene.model.browser.open(url);
       }
     })
     .on('button.deleteWord', function(gameObject, pointer, event){
@@ -252,9 +257,9 @@ var CreateTextLabel = function (scene, text) {
 var CreateActionLabel = function (scene, text, img, radius, pos) {
   return scene.rexUI.add.label({
     background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
-    icon: !img ? undefined : scene.add.image(0, 0, img).setDisplaySize(90, 90),
+    icon: !img ? undefined : scene.add.image(0, 0, img).setDisplaySize(72, 72),
     text: !text ? undefined : scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
-    space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
+    space: { left: 10, right: 10, top: 10, bottom: 10, icon: 0 }
   });
 }
 

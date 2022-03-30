@@ -110,6 +110,7 @@ class Model {
 
         //將api控制權交給model。因為各api有可能在測試時不存在，所以必須做undefined處理
         var apiList = GetValue(config, 'api', undefined);
+        this.browser = GetValue(apiList, 'iab', undefined);//初始化語音
         this.speech = GetValue(apiList, 'speech', undefined);//初始化語音
         this.sound = GetValue(apiList, 'sound', undefined); //初始化音效
 

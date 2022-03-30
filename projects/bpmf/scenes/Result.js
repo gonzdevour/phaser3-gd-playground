@@ -23,7 +23,10 @@ class Result extends Base {
 
         _scene.log('Lang=' + this.language);
 
-        this.input.topOnly = false;
+        _scene.input.topOnly = false;
+
+        _scene.model.getQuizConfig(); //從ls中取得QuizConfig的設定(詞庫|強化|模式)，並設定currentDB
+        _scene.model.appData.load(); //從ls中取得appData
 
         var mainMenu = CreateResultPanel(this);
         mainMenu

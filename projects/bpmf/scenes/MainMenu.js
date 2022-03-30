@@ -64,7 +64,7 @@ class MainMenu extends Base {
 何相關的建議與指導，請不吝聯絡
 敝團隊。`,
                     buttonMode: 3,
-                    callbackMail: function(){ window.open('https://forms.gle/uc51sDPiUZ34Qiws9', '_blank').focus(); },        
+                    callbackMail: function(){ _scene.model.browser.open('https://forms.gle/uc51sDPiUZ34Qiws9') },        
                     width: _scene.viewport.displayWidth-50,
                 })
             }, this)

@@ -22,13 +22,13 @@ var SetupQuizPanel = function (quizPanel, question, onSubmit) {
             let polyphonyCharacter = undefined;
             let isPass = question.verify(result); //比對答案
             if (!isPass) { // 如果答案沒通過，檢查是不是破音詞
-                console.log('沒通過，開始檢查是否破音詞');
+                //console.log('沒通過，開始檢查是否破音詞');
                 polyphonyCharacter = question.getPolyphonyCharacter(); //取出破音詞
-                console.log('破音詞：' + JSON.stringify(polyphonyCharacter.doc));
+                //console.log('破音詞：' + JSON.stringify(polyphonyCharacter.doc));
                 if (polyphonyCharacter) { //如果有破音詞
-                    console.log('有破音詞')
+                    //console.log('有破音詞')
                     isPass = question.setAnswer(polyphonyCharacter).verify(result);//比對破音詞
-                    console.log('通過?' + isPass)
+                    //console.log('通過?' + isPass)
                 }
             }
 

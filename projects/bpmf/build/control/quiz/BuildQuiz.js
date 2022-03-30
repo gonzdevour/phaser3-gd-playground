@@ -57,20 +57,29 @@ var BuildQuiz = function (model) {
     //console.log('characters[0]：' + '\n' + characters[0]);
     //console.log('characters[0].character：' + '\n' + characters[0].character);
 
-    //把考過的character移到最後面
+    //把考過的character移到最後面、答錯的character移到最前面(每次都先複習答錯的)
     var rightList = model.appData.record.rightList;
-    //篩出沒考過的(字不在rightList中的character物件群)
+    var wrongList = model.appData.record.wrongList;
+    //篩出沒答對過的(字不在rightList中的character物件群)
     var undoneList = characters.filter(function(character, index, array){
         return ArrIfContainKeyValue(rightList, 'character', character.character) == false;
     });
-    //篩出考過的(字在rightList中的character物件群)
+    //篩出答對過的(字在rightList中的character物件群)
     var doneList = characters.filter(function(character, index, array){
         return ArrIfContainKeyValue(rightList, 'character', character.character) == true;
     });
-    //console.log('doneList');
-    //console.log(doneList);
-    //組合兩組array，沒考過的在前面，考過的在後面
-    var arrangedChars = undoneList.concat(doneList);
+    //從沒答對過的characters中篩出答錯過的
+    var reviewList = undoneList.filter(function(character, index, array){
+        return ArrIfContainKeyValue(wrongList, 'character', character.character) == true;
+    });
+    //從沒答對過的characters中篩出沒答錯過的
+    var freshList = undoneList.filter(function(character, index, array){
+        return ArrIfContainKeyValue(wrongList, 'character', character.character) == false;
+    });
+    console.log('reviewList' + '\n' + reviewList)
+    console.log('doneList' + '\n' + doneList)
+    //組合3組array：答錯過的在最前面，沒答過的在中間，答對過的在後面
+    var arrangedChars = reviewList.concat(freshList).concat(doneList);
 
     // Now we have quiz characters
     // Clear and add these characters

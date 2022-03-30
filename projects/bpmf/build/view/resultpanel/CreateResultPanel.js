@@ -74,7 +74,7 @@ var CreateResultPanel = function (scene, config) {
         )
         .add(
             txtQcnt,
-            { padding: { bottom: 20 }}
+            { padding: { bottom: 25 }}
         )
         .add(
             labelTElapsed,
@@ -82,7 +82,7 @@ var CreateResultPanel = function (scene, config) {
         )
         .add(
             txtTElapsed,
-            { padding: { bottom: 20 }}
+            { padding: { bottom: 25 }}
         )
         .add(
             labelRPct,
