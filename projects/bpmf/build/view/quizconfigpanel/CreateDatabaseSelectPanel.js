@@ -11,7 +11,7 @@ const PanelName = 'database'; //用來取得config.database|enhancement|mode的k
 /* 
 QuizConfig.js:
     var quizConfigPanel = CreateQuizConfigPanel(this, {
-        radio: this.model.getQuizConfig() 
+        radio: this.model.appData.loadQuizConfig() 
 
         //這裡的config，從model的現存參數來，預設值為：
         //var DefaultQuizConfig = {

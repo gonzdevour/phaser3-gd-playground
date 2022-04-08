@@ -14,7 +14,7 @@ import GetValue from '../../../../../plugins/utils/object/GetValue.js';
 /*
 QuizConfig.js:
     var quizConfigPanel = CreateQuizConfigPanel(this, {
-        radio: this.model.getQuizConfig() //這裡的config，從model的現存參數來
+        radio: this.model.appData.loadQuizConfig() //這裡的config，從model的現存參數來
     })
 →
 CreateQuizConfigPanel.js:

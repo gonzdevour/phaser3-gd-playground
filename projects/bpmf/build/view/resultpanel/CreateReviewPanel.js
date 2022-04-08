@@ -29,7 +29,7 @@ var CreateReviewPanel = function (scene, config) {
     //width: scene.viewport.width-100, 
     height: scene.viewport.height * 0.6,
     scrollMode: 0,
-    background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2), // #ffffff
+    background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
     panel: {
       child: scene.rexUI.add.fixWidthSizer({
         space: { left: 10, right: 10, top: 30, bottom: 10, item: 30, line: 20, },
@@ -92,6 +92,8 @@ var CreateReviewPanel = function (scene, config) {
     */
     var txtLabel = CreateTextLabel(scene, newStr);
     txtLabel.wordTxt = element.word;
+    txtLabel.characterTxt = element.character;
+    txtLabel.dbIdx = element.dbIdx;
     RegisterLabelAsButton(txtLabel, 'button.showWord', mainPanel);
 
     //將詞加入button array，給fixWidthButton用(目前沒用)
@@ -214,8 +216,9 @@ var CreateReviewPanel = function (scene, config) {
       btnDelete.wordTxt = gameObject.wordTxt;
       btnDelete.wordLabel = gameObject;
       var txt = gameObject.wordTxt;
-      scene.log(txt)
-      var wordChars = scene.model.currentDB.words.queryWord(txt)[0].getCharacters();
+      var dbIdx = gameObject.dbIdx;
+      scene.log(txt + '@db' + dbIdx)
+      var wordChars = scene.model.db[dbIdx].words.queryWord(txt)[0].getCharacters();
       mainPanel.getElement('wordPanel.word').setWord(wordChars).layout();
     })
     .on('button.searchWord', function (gameObject, pointer, event) {
@@ -226,8 +229,10 @@ var CreateReviewPanel = function (scene, config) {
     })
     .on('button.deleteWord', function(gameObject, pointer, event){
       if(gameObject.wordTxt != undefined){
+        //(array, item, indexKey)從wrongList中移除word值相同的項目，儲存
         ArrRemoveItemIfKeyExist(wrongList,{'word':gameObject.wordTxt},'word');
         scene.model.appData.recordUpdate();
+        //刪除時縮小詞組
         gameObject.wordLabel.scaleDownDestroyPromise(300,undefined,'Cubic')
           .then(function() {
             mainPanel.buttonLastShowed = undefined;

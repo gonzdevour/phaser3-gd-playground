@@ -116,6 +116,8 @@ class Boot extends Base {
             ],
             api
         });
+        this.model.appData.load() //從ls中取得appData)
+        //console.log(this.model.appData);
         this.scene.start(MainMenuSceneKey);
     }
 

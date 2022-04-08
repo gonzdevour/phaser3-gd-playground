@@ -16,6 +16,7 @@ class Character {
         this.doc = doc;
 
         this.character = doc.character;
+        this.polyphonyIndex = doc.polyphonyIndex;
         this.initials = doc.initials;
         this.media = doc.media;
         this.vowel = doc.vowel;

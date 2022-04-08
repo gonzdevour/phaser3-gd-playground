@@ -20,13 +20,13 @@ class QuizConfig extends Base {
         super.scaleOuter();//Base: this.rexScaleOuter.scale();
 
         var quizConfigPanel = CreateQuizConfigPanel(this, {
-            radio: this.model.getQuizConfig()
+            radio: this.model.appData.loadQuizConfig()
         })
             .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
             .layout()
             .on('startQuiz', function (result) {
                 this.log(result);
-                this.model.setQuizConfig(result);
+                this.model.appData.save(result);
                 this.transitionTo(QuizSceneKey,500 );
             }, this)
 

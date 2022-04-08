@@ -37,6 +37,9 @@ Model
         .dbId //dbWrap.id
         .getWords(wordCount)
         .getRandomWord()
+  .appData
+    .loadQuizConfig() //從ls中取出紀錄並重建回QuizConfig
+    .save(config) //以JSON形式(限於DefaultData中的key)存入ls
   .lsData
   .quiz
     .model
@@ -74,6 +77,4 @@ Model
     .addQuestion(config) //config可以是JSON(from BuildQuiz)也可以是Question(ls fromJSON)
     .shuffleQuestions() //題庫洗牌
     .clearQuestions() //清空questions array，題號歸0
-  .getQuizConfig() //從ls中取出紀錄並重建回QuizConfig
-  .setQuizConfig(config) //將QuizConfig存入ls
 ```

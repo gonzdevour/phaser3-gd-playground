@@ -1,5 +1,11 @@
 //Model.js使用的預設值
 
+var DefaultSettings = {
+    volumeSE: 1, //音效音量
+    volumeSpeak: 1, //語音音量
+    volumeBGM: 1, //音樂音量
+}
+
 var DefaultQuizConfig = {
     database: '常用詞庫', //指定詞庫種類
     enhancement: '無', //強化練習模式
@@ -15,12 +21,14 @@ var DefaultRecord = {
 //將上面的物件全部複製組成一個物件(物件與陣列不能用var複製否則會指向同一物件)
 var DefaultData = Object.assign(
     {},
+    DefaultSettings,
     DefaultQuizConfig,
     DefaultRecord,
 );
 
 export {
     DefaultData,
+    DefaultSettings,
     DefaultQuizConfig,
     DefaultRecord,
 }

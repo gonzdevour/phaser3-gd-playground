@@ -39,17 +39,22 @@ var CreateResultPanel = function (scene, config) {
     var resultTxtRPct = `${result.rightPercent}%`;
 
     //建立統計字串label
-    var labelQcnt = CreateTitleLabel(scene, '測驗題數');
+    var labelQcnt = CreateTitleLabel(scene, '測驗題數', undefined, 20);
     var txtQcnt = CreateTextLabel(scene, resultTxtQcnt);
-    var labelTElapsed = CreateTitleLabel(scene, '作答時間');
+    var labelTElapsed = CreateTitleLabel(scene, '作答時間', undefined, 20);
     var txtTElapsed = CreateTextLabel(scene, resultTxtTElapsed);
-    var labelRPct = CreateTitleLabel(scene, '正確率');
-    var txtRPct = CreateTextLabel(scene, resultTxtRPct)
+    var labelRPct = CreateTitleLabel(scene, '正確率', undefined, 20);
+    var txtRPct = CreateTextLabel(scene, resultTxtRPct);
+
+    txtRPct
+        .layout()
+        .setMinSize(txtRPct.width, txtRPct.height)
         .setData('t', 0)
         .on('changedata-t', function (parent, value, previousValue) {
             parent.setText(`${Math.floor(value * result.rightPercent)}%`);
         })
         .easeDataTo('t', 1, 1000)
+
     /* 
     scene.tweens.add({
         targets: txtRPct.data.values,
@@ -170,13 +175,18 @@ var CreateTextLabel = function (scene, text, img, radius, pos) {
     })
 }
 
-var CreateTitleLabel = function (scene, text, img, radius, pos) {
-    return scene.rexUI.add.label({
-        //background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
-        icon: !img?undefined:scene.add.image(0, 0, img).setDisplaySize(90, 90),
-        text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
-        space: { left: 20, right: 20, top: 10, bottom: 10, icon: 10 }
-    });
+var CreateTitleLabel = function (scene, text ) {
+    return scene.rexUI.add.overlapSizer({ //物件可重疊的sizer(使用aligh,padding,offset)
+            width: 400,
+            space: { top: 10, bottom: 10 } //只設定天地，裡面的大小會由元件決定(這裡是由bbcodeText和button label大小決定)
+        })
+        .addBackground(CreateRoundRectangleBackground(scene, 20, 0x333333))
+        .add(
+            scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+            {
+                align: 'center', expand: false, key: 'title',
+            }
+        )
 }
 
 export default CreateResultPanel;

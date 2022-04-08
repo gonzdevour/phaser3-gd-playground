@@ -51,7 +51,7 @@ class Test extends Base {
         console.log(`${quizPanel.width}x${quizPanel.height}`)
 
         // Set quizConfig manually
-        // model.setQuizConfig({
+        // model.appData.save({
         //     database: '常用詞庫',
         //     enhancement:'ㄔㄘ',
         //     mode: '頻次'

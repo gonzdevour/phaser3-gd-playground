@@ -38,6 +38,7 @@ var CreateQuizPanel = function (scene, config) {
     }
 
     var qidxtext = CreateTextLabel(scene, '');
+    var txtTimer = CreateTextLabel(scene, '');
 
     var quizPanel = new QuizPanel(scene, {
         x: x, y: y,
@@ -81,6 +82,14 @@ var CreateQuizPanel = function (scene, config) {
             qidxtext,{
                 key: 'qidxtext',
                 align: 'right-top',
+                expand: false,
+                //offsetX: 20, offsetY: 20
+            }
+        )
+        .add(
+            txtTimer,{
+                key: 'txtTimer',
+                align: 'left-top',
                 expand: false,
                 //offsetX: 20, offsetY: 20
             }

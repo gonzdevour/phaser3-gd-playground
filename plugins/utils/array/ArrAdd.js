@@ -1,24 +1,4 @@
 /**
- * @author       Richard Davey <rich@photonstorm.com>
- * @copyright    2020 Photon Storm Ltd.
- * @license      {@link https://opensource.org/licenses/MIT|MIT License}
- */
-
-/**
- * Adds the given item, or array of items, to the array.
- *
- * Each item must be unique within the array.
- *
- * The array is modified in-place and returned.
- *
- * You can optionally specify a limit to the maximum size of the array. If the quantity of items being
- * added will take the array length over this limit, it will stop adding once the limit is reached.
- *
- * You can optionally specify a callback to be invoked for each item successfully added to the array.
- *
- * @function Phaser.Utils.Array.Add
- * @since 3.4.0
- *
  * @param {array} array - The array to be added to.
  * @param {any|any[]} item - The item, or array of items, to add to the array. Each item must be unique within the array.
  * @param {number} [limit] - Optional limit which caps the size of the array.
@@ -27,6 +7,9 @@
  *
  * @return {array} The input array.
  */
+
+let ArrIfContain = require('./ArrIfContain.js'); //以物件屬性而非物件本體判斷物件是否存在array裡面
+
 var ArrAdd = function (array, item, limit, callback, context)
 {
     if (context === undefined) { context = array; }
@@ -43,8 +26,10 @@ var ArrAdd = function (array, item, limit, callback, context)
 
     if (!Array.isArray(item)) //第一回合：傳入的item不是array
     {
-        if (array.indexOf(item) === -1) //如果item不存在array裡，則存入此item
+
+        if (ArrIfContain(item, array) === -1) //如果item不存在array裡，則存入此item
         {
+            //console.log(JSON.stringify(item) + '不存在於' + JSON.stringify(array) + '因此加入')
             array.push(item);
 
             if (callback)
@@ -56,6 +41,7 @@ var ArrAdd = function (array, item, limit, callback, context)
         }
         else
         {
+            //console.log(JSON.stringify(item) + '存在於' + JSON.stringify(array) + '因此不加入')
             return null;
         }
     }
@@ -64,7 +50,7 @@ var ArrAdd = function (array, item, limit, callback, context)
 
     while (itemLength >= 0) //逐一檢查item中的每個element是否重複
     {
-        if (array.indexOf(item[itemLength]) !== -1)
+        if (ArrIfContain(item[itemLength], array) !== -1)
         {
             item.splice(itemLength, 1); //若重複則剔除
         }

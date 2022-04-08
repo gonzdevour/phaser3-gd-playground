@@ -8,7 +8,7 @@ var CreateDB = function () {
 
     db.addCollection(CharactersCollectionName, {
         disableMeta: true,
-        indices: ['character', 'initials', 'media', 'vowel', 'tone', 'freq']
+        indices: ['character', 'initials', 'media', 'vowel', 'tone', 'freq', 'polyphonyIndex']
     });
 
     db.addCollection(WordsCollectionName, {

@@ -53,8 +53,8 @@ var WordDataToDB = function (wordData) {
         pinyin = pinyins[0][c];
       }
 
-      //characterData = { character: 此詞第p組破音的第c個字, initial:, media:, vowel:, tone: }
-      var characterData = ParseBopomofo(pinyin, { character: word.charAt(c) });
+      //characterData = { character: 此詞第p組破音的第c個字, polyphonyIndex:第p組破音(用於篩除破音題) initial:, media:, vowel:, tone: }
+      var characterData = ParseBopomofo(pinyin, { character: word.charAt(c), polyphonyIndex: p });
       
       //以詞條建立字庫：
       //如果db的character collection中沒有這條characterData，就加入這條characterData

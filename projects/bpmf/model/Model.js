@@ -47,6 +47,8 @@ Model
         .getWords(wordCount)
         .getRandomWord()
   .appData
+    .loadQuizConfig() //從ls中取出紀錄並重建回QuizConfig
+    .save(config) //將JSON(限於DefaultData中的key)存入ls
   .lsData
   .speech
   .sound
@@ -86,8 +88,6 @@ Model
     .addQuestion(config) //config可以是JSON(from BuildQuiz)也可以是Question(ls fromJSON)
     .shuffleQuestions() //題庫洗牌
     .clearQuestions() //清空questions array，題號歸0
-  .getQuizConfig() //從ls中取出紀錄並重建回QuizConfig
-  .setQuizConfig(config) //將QuizConfig存入ls
 */
 
 
@@ -99,6 +99,14 @@ class Model {
             var dbWrap = new DBWrap(this, jsonList[i]) //用DBWrap解壓縮compress後，傳入Model.db array裡
             this.db.push(dbWrap);
         }
+
+        //將api控制權交給model。因為各api有可能在測試時不存在，所以必須做undefined處理。
+        //因為new appData會同時控制api參數，所以必須在new AppData之前建立
+        var apiList = GetValue(config, 'api', undefined);
+        this.browser = GetValue(apiList, 'iab', undefined);//初始化語音
+        this.speech = GetValue(apiList, 'speech', undefined);//初始化語音
+        this.sound = GetValue(apiList, 'sound', undefined); //初始化音效
+
         //初始化建立ls(lsd plugin而不是純ls)，如果default:undefined會存入所有ls key-content。否則會依預設值的key存入原本在ls內的值，有key無值時存入預設值。
         this.lsData = new LocalStorageData({
             name: 'bopomofo',
@@ -106,43 +114,21 @@ class Model {
             //reset: true, //初始化時重設lsData為DefaultData，正式版要記得關掉
         })
         //appData初始化，傳入lsData，用於紀錄全域變數
-        this.appData = new AppData(this.lsData);
-
-        //將api控制權交給model。因為各api有可能在測試時不存在，所以必須做undefined處理
-        var apiList = GetValue(config, 'api', undefined);
-        this.browser = GetValue(apiList, 'iab', undefined);//初始化語音
-        this.speech = GetValue(apiList, 'speech', undefined);//初始化語音
-        this.sound = GetValue(apiList, 'sound', undefined); //初始化音效
+        //因為new appData時會同時控制api參數，所以必須在api之後建立
+        this.appData = new AppData(this);
 
         // 同時間只能有一個題組在執行
         this.quiz = new Quiz(this);
     }
-
-    getQuizConfig() { //從ls中取出紀錄並重建回QuizConfig
-        var dataManager = this.lsData;
-        var result = {};
-        for (var key in DefaultQuizConfig) { //使用DefaultQuizConfig的key結構
-            result[key] = dataManager.get(key);
-        }
-        this.setCurrentDB(result);
-        return result;
-    }
-
-    setQuizConfig(config) { //將QuizConfig存入ls
-        var dataManager = this.lsData;
-        for (var key in DefaultQuizConfig) { //使用DefaultQuizConfig的key結構
-            dataManager.set(key, config[key]);
-        }
-        return this;
-    }
-
     setCurrentDB(config) { //將QuizConfig存入ls
       switch (config.database) { //指定是哪一個題庫(每個題庫都已經prebuild好了)
         case '高頻詞庫':
             this.currentDB = this.db[0];
+            this.currentDBIndex = 0;
             break; 
         case '常用詞庫':
             this.currentDB = this.db[1];
+            this.currentDBIndex = 1;
             break;
       }
       return this;

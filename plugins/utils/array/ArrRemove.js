@@ -6,6 +6,8 @@
  *
  * @return {array} The input array.
  */
+let ObjIfValueEqual = require('../object/ObjIfValueEqual.js');
+
 var ArrRemove = function (array, item, callback, context)
 {
     if (context === undefined) { context = array; }
@@ -14,7 +16,7 @@ var ArrRemove = function (array, item, callback, context)
     {
         var itemsToRemove = [];
         array.forEach(function(element,idx,arr){
-            if (item == element){
+            if (ObjIfValueEqual(element, item)){
                 itemsToRemove.push(idx)
             }
         });

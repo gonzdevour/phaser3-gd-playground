@@ -7,9 +7,15 @@ var OS = getOS();
 class cdv_sound {
   constructor(audioUrls) {
     this.urls = audioUrls;
+    this.volume = 1;
     log("this.urls: " + this.urls)
   }
+  setVolume(value) {
+    this.volume = Math.min(1, Math.max(0,value));
+    console.log('cdv.setVolume:' + this.volume);
+  }
   play(scene, key, config) {
+    config = !config?{}:config;
     var se = new Media(
       this.getSrc(key),
       function playSuccess() {
@@ -20,9 +26,11 @@ class cdv_sound {
         log("media err: " + err.code);
       }
     );
+    se.setVolume(this.volume);
     se.play(config);
   }
   loop(scene, key, config) {
+    config = !config?{}:config;
     var se = new Media(
       this.getSrc(key),
       function playSuccess() {
@@ -34,6 +42,7 @@ class cdv_sound {
         log("media err: " + err.code);
       }
     );
+    se.setVolume(this.volume);
     se.play(config);
     return se;
   }
@@ -56,15 +65,24 @@ class cdv_sound {
 class p3_sound {
   constructor(audioUrls) {
     this.urls = audioUrls;
+    this.volume = 1;
     log("this.urls: " + this.urls)
+  }
+  setVolume(value) {
+    this.volume = Math.min(1, Math.max(0,value));
+    console.log('p3.setVolume:' + this.volume);
   }
   play(scene, key, config) {
     log(this.getSrc(key));
     log("p3audio play " + key );
+    config = !config?{}:config;
+    config.volume = this.volume;
     scene.sound.play(key, config);
   }
   loop(scene, key, config) {
     log("p3audio loop " + key );
+    config = !config?{}:config;
+    config.volume = this.volume;
     config.loop = true;
     scene.sound.play(key, config);
   }

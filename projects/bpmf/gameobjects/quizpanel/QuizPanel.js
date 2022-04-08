@@ -115,6 +115,11 @@ class QuizPanel extends Sizer {
         return this;
     }
 
+    setTxtTimer(data) {
+        this.getElement('wordArea.txtTimer').setText(data);
+        return this;
+    }
+
     setChoicesText(data) {
         this.getElement('choices').setChoicesText(data);
         return this;

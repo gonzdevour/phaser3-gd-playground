@@ -8,7 +8,7 @@ import ArrIfContainKeyValue from '../../../../../plugins/utils/array/ArrIsContai
 //建立題組
 //被Quiz scene呼叫，從題庫建立題組回傳quiz，送到QuizPromise跟quizpanel組合
 var BuildQuiz = function (model) {
-    var quizConfig = model.getQuizConfig(); //從ls中取出紀錄並重建回QuizConfig並設定currentDB
+    var quizConfig = model.appData.loadQuizConfig(); //從ls中取出紀錄並重建回QuizConfig並設定currentDB
 
     // See build/view/quizconfigpanel/Options.js, EnhanceOptions
     var enhancementMode = quizConfig.enhancement; //指定強化練習模式
@@ -29,9 +29,13 @@ var BuildQuiz = function (model) {
             break;
     }
 
-    var characters = model.currentDB.characters.query( //在字庫中取出符合條件的字docs
+    var charactersRaw = model.currentDB.characters.query( //在字庫中取出符合條件的字docs
         filter,
     );
+
+    var characters = charactersRaw.filter(function(character, index, array){ //篩掉破音字題
+        return character.polyphonyIndex == 0;
+    });
 
     // See build/view/quizconfigpanel/Options.js, QuizModeOptions
     var quizMode = quizConfig.mode; //篩出字docs後，指定出題模式
@@ -55,6 +59,7 @@ var BuildQuiz = function (model) {
 
     //印出第一個charcter物件，測試用
     //console.log('characters[0]：' + '\n' + characters[0]);
+    //debugger
     //console.log('characters[0].character：' + '\n' + characters[0].character);
 
     //把考過的character移到最後面、答錯的character移到最前面(每次都先複習答錯的)
@@ -76,8 +81,8 @@ var BuildQuiz = function (model) {
     var freshList = undoneList.filter(function(character, index, array){
         return ArrIfContainKeyValue(wrongList, 'character', character.character) == false;
     });
-    console.log('reviewList' + '\n' + reviewList)
-    console.log('doneList' + '\n' + doneList)
+    //console.log('reviewList' + '\n' + reviewList)
+    //console.log('doneList' + '\n' + doneList)
     //組合3組array：答錯過的在最前面，沒答過的在中間，答對過的在後面
     var arrangedChars = reviewList.concat(freshList).concat(doneList);
 

@@ -24,9 +24,7 @@ class Result extends Base {
         _scene.log('Lang=' + this.language);
 
         _scene.input.topOnly = false;
-
-        _scene.model.getQuizConfig(); //從ls中取得QuizConfig的設定(詞庫|強化|模式)，並設定currentDB
-        _scene.model.appData.load(); //從ls中取得appData
+        _scene.model.appData.loadQuizConfig(); //從ls中取得QuizConfig的設定(詞庫|強化|模式)，並設定currentDB
 
         var mainMenu = CreateResultPanel(this);
         mainMenu
@@ -42,7 +40,7 @@ class Result extends Base {
                 this.transitionTo( QuizConfigSceneKey,500 );
             }, this)
             .on('button.review', function () { //開啟review modalPromise
-                _scene.sound.play('right');
+                _scene.model.sound.play(_scene, 'right');
                 _scene.log('button.help')
                 ModalDialogPromise(_scene, {
                     title: '複習列表',

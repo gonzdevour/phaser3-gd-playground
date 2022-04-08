@@ -6,6 +6,7 @@ import CreateQuizPanel from '../build/view/quizpanel/CreateQuizPanel.js';
 import BuildQuiz from '../build/control/quiz/BuildQuiz.js';
 import QuizPromise from '../build/control/quiz/QuizPromise.js';
 import Clock from '../../../../phaser3-rex-notes/plugins/clock.js';
+import zeropadedTimerString from '../../../plugins/utils/timer/zeropadedTimerString.js';
 
 // Run quiz
 class Quiz extends Base {
@@ -23,21 +24,23 @@ class Quiz extends Base {
         var _scene = this;
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
 
-        //計時開始
-        var quizClock = new Clock(this);
-        quizClock.start();
-        _scene.log('quizClock start');
-
         //重置關卡紀錄。因為從lsData讀入的appData.record會影響BuildQuiz，所以這個步驟必須在BuidQuiz之前
         this.model.appData.load().reset();
         _scene.log(this.model.appData)
 
         //先建立Quiz面板
-        var quizPanel = CreateQuizPanel(this, this.model.getQuizConfig());
+        var quizPanel = CreateQuizPanel(this, this.model.appData.loadQuizConfig());
         quizPanel
             .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
             .layout()
         //_scene.log(`${quizPanel.width}x${quizPanel.height}`)
+
+        //計時開始
+        var quizClock = new Clock(this);
+        quizClock
+            .on('update', function(now, delta){ quizPanel.setTxtTimer(zeropadedTimerString(now) + '\n')})
+            .start();
+        _scene.log('quizClock start');
 
         //再建立Quiz題組
         var quiz = BuildQuiz(this.model);

@@ -3,6 +3,7 @@ import Base from './Base.js';
 import { MainMenuSceneKey, QuizConfigSceneKey, QuizSceneKey, ResultSceneKey } from './Const.js';
 import CreateMainMenuPanel from '../build/view/mainmenupanel/CreateMainMenuPanel.js';
 import ModalDialogPromise from '../build/view/modeldialog/ModalDialogPromise.js';
+import CreateSettingsPanel from '../build/view/mainmenupanel/CreateSettingsPanel.js';
 
 // Main menu
 class MainMenu extends Base {
@@ -38,10 +39,17 @@ class MainMenu extends Base {
                 this.transitionTo( ResultSceneKey,500 );
             }, this)
             .on('button.config', function () { //todo
-                this.log('button.config')
+                _scene.model.sound.play(_scene, 'right');
+                _scene.log('button.config')
+                ModalDialogPromise(_scene, {
+                    title: '系統設定',
+                    content: CreateSettingsPanel(_scene),
+                    buttonMode: 1,        
+                    width: _scene.viewport.displayWidth-50,
+                })
             }, this)
             .on('button.help', function () { //todo
-                _scene.sound.play('right');
+                _scene.model.sound.play(_scene,'right');
                 _scene.log('button.help')
                 ModalDialogPromise(_scene, {
                     title: '使用說明',

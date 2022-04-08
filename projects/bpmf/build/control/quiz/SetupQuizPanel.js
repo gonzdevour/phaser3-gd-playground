@@ -1,5 +1,12 @@
 //清理上一題，並將新題目與panel組合起來，以作答callback回傳給QuizPromise
 var SetupQuizPanel = function (quizPanel, question, onSubmit) {
+    console.log(`
+-- question setup --
+word:${question.word.word}
+character:${question.character.character}
+characterIndex:${question.characterIndex}
+characterPolyphonyIndex:${question.characterPolyphonyIndex}
+`);
     // Fill quizPanel，從這裡開始跟view扯上關係
     quizPanel
         .clearChoices() //清除選項群
@@ -22,19 +29,22 @@ var SetupQuizPanel = function (quizPanel, question, onSubmit) {
             let polyphonyCharacter = undefined;
             let isPass = question.verify(result); //比對答案
             if (!isPass) { // 如果答案沒通過，檢查是不是破音詞
-                //console.log('沒通過，開始檢查是否破音詞');
+                quizPanel.scene.log('沒通過，開始檢查是否破音詞');
                 polyphonyCharacter = question.getPolyphonyCharacter(); //取出破音詞
-                //console.log('破音詞：' + JSON.stringify(polyphonyCharacter.doc));
                 if (polyphonyCharacter) { //如果有破音詞
-                    //console.log('有破音詞')
+                    quizPanel.scene.log('有破音詞')
+                    quizPanel.scene.log('破音詞：' + JSON.stringify(polyphonyCharacter.doc));
                     isPass = question.setAnswer(polyphonyCharacter).verify(result);//比對破音詞
-                    //console.log('通過?' + isPass)
+                    quizPanel.scene.log('通過?' + isPass)
+                } else {
+                    quizPanel.scene.log('沒有有破音詞')
                 }
             }
 
             let verifyResult = {
                 result: isPass, //是否通過
                 input: result, //答案內容
+                dbIdx: quizPanel.scene.model.currentDBIndex,//目前db索引，用來讓reviewList查找資料用
                 word: question.word,//題目詞
                 character: (isPass && polyphonyCharacter) ? polyphonyCharacter : question.character //題目字(含bopomofo)
             }

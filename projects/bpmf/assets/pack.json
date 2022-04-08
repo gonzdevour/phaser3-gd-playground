@@ -47,8 +47,18 @@
       },
       {
         "type": "image",
+        "key": "music",
+        "url": "assets/image/music.png"
+      },
+      {
+        "type": "image",
         "key": "no",
         "url": "assets/image/no.png"
+      },
+      {
+        "type": "image",
+        "key": "qcnt",
+        "url": "assets/image/qcnt.png"
       },
       {
         "type": "image",
@@ -59,6 +69,11 @@
         "type": "image",
         "key": "search",
         "url": "assets/image/search.png"
+      },
+      {
+        "type": "image",
+        "key": "sound",
+        "url": "assets/image/sound.png"
       },
       {
         "type": "image",
