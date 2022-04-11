@@ -10,7 +10,11 @@ class DBWrap {
         this.id = model.db.length;
         this.db = CreateDB();
         if (json) {
-            StringToDB(this.db, json);
+            if (typeof (json) === 'string') {
+                StringToDB(this.db, json);
+            } else {
+                this.db = json;
+            }
         }
 
         // Note: db won't be deserialized later, thus reference of collection won't change.
