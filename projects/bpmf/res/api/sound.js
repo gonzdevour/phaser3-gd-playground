@@ -74,7 +74,7 @@ class p3_sound {
   }
   play(scene, key, config) {
     log(this.getSrc(key));
-    log("p3audio play " + key );
+    log("p3audio play " + key + ' vol' + this.volume);
     config = !config?{}:config;
     config.volume = this.volume;
     scene.sound.play(key, config);

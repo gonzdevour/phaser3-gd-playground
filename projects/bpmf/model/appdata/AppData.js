@@ -15,6 +15,7 @@ class AppData {
       this.curWrongCnt = 0; //目前的錯誤作答數
       this.curRightList = []; //目前從正確作答中紀錄的所有詞組成的陣列
       this.curWrongList = []; //目前從錯誤作答中紀錄的所有詞、字、輸入答案與正確答案等資料組成的陣列
+      this.model.sound.setVolume(this.settings.volumeSE);
       this.model.lsData.events.on('changedata-' + 'volumeSE', function(parent, value, previousValue){
         this.model.sound.setVolume(value);
       },this);

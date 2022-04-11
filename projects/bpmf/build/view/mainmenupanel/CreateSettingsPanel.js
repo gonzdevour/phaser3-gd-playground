@@ -24,7 +24,8 @@ var CreateSettingsPanel = function (scene) {
     scene.log('mainPanel postlayout')
   })
 
-  //建立音樂音量控制
+  /*
+  //建立音樂音量控制   
   var bgmCtrl = CreateNumberBar(scene,{
     iconText: '音樂',
     iconImageKey: 'music', 
@@ -33,19 +34,9 @@ var CreateSettingsPanel = function (scene) {
       numberBar.text = Math.round(value*100)+'%';
       Save(scene,'volumeBGM', value);
     }
-  })
-  //建立音效音量控制
-  var seCtrl = CreateNumberBar(scene,{
-    iconText: '音效',
-    iconImageKey: 'sound', 
-    value: settings.volumeSE,
-    callback: function (value, oldValue, numberBar) {
-      numberBar.text = Math.round(value*100)+'%';
-      Save(scene,'volumeSE', value);
-      scene.model.sound.play(scene, 'right');
-    }
-  })
-  //建立語音音量控制
+  }) 
+
+  //建立語音音量控制(plugin似乎沒提供語音音量控制)
   var speakCtrl = CreateNumberBar(scene,{
     iconText: '語音',
     iconImageKey: 'speak', 
@@ -55,6 +46,21 @@ var CreateSettingsPanel = function (scene) {
       Save(scene,'volumeSpeak', value);
     }
   })
+
+  */
+
+  //建立音效音量控制
+  var seCtrl = CreateNumberBar(scene,{
+    iconText: '音效',
+    iconImageKey: 'sound', 
+    value: settings.volumeSE,
+    callback: function (value, oldValue, numberBar) {
+      numberBar.text = Math.round(value*100)+'%';
+      Save(scene,'volumeSE', value);
+    }
+  }).on('inputend', function(pointer) {
+    scene.model.sound.play(scene, 'right');
+  }, scene);
  
   //建立題數控制(min1~50max)
   var qcntCtrl = CreateNumberBar(scene,{
@@ -69,17 +75,9 @@ var CreateSettingsPanel = function (scene) {
   })
 
   mainPanel
-    .add(bgmCtrl, {
-      proportion: 1, align: 'left', expand: true,
-      key: 'bgmCtrl'
-    })
     .add(seCtrl, {
       proportion: 1, align: 'left', expand: true,
       key: 'seCtrl'
-    })
-    .add(speakCtrl, {
-      proportion: 1, align: 'left', expand: true,
-      key: 'speakCtrl'
     })
     .add(qcntCtrl, {
       proportion: 1, align: 'left', expand: true,

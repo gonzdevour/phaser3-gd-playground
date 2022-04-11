@@ -35,8 +35,8 @@ class MainMenu extends Base {
                 this.transitionTo( QuizConfigSceneKey,500 );
             }, this)
             .on('button.continue', function () { //繼續遊戲
-                //this.transitionTo( QuizSceneKey,500 );
-                this.transitionTo( ResultSceneKey,500 );
+                this.transitionTo( QuizSceneKey,500 );
+                //this.transitionTo( ResultSceneKey,500 );
             }, this)
             .on('button.config', function () { //todo
                 _scene.model.sound.play(_scene, 'right');

@@ -10,7 +10,7 @@ var DefaultQuizConfig = {
     database: '常用詞庫', //指定詞庫種類
     enhancement: '無', //強化練習模式
     mode: '隨機', //頻次|隨機|測驗
-    qcount: 3, //題數
+    qcount: 10, //題數
 }
 
 var DefaultRecord = {
