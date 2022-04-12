@@ -38,6 +38,7 @@ class Test extends Phaser.Scene {
         LoadAudioTesting(this);
         LoadAtlasTesting(this);
         LoadSpriteSheetTesting(this);
+        LoadBitmapFontTesting(this);
     }
 
     update() { }
@@ -79,6 +80,10 @@ var LoadSpriteSheetTesting = function (scene) {
     scene.anims.create(config);
 
     scene.add.sprite(500, 300, 'explosion').play('explodeAnimation');
+}
+
+var LoadBitmapFontTesting = function (scene) {
+    scene.add.bitmapText(600, 300, 'gothic', 'HELLO');
 }
 
 

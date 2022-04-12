@@ -16,6 +16,12 @@
         ]
       },
       {
+        "type": "bitmapFont",
+        "key": "gothic",
+        "textureURL": "assets/bitmapFont/gothic.png",
+        "fontDataURL": "assets/bitmapFont/gothic.xml"
+      },
+      {
         "type": "image",
         "key": "bolt",
         "url": "assets/image/bolt.png"
