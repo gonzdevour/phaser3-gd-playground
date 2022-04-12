@@ -5,6 +5,7 @@ import AwaitLoaderPlugin from '../../phaser3-rex-notes/plugins/awaitloader-plugi
 import LoadingProgressPlugin from '../../phaser3-rex-notes/plugins/loadingprogress-plugin.js';
 import EventPromisePlugin from '../../phaser3-rex-notes/plugins/eventpromise-plugin.js';
 import ClockPlugin from '../../phaser3-rex-notes/plugins/clock-plugin.js';
+import WebFontLoaderPlugin from '../../phaser3-rex-notes/plugins/webfontloader-plugin.js';
 
 export default {
     scene: [
@@ -44,6 +45,11 @@ export default {
         {
             key: 'rexClock',
             plugin: ClockPlugin,
+            start: true
+        },
+        {
+            key: 'rexWebFontLoader',
+            plugin: WebFontLoaderPlugin,
             start: true
         },
     ]

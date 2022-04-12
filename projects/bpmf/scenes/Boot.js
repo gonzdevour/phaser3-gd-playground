@@ -3,6 +3,8 @@ import Base from './Base.js';
 import { BootSceneKey, MainMenuSceneKey } from './Const.js';
 import CreateModel from '../build/model/CreateModel.js';
 import CreateKnob from '../build/view/style/CreateKnob.js';
+import ModalDialogPromise from '../build/view/modeldialog/ModalDialogPromise.js';
+import PrebuildDB from '../model/prebuilddb/PrebuildDB.js';
 
 //log
 import InitLog from "../../../plugins/logger/InitLog.js";
@@ -35,6 +37,26 @@ class Boot extends Base {
 
     preload() {
         var _scene = this;
+        //onError
+        this.load.once('loaderror', function(fileObj){
+            ModalDialogPromise(_scene, {
+                title: '讀取異常',
+                content: 
+`檔案：${fileObj.key}，
+
+請檢查裝置的連線狀態，
+稍待片刻重新啟動APP。
+
+如果情況沒有改善，
+可能是伺服器正在維護中，
+請至官方網站查詢。`,
+                buttonMode: 0,    
+                width: _scene.viewport.displayWidth-50,
+            })
+        }, this);
+        //load csv from googlesheet
+        this.load.text('db0','https://docs.google.com/spreadsheets/d/e/2PACX-1vQWaeZDoFdraJRJtlfcpOpZ0RaBUHn6hO7VkfgH_RwT_qK1D9nLKWJBcXkyvWw9flaU2mUBlbZhSN-c/pub?gid=1563367807&single=true&output=csv')
+        this.load.text('db1','https://docs.google.com/spreadsheets/d/e/2PACX-1vQWaeZDoFdraJRJtlfcpOpZ0RaBUHn6hO7VkfgH_RwT_qK1D9nLKWJBcXkyvWw9flaU2mUBlbZhSN-c/pub?gid=999894934&single=true&output=csv')
         //load pack
         this.load.pack('pack', 'assets/pack.json');
         this.load.on('filecomplete-packfile-pack', function(key, filetype, data){
@@ -111,8 +133,8 @@ class Boot extends Base {
         //create model
         this.model = CreateModel({
             db: [
-                this.cache.text.get('db0'),
-                this.cache.text.get('db1'),
+                PrebuildDB(this.cache.text.get('db0')),
+                PrebuildDB(this.cache.text.get('db1')),
             ],
             api
         });

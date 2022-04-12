@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PersistableFontDetails xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Letterset>ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄚㄛㄜㄟㄞㄟㄠㄡㄢㄣㄤㄥㄦㄧㄨㄩˊˇˋ </Letterset>
+  <AdjustHeight>0</AdjustHeight>
+  <AdjustWidth>0</AdjustWidth>
+  <SampleText>ㄅㄨˇ</SampleText>
+  <ShiftHorz>0</ShiftHorz>
+  <ShowGrid>true</ShowGrid>
+  <ShowBoundary>false</ShowBoundary>
+  <Size>32</Size>
+  <StrikeOut>false</StrikeOut>
+  <Underline>false</Underline>
+  <IsFill>true</IsFill>
+  <IsOutlineOne>false</IsOutlineOne>
+  <IsOutlineTwo>false</IsOutlineTwo>
+  <IsShadow>false</IsShadow>
+  <OutlineOneWidth>5</OutlineOneWidth>
+  <OutlineTwoWidth>2</OutlineTwoWidth>
+  <ShadowWidth>4</ShadowWidth>
+  <ShadowOffsetX>4</ShadowOffsetX>
+  <ShadowOffsetY>4</ShadowOffsetY>
+  <FontStyleDisplayName>Regular</FontStyleDisplayName>
+  <Height>37</Height>
+  <Width>25</Width>
+  <FontFamilyName>王漢宗顏楷體繁</FontFamilyName>
+  <FontStyleName>Normal</FontStyleName>
+  <FontStretchName>Normal</FontStretchName>
+  <FontWeightName>Normal</FontWeightName>
+  <FillColourName>#FFFFFFFF</FillColourName>
+  <OutlineOneColourName>#FF000000</OutlineOneColourName>
+  <OutlineTwoColourName>#FFFF0000</OutlineTwoColourName>
+  <ShadowColourName>#80000000</ShadowColourName>
+  <SampleBackgroundColourName>#FF808080</SampleBackgroundColourName>
+</PersistableFontDetails>

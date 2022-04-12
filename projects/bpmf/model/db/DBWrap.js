@@ -23,9 +23,12 @@ class DBWrap {
         this.id = model.db.length; 
         this.db = CreateDB(); //取得loki和loki的collections功能
         if (json) {
-            StringToDB(this.db, json);
+            if (typeof (json) === 'string') {
+                StringToDB(this.db, json);//StringToDB(lokiDB, json2joinDB, ifDecompress?true/false)，可以控制要不要解壓縮
+            } else {
+                this.db = json;
+            }
         }
-
         // Note: db won't be deserialized later, thus reference of collection won't change.
         this.wordCollection = GetWordCollection(this.db);
         this.characterCollection = GetCharacterCollection(this.db);

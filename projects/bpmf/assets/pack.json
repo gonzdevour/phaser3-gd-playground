@@ -11,6 +11,12 @@
         ]
       },
       {
+        "type": "bitmapFont",
+        "key": "BFontYK",
+        "textureURL": "assets/bitmapFont/BFontYK.png",
+        "fontDataURL": "assets/bitmapFont/BFontYK.xml"
+      },
+      {
         "type": "image",
         "key": "arrowL",
         "url": "assets/image/arrowL.png"
@@ -89,16 +95,6 @@
         "type": "text",
         "key": "audiosrc",
         "url": "assets/text/audiosrc.csv"
-      },
-      {
-        "type": "text",
-        "key": "db0",
-        "url": "assets/text/db0.compress"
-      },
-      {
-        "type": "text",
-        "key": "db1",
-        "url": "assets/text/db1.compress"
       },
       {
         "type": "text",
