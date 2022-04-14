@@ -1,8 +1,12 @@
-var util = require("util");
+const path = require('path');
+const GenerateVersionFile = require('./GenerateVersionFile.js')
 
 var Preprocessor = function (config) {
-    console.log('Local preprocessor');
-    console.log(util.inspect(config, { showHidden: false, depth: null }));
+    var projectRoot = config.projectRoot;
+    var assetsFolder = config.assetsFolder;
+
+    var outputFilePath = path.resolve(assetsFolder, 'version.txt');
+    GenerateVersionFile(outputFilePath);
 }
 
 module.exports = Preprocessor;
