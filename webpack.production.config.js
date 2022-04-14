@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const PackFolder = require('./plugins/packfolder/PackFolder.js');
+const GlobalPreprocessor = require('./plugins/exporter-preprocessor/Preprocessor.js');
 
 var dist = process.env.dist;
 var postfix = process.env.postfix || false;
@@ -22,7 +23,7 @@ var assetsFolder = process.env.assets || 'assets'; // Map to assets folder
 var rootAssetsFolder = process.env.root || 'root'; // Map to root folder
 var packFolderOutput = process.env.packFolderOutput || false;
 var packFolderConfigExtension = process.env.packFolderConfigExt || '.cfg';
-
+var localPreprocessorMain = process.env.preprocessor || false;
 
 if (projectRoot) {
     projectRoot = path.resolve(__dirname, projectRoot);
@@ -33,6 +34,10 @@ if (projectRoot) {
 
     if (packFolderOutput) {
         packFolderOutput = path.resolve(projectRoot, packFolderOutput);
+    }
+
+    if (localPreprocessorMain) {
+        localPreprocessorMain = path.resolve(projectRoot, localPreprocessorMain);
     }
 }
 
@@ -54,6 +59,23 @@ if (packFolderOutput) {
         },
     });
 }
+
+plugins.push({
+    apply: (compiler) => {
+        compiler.hooks.beforeRun.tap('MyPreprocessPlugin', () => {
+            var config = {
+                projectRoot: projectRoot,
+                assetsFolder: assetsFolder,
+            }
+            GlobalPreprocessor(config);
+
+            if (localPreprocessorMain) {
+                var localPreprocess = require(localPreprocessorMain);
+                localPreprocess(config);
+            }
+        });
+    },
+});
 
 plugins.push(
     new webpack.DefinePlugin({
