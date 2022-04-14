@@ -49,6 +49,9 @@ var CreateModalDialog = function (scene, config) {
         config.buttonMode = 0;
     }
     switch (config.buttonMode) {
+        case 4: // onError訊息，顯示後遊戲停止
+            config.actions = []; //不給按鈕，不會消失
+            break;
         case 3: // mail/ok按鈕
             config.actions = [
                 CreateButton(scene, 'mail').onClick(config.callbackMail),
@@ -71,7 +74,7 @@ var CreateModalDialog = function (scene, config) {
             ];
             break;
         default:
-            config.actions = []; //不給按鈕
+            config.actions = []; //不給按鈕，兩秒後自動消失
             break;
     }
 

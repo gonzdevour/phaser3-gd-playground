@@ -1,3 +1,4 @@
+import bmpFont from '../../../gameobjects/bmpFont/bmpFont.js';
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import { Character } from '../../../gameobjects/quizpanel.js';
 import { Initials, Media, Vowel } from '../../../model/bopomofo/Bopomofo.js'
@@ -32,11 +33,15 @@ var CreateCharacter = function (scene, config) {
 
 //建立注音label
 var CreatePhonologyLabel = function (scene, style, testString) {
+    var stl = style.word.phonology;
     return scene.rexUI.add.label({
         // background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
-        text: scene.rexUI.add.BBCodeText(0, 0, '', style.word.phonology),
+        //text: scene.rexUI.add.BBCodeText(0, 0, '', style.word.phonology),
+        //text: CreateBmpFont(0, 0, '', style.word.phonology),
+        text: new bmpFont(scene, 0, 0, 'bf0', ''),
         // Set fixedWidth, fixedHeight for all kinds of text input
-
+        width: stl.fixedWidth,
+        height: stl.fixedWidth,
         align: 'center',
         //space: { left: 2, right: 2, top: 2, bottom: 2 }
     })
@@ -44,11 +49,14 @@ var CreatePhonologyLabel = function (scene, style, testString) {
 
 //建立音調label
 var CreateToneLabel = function (scene, style) {
+    var stl = style.word.tone;
     return scene.rexUI.add.label({
         // background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
         //text: scene.rexUI.add.BBCodeText(0, 0, '', style.word.tone),
-        text: scene.rexUI.add.bitmapText(0, 0, 'BFontYK', ''),
+        text: new bmpFont(scene, 0, 0, 'bf0', ''),
         // Set fixedWidth, fixedHeight for all kinds of text input
+        width: stl.fixedWidth,
+        height: stl.fixedWidth,
         align: 'left',
         space: { left: 0, right: 0, top: 0, bottom: 0 }
     })
@@ -56,13 +64,16 @@ var CreateToneLabel = function (scene, style) {
 
 //建立輕聲label(在上方置中所以獨立出來)
 var CreateTone0Label = function (scene, style) {
+    var stl = style.word.tone0;
     return scene.rexUI.add.label({
         // background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
-        text: scene.rexUI.add.BBCodeText(0, 0, '', style.word.tone0),
+        //text: scene.rexUI.add.BBCodeText(0, 0, '', style.word.tone0),
+        text: new bmpFont(scene, 0, 0, 'bf0', ''),
         // Set fixedWidth, fixedHeight for all kinds of text input
-
+        width: stl.fixedWidth,
+        height: stl.fixedWidth,
         align: 'center',
-        space: { left: 4, right: 0, top: -30, bottom: 0 }
+        space: { left: 0, right: 0, top: 0, bottom: 0 }
     })
 }
 

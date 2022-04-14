@@ -21,9 +21,8 @@ var CreateQuizModePanel = function (scene, config) {
     */
     var buttons = [];
     for (var i = 0, cnt = QuizModeOptions.length; i < cnt; i++) {
-        buttons.push(
-            CreateOptionLabel(scene, QuizModeOptions[i])
-        )
+        var btn = CreateOptionLabel(scene, QuizModeOptions[i]);
+        buttons.push(btn);
     }
     //fixWidthButtons可以自動換行排列button
     var choices = scene.rexUI.add.fixWidthButtons({
@@ -42,6 +41,7 @@ var CreateQuizModePanel = function (scene, config) {
     //choices.value用法請見CreateDatabaseSelectPanel.js
     //將buttons radio的選項以預設值做設定
     choices.value = GetValue(config, `radio.${PanelName}`, '隨機');
+    choices.setButtonEnable(2, false);//關閉隨機選項
 
     var panel = scene.rexUI.add.sizer({
         orientation: 'y',

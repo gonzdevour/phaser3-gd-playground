@@ -54,7 +54,7 @@ class Base extends Phaser.Scene {
     }
 
     get debugMode() {
-        return true;
+        return false;
     }
 
     create() {

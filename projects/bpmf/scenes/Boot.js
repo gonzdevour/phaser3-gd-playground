@@ -50,7 +50,7 @@ class Boot extends Base {
 如果情況沒有改善，
 可能是伺服器正在維護中，
 請至官方網站查詢。`,
-                buttonMode: 0,    
+                buttonMode: 4,    
                 width: _scene.viewport.displayWidth-50,
             })
         }, this);

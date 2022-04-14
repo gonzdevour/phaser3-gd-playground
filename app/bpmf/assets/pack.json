@@ -11,6 +11,12 @@
         ]
       },
       {
+        "type": "bitmapFont",
+        "key": "bf0",
+        "textureURL": "assets/bitmapFont/bf0.png",
+        "fontDataURL": "assets/bitmapFont/bf0.xml"
+      },
+      {
         "type": "image",
         "key": "arrowL",
         "url": "assets/image/arrowL.png"
@@ -27,6 +33,11 @@
       },
       {
         "type": "image",
+        "key": "delete",
+        "url": "assets/image/delete.png"
+      },
+      {
+        "type": "image",
         "key": "eraser",
         "url": "assets/image/eraser.png"
       },
@@ -37,13 +48,38 @@
       },
       {
         "type": "image",
+        "key": "mail",
+        "url": "assets/image/mail.png"
+      },
+      {
+        "type": "image",
+        "key": "music",
+        "url": "assets/image/music.png"
+      },
+      {
+        "type": "image",
         "key": "no",
         "url": "assets/image/no.png"
       },
       {
         "type": "image",
+        "key": "qcnt",
+        "url": "assets/image/qcnt.png"
+      },
+      {
+        "type": "image",
         "key": "right",
         "url": "assets/image/right.png"
+      },
+      {
+        "type": "image",
+        "key": "search",
+        "url": "assets/image/search.png"
+      },
+      {
+        "type": "image",
+        "key": "sound",
+        "url": "assets/image/sound.png"
       },
       {
         "type": "image",
@@ -59,16 +95,6 @@
         "type": "text",
         "key": "audiosrc",
         "url": "assets/text/audiosrc.csv"
-      },
-      {
-        "type": "text",
-        "key": "db0",
-        "url": "assets/text/db0.compress"
-      },
-      {
-        "type": "text",
-        "key": "db1",
-        "url": "assets/text/db1.compress"
       },
       {
         "type": "text",

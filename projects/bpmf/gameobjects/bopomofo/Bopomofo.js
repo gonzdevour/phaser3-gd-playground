@@ -110,6 +110,13 @@ class Bopomofo extends Sizer {
         if (tone0 === undefined) {
             tone0 = initials;
         }
+        /*         
+        this.getElement('initials.text').setColor(initials);
+        this.getElement('media.text').setColor(media);
+        this.getElement('vowel.text').setColor(vowel);
+        this.getElement('tone.text').setColor(tone);
+        this.getElement('tone0.text').setColor(tone0);
+        */
         this.getElement('initials.text').setColor(initials);
         this.getElement('media.text').setColor(media);
         this.getElement('vowel.text').setColor(vowel);

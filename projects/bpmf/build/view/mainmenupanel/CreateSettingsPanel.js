@@ -111,10 +111,10 @@ var CreateNumberBar = function (scene, config) {
     icon: CreateActionLabel(scene, config.iconText, config.iconImageKey),
     slider: {
         // width: 120, // Fixed width
-        height: 64,
-        track: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 32, COLOR_PRIMARY),
-        indicator: scene.rexUI.add.roundRectangle(0, 0, 0, 64, 32, COLOR_LIGHT),
-        thumb: scene.rexUI.add.roundRectangle(0, 0, 0, 64, 32, 0xff3333),
+        height: 16, //這邊的height控制track的height
+        track: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 16, COLOR_PRIMARY),
+        indicator: scene.rexUI.add.roundRectangle(0, 0, 0, 16, 16, COLOR_LIGHT), //indicator可填入高度。color:#992d0d
+        thumb: scene.rexUI.add.roundRectangle(0, 0, 0, 64, 32, 0xb3340f), //thumb寬高可自訂不受影響。color:#b3340f
         input: 'drag',
     },
     value: config.value,

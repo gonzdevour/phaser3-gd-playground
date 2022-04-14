@@ -12,9 +12,9 @@
       },
       {
         "type": "bitmapFont",
-        "key": "BFontYK",
-        "textureURL": "assets/bitmapFont/BFontYK.png",
-        "fontDataURL": "assets/bitmapFont/BFontYK.xml"
+        "key": "bf0",
+        "textureURL": "assets/bitmapFont/bf0.png",
+        "fontDataURL": "assets/bitmapFont/bf0.xml"
       },
       {
         "type": "image",
