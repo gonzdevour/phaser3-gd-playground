@@ -1,8 +1,14 @@
-const Style = {
+import { getOS } from "../../../../../plugins/os";
+//get OS status
+var OS = getOS();
+var fontFamilyName = OS.desktop?'DFKai-SB':'Noto Sans CJK';
+
+var Style = {
+    fontFamilyName: fontFamilyName,
     reviewPanel: {
         word: {
             character: {
-                fontFamily: 'DFKai-SB',
+                fontFamily: fontFamilyName,
                 fontSize: 48,
                 fixedWidth: 50,
                 fixedHeight: 50,
@@ -11,7 +17,7 @@ const Style = {
                 testString: '回'
             },
             phonology: {
-                fontFamily: 'DFKai-SB',
+                fontFamily: fontFamilyName,
                 fontSize: 16,
                 fixedWidth: 18,
                 fixedHeight: 20,
@@ -20,7 +26,7 @@ const Style = {
                 testString: '回'
             },
             tone: {
-                fontFamily: 'DFKai-SB',
+                fontFamily: fontFamilyName,
                 fontSize: 16,
                 fixedWidth: 18,
                 fixedHeight: 10,
@@ -29,7 +35,7 @@ const Style = {
                 testString: 'ˊˇˋ'
             },
             tone0: {
-                fontFamily: 'DFKai-SB',
+                fontFamily: fontFamilyName,
                 fontSize: 16,
                 fixedWidth: 18,
                 fixedHeight: 10,
@@ -47,7 +53,7 @@ const Style = {
     quizPanel: {
 
         title: {
-            fontFamily: 'DFKai-SB',
+            fontFamily: fontFamilyName,
             fontSize: 48,
             fixedHeight: 60,
             valign: 'center',
@@ -55,7 +61,7 @@ const Style = {
         },
 
         qidxtext: {
-            fontFamily: 'DFKai-SB',
+            fontFamily: fontFamilyName,
             fontSize: 48,
             lineSpacing: 20,
             fixedHeight: 120,
@@ -66,7 +72,7 @@ const Style = {
 
         word: {
             character: {
-                fontFamily: 'DFKai-SB',
+                fontFamily: fontFamilyName,
                 fontSize: 96,
                 fixedWidth: 100,
                 fixedHeight: 100,
@@ -75,7 +81,7 @@ const Style = {
                 testString: '回'
             },
             phonology: {
-                fontFamily: 'DFKai-SB',
+                fontFamily: fontFamilyName,
                 fontSize: 32,
                 fixedWidth: 36,
                 fixedHeight: 40,
@@ -84,7 +90,7 @@ const Style = {
                 testString: '回'
             },
             tone: {
-                fontFamily: 'DFKai-SB',
+                fontFamily: fontFamilyName,
                 fontSize: 32,
                 fixedWidth: 36,
                 fixedHeight: 20,
@@ -93,7 +99,7 @@ const Style = {
                 testString: 'ˊˇˋ'
             },
             tone0: {
-                fontFamily: 'DFKai-SB',
+                fontFamily: fontFamilyName,
                 fontSize: 32,
                 fixedWidth: 36,
                 fixedHeight: 20,
@@ -109,7 +115,7 @@ const Style = {
 
         choice: {
             phonology: {
-                fontFamily: 'DFKai-SB',
+                fontFamily: fontFamilyName,
                 fontSize: 60,
                 fixedWidth: 72,
                 fixedHeight: 90,
@@ -118,7 +124,7 @@ const Style = {
                 testString: '回'
             },
             tone: {
-                fontFamily: 'DFKai-SB',
+                fontFamily: fontFamilyName,
                 fontSize: 60,
                 fixedWidth: 72,
                 fixedHeight: 90,

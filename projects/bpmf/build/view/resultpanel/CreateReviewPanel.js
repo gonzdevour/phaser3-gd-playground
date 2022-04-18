@@ -84,7 +84,7 @@ var CreateReviewPanel = function (scene, config) {
     newStr = `[area=${element.word}]` + newStr + `[/area]`;
     //以字串建立bbcode詞
     /* 
-    var word = scene.rexUI.add.BBCodeText(0, 0, newStr, { fontFamily: 'DFKai-SB', fontSize: 72 })
+    var word = scene.rexUI.add.BBCodeText(0, 0, newStr, { fontFamily: Style.fontFamilyName, fontSize: 72 })
       .setInteractive()
       .on('areaover', function (key) {
         scene.log('areaover' + key);
@@ -253,7 +253,7 @@ var CreateTextLabel = function (scene, text) {
   return scene.rexUI.add.label({
     background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
     // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
-    text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 72 }),
+    text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 72 }),
     align: 'center',
     space: { top: 20, bottom: 20 } //text在label中的天地
   });
@@ -263,7 +263,7 @@ var CreateActionLabel = function (scene, text, img, radius, pos) {
   return scene.rexUI.add.label({
     background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
     icon: !img ? undefined : scene.add.image(0, 0, img).setDisplaySize(72, 72),
-    text: !text ? undefined : scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+    text: !text ? undefined : scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 60 }),
     space: { left: 10, right: 10, top: 10, bottom: 10, icon: 0 }
   });
 }

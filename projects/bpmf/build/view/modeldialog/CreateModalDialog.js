@@ -1,3 +1,4 @@
+import { Style } from '../style/style.js';
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 
 //utils
@@ -28,6 +29,9 @@ var CreateModalDialog = function (scene, config) {
     config.width = GetValue(config, 'width', 0); //寬高會由dialog排版自動決定，故預設值為0即可
     config.height = GetValue(config, 'height', 0); //寬高會由dialog排版自動決定，故預設值為0即可
 
+    config.titleStyle = GetValue(config, 'titleStyle', { fontFamily: Style.fontFamilyName, fontSize: 60 })
+    config.contentStyle = GetValue(config, 'contentStyle', { fontFamily: Style.fontFamilyName, fontSize: 48 })
+
     if (config.background === undefined) {
         //dialog需要底板，如果config中沒有指定background就建一個底板出來
         config.background = CreateRoundRectangleBackground(scene, 20, 0x0, 0xffffff, 2);
@@ -35,13 +39,13 @@ var CreateModalDialog = function (scene, config) {
 
     if (typeof (config.title) === 'string') {
         //如果有title文字則建立bbcode物件
-        config.title = scene.rexUI.add.BBCodeText(0, 0, config.title, { fontFamily: 'DFKai-SB', fontSize: 60 });
+        config.title = scene.rexUI.add.BBCodeText(0, 0, config.title, { fontFamily: Style.fontFamilyName, fontSize: 60 });
         SetValue(config, 'expand.title', false); //將title物件設定為不隨dialog的排版延展
     }
 
     if (typeof (config.content) === 'string') {
         //如果有content文字則建立bbcode物件(此例的content是一個new Character物件)
-        config.content = scene.rexUI.add.BBCodeText(0, 0, config.content, { fontFamily: 'DFKai-SB', fontSize: 48 });
+        config.content = scene.rexUI.add.BBCodeText(0, 0, config.content, { fontFamily: Style.fontFamilyName, fontSize: 48 });
         SetValue(config, 'expand.content', false); //將content物件設定為不隨dialog的排版延展
     }
 
@@ -69,7 +73,7 @@ var CreateModalDialog = function (scene, config) {
         case 1: // OK按鈕
             config.actions = [
                 scene.rexUI.add.space(),
-                CreateButton(scene, 'yes'),
+                CreateTweenButton(scene, 'yes'),
                 scene.rexUI.add.space()
             ];
             break;
@@ -110,13 +114,53 @@ dialog config:{
     return dialog;
 }
 
-var CreateButton = function (scene, img) {
-    return scene.rexUI.add.label({
+var CreateTweenButton = function (scene, img) {
+    var label = scene.rexUI.add.label({
         // background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
+        //icon: scene.rexUI.add.roundRectangle(0, 0, 90, 90, 20, undefined).setStrokeStyle(2, 0x00ff00),
         icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
-        // text: scene.rexUI.add.BBCodeText(0, 0, 'X', { fontFamily: 'DFKai-SB', fontSize: 60 }),
-        // space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 },
+        // text: scene.rexUI.add.BBCodeText(0, 0, 'X', { fontFamily: Style.fontFamilyName, fontSize: 60 }),
+        //space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 },
     })
+    label
+        .on('dialog.open',function(scene){
+            yoyoScaleStart(scene, label);
+        })
+        .on('dialog.close',function(scene){
+            yoyoScaleRemove(label);
+        })
+
+    return label;
+}
+
+var yoyoScaleStart = function(scene, yoyoTarget){
+    yoyoTarget.yoyoScale = scene.tweens.add({
+        targets: yoyoTarget,
+        scale: 1.2,
+        ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+        duration: 500,
+        repeat: -1,
+        yoyo: true
+    });
+    return yoyoTarget;
+}
+
+var yoyoScaleRemove = function(yoyoTarget){
+    if(yoyoTarget.yoyoScale){
+        yoyoTarget.yoyoScale.restart().stop().remove();
+    }
+    return yoyoTarget;
+}
+
+var CreateButton = function (scene, img) {
+    var label = scene.rexUI.add.label({
+        // background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
+        //icon: scene.rexUI.add.roundRectangle(0, 0, 90, 90, 20, undefined).setStrokeStyle(2, 0x00ff00),
+        icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
+        // text: scene.rexUI.add.BBCodeText(0, 0, 'X', { fontFamily: Style.fontFamilyName, fontSize: 60 }),
+        // space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 },
+    });
+    return label;
 }
 
 export default CreateModalDialog;

@@ -130,6 +130,7 @@ class Boot extends Base {
     }
 
     create() {
+        console.log('projVer:' + this.cache.text.get('version'));
         //create model
         this.model = CreateModel({
             db: [

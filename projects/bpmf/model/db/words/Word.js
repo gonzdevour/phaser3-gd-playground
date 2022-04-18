@@ -53,7 +53,7 @@ class Word {
         for (var p = 0, pcnt = pidLists.length; p < pcnt; p++) {//對此詞的每組破音
             characterIndex = pidLists[p].indexOf(characterDocID);//找出此字的doc.id是這組破音doc id array中的第幾個
             if (characterIndex !== -1) {
-                console.log('getCharacterPolyphonyIndex' + '\n' + characterDocID + '?' + pidLists[p] + '  cIdx=' + characterIndex + ',pIdx=' + p)
+                //console.log('getCharacterPolyphonyIndex' + '\n' + characterDocID + '?' + pidLists[p] + '  cIdx=' + characterIndex + ',pIdx=' + p)
                 characterPolyphonyIndex = p;//如果有查到則記錄是第幾組破音詞
                 break; //有查到就停止
             }

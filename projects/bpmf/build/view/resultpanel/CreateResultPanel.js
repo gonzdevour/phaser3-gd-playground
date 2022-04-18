@@ -1,5 +1,6 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import RegisterLabelAsButton from '../../../behavior/Button/RegisterLabelAsButton.js';
+import { Style } from '../style/style.js';
 
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
@@ -21,7 +22,7 @@ var CreateResultPanel = function (scene, config) {
     var background = CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2);
 
     //建立logo物件
-    //var logo = scene.rexUI.add.BBCodeText(0, 0, 'Logo', { fontFamily: 'DFKai-SB', fontSize: 60 });
+    //var logo = scene.rexUI.add.BBCodeText(0, 0, 'Logo', { fontFamily: Style.fontFamilyName, fontSize: 60 });
 
     // TODO: style
     
@@ -152,7 +153,7 @@ var CreateActionLabel = function (scene, text, img, radius, pos) {
     return scene.rexUI.add.label({
         background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
         icon: !img?undefined:scene.add.image(0, 0, img).setDisplaySize(90, 90),
-        text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+        text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 60 }),
         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
     });
 }
@@ -161,7 +162,7 @@ var CreateHelpLabel = function (scene, text, img, radius, pos) {
     return scene.rexUI.add.label({
         //background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
         icon: !img?undefined:scene.add.image(0, 0, img).setDisplaySize(90, 90),
-        text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+        text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 60 }),
         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
     });
 }
@@ -170,7 +171,7 @@ var CreateTextLabel = function (scene, text, img, radius, pos) {
     return scene.rexUI.add.label({
         //background: CreateRoundRectangleBackground(scene, Style.quizPanel.top.round, undefined, 0xffffff, 2),
         //icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(2, 0x0000ff),
-        text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 , align: 'center', lineSpacing: 10,}),
+        text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 60 , align: 'center', lineSpacing: 10,}),
         space: { left: 15, right: 15, top: 10, bottom: 10, icon: 0 }
     })
 }
@@ -182,7 +183,7 @@ var CreateTitleLabel = function (scene, text ) {
         })
         .addBackground(CreateRoundRectangleBackground(scene, 20, 0x333333))
         .add(
-            scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+            scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 60 }),
             {
                 align: 'center', expand: false, key: 'title',
             }

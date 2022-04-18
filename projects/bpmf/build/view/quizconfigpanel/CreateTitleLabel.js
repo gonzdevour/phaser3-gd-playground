@@ -1,4 +1,5 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
+import { Style } from '../style/style.js';
 
 var CreateTitleLabel = function (scene, text) { //title, help按鈕
     return scene.rexUI.add.overlapSizer({ //物件可重疊的sizer(使用aligh,padding,offset)
@@ -6,7 +7,7 @@ var CreateTitleLabel = function (scene, text) { //title, help按鈕
     })
         .addBackground(CreateRoundRectangleBackground(scene, 0, 0xD2691E))
         .add(
-            scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+            scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 60 }),
             {
                 align: 'center', expand: false, key: 'title',
             }
@@ -24,7 +25,7 @@ var CreateHelpButton = function (scene) {
     return scene.rexUI.add.label({ //text font size加上space決定了label的大小
         background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 3),
         text: scene.rexUI.add.BBCodeText(0, 0, '?', {
-            fontFamily: 'DFKai-SB', fontSize: 50,
+            fontFamily: Style.fontFamilyName, fontSize: 50,
             fixedWidth: 50, fixedWidth: 50, halign: 'center', valign: 'center'
         }),
         space: { left: 10, right: 10, top: 10, bottom: 10 }

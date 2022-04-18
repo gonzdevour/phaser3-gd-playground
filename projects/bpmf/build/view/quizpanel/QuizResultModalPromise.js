@@ -15,9 +15,9 @@ result:
     }
 */
 var QuizResultModalPromise = function (scene, result, onCloseCallback) {
-    if (result.result) {  // 答對回傳content:打勾圖片
+    if (result.result) {  //答對回傳content:打勾圖片
         scene.model.sound.play(scene, 'right');
-        return ModalDialogPromise(scene, {
+        return  ModalDialogPromise(scene, {
             content: scene.add.image(0, 0, 'right').setDisplaySize(540, 540),
             background: null,
             buttonMode: 0,

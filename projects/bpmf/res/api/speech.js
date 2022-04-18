@@ -48,31 +48,46 @@ class cdv_speechSynthesis {
 
 class speechSynthesis {
   constructor(language, voiceName) {
+    this.language = language;
     this.synth = window.speechSynthesis;
     this.utter = new SpeechSynthesisUtterance();
-    this.utter.lang = language;
-    this.synth.addEventListener("voiceschanged", () => {
-      //用箭頭函數保證this
-      log("--voices on changed--");
-      this.setVoice(voiceName);
-    });
+    this.setVoice(voiceName);
+    if (this.synth.onvoiceschanged !== undefined) {
+      this.synth.onvoiceschanged = function(){
+        this.setVoice(voiceName);
+      }.bind(this);
+    }
   }
   setVoice(voiceName) {
     var voices = this.synth.getVoices();
+    var language = this.language;
     //log("show available voices");
     //log(voices);
-    var foundVoices = voices.filter(function (voice) {
+    var foundVoicesByName = voices.filter(function (voice) {
       return voice.name == voiceName;
     });
-    if (foundVoices.length === 1) {
-      this.utter.voice = foundVoices[0];
-      log(this.utter.voice.name);
+    var foundVoicesByLanguage = voices.filter(function (voice) {
+      return voice.lang == language;
+    });
+    if (foundVoicesByName.length >= 1) { //用voiceName有取得voiceObj
+      this.voiceObj = foundVoicesByName[0];
+      log(this.voiceObj.name);
+    } else if (foundVoicesByLanguage.length >= 1){ //用voiceName找不到voiceObj，改用lang尋找
+      this.voiceObj = foundVoicesByLanguage[0];
+      log(this.voiceObj.name);
+    } else { //找不到符合需求的語音
+      log('no voice found');
     }
   }
   say(words) {
-    this.synth.cancel();
-    this.utter.text = words;
-    this.synth.speak(this.utter);
+    if(this.voiceObj){
+      this.synth.cancel();
+      this.utter.text = words;
+      this.utter.voice = this.voiceObj;
+      this.synth.speak(this.utter);
+    } else {
+      log('no voice found');
+    }
   }
 }
 

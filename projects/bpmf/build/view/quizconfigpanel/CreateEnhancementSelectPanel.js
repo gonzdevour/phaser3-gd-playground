@@ -2,6 +2,7 @@ import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackgro
 import CreateTitleLabel from './CreateTitleLabel.js';
 import ModalDialogPromise from '../modeldialog/ModalDialogPromise.js';
 import { EnhanceOptions } from './Options.js'
+import { Style } from '../style/style.js';
 
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
@@ -83,7 +84,7 @@ var CreateOptionLabel = function (scene, text) {
     return scene.rexUI.add.label({
         background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
         // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
-        text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+        text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 60 }),
         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 },
 
         name: text   // !! button.name會被用在buttons.value的指定

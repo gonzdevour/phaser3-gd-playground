@@ -2,6 +2,7 @@ import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackgro
 import CreateTitleLabel from './CreateTitleLabel.js';
 import ModalDialogPromise from '../modeldialog/ModalDialogPromise.js';
 import { DataBaseOptions } from './Options.js'
+import { Style } from '../style/style.js';
 
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
@@ -127,7 +128,7 @@ var CreateOptionLabel = function (scene, title, text) {
     })
         /*說明功能跟help button重複，為了排版一致與美觀，刪除
            .add( //option.description bbcodeText
-            scene.rexUI.add.BBCodeText(0, 0, title, { fontFamily: 'DFKai-SB', fontSize: 50 }),
+            scene.rexUI.add.BBCodeText(0, 0, title, { fontFamily: Style.fontFamilyName, fontSize: 50 }),
             { align: 'center', key: 'title' }
         )
         */
@@ -136,7 +137,7 @@ var CreateOptionLabel = function (scene, title, text) {
                 orientation: 'y',
                 background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
                 // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
-                text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+                text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 60 }),
                 // action: scene.add.image(0, 0, img).setDisplaySize(90, 90),
                 space: { top: 20, bottom: 10, text: 30 }
             }),

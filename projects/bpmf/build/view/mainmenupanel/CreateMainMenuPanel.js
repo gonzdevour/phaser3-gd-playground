@@ -32,7 +32,7 @@ var CreateMainMenuPanel = function (scene, config) {
     var background = CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2);
 
     //建立logo物件
-    //var logo = scene.rexUI.add.BBCodeText(0, 0, 'Logo', { fontFamily: 'DFKai-SB', fontSize: 60 });
+    //var logo = scene.rexUI.add.BBCodeText(0, 0, 'Logo', { fontFamily: Style.fontFamilyName, fontSize: 60 });
     //scene.rexUI.easeMoveFrom(logo, 1000, undefined, '-=200', 'Cubic'); //排好版之後再開始tween
 
     // TODO: style
@@ -108,7 +108,7 @@ var CreateActionLabel = function (scene, text, img, radius, pos) {
     return scene.rexUI.add.label({
         background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
         icon: !img?undefined:scene.add.image(0, 0, img).setDisplaySize(90, 90),
-        text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+        text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 60 }),
         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
     })
 }
@@ -117,7 +117,7 @@ var CreateHelpLabel = function (scene, text, img, radius, pos) {
     return scene.rexUI.add.label({
         //background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
         icon: !img?undefined:scene.add.image(0, 0, img).setDisplaySize(90, 90),
-        text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+        text: !text?undefined:scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 60 }),
         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 }
     });
 }

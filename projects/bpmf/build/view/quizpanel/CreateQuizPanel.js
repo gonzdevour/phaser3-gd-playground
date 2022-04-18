@@ -68,6 +68,11 @@ var CreateQuizPanel = function (scene, config) {
 
     var btnSpeak = CreateLabel(scene, '發音', 'speak')
     RegisterLabelAsButton(btnSpeak, 'ttsSpeak', quizPanel);
+    quizPanel.on('ttsSpeak', function (gameObject, pointer, event) {
+        let ttsWord = quizPanel.question.word.word;
+        console.log('ttsSpeak:' + ttsWord);
+        gameObject.scene.model.speech.say(ttsWord);
+    })
 
     quizPanel.getElement('wordArea')
         .add(
@@ -146,7 +151,7 @@ var CreateLabel = function (scene, text, img, pos) {
     return scene.rexUI.add.label({
         background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
         icon: scene.add.image(0, 0, img).setDisplaySize(45, 60),
-        text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'DFKai-SB', fontSize: 60 }),
+        text: scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 60 }),
         space: { left: 20, right: 0, top: 20, bottom: 20, icon: 10 }
     });
 }

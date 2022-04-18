@@ -8,6 +8,7 @@ characterIndex:${question.characterIndex}
 characterPolyphonyIndex:${question.characterPolyphonyIndex}
 `);
     // Fill quizPanel，從這裡開始跟view扯上關係
+    quizPanel.question = question;
     quizPanel
         .clearChoices() //清除選項群
         .setQIndexText('第' + question.questionIndex + '題' + '\n' + '共' + question.questionTotal + '題')
@@ -21,10 +22,6 @@ characterPolyphonyIndex:${question.characterPolyphonyIndex}
         //CreateQuizPanel.js會幫quizPanel掛上'changedata-focusCharacterIndex'事件
         //當字(題目)切換時，該字會變色並清除該字旁邊的注音。
         .setData('focusCharacterIndex', question.characterIndex)
-        .on('ttsSpeak', function (gameObject, pointer, event) {
-            console.log('ttsSpeak:' + question.word.word);
-            gameObject.scene.model.speech.say(question.word.word);
-        })
         .once('submit', function (result) { //callback回傳答案
             let polyphonyCharacter = undefined;
             let isPass = question.verify(result); //比對答案
