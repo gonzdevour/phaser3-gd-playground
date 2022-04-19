@@ -31,7 +31,7 @@ class Bopomofo extends Sizer {
         })
             .add(
                 tone0,
-                { proportion: 0, expand: false }
+                { proportion: 0, expand: false ,padding: {top:-20}}
             )
             .add(
                 initials,
@@ -93,7 +93,10 @@ class Bopomofo extends Sizer {
     }
 
     setTone0(text) {
-        SetText(this.getElement('tone0'), text);
+        var tone0 = this.getElement('tone0')
+        SetText(tone0, text);
+        //this.space.bottom = text==''?0:20;
+        //this.layout();
         return this;
     }
 

@@ -75,11 +75,15 @@ class Base extends Phaser.Scene {
     }
 
     drawBounds(sizer, color) {
-        if (color == undefined) {
-            color = 0xff0000;
-        }
         if (this.debugMode) {
-            return sizer.drawBounds(this.add.graphics(), color)
+            if (this.boundsDrawer == undefined){
+                this.boundsDrawer = this.add.graphics();
+            }
+            if (color == undefined) {
+                color = 0xff0000;
+            }
+            this.boundsDrawer.clear();
+            return sizer.drawBounds(this.boundsDrawer, color)
         }
     }
 

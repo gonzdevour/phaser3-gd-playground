@@ -54,7 +54,7 @@ class QuizPanel extends Sizer {
             .add(
                 choices,
                 {
-                    proportion: 1, expand: true,
+                    proportion: 0, expand: true,
                     padding: { bottom: spaceChoices }
                 }
             )

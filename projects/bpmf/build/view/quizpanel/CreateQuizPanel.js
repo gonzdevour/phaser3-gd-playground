@@ -142,6 +142,8 @@ var CreateQuizPanel = function (scene, config) {
                 .setCharacterBopomofo(index, quizPanel.getChoiceResult())
                 //※注意gameobjects/bopomofo/Bopomofo.js的setText自訂函數會用show/hide控制排版
                 .layoutCharacter(index)
+                
+            quizPanel.scene.drawBounds(quizPanel);
         })
 
     return quizPanel;
