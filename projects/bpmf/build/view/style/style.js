@@ -2,8 +2,11 @@ import { getOS } from "../../../../../plugins/os";
 //get OS status
 var OS = getOS();
 var fontFamilyName = OS.desktop?'DFKai-SB':'Noto Sans CJK';
+var bitmapTextName = OS.desktop?'bf0':'bf1';
 
 var Style = {
+    bitmapTextName: bitmapTextName,
+    bitmapTextSize: 32,
     fontFamilyName: fontFamilyName,
     reviewPanel: {
         word: {

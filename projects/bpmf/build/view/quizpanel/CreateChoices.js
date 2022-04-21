@@ -2,6 +2,7 @@ import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackgro
 import CreateButtonBackground from '../style/CreateButtonBackground.js';
 import { Choices } from '../../../gameobjects/quizpanel.js';
 import { Style } from '../style/style.js';
+import bmpFont from '../../../gameobjects/bmpFont/bmpFont.js';
 
 const MaxInitialsButtons = 5;
 const MaxMediaButtons = 3;
@@ -47,7 +48,8 @@ var CreateChoices = function (scene) {
     var tone = config.tone;
     for (var i = 0; i < MaxToneButtons; i++) { //建立5個tone選項(無內容)存入該config array
         tone.push(
-            CreateLabel(scene, Style.quizPanel.choice.tone)
+            //CreateLabel(scene, Style.quizPanel.choice.tone)
+            CreateBitmapTextLabel(scene, Style.quizPanel.choice.tone)
         )
     }
 
@@ -80,6 +82,20 @@ var CreateLabel = function (scene, style) {
         text: scene.rexUI.add.BBCodeText(0, 0, '', style),
         // Set fixedWidth, fixedHeight for all kinds of text input
 
+        align: 'center',
+        space: { left: 5, right: 5, top: 5, bottom: 5 }
+    })
+}
+
+var CreateBitmapTextLabel = function (scene, style) {
+    var stl = style;
+    var newBitmapTextSize = 2*Style.bitmapTextSize;
+    return scene.rexUI.add.label({
+        background: CreateButtonBackground(scene, 10, undefined, 0xffffff, 2),
+        text: new bmpFont(scene, 0, 0, Style.bitmapTextName, '', newBitmapTextSize),
+        // Set fixedWidth, fixedHeight for all kinds of text input
+        width: stl.fixedWidth,
+        height: stl.fixedHeight,
         align: 'center',
         space: { left: 5, right: 5, top: 5, bottom: 5 }
     })

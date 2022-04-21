@@ -2,6 +2,7 @@ import bmpFont from '../../../gameobjects/bmpFont/bmpFont.js';
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import { Character } from '../../../gameobjects/quizpanel.js';
 import { Initials, Media, Vowel } from '../../../model/bopomofo/Bopomofo.js'
+import { Style } from '../style/style.js';
 
 //建立字與注音的label群後，透過gameobjects/Character.js的new Character(包含new Bopomofo)進行排列
 //注意這個階段並不給予text內容，而只是將組件排版
@@ -36,12 +37,11 @@ var CreatePhonologyLabel = function (scene, style, testString) {
     var stl = style.word.phonology;
     return scene.rexUI.add.label({
         // background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
-        //text: scene.rexUI.add.BBCodeText(0, 0, '', style.word.phonology),
-        //text: CreateBmpFont(0, 0, '', style.word.phonology),
-        text: new bmpFont(scene, 0, 0, 'bf0', ''),
+        //text: scene.rexUI.add.BBCodeText(0, 0, '', stl),
+        text: new bmpFont(scene, 0, 0, Style.bitmapTextName, '', Style.bitmapTextSize),
         // Set fixedWidth, fixedHeight for all kinds of text input
         width: stl.fixedWidth,
-        height: stl.fixedWidth,
+        height: stl.fixedHeight,
         align: 'center',
         //space: { left: 2, right: 2, top: 2, bottom: 2 }
     })
@@ -52,11 +52,11 @@ var CreateToneLabel = function (scene, style) {
     var stl = style.word.tone;
     return scene.rexUI.add.label({
         // background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
-        //text: scene.rexUI.add.BBCodeText(0, 0, '', style.word.tone),
-        text: new bmpFont(scene, 0, 0, 'bf0', ''),
+        //text: scene.rexUI.add.BBCodeText(0, 0, '', stl),
+        text: new bmpFont(scene, 0, 0, Style.bitmapTextName, '', Style.bitmapTextSize),
         // Set fixedWidth, fixedHeight for all kinds of text input
         width: stl.fixedWidth,
-        height: stl.fixedWidth,
+        height: stl.fixedHeight,
         align: 'left',
         space: { left: 0, right: 0, top: 0, bottom: 0 }
     })
@@ -67,11 +67,11 @@ var CreateTone0Label = function (scene, style) {
     var stl = style.word.tone0;
     return scene.rexUI.add.label({
         // background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
-        //text: scene.rexUI.add.BBCodeText(0, 0, '', style.word.tone0),
-        text: new bmpFont(scene, 0, 0, 'bf0', ''),
+        //text: scene.rexUI.add.BBCodeText(0, 0, '', stl),
+        text: new bmpFont(scene, 0, 0, Style.bitmapTextName, '', Style.bitmapTextSize),
         // Set fixedWidth, fixedHeight for all kinds of text input
         width: stl.fixedWidth,
-        height: stl.fixedWidth,
+        height: stl.fixedHeight,
         align: 'center',
         space: { left: 0, right: 0, top: 0, bottom: 0 }
     })

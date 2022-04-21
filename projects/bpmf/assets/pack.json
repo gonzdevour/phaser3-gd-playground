@@ -17,6 +17,12 @@
         "fontDataURL": "assets/bitmapFont/bf0.xml"
       },
       {
+        "type": "bitmapFont",
+        "key": "bf1",
+        "textureURL": "assets/bitmapFont/bf1.png",
+        "fontDataURL": "assets/bitmapFont/bf1.xml"
+      },
+      {
         "type": "image",
         "key": "arrowL",
         "url": "assets/image/arrowL.png"

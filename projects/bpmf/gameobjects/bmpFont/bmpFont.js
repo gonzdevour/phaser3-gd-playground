@@ -1,8 +1,8 @@
 import { ColorNameToInteger } from '../../../../../phaser3-rex-notes/plugins/utils/color/ColorNameToInteger.js';
 
 class bmpFont extends Phaser.GameObjects.BitmapText {
-  constructor(scene,x,y,key,text){
-    super(scene,x,y,key,text,32); //size:32
+  constructor(scene,x,y,key,text,fontSize){
+    super(scene,x,y,key,text,fontSize); //base size:32
     scene.add.existing(this);
   }
   setColor(color) {
