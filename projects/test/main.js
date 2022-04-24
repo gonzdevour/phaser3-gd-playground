@@ -1,12 +1,12 @@
-var Fn0 = function() {
-    console.log('Fn0')
-    setTimeout(function () {
-        Fn1()
-    }, 1000)
-}
+import Mustache from 'mustache';
 
-var Fn1 = function() {
-    console.log('Fn1')
-}
+var view = {
+    title: "Joe",
+    calc: function () {
+        return 2 + 4;
+    }
+};
 
-Fn0()
+var output = Mustache.render("{{title}} spends {{calc}}", view);
+
+console.log(output)
