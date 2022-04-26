@@ -47,6 +47,11 @@ class Logger {
         this.setVisible(!this.visible);
         return this;
     }
+
+    destroy() {
+        this.print.remove();
+        return this;
+    }
 }
 
 export default Logger;

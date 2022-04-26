@@ -62,7 +62,7 @@ var CreateQuizConfigPanel = function (scene, config) {
             buttonLabel,
             {
                 proportion: 0, expand: true, align: 'center',
-                padding: { left: 80, right: 80, bottom:80 } //label在sizer子區塊中的天地
+                padding: { left: 80, right: 80, bottom:40 } //label在sizer子區塊中的天地
             }
         )
 

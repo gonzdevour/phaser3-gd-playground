@@ -55,29 +55,27 @@ class MainMenu extends Base {
                 ModalDialogPromise(_scene, {
                     title: '使用說明',
                     content: 
-`「注音習作」是以注音符號
-測驗認識常用字詞的線上教具
-APP，有語音輔助，能指定易
-混淆的聲韻進行強化訓練。
-適合幼小銜接以及國語初學者
-使用。
+`「注音習作」是以注音符號測驗
+認識常用字詞的線上教具APP，
+有語音輔助，能指定易混淆的聲韻
+進行強化訓練。適合幼小銜接以及
+國語初學者使用。
 
-尊重考證、遵循教育部指引為
-本作一貫的開發原則。然而，
-字音形古今通塞、南北是非，
-所謂「正確答案」只存在一時
-一地，台灣本地習慣的發音若
-與部頒標準不一致時，本作則
-採兼容之立場，祈使用者透過
-練習，可更貼合日常實用。
+尊重考證、遵循教育部指引為本作
+一貫的開發原則。然而，字音形古
+今通塞、南北是非，所謂「正確答
+案」只存在一時一地，台灣本地習
+慣的發音若與部頒標準不一致時，
+本作則採兼容之立場，祈使用者透
+過練習，可更貼合日常實用。
 
-如有設計不周、內容錯漏，或
-有任何相關的建議與指導，請
-不吝聯絡敝團隊。
+如有設計不周、內容錯漏，或有任
+何相關的建議與指導，請不吝聯絡
+敝團隊。
 
 ©PLAYONE 2022`,
                     buttonMode: 3,
-                    contentStyle:{ fontFamily: Style.fontFamilyName, fontSize: 32 },
+                    contentStyle:{ fontFamily: Style.fontFamilyName, fontSize: 40 },
                     callbackMail: function(){ _scene.model.browser.open('https://forms.gle/uc51sDPiUZ34Qiws9') },        
                     width: _scene.viewport.displayWidth-50,
                 })

@@ -31,7 +31,7 @@ class QuizConfig extends Base {
             }, this)
 
         this.drawBounds(quizConfigPanel);
-        //this.log(`${quizConfigPanel.width}x${quizConfigPanel.height}`)
+        //console.log(`${quizConfigPanel.width}x${quizConfigPanel.height}`);
 
         super.create(); //createSysPanel & setupTransition
         var _scene = this;

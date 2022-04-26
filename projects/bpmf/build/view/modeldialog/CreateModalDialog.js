@@ -45,7 +45,7 @@ var CreateModalDialog = function (scene, config) {
 
     if (typeof (config.content) === 'string') {
         //如果有content文字則建立bbcode物件(此例的content是一個new Character物件)
-        config.content = scene.rexUI.add.BBCodeText(0, 0, config.content, { fontFamily: Style.fontFamilyName, fontSize: 48 });
+        config.content = scene.rexUI.add.BBCodeText(0, 0, config.content, config.contentStyle);
         SetValue(config, 'expand.content', false); //將content物件設定為不隨dialog的排版延展
     }
 

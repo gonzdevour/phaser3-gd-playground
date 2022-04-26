@@ -1,0 +1,102 @@
+,zh,en
+0,讀取中,Loading
+1,連線中,Connecting
+2,玩家名稱：,User Name
+3,建立自己的遊戲室。,Create your own game room.
+4,加入別人建立的遊戲室。,Join a game room which is already created.
+5,遊戲規則與字彙題庫。,Game rules and vocabulary bank.
+6,競賽紀錄與排名列表。,Match records and ranking list.
+7,在線玩家列表,Online Users
+8,遊戲室列表,Available Game Rooms
+9,建立遊戲室,Create Room
+10,遊戲室名稱,Room Name
+11,提示次數：,Hint(s):
+12,自由棋次數：,Free Move(s):
+13,出手順序：,Player Order:
+14,先手,1st
+15,後手,2nd
+16,加入遊戲室,Join Room
+17,排名,Ranking
+18,複合字配對成績,Matched Vocabulary
+19,局數,Round
+20,總時間,Time
+21,等待時間,Counter
+22,自由棋,Free-Move
+23,配對字彙,Vocabulary
+24,配對字彙數,Correct
+25,剩餘棋子數,Your Go
+26,失手次數,Incorrect
+27,總分,Score
+28,音樂音量,BGM
+29,音效音量,SE
+30,你獲得了,You got
+31,分！,point!
+32,分！,points!
+33,分，,"point,"
+34,分，,"points,"
+35,換,it's
+36,下囉！,s turn!
+37,比賽結束！,game set!
+38,獲得了,got
+39,等待其他玩家…,Waiting for other user...
+40,等待對方接受挑戰…,Waiting for host...
+41,換你下囉！,it's your turn!
+42,語系選擇,Language
+43,你使用了1次自由棋！,You have requested a free-move!
+44,你使用了1次自由棋，,"You have requested a free-move,"
+45,使用了1次自由棋，," has requested a free-move,"
+46,這裡沒有複合字喔，再思考一下吧！,No matched vocabulary here!
+47,發生了失誤！,has made an incorrect move!
+48,思考超過1分鐘，,"It's more than 1 minute waiting,"
+49,失誤增加1次，,"incorrect move +1,"
+50,加油喔！,don't give up!
+51,對方思考超過1分鐘，,"It's more than 1 minute waiting,"
+52,失誤增加1次！,incorrect move +1!
+53,使用自由棋！,Free-Move!
+54,現在可以將棋子下在任意空格了！,you can place one chess anywhrere!
+55,確定要使用提示嗎？,Are you sure to take a hint?
+56,提示機會已經用完囉！,No hint available.
+57,確定要使用自由棋嗎？,Make a free-move?
+58,已經沒有自由棋可以使用囉！,No free-move available.
+59,確定要離開遊戲嗎？,Are you sure to leave the game?
+60,邀請已送出！,Invitation has been sent.
+61,是否再來一局？,One more round?
+62,是否邀請,One more round with
+63,再來一局？,?
+64,邀請你再來一局，要接受嗎？," invites you for one more round, are you ready?"
+65,你接受了邀請！,Invitation accepted!
+66,遊戲將在5秒後重新開始。,New round will start in 5 seconds.
+67,接受了邀請！,has accepted your invitation!
+68,遊戲即將重新開始。,New round will start in seconds.
+69,請在此處輸入玩家名稱。,Enter your name.
+70,請在此處輸入房間名稱。,Enter the room name.
+71,輸入訊息...,Chat...
+72,連線關閉！,Connection closed!
+73,請檢查網路狀態，按F5重新登入。,Please check your internet and press F5 to login again.
+74,連線中斷！,Internet disconnected!
+75,請檢查網路狀態，按F5重新登入。,Please check it and press F5 to login again.
+76,是否接受,Do you agree
+77,的對弈請求？,to join the game?
+78,已加入遊戲。,has joined.
+79,的房間：,s room:
+80,歡迎,Welcome
+81,來到遊戲大廳！,logs into our fantastic game center!
+82,在線,Online
+83,已離線。,has left game.
+84,對手已離線，請重新等待。,Your opponent has left. Wait for another user.
+85,五子連線，練習結束！,Five in a row!
+86,五子連線，,Five in a row!
+87,獲得勝利！,wins!
+88,對手離線，,"Your opponent has left, "
+89,棋盤已滿，積分相同，判定和局！,"Game set, score draw!"
+90,棋盤已滿，判定積分由,"Game set, "
+91,無子可下，積分相同，判定和局！,"No possible move, score draw!"
+92,無子可下，判定積分由,"No possible move, "
+93,請輸入使用者名稱。,Please enter the user name.
+94,請按F5重新連線。,Press F5 to re-connect.
+95,請輸入房間名稱。,Please enter the room name.
+96,請嘗試其他的房間名稱。,Please try another room name.
+97,確定要刪除所有競賽紀錄嗎？,Are you sure to delete all ranking data?
+98,你放棄了這回合，,"You passed, "
+99,放棄這回合，,passed!
+100,確定要換手嗎？,Are you sure to pass this turn?
