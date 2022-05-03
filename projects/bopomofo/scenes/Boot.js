@@ -19,12 +19,14 @@ class Boot extends Base {
     }
 
     create() {
-        this.model = CreateModel({
+
+        var model = CreateModel({
             db: [
                 this.cache.text.get('db0'),
                 this.cache.text.get('db1'),
             ]
         });
+        this.addGlobalProperty('model', model);
 
         this.scene.start(MainMenuSceneKey);
     }
