@@ -1,8 +1,8 @@
 var SetupQuizPanel = function (quizPanel, question, onSubmit) {
-    // Fill quizPanel
+    // Fill 
+    // 4. fire 'clear-events', to turn off events
+    quizPanel.emit('clear-events');
     quizPanel
-        // 4. fire 'clear-events', to turn off events
-        .emit('clear-events')
         .clearChoices()
         .setTitle(question.title)
         .setWord(question.characters)

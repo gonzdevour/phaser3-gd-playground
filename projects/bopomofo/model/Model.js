@@ -21,6 +21,10 @@ class Model extends EventEmitter {
         // Only one quiz (series of question) is running one time
         this.quiz = new Quiz(this);
     }
+
+    destroy() {
+        // Do nothing
+    }
 }
 
 export default Model;
