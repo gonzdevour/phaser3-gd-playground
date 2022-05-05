@@ -7,8 +7,8 @@ const DefaultQuizConfig = {
 }
 
 class QuizConfig extends Base {
-    constructor(model) {
-        super(model, 'bopomofo.quizConfig', DefaultQuizConfig);
+    constructor() {
+        super('bopomofo.quizConfig', DefaultQuizConfig);
     }
 }
 

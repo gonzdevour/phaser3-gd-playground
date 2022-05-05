@@ -5,9 +5,8 @@ import Words from './words/Words.js';
 import Characters from './characters/Characters.js';
 
 class DBWrap {
-    constructor(model, json) {
-        this.model = model;
-        this.id = model.db.length;
+    constructor(id, json) {        
+        this.id = id;
         this.db = CreateDB();
         if (json) {
             if (typeof (json) === 'string') {

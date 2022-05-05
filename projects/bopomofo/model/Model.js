@@ -12,7 +12,7 @@ class Model extends EventEmitter {
         var jsonList = GetValue(config, 'db', []);
         this.db = [];
         for (var i = 0, cnt = jsonList.length; i < cnt; i++) {
-            var dbWrap = new DBWrap(this, jsonList[i])
+            var dbWrap = new DBWrap(i, jsonList[i])
             this.db.push(dbWrap);
         }
 
