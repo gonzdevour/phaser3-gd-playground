@@ -14,8 +14,6 @@ var CreateApi = function (scene) {
   api.speech = GetValue(apiList, 'speech', undefined);//初始化語音
   api.sound = GetValue(apiList, 'sound', undefined); //初始化音效
 
-  api.tableManager = new TableManager(scene);
-
   //建立基於lsData的dialog依序彈出機制
   //api.dialogQueue = new DialogQueue(model.lsData);
 

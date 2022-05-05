@@ -80,39 +80,30 @@ Model
     .shuffleQuestions() //題庫洗牌
     .clearQuestions() //清空questions array，題號歸0
 */
-import LocalStorageData from '../../../../phaser3-rex-notes/plugins/localstorage-data.js';
-import { DefaultData } from './DefaultData.js'
-import DBWrap from './db/DBWrap.js';
+
 import Quiz from './quiz/Quiz.js';
-import AppData from './appdata/AppData.js';
+import CreateLocalization from '../build/model/CreateLocalization.js';
+import CreateLsData from '../build/model/CreateLsData.js';
+import CreateAppData from '../build/model/CreateAppData.js';
+import CreateModelDB from '../build/model/CreateModelDB.js';
 
 //utils
 import GetValue from '../../../plugins/utils/object/GetValue.js';
 
 class Model {
-  constructor(config) { 
-    //初始化建立ls(lsd plugin而不是純ls)，如果default:undefined會存入所有ls key-content。否則會依預設值的key存入原本在ls內的值，有key無值時存入預設值。
-    this.lsData = new LocalStorageData({
-        name: DefaultData.appID,
-        default: DefaultData, //以defaultData中的key為索引，有值時略過，無值時存入該value為預設值
-        //reset: true, //初始化時重設lsData為DefaultData，正式版要記得關掉
-    })
-
+  constructor(config) {
     //從CreateModel傳入config: {db: [this.cache.text.get("db0"), this.cache.text.get("db1")];}
-    this.db = [];
-    var dbList = GetValue(config, 'db', []); //dbList = 取出db中的array[db0, db1]，若無值則設為[]
-    for (var i = 0, cnt = dbList.length; i < cnt; i++) { //db0, db1，兩者為.compress壓縮字串
-        var dbWrap = new DBWrap(this, dbList[i]) //用DBWrap解壓縮compress後，傳入Model.db array裡
-        this.db.push(dbWrap);
-    }
-
+    this.db = CreateModelDB(GetValue(config, 'db', []));
+    //初始化建立ls(lsd plugin而不是純ls)，如果default:undefined會存入所有ls key-content。否則會依預設值的key存入原本在ls內的值，有key無值時存入預設值。
+    this.lsData = GetValue(config, 'lsData', CreateLsData());
     //appData初始化，傳入model，model的lsData用於紀錄全域變數，所以傳入時model.lsData必須存在
-    //因為new appData時會同時控制api參數，所以必須在api之後建立
-    this.appData = new AppData(this);
+    this.appData = GetValue(config, 'appData', CreateAppData(this.lsData));
+    //取得或新增特製的loc table
+    this.localization = GetValue(config, 'localization', CreateLocalization(this.lsData));
+    //this.tableManager = new TableManager(this.lsData);
 
     // 同時間只能有一個題組在執行
     this.quiz = new Quiz(this);
-
   }
   setCurrentDB(config) { //將QuizConfig存入ls
     switch (config.database) { //指定是哪一個題庫(每個題庫都已經prebuild好了)

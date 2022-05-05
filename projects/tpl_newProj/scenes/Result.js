@@ -22,7 +22,8 @@ class Result extends Base {
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
 
         _scene.input.topOnly = false;
-        _scene.model.appData.loadQuizConfig(); //從ls中取得QuizConfig的設定(詞庫|強化|模式)，並設定currentDB
+        var quizConfig = _scene.model.appData.loadQuizConfig(); //從ls中取得QuizConfig的設定(詞庫|強化|模式)
+        _scene.model.setCurrentDB(quizConfig);//依QuizConfig設定currentDB
 
         var mainMenu = CreateResultPanel(this);
         mainMenu

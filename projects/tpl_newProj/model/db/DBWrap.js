@@ -18,9 +18,8 @@ import Characters from './characters/Characters.js';
 } */
 
 class DBWrap {
-    constructor(model, json) {
-        this.model = model;
-        this.id = model.db.length; 
+    constructor(dbID, json) {
+        this.id = dbID; 
         this.db = CreateDB(); //取得loki和loki的collections功能
         if (json) {
             if (typeof (json) === 'string') {

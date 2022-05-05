@@ -1,4 +1,5 @@
 import LoadAPI from "../res/api/loadAPI.js";
+import CreateApi from "../build/model/CreateApi.js";
 import ModalDialogPromise from "../build/view/modaldialog/ModalDialogPromise.js";
 import LoadingProgressUI from "./LoadingProgressUI.js";
 
@@ -12,6 +13,7 @@ var Loading = function(scene) {
     //load api
     async function load(onSuccess, onError) {
         scene.api = await LoadAPI();
+        CreateApi(scene);
         //api.sound|dialog|speech|iap|ads|idfa
         onSuccess();
     }

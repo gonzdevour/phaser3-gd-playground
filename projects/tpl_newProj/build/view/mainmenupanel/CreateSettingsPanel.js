@@ -4,6 +4,7 @@ import Save from '../../../model/appdata/Save.js';
 
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
+import AppLang from '../../../../../plugins/utils/language/AppLang.js';
 
 const COLOR_PRIMARY = 0x111111;
 const COLOR_LIGHT = 0x7b5e57;
@@ -13,6 +14,7 @@ var CreateSettingsPanel = function (scene) {
 
   var settings = scene.model.appData.loadSettings();
   var quizConfig = scene.model.appData.loadQuizConfig();
+  scene.model.setCurrentDB(quizConfig);//依QuizConfig設定currentDB
 
   var mainPanel = scene.rexUI.add.sizer({
     orientation: 'y',
@@ -161,7 +163,9 @@ var CreateButtons = function(scene,config){
             .setFillStyle((value) ? 0x8B4513 : undefined) 
       },
   })
-  choices.value = GetValue(config, 'appLangAlias', 'zh');
+  var langFromLS = scene.model.lsData.get('appLangAlias');
+  var lang = langFromLS?langFromLS:AppLang();
+  choices.value = lang;
   //choices.setButtonEnable(2, false);//關閉第2個選項
   return choices;
 }

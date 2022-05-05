@@ -2,6 +2,7 @@
 
 var DefaultAppConfig = {
     appID: 'bopomofo',
+    tableToJSONKeyHeader: 'tb.',
     cleanLocalStorage: false,
 }
 

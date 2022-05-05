@@ -8,7 +8,8 @@ import ArrIfContainKeyValue from '../../../../../plugins/utils/array/ArrIsContai
 //建立題組
 //被Quiz scene呼叫，從題庫建立題組回傳quiz，送到QuizPromise跟quizpanel組合
 var BuildQuiz = function (model) {
-    var quizConfig = model.appData.loadQuizConfig(); //從ls中取出紀錄並重建回QuizConfig並設定currentDB
+    var quizConfig = model.appData.loadQuizConfig(); //從ls中取出紀錄並重建回QuizConfig
+    model.setCurrentDB(quizConfig);//依QuizConfig設定currentDB
 
     // See build/view/quizconfigpanel/Options.js, EnhanceOptions
     var enhancementMode = quizConfig.enhancement; //指定強化練習模式
