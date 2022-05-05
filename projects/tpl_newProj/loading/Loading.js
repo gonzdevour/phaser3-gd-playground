@@ -1,6 +1,6 @@
 import LoadAPI from "../res/api/loadAPI.js";
 import CreateApi from "../build/model/CreateApi.js";
-import ModalDialogPromise from "../build/view/modaldialog/ModalDialogPromise.js";
+import * as Dialog from '../build/view/modaldialog/DialogType.js';
 import LoadingProgressUI from "./LoadingProgressUI.js";
 
 var Loading = function(scene) {
@@ -23,22 +23,11 @@ var Loading = function(scene) {
     LoadingProgressUI(scene);
     
     //onError
+    var tb = scene.localization;
     scene.load.once('loaderror', function(fileObj){
-        ModalDialogPromise(scene, {
-            title: '讀取異常',
-            content: 
-`檔案：${fileObj.key}
-
-請檢查裝置的連線狀態，
-稍待片刻重新啟動APP。
-
-如果情況沒有改善，
-可能是伺服器正在維護中，
-請至官方網站查詢。`,
-            buttonMode: 4,    
-            width: scene.viewport.displayWidth-50,
-        })
+        Dialog.TypeFatalError(scene, tb.loc('loading-error-title'), tb.loc('loading-error-content',{ filename: fileObj.key }))
     }, scene);
+
 }
 
 export default Loading;

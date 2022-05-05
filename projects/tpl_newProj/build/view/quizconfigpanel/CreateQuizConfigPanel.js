@@ -88,10 +88,9 @@ var CreateQuizConfigPanel = function (scene, config) {
     
     // content原本用``樣版字面值。``的\可以取消換行，但會把空格也帶進來。用\n比較清爽
     // 注意width只有設定最小寬度的功能，如果排版後大於width，會以排版大小為準
-    var tb = scene.model.localization;
-    tb.mtView = { filename: 'rex' };    
+    var tb = scene.model.localization;  
     databaseSelectPanel.on('button.help', function(gameObject, pointer, event){
-        Dialog.TypeY(scene, tb.loc('loading-error-title'), tb.loc('loading-error-content'))
+        Dialog.TypeY(scene, tb.loc('select-db-title'), tb.loc('select-db-content'))
     });
 
     //databaseSelectPanel.on('button.help', function(gameObject, pointer, event){

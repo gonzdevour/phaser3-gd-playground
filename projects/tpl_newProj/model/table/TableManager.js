@@ -1,3 +1,4 @@
+import { DefaultAppConfig } from "../DefaultData.js";
 import CSVToHashTable from "../../../../../phaser3-rex-notes/plugins/csvtohashtable.js";
 import mustache from "mustache";
 
@@ -9,7 +10,7 @@ class TableManager {
     this[key] = this.load(scene, key, mustacheView);
   }
   keyForLs(key) {
-    return 'tb.' + key; //存讀tb的key給前綴以免混淆
+    return DefaultAppConfig.tableToJSONKeyHeader + key; //變數名很長但其實只是'tb.'。存讀tb的key給前綴以免混淆
   }
   load(scene, key, mustacheView) { //table的來源可能為：asset(包括網路)|ls，格式可能為csv|JSON，ls有值則從ls取，無值從cache(asset)取
     var table = new CSVToHashTable();
