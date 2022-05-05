@@ -48,11 +48,6 @@ class Base extends Phaser.Scene {
         return v; 
     }
 
-    get language() {
-        var userLang = navigator.language || navigator.userLanguage;
-        return userLang;
-    }
-
     get debugMode() {
         return false;
     }

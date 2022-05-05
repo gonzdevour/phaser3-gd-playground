@@ -1,4 +1,7 @@
 import { DefaultData, DefaultQuizConfig, DefaultRecord, DefaultSettings } from "../DefaultData";
+import DeviceLang from "../../../../plugins/utils/language/DeviceLang.js";
+import AppLang from "../../../../plugins/utils/language/AppLang.js";
+import Save from "./Save.js";
 
 //utils
 import MoveItemBetweenList from '../../../../plugins/utils/array/MoveItemBetweenList.js'
@@ -7,19 +10,42 @@ import UpdateItemBetweenListByKey from "../../../../plugins/utils/array/UpdateIt
 class AppData {
   constructor(model) {
       this.model = model;
-      this.quizConfig = this.loadQuizConfig();//關於出題的設定
-      this.settings = this.loadSettings(); //設定值如音量等
-      this.record = this.loadRecord(); //過去的作答紀錄，包含wrongList和rightList
       this.curTimeElapsed = 0; //目前所花費的作答時間(ms)
       this.curRightCnt = 0; //目前的正確作答數
       this.curWrongCnt = 0; //目前的錯誤作答數
       this.curRightList = []; //目前從正確作答中紀錄的所有詞組成的陣列
       this.curWrongList = []; //目前從錯誤作答中紀錄的所有詞、字、輸入答案與正確答案等資料組成的陣列
-      this.model.sound.setVolume(this.settings.volumeSE);
-      this.model.lsData.events.on('changedata-' + 'volumeSE', function(parent, value, previousValue){
-        this.model.sound.setVolume(value);
-      },this);
+  }
+  init(scene) {
+    //從ls讀取appData.
+    //quizConfig:關於出題的設定
+    //record:過去的作答紀錄，包含wrongList和rightList
+    //settings:設定值如音量、語系設定等
+    this.load();
 
+    //初始化appLangAlias
+    if(this.settings.appLangAlias == undefined){
+      Save(scene, 'appLang', DeviceLang())
+      Save(scene, 'appLangAlias', AppLang())
+    }
+    console.log('appLangAlias:' + this.settings.appLangAlias)
+
+    //設定音量
+    scene.game.api.sound.setVolume(this.settings.volumeSE);
+
+    //數值改變事件：
+
+    //音量調整
+    this.model.lsData.events.on('changedata-' + 'volumeSE', function(parent, value, previousValue){
+      scene.game.api.sound.setVolume(value);
+    },this);
+
+    //語系切換
+    this.model.lsData.events.on('changedata-' + 'appLangAlias', function(parent, value, previousValue){
+      this.settings.appLangAlias = value;
+    },this);
+
+    return this;
   }
   reset() {
       this.curTimeElapsed = 0;

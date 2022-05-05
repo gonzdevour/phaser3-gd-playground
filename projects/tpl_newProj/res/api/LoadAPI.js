@@ -11,12 +11,12 @@ var OS = getOS();
 
 //loading promise
 
-var LoadAPI = function (scene, audioUrls) {
+var LoadAPI = function (audioUrls) {
   return new Promise(function (resolve, reject) {
     //之後應該會想不起來為什麼會加audioUrls：
     //audioUrls是記錄音效路徑用的字典，p3本體load audio後無法取得路徑，
     //但cdv_audio(cordova media)要靠路徑才能正確播放
-    var apiInit = function (scene, audioUrls) {
+    var apiInit = function (audioUrls) {
       var api = {};
       api.iab = iabInit();
       api.sound = soundInit(audioUrls);
@@ -29,7 +29,7 @@ var LoadAPI = function (scene, audioUrls) {
     };
 
     //ready api
-    var apiReady = function (scene, audioUrls) {
+    var apiReady = function (audioUrls) {
       log("api ready");
       if (OS.cordova) {
         document.addEventListener(
@@ -40,15 +40,15 @@ var LoadAPI = function (scene, audioUrls) {
             log(device.cordova);
             log(device.uuid);
             log("dvcrdy: " + audioUrls);
-            apiInit(scene, audioUrls);
+            apiInit(audioUrls);
           },
           false
         );
       } else {
-        apiInit(scene, audioUrls);
+        apiInit(audioUrls);
       }
     };
-    apiReady(scene, audioUrls);
+    apiReady(audioUrls);
 
   });
 };

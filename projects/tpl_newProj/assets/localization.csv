@@ -1,0 +1,26 @@
+key,when,what,where,zh,en,jp
+loading-error-title,loading,error,title,讀取異常,loading error,読み込みエラー
+loading-error-content,loading,error,content,"檔案：{{filename}}
+
+請檢查裝置的連線狀態，
+稍待片刻重新啟動APP。
+
+如果情況沒有改善，
+可能是伺服器正在維護中，
+請至官方網站查詢。","file：{{filename}}
+
+Please check the connection 
+status of the device and restart 
+this app again.
+
+You can also check the official 
+website if the server is under 
+maintenance,.","ファイル：{{filename}}
+
+デバイスの接続状態を確認
+してください。しばらく待って、
+APPを再起動します。
+
+状況が改善しない場合は、
+たぶん、サーバーはメンテナンス中です、
+公式サイトをご確認ください。"

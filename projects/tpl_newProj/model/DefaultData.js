@@ -1,9 +1,16 @@
 //Model.js使用的預設值
 
+var DefaultAppConfig = {
+    appID: 'bopomofo',
+    cleanLocalStorage: false,
+}
+
 var DefaultSettings = {
     volumeSE: 1, //音效音量
     volumeSpeak: 1, //語音音量
     volumeBGM: 1, //音樂音量
+    appLang: undefined,
+    appLangAlias: undefined,
 }
 
 var DefaultQuizConfig = {
@@ -21,12 +28,14 @@ var DefaultRecord = {
 //將上面的物件全部複製組成一個物件(物件與陣列不能用var複製否則會指向同一物件)
 var DefaultData = Object.assign(
     {},
+    DefaultAppConfig,
     DefaultSettings,
     DefaultQuizConfig,
     DefaultRecord,
 );
 
 export {
+    DefaultAppConfig,
     DefaultData,
     DefaultSettings,
     DefaultQuizConfig,

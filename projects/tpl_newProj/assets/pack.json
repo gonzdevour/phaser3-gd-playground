@@ -104,8 +104,8 @@
       },
       {
         "type": "text",
-        "key": "language",
-        "url": "assets/text/language.csv"
+        "key": "localization",
+        "url": "assets/text/localization.csv"
       },
       {
         "type": "text",

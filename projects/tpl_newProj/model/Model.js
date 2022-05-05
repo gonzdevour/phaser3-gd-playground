@@ -1,13 +1,3 @@
-import DBWrap from './db/DBWrap.js';
-import Quiz from './quiz/Quiz.js';
-import LocalStorageData from '../../../../phaser3-rex-notes/plugins/localstorage-data.js';
-import AppData from './appdata/AppData.js';
-import DialogQueue from '../build/view/modaldialog/DialogQueue.js';
-import { DefaultData, DefaultQuizConfig, DefaultRecord } from './DefaultData.js'
-
-//utils
-import GetValue from '../../../plugins/utils/object/GetValue.js';
-
 /* 
 Model
   .db[0,1]
@@ -90,51 +80,52 @@ Model
     .shuffleQuestions() //題庫洗牌
     .clearQuestions() //清空questions array，題號歸0
 */
+import LocalStorageData from '../../../../phaser3-rex-notes/plugins/localstorage-data.js';
+import { DefaultData } from './DefaultData.js'
+import DBWrap from './db/DBWrap.js';
+import Quiz from './quiz/Quiz.js';
+import AppData from './appdata/AppData.js';
 
+//utils
+import GetValue from '../../../plugins/utils/object/GetValue.js';
 
 class Model {
-    constructor(config) { //從CreateModel傳入config: {db: [this.cache.text.get("db0"), this.cache.text.get("db1")];}
-        var jsonList = GetValue(config, 'db', []); //jsonList = 取出db中的array[db0, db1]，若無值則設為[]
-        this.db = [];
-        for (var i = 0, cnt = jsonList.length; i < cnt; i++) { //db0, db1，兩者為.compress壓縮字串
-            var dbWrap = new DBWrap(this, jsonList[i]) //用DBWrap解壓縮compress後，傳入Model.db array裡
-            this.db.push(dbWrap);
-        }
+  constructor(config) { 
+    //初始化建立ls(lsd plugin而不是純ls)，如果default:undefined會存入所有ls key-content。否則會依預設值的key存入原本在ls內的值，有key無值時存入預設值。
+    this.lsData = new LocalStorageData({
+        name: DefaultData.appID,
+        default: DefaultData, //以defaultData中的key為索引，有值時略過，無值時存入該value為預設值
+        //reset: true, //初始化時重設lsData為DefaultData，正式版要記得關掉
+    })
 
-        //將api控制權交給model。因為各api有可能在測試時不存在，所以必須做undefined處理。
-        //因為new appData會同時控制api參數，所以必須在new AppData之前建立
-        var apiList = GetValue(config, 'api', undefined);
-        this.browser = GetValue(apiList, 'iab', undefined);//初始化語音
-        this.speech = GetValue(apiList, 'speech', undefined);//初始化語音
-        this.sound = GetValue(apiList, 'sound', undefined); //初始化音效
-
-        //初始化建立ls(lsd plugin而不是純ls)，如果default:undefined會存入所有ls key-content。否則會依預設值的key存入原本在ls內的值，有key無值時存入預設值。
-        this.lsData = new LocalStorageData({
-            name: 'bopomofo',
-            default: DefaultData, //以defaultData中的key為索引，有值時略過，無值時存入該value為預設值
-            //reset: true, //初始化時重設lsData為DefaultData，正式版要記得關掉
-        })
-        //建立基於lsData的dialog依序彈出機制
-        this.dialogQueue = new DialogQueue(this.lsData);
-        //appData初始化，傳入lsData，用於紀錄全域變數
-        //因為new appData時會同時控制api參數，所以必須在api之後建立
-        this.appData = new AppData(this);
-
-        // 同時間只能有一個題組在執行
-        this.quiz = new Quiz(this);
+    //從CreateModel傳入config: {db: [this.cache.text.get("db0"), this.cache.text.get("db1")];}
+    this.db = [];
+    var dbList = GetValue(config, 'db', []); //dbList = 取出db中的array[db0, db1]，若無值則設為[]
+    for (var i = 0, cnt = dbList.length; i < cnt; i++) { //db0, db1，兩者為.compress壓縮字串
+        var dbWrap = new DBWrap(this, dbList[i]) //用DBWrap解壓縮compress後，傳入Model.db array裡
+        this.db.push(dbWrap);
     }
-    setCurrentDB(config) { //將QuizConfig存入ls
-      switch (config.database) { //指定是哪一個題庫(每個題庫都已經prebuild好了)
-        case '高頻詞庫':
-            this.currentDB = this.db[0];
-            this.currentDBIndex = 0;
-            break; 
-        case '常用詞庫':
-            this.currentDB = this.db[1];
-            this.currentDBIndex = 1;
-            break;
-      }
-      return this;
+
+    //appData初始化，傳入model，model的lsData用於紀錄全域變數，所以傳入時model.lsData必須存在
+    //因為new appData時會同時控制api參數，所以必須在api之後建立
+    this.appData = new AppData(this);
+
+    // 同時間只能有一個題組在執行
+    this.quiz = new Quiz(this);
+
+  }
+  setCurrentDB(config) { //將QuizConfig存入ls
+    switch (config.database) { //指定是哪一個題庫(每個題庫都已經prebuild好了)
+      case '高頻詞庫':
+          this.currentDB = this.db[0];
+          this.currentDBIndex = 0;
+          break; 
+      case '常用詞庫':
+          this.currentDB = this.db[1];
+          this.currentDBIndex = 1;
+          break;
+    }
+    return this;
   }
 }
 

@@ -1,6 +1,5 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import CreateTitleLabel from './CreateTitleLabel.js';
-import ModalDialogPromise from '../modaldialog/ModalDialogPromise.js';
 import { QuizModeOptions } from './Options.js'
 import Style from '../../../settings/Style.js';
 

@@ -21,8 +21,6 @@ class Result extends Base {
         var _scene = this;
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
 
-        _scene.log('Lang=' + this.language);
-
         _scene.input.topOnly = false;
         _scene.model.appData.loadQuizConfig(); //從ls中取得QuizConfig的設定(詞庫|強化|模式)，並設定currentDB
 
@@ -40,7 +38,7 @@ class Result extends Base {
                 this.transitionTo( SceneKey.Menu,500 );
             }, this)
             .on('button.review', function () { //開啟review modalPromise
-                _scene.model.sound.play(_scene, 'right');
+                _scene.game.api.sound.play(_scene, 'right');
                 _scene.log('button.help')
                 ModalDialogPromise(_scene, {
                     title: '複習列表',

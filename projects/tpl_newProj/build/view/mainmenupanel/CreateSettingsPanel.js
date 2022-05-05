@@ -1,10 +1,9 @@
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import Style from '../../../settings/Style.js';
-import RegisterLabelAsButton from '../../../behavior/Button/RegisterLabelAsButton.js';
+import Save from '../../../model/appdata/Save.js';
 
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
-import { DefaultSettings } from '../../../model/DefaultData.js';
 
 const COLOR_PRIMARY = 0x111111;
 const COLOR_LIGHT = 0x7b5e57;
@@ -20,8 +19,9 @@ var CreateSettingsPanel = function (scene) {
     space: { item: 30 },
     sizerEvents: true,
   })
-  .on('postlayout', function(){
+  .on('postlayout', function(child, sizer){
     scene.log('mainPanel postlayout')
+    scene.drawBounds(sizer);
   })
 
   /*
@@ -59,7 +59,7 @@ var CreateSettingsPanel = function (scene) {
       Save(scene,'volumeSE', value);
     }
   }).on('inputend', function(pointer) {
-    scene.model.sound.play(scene, 'right');
+    scene.game.api.sound.play(scene, 'right');
   }, scene);
  
   //建立題數控制(min1~50max)
@@ -74,6 +74,16 @@ var CreateSettingsPanel = function (scene) {
     }
   })
 
+  var langCtrl = scene.rexUI.add.sizer({
+    orientation: 'x',
+    space: { left: 10, right: 10, top: 10, bottom: 10, item: 30 },
+  })
+  .addBackground(scene.rexUI.add.roundRectangle(0, 0, 0, 0, 10, COLOR_DARK))
+  .add(CreateActionLabel(scene, '語系', 'qcnt'),{})
+  .add(CreateButtons(scene), {
+    proportion: 1, align: 'left', expand: true,
+  })
+
   mainPanel
     .add(seCtrl, {
       proportion: 1, align: 'left', expand: true,
@@ -83,14 +93,12 @@ var CreateSettingsPanel = function (scene) {
       proportion: 1, align: 'left', expand: true,
       key: 'qcntCtrl'
     })
+    .add(langCtrl, {
+      proportion: 1, align: 'center', expand: true,
+      key: 'langCtrl'
+    })
 
   return mainPanel;
-}
-
-var Save = function (scene, key, newValue) {
-  let savingConfig = {};
-  savingConfig[key] = newValue;
-  scene.model.appData.save(savingConfig);
 }
 
 var CreateActionLabel = function (scene, text, img, radius, pos) {
@@ -98,7 +106,8 @@ var CreateActionLabel = function (scene, text, img, radius, pos) {
     background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
     icon: !img ? undefined : scene.add.image(0, 0, img).setDisplaySize(72, 72),
     text: !text ? undefined : scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 60 }),
-    space: { left: 10, right: 10, top: 10, bottom: 10, icon: 0 }
+    space: { left: 10, right: 10, top: 10, bottom: 10, icon: 0 },
+    align: 'center'
   });
 }
 
@@ -122,6 +131,39 @@ var CreateNumberBar = function (scene, config) {
     space: { left: 10, right: 10, top: 10, bottom: 10, icon: 10, slider: 10 },
     valuechangeCallback: config.callback,
 })
+}
+
+var CreateButtons = function(scene,config){
+  var langOptions = GetValue(config, 'langOptions', ['zh','en','jp']);
+  var buttons = [];
+  for (var i = 0, cnt = langOptions.length; i < cnt; i++) {
+      var btn = CreateActionLabel(scene, langOptions[i]);
+      btn.name = langOptions[i];
+      buttons.push(btn);
+  }
+  //fixWidthButtons可以自動換行排列button
+  var choices = scene.rexUI.add.buttons({
+      //align: 'justify',
+      //justifyPercentage: 1,
+      // justify在rexUI中的規則是：當該行元素超過justifyPercentage時自動換行，否則左右對齊
+      space: { line: 30, item: 30 },
+      expand: true,
+      type: 'radio',
+      buttons: buttons,
+      setValueCallback: function (button, value, previousValue) {
+        //value是true|false值，radio會在按下按鈕後觸發所有buttons的setValuecallback，所以需要判斷後處理
+        //數值處理
+        if(value){
+          Save(scene,'appLangAlias', button.name);
+        }
+        //外觀處理
+        button.getElement('background')
+            .setFillStyle((value) ? 0x8B4513 : undefined) 
+      },
+  })
+  choices.value = GetValue(config, 'appLangAlias', 'zh');
+  //choices.setButtonEnable(2, false);//關閉第2個選項
+  return choices;
 }
 
 export default CreateSettingsPanel;

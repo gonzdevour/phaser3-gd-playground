@@ -5,8 +5,8 @@ import CreateChoices from "./CreateChoices.js";
 import CreateActions from "./CreateActions.js";
 import { QuizPanel } from '../../../gameobjects/quizpanel.js';
 import Style from "../../../settings/Style.js";
+import * as Dialog from '../modaldialog/DialogType.js';
 import RegisterLabelAsButton from "../../../behavior/Button/RegisterLabelAsButton.js";
-import ModalDialogPromise from "../modaldialog/ModalDialogPromise.js";
 
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
@@ -71,24 +71,20 @@ var CreateQuizPanel = function (scene, config) {
     RegisterLabelAsButton(btnSpeak, 'ttsSpeak', quizPanel);
     quizPanel
         .on('ttsSpeak', function (gameObject, pointer, event) {
-            if (gameObject.scene.model.speech.speaker){
+            var api = gameObject.scene.game.api;
+            if (api.speech.speaker){
                 let ttsWord = quizPanel.question.word.word;
                 console.log('ttsSpeak:' + ttsWord);
-                gameObject.scene.model.speech.say(ttsWord);
+                api.speech.say(ttsWord);
             } else {
-                ModalDialogPromise(scene, {
-                    title: '無法取得語音',
-                    content: `
+                Dialog.TypeY(scene, '無法取得語音', `
 此瀏覽視窗不支援語音功能，
 建議使用：
 Chrome(最佳)
 Safari
 Firefox
 Edge
-重新開啟此APP。`,
-                    buttonMode: 1,
-                    width: scene.viewport.displayWidth-50,
-                })
+重新開啟此APP。`)
             }
         })
 

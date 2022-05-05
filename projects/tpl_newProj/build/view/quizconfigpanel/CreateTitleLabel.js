@@ -12,7 +12,7 @@ var CreateTitleLabel = function (scene, text) { //title, help按鈕
                 align: 'center', expand: false, key: 'title',
             }
         )
-        //help按鈕會在各面板建立時用getElement('help').onClick來褂上ModalDialogPromise
+        //help按鈕會在各面板建立時用getElement('help').onClick來褂上dialog
         .add(
             CreateHelpButton(scene),
             {

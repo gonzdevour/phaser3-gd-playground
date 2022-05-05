@@ -23,8 +23,6 @@ class Home extends Base {
         var _scene = this;
         super.scaleOuter(); //Base: this.rexScaleOuter.scale();
 
-        _scene.log('Lang=' + this.language);
-
         var mainMenu = CreateMainMenuPanel(this);
         mainMenu
             .setMinSize(this.viewport.displayWidth, this.viewport.displayHeight)
@@ -40,7 +38,7 @@ class Home extends Base {
                 //this.transitionTo( ResultSceneKey,500 );
             }, this)
             .on('button.config', function () { //todo
-                _scene.model.sound.play(_scene, 'right');
+                _scene.game.api.sound.play(_scene, 'right');
                 _scene.log('button.config')
                 ModalDialogPromise(_scene, {
                     title: '系統設定',
@@ -50,7 +48,7 @@ class Home extends Base {
                 })
             }, this)
             .on('button.help', function () { //todo
-                _scene.model.sound.play(_scene,'right');
+                _scene.game.api.sound.play(_scene,'right');
                 _scene.log('button.help')
                 ModalDialogPromise(_scene, {
                     title: '使用說明',
@@ -76,7 +74,7 @@ class Home extends Base {
 ©PLAYONE 2022`,
                     buttonMode: 3,
                     contentStyle:{ fontFamily: Style.fontFamilyName, fontSize: 40 },
-                    callbackMail: function(){ _scene.model.browser.open('https://forms.gle/uc51sDPiUZ34Qiws9') },        
+                    callbackMail: function(){ _scene.game.api.browser.open('https://forms.gle/uc51sDPiUZ34Qiws9') },        
                     width: _scene.viewport.displayWidth-50,
                 })
             }, this)
