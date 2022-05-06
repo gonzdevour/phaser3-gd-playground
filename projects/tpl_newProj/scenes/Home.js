@@ -90,13 +90,14 @@ class Home extends Base {
             .on('update', function () {
                 console.log(JSON.stringify(messages));
             })
-            .on('push', function () {
-                // messages.pop(PopCallback, this);
-                messages.popAll(PopCallback, _scene)
-                    .then(function (result) {
-                        //debugger
-                        //popAll結束
-                    })
+            .on('push', async function () {
+                if (messages.isPoppingAll) {
+                    return;
+                }
+                messages.isPoppingAll = true;
+                await messages.popAll(PopCallback, _scene);
+                //popAll結束
+                messages.isPoppingAll = false;
             })
 
         this.input.on('wheel',function(){
