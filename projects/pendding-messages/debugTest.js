@@ -20,25 +20,20 @@ class Test extends Phaser.Scene {
             .on('update', function () {
                 console.log(JSON.stringify(messages));
             })
-            .on('push', function () {
-                // messages.pop(PopCallback, this);
-                messages.popAll(PopCallback, _scene)
-                    .then(function (result) {
-                        //debugger
-                        //popAll結束
-                    })
+            .on('push', async function () {
+                if (messages.isPoppingAll) {
+                    return;
+                }
+
+                messages.isPoppingAll = true;
+                await messages.popAll(PopCallback, _scene);
+                messages.isPoppingAll = false;
             })
 
-        this.input.on('wheel',function(){
+        this.input.on('wheel', function () {
             console.log('pushed')
             messages.push(Date.now().toString())
         })
-
-        // messages.pop(PopCallback, this);
-        messages.popAll(PopCallback, this)
-            .then(function (result) {
-                debugger
-            })
 
     }
 
