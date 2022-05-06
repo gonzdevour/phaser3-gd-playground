@@ -1,0 +1,78 @@
+import EventEmitter from 'eventemitter3';
+
+class PenddingMessages extends EventEmitter {
+    constructor() {
+        super();
+        this.messages = [];
+    }
+
+    toJSON() {
+        return {
+            messages: this.messages
+        }
+    }
+
+    resetFromJSON(config) {
+        this.messages = config.messages;
+        return this;
+    }
+
+    get length() {
+        return this.messages.length;
+    }
+
+    get isEmpty() {
+        return (this.messages.length === 0);
+    }
+
+    push(message) {
+        this.messages.push(message);
+        this.emit('push', message, this.messages);
+        this.emit('update', this.messages);
+        return this;
+    }
+
+    async pop(callback, scope) {
+        if (this.isEmpty) {
+            return false;
+        }
+
+        if (callback) {
+            // Async callback, to run (model dialog) task
+            var message = this.messages[0];
+            var result = await callback.call(scope, this.messages[0], this.messages);
+            // Remove popped message if result is true
+            if (result) {
+                this.messages.shift();
+                this.emit('pop', message, this.messages);
+                this.emit('update', this.messages);
+            }
+            return Promise.resolve(result);
+        } else { // No callback, just pop message
+            var message = this.messages.shift();
+            this.emit('pop', message, this.messages);
+            this.emit('update', this.messages);
+            return message;
+        }
+    }
+
+    async popAll(callback, scope) {
+        if (callback) {
+            var result = false;
+            while (!this.isEmpty) {
+                var result = await this.pop(callback, scope);
+                if (!result) {
+                    break;
+                }
+            }
+            return Promise.resolve(result);
+        } else {
+            while (!this.isEmpty) {
+                this.pop();
+            }
+            return true;
+        }
+    }
+}
+
+export default PenddingMessages;
