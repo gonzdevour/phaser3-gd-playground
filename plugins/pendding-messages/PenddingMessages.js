@@ -1,4 +1,5 @@
 import EventEmitter from 'eventemitter3';
+import GetValue from '../utils/object/GetValue.js'
 
 class PenddingMessages extends EventEmitter {
     constructor() {
@@ -13,7 +14,7 @@ class PenddingMessages extends EventEmitter {
     }
 
     resetFromJSON(config) {
-        this.messages = config.messages;
+        this.messages = GetValue(config, 'messages', []);
         return this;
     }
 
