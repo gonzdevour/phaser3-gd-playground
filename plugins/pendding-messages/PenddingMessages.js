@@ -5,6 +5,7 @@ class PenddingMessages extends EventEmitter {
     constructor() {
         super();
         this.messages = [];
+        this.isPopping = false;
     }
 
     toJSON() {
@@ -39,6 +40,7 @@ class PenddingMessages extends EventEmitter {
         }
 
         if (callback) {
+            this.isPopping = true;
             // Async callback, to run (model dialog) task
             var message = this.messages[0];
             var result = await callback.call(scope, message, this.messages);
@@ -48,6 +50,7 @@ class PenddingMessages extends EventEmitter {
                 this.emit('pop', message, this.messages);
                 this.emit('update', this.messages);
             }
+            this.isPopping = false;
             return result;
         } else { // No callback, just pop message
             var message = this.messages.shift();
