@@ -48,7 +48,7 @@ class PenddingMessages extends EventEmitter {
                 this.emit('pop', message, this.messages);
                 this.emit('update', this.messages);
             }
-            return Promise.resolve(result);
+            return result;
         } else { // No callback, just pop message
             var message = this.messages.shift();
             this.emit('pop', message, this.messages);
@@ -66,7 +66,7 @@ class PenddingMessages extends EventEmitter {
                     break;
                 }
             }
-            return Promise.resolve(result);
+            return result;
         } else {
             while (!this.isEmpty) {
                 this.pop();

@@ -21,8 +21,8 @@ class Test extends Phaser.Scene {
 
         messages.push('Message 0').push('Message 1').push('Message 2');
 
-        // messages.pop(popCallback, this);
-        messages.popAll(popCallback, this)
+        // messages.pop(PopCallback, this);
+        messages.popAll(PopCallback, this)
             .then(function (result) {
                 debugger
             })
@@ -36,8 +36,8 @@ class Test extends Phaser.Scene {
     }
 }
 
-var popCallback = function (message) {
-    return this.rexUI.modalPromise(
+var PopCallback = async function (message) {
+    var result = await this.rexUI.modalPromise(
         // Game object
         CreateDialog(this, message).setPosition(400, 300),
         // Config
@@ -49,9 +49,7 @@ var popCallback = function (message) {
             }
         }
     )
-        .then(function (result) {
-            return (result.index === 0);
-        })
+    return (result.index === 0);
 }
 
 var CreateDialog = function (scene, content) {
