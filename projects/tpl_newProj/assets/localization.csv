@@ -1,4 +1,4 @@
-key,when,what,where,zh,en,jp
+key,when,what,where,zh,en,ja
 loading-error-title,loading,error,title,讀取異常,loading error,読み込みエラー
 loading-error-content,loading,error,content,"檔案：{{filename}}
 

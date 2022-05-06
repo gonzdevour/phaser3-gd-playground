@@ -1,7 +1,7 @@
 import ModalDialogPromise from "./ModalDialogPromise";
 
-var TypeY = function (scene, titleTxt, contentTxt) {
-    ModalDialogPromise(scene, {
+var DialogY = function (scene, titleTxt, contentTxt) {
+    return ModalDialogPromise(scene, {
         title: titleTxt,
         content: contentTxt,
         buttonMode: 1,
@@ -9,8 +9,8 @@ var TypeY = function (scene, titleTxt, contentTxt) {
     })
 }
 
-var TypeFatalError = function (scene, titleTxt, contentTxt) {
-    ModalDialogPromise(scene, {
+var DialogFatal = function (scene, titleTxt, contentTxt) {
+    return ModalDialogPromise(scene, {
         title: titleTxt,
         content: contentTxt,
         buttonMode: 4,
@@ -19,6 +19,6 @@ var TypeFatalError = function (scene, titleTxt, contentTxt) {
 }
 
 export { 
-    TypeY,
-    TypeFatalError,
+    DialogY,
+    DialogFatal,
 };

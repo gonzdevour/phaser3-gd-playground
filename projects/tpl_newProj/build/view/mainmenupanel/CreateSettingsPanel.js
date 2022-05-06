@@ -136,7 +136,7 @@ var CreateNumberBar = function (scene, config) {
 }
 
 var CreateButtons = function(scene,config){
-  var langOptions = GetValue(config, 'langOptions', ['zh','en','jp']);
+  var langOptions = GetValue(config, 'langOptions', ['zh','en','ja']);
   var buttons = [];
   for (var i = 0, cnt = langOptions.length; i < cnt; i++) {
       var btn = CreateActionLabel(scene, langOptions[i]);

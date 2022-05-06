@@ -6,6 +6,9 @@ import ModalDialogPromise from '../build/view/modaldialog/ModalDialogPromise.js'
 import CreateSettingsPanel from '../build/view/mainmenupanel/CreateSettingsPanel.js';
 import Style from '../settings/Style.js';
 
+import PenddingMessages from '../../../plugins/pendding-messages/PenddingMessages.js';
+import { DialogY } from '../build/view/modaldialog/DialogType.js';
+
 //Home
 class Home extends Base {
     constructor() {
@@ -81,11 +84,39 @@ class Home extends Base {
 
         //this.log(`${mainMenu.width}x${mainMenu.height}`)
 
+        ////////////////////////////////////////////
+        var messages = new PenddingMessages();
+        messages
+            .on('update', function () {
+                console.log(JSON.stringify(messages));
+            })
+            .on('push', function () {
+                // messages.pop(PopCallback, this);
+                messages.popAll(PopCallback, _scene)
+                    .then(function (result) {
+                        //debugger
+                        //popAll結束
+                    })
+            })
+
+        this.input.on('wheel',function(){
+            console.log('pushed')
+            messages.push(Date.now().toString())
+        })
+
+        ////////////////////////////////////////////
+
         super.create(); //createSysPanel & setupTransition
 
     }
 
     update() { }
+}
+
+var PopCallback = async function (message) {
+    var lo = this.model.localization;
+    var result = await DialogY(this, lo.loc('select-db-title'), message)
+    return (result.index === 0);
 }
 
 export default Home;

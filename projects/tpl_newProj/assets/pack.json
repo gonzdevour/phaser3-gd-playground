@@ -99,23 +99,8 @@
       },
       {
         "type": "text",
-        "key": "audiosrc",
-        "url": "assets/text/audiosrc.csv"
-      },
-      {
-        "type": "text",
-        "key": "localization",
-        "url": "assets/text/localization.csv"
-      },
-      {
-        "type": "text",
         "key": "version",
         "url": "assets/text/version.txt"
-      },
-      {
-        "type": "text",
-        "key": "words",
-        "url": "assets/text/words.csv"
       }
     ]
   }

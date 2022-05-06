@@ -1,8 +1,10 @@
 import ModalDialogPromise from './ModalDialogPromise.js';
+import { DialogY, DialogFatal } from './DialogType.js';
 
 class DialogQueue {
-    constructor(lsData) {
+    constructor(lsData, localization) {
         this.lsData = lsData;
+        this.lo = localization;
         this.isRunning = false;
     }
 
@@ -34,6 +36,7 @@ class DialogQueue {
 }
 
 var DialogQueuePromise = async function (scene, dialogQueue) {
+    //DialogY(scene, lo.loc('select-db-title'), lo.loc('select-db-content'));
     while (dialogQueue.configs.length) { //如果dialogQueue還有值
         dialogQueue.isRunning = true;
         var config = dialogQueue.configs.shift(); //這個應該動不到dialogQueue.configs的本體

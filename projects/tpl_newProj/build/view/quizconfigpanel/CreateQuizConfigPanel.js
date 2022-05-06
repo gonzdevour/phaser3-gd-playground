@@ -1,5 +1,5 @@
 import Style from '../../../settings/Style.js';
-import * as Dialog from '../modaldialog/DialogType.js';
+import { DialogY } from '../modaldialog/DialogType.js';
 //ui components
 import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
 import CreateDatabaseSelectPanel from './CreateDatabaseSelectPanel.js'; //詞庫選單
@@ -88,9 +88,9 @@ var CreateQuizConfigPanel = function (scene, config) {
     
     // content原本用``樣版字面值。``的\可以取消換行，但會把空格也帶進來。用\n比較清爽
     // 注意width只有設定最小寬度的功能，如果排版後大於width，會以排版大小為準
-    var tb = scene.model.localization;  
+    var lo = scene.model.localization;
     databaseSelectPanel.on('button.help', function(gameObject, pointer, event){
-        Dialog.TypeY(scene, tb.loc('select-db-title'), tb.loc('select-db-content'))
+        DialogY(scene, lo.loc('select-db-title'), lo.loc('select-db-content'))
     });
 
     //databaseSelectPanel.on('button.help', function(gameObject, pointer, event){
@@ -98,11 +98,11 @@ var CreateQuizConfigPanel = function (scene, config) {
     //});
 
     enhancementSelectPanel.on('button.help', function(gameObject, pointer, event){
-        Dialog.TypeY(scene, '強化練習', '針對容易混淆的讀音加強練習')
+        DialogY(scene, '強化練習', '針對容易混淆的讀音加強練習')
     });
 
     quizModePanel.on('button.help', function(gameObject, pointer, event){
-        Dialog.TypeY(scene, '出題模式', '隨機：詞庫隨機出題\n頻次：依常用度出題\n測驗：指定範圍進行測驗\n\n[color=gray]※測驗模式施工中[/color]')
+        DialogY(scene, '出題模式', '隨機：詞庫隨機出題\n頻次：依常用度出題\n測驗：指定範圍進行測驗\n\n[color=gray]※測驗模式施工中[/color]')
     });   
 
 

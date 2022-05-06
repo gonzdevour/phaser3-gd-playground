@@ -38,7 +38,7 @@ class Boot extends Base {
             ],
             lsData: this.lsData,
             appData: this.appData,
-            localization: this.localization
+            localization: this.localization.loadCSV(this.cache.text.get('localization'))
         });
         //必須在api讀取完成後執行。為了控制scene.game.api的數值(例如已儲存的語系和音量)所以要帶scene
         this.model.appData.initAPI(this);
