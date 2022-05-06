@@ -41,7 +41,7 @@ class PenddingMessages extends EventEmitter {
         if (callback) {
             // Async callback, to run (model dialog) task
             var message = this.messages[0];
-            var result = await callback.call(scope, this.messages[0], this.messages);
+            var result = await callback.call(scope, message, this.messages);
             // Remove popped message if result is true
             if (result) {
                 this.messages.shift();
