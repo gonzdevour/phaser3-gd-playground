@@ -25,10 +25,14 @@ class Test extends Phaser.Scene {
 
         delayTasks
             .on('run', function (taskName) {
-                console.log(`Run task ${taskName}`)
+                console.log(`- Run task ${taskName} -`)
             })
-            .addTask('task0', 20000)
-            .addTask('task1', 10000)
+            .addTask('task0', 20000, function () {
+                console.log('On task0')
+            })
+            .addTask('task1', 10000, function () {
+                console.log('On task1')
+            })
             .seek(awayTime)
 
     }

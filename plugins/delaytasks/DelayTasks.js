@@ -64,12 +64,15 @@ class DelayTasks extends EventEmitter {
         return this;
     }
 
-    addTask(taskName, delay) {
+    addTask(taskName, delay, callback, scope) {
         this.dataManager.set(taskName, delay);
+        if (callback) {
+            this.once(`run - ${taskName}`, callback, scope);
+        }
         return this;
     }
 
-    seek(time) {        
+    seek(time) {
         var dataManager = this.dataManager;
         dataManager.each(function (parent, taskName, delay) {
             delay -= time;
