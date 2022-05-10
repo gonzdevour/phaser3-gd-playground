@@ -41,12 +41,18 @@ class DelayTasks extends EventEmitter {
             this.dataManager.set(data);
         }
         this.setTickPeriod(GetValue(o, 'period', 1000));
+
+        var isPaused = GetValue(o, 'isPaused', false);
+        if (isPaused) {
+            this.pause();
+        }
     }
 
     toJSON() {
         return {
             data: this.dataManager.getAll(),
-            period: this.timer.delay
+            period: this.tickPeriod,
+            isPaused: this.isPaused
         }
     }
 
@@ -62,6 +68,10 @@ class DelayTasks extends EventEmitter {
             loop: true
         });
         return this;
+    }
+
+    get tickPeriod() {
+        return (this.timer) ? this.timer.delay : 0;
     }
 
     addTask(taskName, delay, callback, scope) {
@@ -99,7 +109,7 @@ class DelayTasks extends EventEmitter {
     }
 
     get isPaused() {
-        return (this.timer) ? this.timer.paused : true;
+        return (this.timer) ? this.timer.paused : false;
     }
 
 }
