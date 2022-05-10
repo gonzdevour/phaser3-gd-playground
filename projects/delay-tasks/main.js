@@ -33,6 +33,10 @@ class Test extends Phaser.Scene {
             .addTask('task1', 10000, function () {
                 console.log('On task1')
             })
+            .addTask('task2', 15000, function () {
+                console.log('On task2')
+            })
+            .pauseTask('task2')
             .elapse(awayTime)
 
     }

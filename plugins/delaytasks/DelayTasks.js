@@ -30,9 +30,7 @@ class DelayTasks extends EventEmitter {
     }
 
     destroy() {
-        if (this.timer) {
-            this.timer.remove();
-        }
+        this.timer.remove();
     }
 
     resetFromJSON(o) {
@@ -71,48 +69,88 @@ class DelayTasks extends EventEmitter {
     }
 
     get tickPeriod() {
-        return (this.timer) ? this.timer.delay : 0;
+        return this.timer.delay;
     }
 
     addTask(taskName, delay, callback, scope) {
-        if (this.timer) {            
-            delay += this.timer.elapsed;
+        delay += this.timer.elapsed;
+        var taskData = {
+            // name: taskName,
+            delay: delay,
+            timeScale: 1,
+            isPaused: false
         }
-        this.dataManager.set(taskName, delay);
+        this.dataManager.set(taskName, taskData);
         if (callback) {
             this.once(`run - ${taskName}`, callback, scope);
         }
         return this;
     }
 
+    hasTask(taskName) {
+        return this.dataManager.has(taskName);
+    }
+
+    pauseTask(taskName) {
+        if (!this.hasTask(taskName)) {
+            return this;
+        }
+        var taskData = this.dataManager.get(taskName);
+        taskData.isPaused = true;
+        taskData.delay -= this.timer.elapsed;
+        this.dataManager.set(taskName, taskData);
+        return this;
+    }
+
+    resumeTask(taskName) {
+        if (!this.hasTask(taskName)) {
+            return this;
+        }
+        var taskData = this.dataManager.get(taskName);
+        taskData.isPaused = false;
+        taskData.delay += this.timer.elapsed;
+        this.dataManager.set(taskName, taskData);
+        return this;
+    }
+
+    setTaskTimeScale(taskName, timeScale) {
+        if (!this.hasTask(taskName)) {
+            return this;
+        }
+        var taskData = this.dataManager.get(taskName);
+        taskData.timeScale = timeScale;
+        // TODO: Change taskData.delay value
+        this.dataManager.set(taskName, taskData);
+        return this;
+    }
+
     elapse(time) {
         var dataManager = this.dataManager;
-        dataManager.each(function (parent, taskName, delay) {
-            delay -= time;
-            if (delay <= 0) { // timeout
+        dataManager.each(function (parent, taskName, taskData) {
+            if (taskData.isPaused || (taskData.timeScale === 0)) {
+                return;
+            }
+            taskData.delay -= (time * taskData.timeScale);
+            if (taskData.delay <= 0) { // timeout
                 this.emit(`run - ${taskName}`);
                 this.emit('run', taskName);
                 dataManager.remove(taskName);
             } else {
-                dataManager.set(taskName, delay);
+                dataManager.set(taskName, taskData);
             }
         }, this);
     }
 
     pause() {
-        if (this.timer) {
-            this.timer.paused = true;
-        }
+        this.timer.paused = true;
     }
 
     resume() {
-        if (this.timer) {
-            this.timer.paused = false;
-        }
+        this.timer.paused = false;
     }
 
     get isPaused() {
-        return (this.timer) ? this.timer.paused : false;
+        return this.timer.paused;
     }
 
 }
