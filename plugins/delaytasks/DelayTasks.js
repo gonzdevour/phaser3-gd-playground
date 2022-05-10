@@ -56,7 +56,7 @@ class DelayTasks extends EventEmitter {
         }
         this.timer = this.scene.time.addEvent({
             delay: period,
-            callback: this.seek,
+            callback: this.elapse,
             args: [period],
             callbackScope: this,
             loop: true
@@ -72,7 +72,7 @@ class DelayTasks extends EventEmitter {
         return this;
     }
 
-    seek(time) {
+    elapse(time) {
         var dataManager = this.dataManager;
         dataManager.each(function (parent, taskName, delay) {
             delay -= time;
