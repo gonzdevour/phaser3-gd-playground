@@ -86,6 +86,22 @@ class DelayTasks extends EventEmitter {
         }, this);
     }
 
+    pause() {
+        if (this.timer) {
+            this.timer.paused = true;
+        }
+    }
+
+    resume() {
+        if (this.timer) {
+            this.timer.paused = false;
+        }
+    }
+
+    get isPaused() {
+        return (this.timer) ? this.timer.paused : true;
+    }
+
 }
 
 export default DelayTasks;
