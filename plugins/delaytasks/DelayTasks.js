@@ -10,17 +10,13 @@ class DelayTasks extends EventEmitter {
 
         this.scene = scene;
 
-        var dataManager;
-        var lsName = GetValue(config, 'lsName', undefined);
-        if (lsName) {
+        var dataManager = GetValue(config, 'dataManager', undefined);
+        if (dataManager === true) {
+            dataManager = new DataManager(this, this);
+        } else if (!dataManager) {
             dataManager = new LocalStorageData({
-                name: lsName
+                name: GetValue(config, 'lsName', 'delaytTsks')
             });
-        } else {
-            dataManager = GetValue(config, 'dataManager', undefined);
-            if (dataManager === undefined) {
-                dataManager = new DataManager(this, this)
-            }
         }
         this.dataManager = dataManager;
 
@@ -97,7 +93,7 @@ class DelayTasks extends EventEmitter {
         }
         var taskData = this.dataManager.get(taskName);
         taskData.isPaused = true;
-        taskData.delay -= this.timer.elapsed;
+        taskData.delay -= (this.timer.elapsed * taskData.timeScale);
         this.dataManager.set(taskName, taskData);
         return this;
     }
@@ -108,7 +104,7 @@ class DelayTasks extends EventEmitter {
         }
         var taskData = this.dataManager.get(taskName);
         taskData.isPaused = false;
-        taskData.delay += this.timer.elapsed;
+        taskData.delay += (this.timer.elapsed * taskData.timeScale);
         this.dataManager.set(taskName, taskData);
         return this;
     }
@@ -118,8 +114,8 @@ class DelayTasks extends EventEmitter {
             return this;
         }
         var taskData = this.dataManager.get(taskName);
+        taskData.delay += (this.timer.elapsed * (timeScale - taskData.timeScale));
         taskData.timeScale = timeScale;
-        // TODO: Change taskData.delay value
         this.dataManager.set(taskName, taskData);
         return this;
     }
@@ -151,6 +147,11 @@ class DelayTasks extends EventEmitter {
 
     get isPaused() {
         return this.timer.paused;
+    }
+
+    setTimerTimeScale(timeScale) {
+        this.timer.timeScale = timeScale;
+        return this;
     }
 
 }

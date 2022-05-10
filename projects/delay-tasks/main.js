@@ -18,8 +18,7 @@ class Test extends Phaser.Scene {
         var awayTime = new AwayTime().awayTime;
         console.log(`AwayTime = ${awayTime}`)
 
-        var delayTasks = new DelayTasks(this, {
-            lsName: 'delayTasks',
+        var delayTasks = new DelayTasks(this, {       
             period: 500
         });
 
