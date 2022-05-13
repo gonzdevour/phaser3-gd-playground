@@ -82,9 +82,6 @@ Model
 */
 
 import Quiz from './quiz/Quiz.js';
-import CreateLocalization from '../build/model/CreateLocalization.js';
-import CreateLsData from '../build/model/CreateLsData.js';
-import CreateAppData from '../build/model/CreateAppData.js';
 import CreateModelDB from '../build/model/CreateModelDB.js';
 
 //utils
@@ -92,16 +89,19 @@ import GetValue from '../../../plugins/utils/object/GetValue.js';
 
 class Model {
   constructor(config) {
-    //從CreateModel傳入config: {db: [this.cache.text.get("db0"), this.cache.text.get("db1")];}
-    this.db = CreateModelDB(GetValue(config, 'db', []));
-    //初始化建立ls(lsd plugin而不是純ls)，如果default:undefined會存入所有ls key-content。否則會依預設值的key存入原本在ls內的值，有key無值時存入預設值。
-    this.lsData = GetValue(config, 'lsData', CreateLsData());
-    //appData初始化，傳入model，model的lsData用於紀錄全域變數，所以傳入時model.lsData必須存在
-    this.appData = GetValue(config, 'appData', CreateAppData(this.lsData));
-    //取得或新增特製的loc table
-    this.localization = GetValue(config, 'localization', CreateLocalization(this.lsData));
+
+    //依附在model上以跨scene使用的工具包
+
+    this.lsData = config.lsData;
+    this.appData = config.appData;
+    this.localization = config.localization; //loc table
+    this.rtt = config.rtt; //realTimeTimer
     //this.tableManager = new TableManager(this.lsData);
 
+    //題庫架構
+    
+    //從CreateModel傳入config: {db: [this.cache.text.get("db0"), this.cache.text.get("db1")];}
+    this.db = CreateModelDB(GetValue(config, 'db', []));
     // 同時間只能有一個題組在執行
     this.quiz = new Quiz(this);
   }

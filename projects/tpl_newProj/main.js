@@ -3,6 +3,7 @@ import AllPlugins from '../../plugins/AllPlugins.js';
 
 //scenes
 import Boot from './scenes/Boot.js';
+import Global from './scenes/Global.js';
 import Home from './scenes/Home.js';
 import Menu from './scenes/Menu.js';
 import Game from './scenes/Game.js';
@@ -18,7 +19,7 @@ var config = {
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     plugins: AllPlugins,
-    scene: [Boot, Home, Menu, Game, Result]
+    scene: [Boot, Global, Home, Menu, Game, Result]
 };
 
 var game = new Phaser.Game(config);

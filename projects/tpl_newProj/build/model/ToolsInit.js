@@ -10,6 +10,7 @@ var ToolsInit = function (scene) {
     db: [db0, db1],
     lsData: scene.lsData,
     appData: scene.appData,
+    rtt: scene.rtt,
     localization: scene.localization.loadCSV(loccsv)
   });
   //init

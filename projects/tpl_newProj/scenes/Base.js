@@ -1,4 +1,5 @@
 import 'phaser';
+import { DefaultAppConfig } from '../model/DefaultData';
 
 /* 
 Base class的主要功能就是控制Model這個變數，有兩個學習重點：
@@ -38,6 +39,7 @@ class Base extends Phaser.Scene {
     get model() { //get: 'this.model'時觸發
         return Model;
     }
+
     get viewport() { //簡化呼叫
         //直橫版尺寸調整
         var v = this.rexScaleOuter.outerViewport;

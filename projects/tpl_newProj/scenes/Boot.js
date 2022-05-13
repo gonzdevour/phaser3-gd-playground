@@ -14,7 +14,7 @@ class Boot extends Base {
         super({
             key: SceneKey.Boot
         })
-        ToolsPrepare(this);//建立lsData, appData, localization, api
+        ToolsPrepare(this);//建立lsData, appData, localization, api, rtt
     }
     preload() {
         Loading(this); //讀取api, 錯誤訊息會調用this.localization
@@ -23,6 +23,7 @@ class Boot extends Base {
         console.log('projVer:' + this.cache.text.get('version'));
         ToolsInit(this);//db-prebuild, 建立model, 初始化api與appData
 
+        this.scene.launch(SceneKey.Global);
         this.scene.start(SceneKey.Home);
     }
 

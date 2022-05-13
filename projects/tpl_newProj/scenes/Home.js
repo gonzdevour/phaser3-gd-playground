@@ -9,6 +9,9 @@ import Style from '../settings/Style.js';
 import PenddingMessages from '../../../plugins/pendding-messages/PenddingMessages.js';
 import { DialogY } from '../build/view/modaldialog/DialogType.js';
 
+//utils
+import idGen from '../../../plugins/utils/id/idGen.js';
+
 //Home
 class Home extends Base {
     constructor() {
@@ -85,6 +88,15 @@ class Home extends Base {
         //this.log(`${mainMenu.width}x${mainMenu.height}`)
 
         ////////////////////////////////////////////
+        this.model.rtt
+            .startRealTime()
+            .addTimer(idGen(), { s: 5 }, 'cbk001')
+            .addTimer(idGen(), { s: 10 }, 'cbk002')
+
+        this.input.on('pointerup',function(){
+            console.log('pointerup')
+        })
+
         var messages = new PenddingMessages();
         messages
             .on('update', function () {
@@ -101,7 +113,7 @@ class Home extends Base {
             })
 
         this.input.on('wheel',function(){
-            console.log('pushed')
+            console.log('msgPending pushed')
             messages.push(Date.now().toString())
         })
 

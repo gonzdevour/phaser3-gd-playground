@@ -6,6 +6,8 @@ import LoadingProgressPlugin from '../../phaser3-rex-notes/plugins/loadingprogre
 import EventPromisePlugin from '../../phaser3-rex-notes/plugins/eventpromise-plugin.js';
 import ClockPlugin from '../../phaser3-rex-notes/plugins/clock-plugin.js';
 import WebFontLoaderPlugin from '../../phaser3-rex-notes/plugins/webfontloader-plugin.js';
+import AwayTimePlugin from '../../phaser3-rex-notes/plugins/awaytime-plugin.js';
+import RealTimeTimersPlugin from '../../phaser3-rex-notes/plugins/realtimetimers-plugin.js';
 
 export default {
     scene: [
@@ -45,6 +47,16 @@ export default {
         {
             key: 'rexClock',
             plugin: ClockPlugin,
+            start: true
+        },
+        {
+            key: 'rexAwayTime',
+            plugin: AwayTimePlugin,
+            start: true
+        },
+        {
+            key: 'rexRealTimeTimers',
+            plugin: RealTimeTimersPlugin,
             start: true
         },
         {

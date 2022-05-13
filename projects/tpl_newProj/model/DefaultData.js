@@ -3,6 +3,7 @@
 var DefaultAppConfig = {
     appID: 'bopomofo',
     tableToJSONKeyHeader: 'tb.',
+    rttimerToJSONKey: 'rtt',
     cleanLocalStorage: false,
 }
 
@@ -35,9 +36,18 @@ var DefaultData = Object.assign(
     DefaultRecord,
 );
 
+//LS初始化存入的預設值(排除AppConfig)
+var DefaultLSData = Object.assign(
+    {},
+    DefaultSettings,
+    DefaultQuizConfig,
+    DefaultRecord,
+);
+
 export {
     DefaultAppConfig,
     DefaultData,
+    DefaultLSData,
     DefaultSettings,
     DefaultQuizConfig,
     DefaultRecord,
