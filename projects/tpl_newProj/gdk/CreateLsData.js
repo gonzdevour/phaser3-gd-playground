@@ -1,5 +1,5 @@
-import LocalStorageData from '../../../../../phaser3-rex-notes/plugins/localstorage-data.js';
-import { DefaultLSData, DefaultAppConfig } from '../../model/DefaultData.js';
+import LocalStorageData from '../../../../phaser3-rex-notes/plugins/localstorage-data.js';
+import { DefaultLSData, DefaultAppConfig } from '../settings/DefaultData.js';
 
 var CreateLsData = function () {
   //初始化建立ls(lsd plugin而不是純ls)，如果default:undefined會存入所有ls key-content。

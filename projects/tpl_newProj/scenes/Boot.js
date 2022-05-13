@@ -1,8 +1,8 @@
 import 'phaser';
 import Base from './Base.js';
 import * as SceneKey from '../settings/SceneKey.js';
-import ToolsPrepare from '../build/model/ToolsPrepare.js';
-import ToolsInit from '../build/model/ToolsInit.js';
+import ToolsPrepare from '../gdk/ToolsPrepare.js';
+import ToolsInit from '../gdk/ToolsInit.js';
 import Loading from '../loading/Loading.js';
 
 //log
@@ -14,6 +14,8 @@ class Boot extends Base {
         super({
             key: SceneKey.Boot
         })
+    }
+    init() {
         ToolsPrepare(this);//建立lsData, appData, localization, api, rtt
     }
     preload() {

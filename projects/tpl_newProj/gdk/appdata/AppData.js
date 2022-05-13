@@ -1,4 +1,4 @@
-import { DefaultData, DefaultQuizConfig, DefaultRecord, DefaultSettings } from "../DefaultData";
+import { DefaultData, DefaultQuizConfig, DefaultRecord, DefaultSettings } from "../../settings/DefaultData";
 import DeviceLang from "../../../../plugins/utils/language/DeviceLang.js";
 import AppLang from "../../../../plugins/utils/language/AppLang.js";
 

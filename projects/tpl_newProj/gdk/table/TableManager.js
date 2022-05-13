@@ -1,4 +1,4 @@
-import { DefaultAppConfig } from "../DefaultData.js";
+import { DefaultAppConfig } from "../../settings/DefaultData.js";
 import CSVToHashTable from "../../../../../phaser3-rex-notes/plugins/csvtohashtable.js";
 import mustache from "mustache";
 

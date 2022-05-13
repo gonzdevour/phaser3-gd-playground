@@ -1,4 +1,4 @@
-import TableLocalization from "../../model/table/TableLocalization";
+import TableLocalization from "./table/TableLocalization";
 
 var CreateLocalization = function (lsData, config) {
   var localization = new TableLocalization(lsData, config);

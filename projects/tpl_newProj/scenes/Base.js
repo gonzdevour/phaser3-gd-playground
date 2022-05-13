@@ -1,5 +1,5 @@
 import 'phaser';
-import { DefaultAppConfig } from '../model/DefaultData';
+import { DefaultAppConfig } from '../settings/DefaultData';
 
 /* 
 Base class的主要功能就是控制Model這個變數，有兩個學習重點：

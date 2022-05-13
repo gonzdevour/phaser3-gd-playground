@@ -92,10 +92,10 @@ class Model {
 
     //依附在model上以跨scene使用的工具包
 
-    this.lsData = config.lsData;
-    this.appData = config.appData;
-    this.localization = config.localization; //loc table
-    this.rtt = config.rtt; //realTimeTimer
+    this.lsData = GetValue(config, 'lsData', undefined);
+    this.appData = GetValue(config, 'appData', undefined);
+    this.localization = GetValue(config, 'localization', undefined); //loc table
+    this.rtt = GetValue(config, 'rtt', undefined); //realTimeTimer
     //this.tableManager = new TableManager(this.lsData);
 
     //題庫架構

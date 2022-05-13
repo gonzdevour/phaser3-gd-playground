@@ -88,7 +88,7 @@ var CreateQuizConfigPanel = function (scene, config) {
     
     // content原本用``樣版字面值。``的\可以取消換行，但會把空格也帶進來。用\n比較清爽
     // 注意width只有設定最小寬度的功能，如果排版後大於width，會以排版大小為準
-    var lo = scene.model.localization;
+    var lo = scene.game.localization;
     databaseSelectPanel.on('button.help', function(gameObject, pointer, event){
         DialogY(scene, lo.loc('select-db-title'), lo.loc('select-db-content'))
     });

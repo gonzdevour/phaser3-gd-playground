@@ -1,5 +1,4 @@
 import LoadAPI from "../res/api/loadAPI.js";
-import CreateApi from "../build/model/CreateApi.js";
 import { DialogFatal } from "../build/view/modaldialog/DialogType.js";
 import LoadingProgressUI from "./LoadingProgressUI.js";
 
@@ -13,9 +12,7 @@ var Loading = function(scene) {
     scene.load.pack('pack', 'assets/pack.json');
     //load api
     async function load(onSuccess, onError) {
-        scene.api = await LoadAPI();
-        CreateApi(scene);
-        //api.sound|dialog|speech|iap|ads|idfa
+        scene.game.api = await LoadAPI(); //回傳字典api.sound|dialog|speech|iap|ads|idfa
         onSuccess();
     }
     scene.load.rexAwait(load);//參數:callback(onSuccess,onError)，要執行callback才會完成rexAwait

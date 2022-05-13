@@ -88,14 +88,20 @@ class Home extends Base {
         //this.log(`${mainMenu.width}x${mainMenu.height}`)
 
         ////////////////////////////////////////////
-        this.model.rtt
+        
+        this.game.storytimer
+            .addTimer(idGen(), { s: 5 }, 'storyCbk001')
+            .addTimer(idGen(), { s: 10 }, 'storyCbk002')
+
+        this.game.rttimer
             .startRealTime()
             .addTimer(idGen(), { s: 5 }, 'cbk001')
             .addTimer(idGen(), { s: 10 }, 'cbk002')
 
         this.input.on('pointerup',function(){
+            this.game.storytimer.pushTime({s:1})
             console.log('pointerup')
-        })
+        },this)
 
         var messages = new PenddingMessages();
         messages
@@ -115,7 +121,7 @@ class Home extends Base {
         this.input.on('wheel',function(){
             console.log('msgPending pushed')
             messages.push(Date.now().toString())
-        })
+        },this)
 
         ////////////////////////////////////////////
 
@@ -127,7 +133,7 @@ class Home extends Base {
 }
 
 var PopCallback = async function (message) {
-    var lo = this.model.localization;
+    var lo = this.game.localization;
     var result = await DialogY(this, lo.loc('select-db-title'), message)
     return (result.index === 0);
 }

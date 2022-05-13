@@ -1,4 +1,4 @@
-import AppData from "../../model/appdata/AppData";
+import AppData from "./appdata/AppData";
 
 var CreateAppData = function (lsData) {
   var appData = new AppData(lsData)
