@@ -3,7 +3,6 @@ import { DefaultAppConfig } from "../../settings/DefaultData";
 
 //utils
 import GetValue from "../../../../plugins/utils/object/GetValue";
-import GetPeriodMS from "../../../../../phaser3-rex-notes/plugins/utils/time/GetPeriodMS";
 
 class RTTimers extends RealTimeTimers {
   constructor(lsData, config) {
@@ -15,14 +14,23 @@ class RTTimers extends RealTimeTimers {
       this.pushPeriodCallback = config.pushPeriodCallback;
     }
     this.load();
-    this.on('update', function () {                
-      //console.log(`${this.name}Updated:` + '\n' + JSON.stringify(this));
-      // Save to localstorage or server here
-      this.save()
-    },this)
-    this.on('remove', function (t, tArr) {                
-      console.log(`${this.name} removed timer:` + '\n' + JSON.stringify(t));
-    },this)
+    this
+      .on('update', function () {                
+        //console.log(`${this.name}Updated:` + '\n' + JSON.stringify(this));
+        // Save to localstorage or server here
+        this.save()
+      },this)
+      .on('remove', function (t, tArr) {                
+        console.log(`${this.name} removed timer:` + '\n' + JSON.stringify(t));
+      },this)
+      .on('expired',function(timerInfo){
+        this.removeTimers(timerInfo.name);
+        var data = GetValue(timerInfo, 'timer.data', undefined);
+        console.log(`${data.id} expired`)
+        if(this.expiredCallback){
+          this.expiredCallback(data)
+        }
+      },this)
   }
   startRealTime() {
     this.check();
@@ -44,19 +52,23 @@ class RTTimers extends RealTimeTimers {
     console.log(`${this.name} loaded` + '\n' + JSON.stringify(this));
     return this;
   }
-  expired(timerInfo) {
+/*   expired(timerInfo) {
     console.log(`${this.name}-${timerInfo.name}-expired → emit ${timerInfo.timer.data}`)
     this.emit(`${timerInfo.name}`);
     this.removeTimers(timerInfo.name); //getTimers by name then remove all
-  }
+  } */
   check() {
     var rttProgress = this.getTimersProgress();
     for (var i = 0, cnt = rttProgress.length; i < cnt; i++) {
         var timerInfo = rttProgress[i];
         if(timerInfo.progress == 1){
-          this.expired(timerInfo)
+          this.emit('expired', timerInfo) //timerInfo.name, timerInfo.timer.data
         }
     }
+    return this;
+  }
+  setExpiredCallback(callback){
+    this.expiredCallback = callback;
     return this;
   }
 }

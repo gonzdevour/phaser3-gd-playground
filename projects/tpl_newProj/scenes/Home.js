@@ -88,27 +88,13 @@ class Home extends Base {
         //this.log(`${mainMenu.width}x${mainMenu.height}`)
 
         ////////////////////////////////////////////
-        
-        this.game.storytimer
-            .addTimer(idGen(), { s: 5 }, 'storyCbk001')
-            .addTimer(idGen(), { s: 10 }, 'storyCbk002')
-
-        this.game.rttimer
-            .startRealTime()
-            .addTimer(idGen(), { s: 5 }, 'cbk001')
-            .addTimer(idGen(), { s: 10 }, 'cbk002')
-
-        this.input.on('pointerup',function(){
-            this.game.storytimer.pushTime({s:1})
-            console.log('pointerup')
-        },this)
-
         var messages = new PenddingMessages();
         messages
             .on('update', function () {
                 console.log(JSON.stringify(messages));
             })
             .on('push', async function () {
+                console.log('pushed')
                 if (messages.isPoppingAll) {
                     return;
                 }
@@ -118,9 +104,41 @@ class Home extends Base {
                 messages.isPoppingAll = false;
             })
 
+        var rtEvent1 = {
+            id:'獲得補給001', 
+            cmds: [['rteCbk','001']]
+        };
+
+        var rtEvent2 = {
+            id:'獲得補給002', 
+            cmds: [['rteCbk','002']]
+        };            
+
+        var storyEvent1 = {
+            id:'三國演義', 
+            cmds: [['storyCbk','001']],
+        };
+
+        var storyEvent2 = {
+            id:'西遊記', 
+            cmds: [['storyCbk','002']],
+        };
+
+        this.game.storytimer
+            .setExpiredCallback(function(data){
+                messages.push(data);
+            })
+            .addTimer(idGen(), { s: 5 }, storyEvent1 )
+            .addTimer(idGen(), { s: 10 }, storyEvent2 )
+
+        this.game.rttimer
+            .startRealTime()
+            .addTimer(idGen(), { s: 1 }, rtEvent1)
+            .addTimer(idGen(), { s: 2 }, rtEvent2)
+
         this.input.on('wheel',function(){
-            console.log('msgPending pushed')
-            messages.push(Date.now().toString())
+            this.game.storytimer.pushTime({s:1})
+            console.log('push 1 sec')
         },this)
 
         ////////////////////////////////////////////
@@ -132,10 +150,11 @@ class Home extends Base {
     update() { }
 }
 
-var PopCallback = async function (message) {
+var PopCallback = async function (msg) {
     var lo = this.game.localization;
-    var result = await DialogY(this, lo.loc('select-db-title'), message)
-    return (result.index === 0);
+    var result = await DialogY(this, lo.loc('select-db-title'), msg.id)
+    //return (result.index === 0);//true:繼續popAll，false:中斷popAll
+    return true;
 }
 
 export default Home;
