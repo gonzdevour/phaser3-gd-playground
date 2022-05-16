@@ -6,11 +6,12 @@ import ModalDialogPromise from '../build/view/modaldialog/ModalDialogPromise.js'
 import CreateSettingsPanel from '../build/view/mainmenupanel/CreateSettingsPanel.js';
 import Style from '../settings/Style.js';
 
-import PenddingMessages from '../../../plugins/pendding-messages/PenddingMessages.js';
+import msgQueue1 from '../gdk/msgqueue/msgQueue.js';
 import { DialogY } from '../build/view/modaldialog/DialogType.js';
 
 //utils
 import idGen from '../../../plugins/utils/id/idGen.js';
+import msgQueue from '../gdk/msgqueue/msgQueue.js';
 
 //Home
 class Home extends Base {
@@ -88,21 +89,17 @@ class Home extends Base {
         //this.log(`${mainMenu.width}x${mainMenu.height}`)
 
         ////////////////////////////////////////////
-        var messages = new PenddingMessages();
-        messages
-            .on('update', function () {
-                console.log(JSON.stringify(messages));
-            })
-            .on('push', async function () {
-                console.log('pushed')
-                if (messages.isPoppingAll) {
-                    return;
-                }
-                messages.isPoppingAll = true;
-                await messages.popAll(PopCallback, _scene);
-                //popAll結束
-                messages.isPoppingAll = false;
-            })
+
+        var msgQ = new msgQueue1(this.game.lsData);
+        msgQ
+            .on('start', function(){
+                console.log('msgQstart')
+                msgQ.startPop(PopCallback.bind(this), this);
+            },this)
+            .on('push', function(msg){
+                console.log('msgQpushed')
+                msgQ.startPop(PopCallback.bind(this), this);
+            },this)
 
         var rtEvent1 = {
             id:'獲得補給001', 
@@ -126,7 +123,7 @@ class Home extends Base {
 
         this.game.storytimer
             .setExpiredCallback(function(data){
-                messages.push(data);
+                msgQ.push(data);
             })
             .addTimer(idGen(), { s: 5 }, storyEvent1 )
             .addTimer(idGen(), { s: 10 }, storyEvent2 )

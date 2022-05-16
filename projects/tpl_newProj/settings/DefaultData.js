@@ -4,6 +4,7 @@ var DefaultAppConfig = {
     appID: 'bopomofo',
     tableToJSONKeyHeader: 'tb.',
     rttimerToJSONKey: 'rtt',
+    msgQueueToJSONKey: 'msgQ',
     cleanLocalStorage: false,
 }
 
