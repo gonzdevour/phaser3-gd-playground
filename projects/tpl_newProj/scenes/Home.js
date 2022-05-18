@@ -6,12 +6,8 @@ import ModalDialogPromise from '../build/view/modaldialog/ModalDialogPromise.js'
 import CreateSettingsPanel from '../build/view/mainmenupanel/CreateSettingsPanel.js';
 import Style from '../settings/Style.js';
 
-import msgQueue1 from '../gdk/msgqueue/msgQueue.js';
-import { DialogY } from '../build/view/modaldialog/DialogType.js';
-
 //utils
 import idGen from '../../../plugins/utils/id/idGen.js';
-import msgQueue from '../gdk/msgqueue/msgQueue.js';
 
 //Home
 class Home extends Base {
@@ -90,16 +86,6 @@ class Home extends Base {
 
         ////////////////////////////////////////////
 
-        var msgQ = new msgQueue1(this.game.lsData);
-        msgQ
-            .on('start', function(){
-                console.log('msgQstart')
-                msgQ.startPop(PopCallback.bind(this), this);
-            },this)
-            .on('push', function(msg){
-                console.log('msgQpushed')
-                msgQ.startPop(PopCallback.bind(this), this);
-            },this)
 
         var rtEvent1 = {
             id:'獲得補給001', 
@@ -122,21 +108,12 @@ class Home extends Base {
         };
 
         this.game.storytimer
-            .setExpiredCallback(function(data){
-                msgQ.push(data);
-            })
             .addTimer(idGen(), { s: 5 }, storyEvent1 )
             .addTimer(idGen(), { s: 10 }, storyEvent2 )
 
         this.game.rttimer
-            .startRealTime()
             .addTimer(idGen(), { s: 1 }, rtEvent1)
             .addTimer(idGen(), { s: 2 }, rtEvent2)
-
-        this.input.on('wheel',function(){
-            this.game.storytimer.pushTime({s:1})
-            console.log('push 1 sec')
-        },this)
 
         ////////////////////////////////////////////
 
@@ -145,13 +122,6 @@ class Home extends Base {
     }
 
     update() { }
-}
-
-var PopCallback = async function (msg) {
-    var lo = this.game.localization;
-    var result = await DialogY(this, lo.loc('select-db-title'), msg.id)
-    //return (result.index === 0);//true:繼續popAll，false:中斷popAll
-    return true;
 }
 
 export default Home;

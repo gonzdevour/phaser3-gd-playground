@@ -6,19 +6,24 @@ import GetPeriodMS from "../../../../phaser3-rex-notes/plugins/utils/time/GetPer
 //- 沒有startTimestamp, 使用系統目前時間
 
 //Non-Real-TimeTimers
-var CreateNRTTimers = function (name, lsData, defaultCurTimeInStory) {
+var CreateNRTTimers = function (name, lsData, expiredHandler, defaultCurTimeInStory) {
   if(defaultCurTimeInStory !== undefined){
     lsData.set('curTimeInStory', defaultCurTimeInStory) //注意curTimeInStory的單位必須是ms
   }
   var config = {
     name: name,
+    expiredCallback: function(data){
+      expiredHandler.push(data); //msgQ.push(data)
+    },
     pushPeriodCallback: function(period){
       var curTimeInStory = lsData.get('curTimeInStory');
       var timeToAdd = GetPeriodMS(period);
       var newTimeInStory = curTimeInStory + timeToAdd;
       return lsData.set('curTimeInStory', newTimeInStory)
     },
-    getTimestampCallback: function(){return lsData.get('curTimeInStory')}
+    getTimestampCallback: function(){
+      return lsData.get('curTimeInStory')
+    }
   };
   var nrtt = new RTTimers(lsData, config);
   return nrtt;

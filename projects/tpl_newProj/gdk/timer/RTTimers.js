@@ -13,7 +13,9 @@ class RTTimers extends RealTimeTimers {
     if(config.pushPeriodCallback){
       this.pushPeriodCallback = config.pushPeriodCallback;
     }
-    this.load();
+    if(config.expiredCallback){
+      this.expiredCallback = config.expiredCallback;
+    }
     this
       .on('update', function () {                
         //console.log(`${this.name}Updated:` + '\n' + JSON.stringify(this));
@@ -27,10 +29,13 @@ class RTTimers extends RealTimeTimers {
         this.removeTimers(timerInfo.name);
         var data = GetValue(timerInfo, 'timer.data', undefined);
         console.log(`${data.id} expired`)
-        if(this.expiredCallback){
-          this.expiredCallback(data)
+        var cbk = this.expiredCallback;
+        var scope = this.expiredCallbackScope
+        if(cbk){
+          cbk.call(scope, data); //scope可以是null所以不用檢查
         }
       },this)
+      .load()
   }
   startRealTime() {
     this.check();
@@ -67,8 +72,9 @@ class RTTimers extends RealTimeTimers {
     }
     return this;
   }
-  setExpiredCallback(callback){
-    this.expiredCallback = callback;
+  setExpiredCallback(cbk,scope){
+    this.expiredCallback = cbk;
+    this.expiredCallbackScope = scope;
     return this;
   }
 }

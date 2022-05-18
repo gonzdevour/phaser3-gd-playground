@@ -1,4 +1,4 @@
-import msgQueue from "./msgqueue/msgQueue";
+import msgQueue from "./msgqueue/msgQueue.js";
 
 //pendingMessage with lsData
 var CreateMsgQueue = function (name, lsData) {

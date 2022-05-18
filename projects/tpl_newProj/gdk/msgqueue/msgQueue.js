@@ -4,7 +4,7 @@ import { DefaultAppConfig } from "../../settings/DefaultData";
 //utils
 import GetValue from "../../../../plugins/utils/object/GetValue";
 
-class msgQueue1 extends PenddingMessages {
+class msgQueue extends PenddingMessages {
   constructor(lsData,config) {
     super();
     this.lsData = lsData;
@@ -13,22 +13,30 @@ class msgQueue1 extends PenddingMessages {
     if (this.lsData.has(this.lsKey)){
       this.load();
     }
-    if (!this.isEmpty){
-      this.emit('start');
-    }
     this
       .on('update', function () {
         console.log(`msgQ.${this.name} updated:`+ '\n' + JSON.stringify(this));
         this.save();
       },this)
+      .on('push', function(msg){
+        console.log('msgQpushed')
+        this.startPop();
+    })
   }
-  async startPop(callback, callbackScope) {
+  setPopCallback(cbk,scope) {
+    this.popCallback = cbk;
+    this.popCallbackScope = scope;
+    return this;
+  }
+  async startPop() {
+    var cbk = this.popCallback;
+    var scope = this.popCallbackScope;
     if (this.isPoppingAll) {
       return;
     }
     this.isPoppingAll = true;
-    if(callback && callbackScope){
-      await this.popAll(callback, this.callbackScope);
+    if(cbk && scope){
+      await this.popAll(cbk, scope);
     }
     //popAll結束
     this.isPoppingAll = false;
@@ -45,4 +53,4 @@ class msgQueue1 extends PenddingMessages {
   }
 }
 
-export default msgQueue1;
+export default msgQueue;

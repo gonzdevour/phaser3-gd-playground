@@ -1,5 +1,5 @@
 import 'phaser';
-import { DefaultAppConfig } from '../settings/DefaultData';
+import { DialogY } from '../build/view/modaldialog/DialogType.js';
 
 /* 
 Base class的主要功能就是控制Model這個變數，有兩個學習重點：
@@ -69,6 +69,15 @@ class Base extends Phaser.Scene {
     create() {
         this.createSysPanel();
         this.setupTransition();
+        this.game.msgQ
+            .setPopCallback(msgQPopCallback,this) //popCallback跟著scene所以要每個scene都set
+            .startPop() //彈出ls中的msg，popAll會偵測若empty則break
+        
+        this.input.on('wheel',function(){
+            this.game.storytimer.pushTime({s:1})
+            console.log('push 1 sec')
+        },this)
+
     }
 
     scaleOuter() {
@@ -136,4 +145,14 @@ class Base extends Phaser.Scene {
         });
     }
 }
+
+//這邊的this被popAll→pop→await callback.call(scope, message, this.messages)的scope所指定
+//換句話說，就是msgQ.startPop(PopCallback, this)的this。
+var msgQPopCallback = async function (msg) {
+    var lo = this.game.localization;
+    var result = await DialogY(this, lo.loc('select-db-title'), msg.id)
+    //return (result.index === 0);//true:繼續popAll，false:中斷popAll
+    return true;
+}
+
 export default Base;
