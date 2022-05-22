@@ -5,6 +5,7 @@ import CreateMainMenuPanel from '../build/view/mainmenupanel/CreateMainMenuPanel
 import ModalDialogPromise from '../build/view/modaldialog/ModalDialogPromise.js';
 import CreateSettingsPanel from '../build/view/mainmenupanel/CreateSettingsPanel.js';
 import Style from '../settings/Style.js';
+import tfdb from '../../../plugins/taffydb/taffy-min.js'
 
 //utils
 import idGen from '../../../plugins/utils/id/idGen.js';
@@ -86,6 +87,33 @@ class Home extends Base {
 
         ////////////////////////////////////////////
 
+        var products = tfdb.taffy([
+            { "item"  : 1,
+              "name"  : "Blue Ray Player",
+              "price" : 99.99
+            },
+            { "item"  : 2,
+              "name"  : "3D TV",
+              "price" : 1799.99
+            }
+          ]);
+        // where item is equal to 1
+        for(var i = 0; i< products({item:1}).count(); i++){
+            console.log(products().get()[i]['name']);
+        }
+
+        // where price is less than 100
+        var lowPricedItems = products({price:{lt:100}});
+        // where name is like "Blue Ray"
+        var blueRayPlayers = products({name:{like:"Blue Ray"}});
+
+        // get first record
+        var item1 = products().first();
+        // get last record
+        var item2 = products().last();
+
+        console.log(item1);
+        console.log(item2);
 
         var rtEvent1 = {
             id:'獲得補給001', 
