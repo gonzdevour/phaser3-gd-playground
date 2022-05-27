@@ -34,7 +34,7 @@ var ModalDialogPromise = function (scene, config) {
         hold: 2000, //自動關閉前的持續時間，manualClose為true時會disable這個數值
         out: 200
     };
-    scene.drawBounds(dialog);
+    //scene.drawBounds(dialog);
 
     //將dialog再包裝為modal，並建立promise
     return scene.rexUI.modalPromise(dialog, config);

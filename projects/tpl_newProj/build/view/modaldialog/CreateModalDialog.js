@@ -4,6 +4,7 @@ import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackgro
 //utils
 import SetValue from '../../../../../plugins/utils/object/SetValue.js';
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
+import Shuffle from '../../../../../plugins/utils/array/Shuffle.js';
 
 /*
 呼叫QuizResultModalPromise後，取得: 
@@ -23,7 +24,7 @@ var CreateModalDialog = function (scene, config) {
     }
 
     //取得camera中央位置與寬高(而非game.config的預設數值)，將成為dialog的位置
-    var viewport = scene.rexScaleOuter.outerViewport;
+    var viewport = GetValue(scene, 'rexScaleOuter.outerViewport', scene.cameras.main);
     config.x = GetValue(config, 'x', viewport.centerX);
     config.y = GetValue(config, 'y', viewport.centerY);
     config.width = GetValue(config, 'width', 0); //寬高會由dialog排版自動決定，故預設值為0即可
@@ -53,6 +54,15 @@ var CreateModalDialog = function (scene, config) {
         config.buttonMode = 0;
     }
     switch (config.buttonMode) {
+        case 5: // 自訂actions，可能可以給buttons
+            config.choicesBackground = CreateRoundRectangleBackground(scene, 20, 0x110606, 0x663030, 6); //'#663030''#110606'
+            config.choices = CreateButtons(scene, config.buttonsData);
+            config.actions = [
+                scene.rexUI.add.space(),
+                CreateButton(scene, 'yes'),
+                scene.rexUI.add.space()
+            ];
+        break;
         case 4: // onError訊息，顯示後遊戲停止
             config.actions = []; //不給按鈕，不會消失
             break;
@@ -83,7 +93,23 @@ var CreateModalDialog = function (scene, config) {
     }
 
     if (config.space === undefined) { //設定Modal的padding和字物件間距
-        config.space = { left: 40, right: 40, top: 40, bottom: 40, item: 40 };
+        config.space = { 
+            left: 40, 
+            right: 40, 
+            top: 40, 
+            bottom: 40, 
+            item: 40, 
+            choices: 0, //跟action的間距
+            choicesLeft: 0,
+            choicesRight: 0,
+            choice: 10,
+        };
+    }
+
+    if (config.expand === undefined) {
+        config.expand = { 
+            choices: true, 
+        };
     }
 /*
 以上建立了： 
@@ -152,15 +178,62 @@ var yoyoScaleRemove = function(yoyoTarget){
     return yoyoTarget;
 }
 
-var CreateButton = function (scene, img) {
+var CreateButton = function (scene, img, txt, spaceSettings, bg) {
     var label = scene.rexUI.add.label({
-        // background: CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2),
+        background: bg?bg:undefined,
         //icon: scene.rexUI.add.roundRectangle(0, 0, 90, 90, 20, undefined).setStrokeStyle(2, 0x00ff00),
-        icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
-        // text: scene.rexUI.add.BBCodeText(0, 0, 'X', { fontFamily: Style.fontFamilyName, fontSize: 60 }),
-        // space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10 },
+        icon: img?scene.add.image(0, 0, img).setDisplaySize(90, 90):undefined,
+        text: txt?scene.rexUI.add.BBCodeText(0, 0, txt, { fontFamily: Style.fontFamilyName, fontSize: 60 }):undefined,
+        space: spaceSettings?spaceSettings:{},
     });
     return label;
+}
+
+//buttonsData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
+var CreateButtons = function(scene, buttonsData){
+    var btnArrSizerd = [];
+    var btnArrResult = [];
+    
+    var btnArrPre = [];
+    var btnArrPreShuffle = [];
+    var btnArrPreFixed = [];
+    var list = buttonsData.list;
+    list.forEach(function(item, index, arr){
+        item.space = { left: 20, right: 20, top: 20, bottom: 20, icon: 10 };
+        item.bg = CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2)
+        var button = CreateButton(scene, item.imgKey, item.text, item.space, item.bg)
+        button.index = index;
+
+        btnArrPre.push(button);
+        if (item.indexFixed == 1){
+            btnArrPreFixed.push(button); //不shuffle的選項
+        } else {
+            btnArrPreShuffle.push(button); //要shuffle的選項
+        }
+    })
+
+    if(buttonsData.ifShuffle == 1){
+        Shuffle(btnArrPre);
+        btnArrResult = btnArrPre.slice();
+    } else {
+        Shuffle(btnArrPreShuffle);
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].indexFixed == 1){
+                btnArrResult.push(btnArrPre[i]);
+            } else {
+                var btn = btnArrPreShuffle.pop();
+                btnArrResult.push(btn);
+            }
+        }
+    }
+
+    btnArrSizerd.push(scene.rexUI.add.space());
+    btnArrResult.forEach(function(item, index, arr){
+        btnArrSizerd.push(item);
+        btnArrSizerd.push(scene.rexUI.add.space());
+    })
+
+    return btnArrSizerd;
 }
 
 export default CreateModalDialog;
