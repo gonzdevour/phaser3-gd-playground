@@ -1,7 +1,6 @@
 import 'phaser';
 import Base from './Base.js';
 import * as SceneKey from '../settings/SceneKey.js';
-import ModalDialogPromise from '../build/view/modaldialog/ModalDialogPromise.js';
 import CreateQuizConfigPanel from '../build/view/quizconfigpanel/CreateQuizConfigPanel.js';
 
 // Setup quiz

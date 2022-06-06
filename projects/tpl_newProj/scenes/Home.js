@@ -2,7 +2,8 @@ import 'phaser';
 import Base from './Base.js';
 import * as SceneKey from '../settings/SceneKey.js';
 import CreateMainMenuPanel from '../build/view/mainmenupanel/CreateMainMenuPanel.js';
-import ModalDialogPromise from '../build/view/modaldialog/ModalDialogPromise.js';
+import DialogDefault from '../build/view/modaldialog/dialogs/DialogDefault.js';
+import { DialogY } from '../build/view/modaldialog/DialogType.js';
 import CreateSettingsPanel from '../build/view/mainmenupanel/CreateSettingsPanel.js';
 import Style from '../settings/Style.js';
 
@@ -43,20 +44,18 @@ class Home extends Base {
             .on('button.config', function () { //todo
                 _scene.game.api.sound.play(_scene, 'right');
                 _scene.log('button.config')
-                ModalDialogPromise(_scene, {
+                DialogY(_scene, {
                     title: '系統設定',
                     content: CreateSettingsPanel(_scene),
-                    buttonMode: 1,        
-                    width: _scene.viewport.displayWidth-50,
                 })
-            }, this)
+            })
             .on('button.help', function () { //todo
                 _scene.game.api.sound.play(_scene,'right');
                 _scene.log('button.help')
-                ModalDialogPromise(_scene, {
+
+                DialogDefault(_scene, {
                     title: '使用說明',
-                    content: 
-`「注音習作」是以注音符號測驗
+                    content: `「注音習作」是以注音符號測驗
 認識常用字詞的線上教具APP，
 有語音輔助，能指定易混淆的聲韻
 進行強化訓練。適合幼小銜接以及
@@ -75,12 +74,15 @@ class Home extends Base {
 敝團隊。
 
 ©PLAYONE 2022`,
-                    buttonMode: 3,
-                    contentStyle:{ fontFamily: Style.fontFamilyName, fontSize: 40 },
-                    callbackMail: function(){ _scene.game.api.browser.open('https://forms.gle/uc51sDPiUZ34Qiws9') },        
-                    width: _scene.viewport.displayWidth-50,
+                    actions: [
+                        {imageKey:'mail', callback: function(){ _scene.game.api.iab.open('https://forms.gle/uc51sDPiUZ34Qiws9') }},
+                        {imageKey:'yes', callback: undefined},
+                    ],
+                    extraConfig: { 
+                        contentStyle: { fontFamily: Style.fontFamilyName, fontSize: 40 },
+                    }
                 })
-            }, this)
+            })
 
         //this.log(`${mainMenu.width}x${mainMenu.height}`)
 

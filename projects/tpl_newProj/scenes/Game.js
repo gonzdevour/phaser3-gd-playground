@@ -1,7 +1,7 @@
 import 'phaser';
 import Base from './Base.js';
 import * as SceneKey from '../settings/SceneKey.js';
-import ModalDialogPromise from '../build/view/modaldialog/ModalDialogPromise.js';
+import DialogYN from '../build/view/modaldialog/dialogs/DialogYN.js';
 import CreateQuizPanel from '../build/view/quizpanel/CreateQuizPanel.js';
 import BuildQuiz from '../build/control/quiz/BuildQuiz.js';
 import QuizPromise from '../build/control/quiz/QuizPromise.js';
@@ -58,14 +58,9 @@ class Game extends Base {
         var btnHome = CreateLabel(_scene, '返回', 'arrowL')
             .onClick( function (button, gameObject, pointer, event) {
                 _scene.log('reqBack')
-                ModalDialogPromise(_scene, {
-                    //title: '使用說明',
-                    content: '確定要返回選單頁面嗎？',
-                    buttonMode: 2, //default:none|1:yes|2:yes&no
-                    callbackYes: function(){ _scene.transitionTo( SceneKey.Menu, 500 ) },
-        
-                    width: _scene.viewport.displayWidth-50,
-                })
+                var callbackYes = function(){ _scene.transitionTo( SceneKey.Menu, 500 ) };
+                var config = { callbacks: [callbackYes] };
+                DialogYN(_scene, undefined, '確定要返回選單頁面嗎？', config)
             })
 
         super.create(); //createSysPanel & setupTransition

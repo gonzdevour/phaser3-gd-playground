@@ -150,7 +150,10 @@ class Base extends Phaser.Scene {
 //換句話說，就是msgQ.startPop(PopCallback, this)的this。
 var msgQPopCallback = async function (msg) {
     var lo = this.game.localization;
-    var result = await DialogY(this, lo.loc('select-db-title'), msg.id)
+    var result = await DialogY(this, {
+        title: lo.loc('select-db-title'), 
+        content: msg.id
+    })
     //return (result.index === 0);//true:繼續popAll，false:中斷popAll
     return true;
 }

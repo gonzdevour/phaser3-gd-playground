@@ -11,6 +11,10 @@ class Demo extends Phaser.Scene {
         })
     }
 
+    init() {
+        this.viewport = this.cameras.main; 
+    }
+
     preload() { 
         this.load.text('questions','https://docs.google.com/spreadsheets/d/e/2PACX-1vQjdECX4kOj4uvdr_5w7iP5P8h-7m1QBr5XoOXy7Hn6PpAsSXtqPBwrc94uvBOzWOPUB7q7TSciAKku/pub?gid=0&single=true&output=csv')
     }

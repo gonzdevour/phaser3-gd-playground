@@ -224,7 +224,7 @@ var CreateReviewPanel = function (scene, config) {
     .on('button.searchWord', function (gameObject, pointer, event) {
       if (gameObject.wordTxt != undefined) {
         var url = 'https://dict.revised.moe.edu.tw/search.jsp?md=1&word=' + gameObject.wordTxt;
-        scene.game.api.browser.open(url);
+        scene.game.api.iab.open(url);
       }
     })
     .on('button.deleteWord', function(gameObject, pointer, event){

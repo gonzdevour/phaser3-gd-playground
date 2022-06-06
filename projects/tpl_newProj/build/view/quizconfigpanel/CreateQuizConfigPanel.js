@@ -90,7 +90,10 @@ var CreateQuizConfigPanel = function (scene, config) {
     // 注意width只有設定最小寬度的功能，如果排版後大於width，會以排版大小為準
     var lo = scene.game.localization;
     databaseSelectPanel.on('button.help', function(gameObject, pointer, event){
-        DialogY(scene, lo.loc('select-db-title'), lo.loc('select-db-content'))
+        DialogY(scene, {
+            title: lo.loc('select-db-title'), 
+            content: lo.loc('select-db-content')
+        })
     });
 
     //databaseSelectPanel.on('button.help', function(gameObject, pointer, event){
@@ -98,11 +101,17 @@ var CreateQuizConfigPanel = function (scene, config) {
     //});
 
     enhancementSelectPanel.on('button.help', function(gameObject, pointer, event){
-        DialogY(scene, '強化練習', '針對容易混淆的讀音加強練習')
+        DialogY(scene, {
+            title: '強化練習', 
+            content: '針對容易混淆的讀音加強練習'
+        })
     });
 
     quizModePanel.on('button.help', function(gameObject, pointer, event){
-        DialogY(scene, '出題模式', '隨機：詞庫隨機出題\n頻次：依常用度出題\n測驗：指定範圍進行測驗\n\n[color=gray]※測驗模式施工中[/color]')
+        DialogY(scene, {
+            title: '出題模式', 
+            content: '隨機：詞庫隨機出題\n頻次：依常用度出題\n測驗：指定範圍進行測驗\n\n[color=gray]※測驗模式施工中[/color]'
+        })
     });   
 
 
