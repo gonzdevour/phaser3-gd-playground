@@ -1,45 +1,35 @@
-import ModalDialogPromise from "../ModalDialogPromise";
 import Style from "../../../../settings/Style";
 import CreateRoundRectangleBackground from "../../style/CreateRoundRectangleBackground";
+import DialogDefault from "./DialogDefault";
 
 //utils
+import GetValue from "../../../../../../plugins/utils/object/GetValue";
 import Shuffle from "../../../../../../plugins/utils/array/Shuffle";
 
-var DialogSelect = function (scene, titleTxt, contentTxt, config) {
-  return ModalDialogPromise(scene, {
-      title: CreateTitle(scene, titleTxt),
-      content: CreateContent(scene, contentTxt),
-      choicesBackground: CreateRoundRectangleBackground(scene, 20, 0x110606, 0x663030, 6), //'#663030''#110606'
-      choices: CreateButtons(scene, config.buttonsData),
-      actions: CreateAction(scene),
+var DialogSelect = function (scene, config) {
+    var dialogConfig =  {
+      title: CreateTitle(scene, GetValue(config, 'title', '')),
+      content: CreateContent(scene, GetValue(config, 'content', '')),
+      choicesBackground: CreateRoundRectangleBackground(scene, 20, 0x110606, 0x663030, 6), //'#663030''#110606',
+      choices: CreateButtons(scene, GetValue(config, 'choicesData', [])),
       background: CreateRoundRectangleBackground(scene, 20, 0x0, 0xffffff, 2),
-      //通用預設值
-      width: scene.viewport.displayWidth-50,
-      x: scene.viewport.centerX,
-      y: scene.viewport.centerY,
-      space: { 
-          left: 40, 
-          right: 40, 
-          top: 40, 
-          bottom: 40, 
-          item: 40, 
-          choices: 0, //跟action的間距
-          choicesLeft: 0,
-          choicesRight: 0,
-          choicesBackgroundTop: 10,
-          choicesBackgroundBottom: 10,
-          choicesBackgroundLeft: 20,
-          choicesBackgroundRight: 20,
-          choice: 15,
-      },
-      expand:{
-          title: false, //不隨dialog的排版延展
-          content: false,
-          choices: true,
-      },
-      //modalClose的模式選擇
-      buttonMode: 1,
-  })
+      extraConfig: { 
+          expand: { title: false, content: false, choices: true },
+      }
+    }
+    addBehaviors(dialogConfig.choices, ['ninja']);
+  
+    return DialogDefault(scene, dialogConfig);
+}
+
+var addBehaviors = function(targets, bhvs){
+    targets.forEach(function(target, idx, arr){
+        var originalBehaviors = GetValue(target, 'behavior', []);
+        if(Array.isArray(originalBehaviors)){
+            target.behavior = originalBehaviors.concat(bhvs);
+        }
+    })
+    return targets;
 }
 
 //客製函數
@@ -50,14 +40,6 @@ var CreateTitle = function(scene, title){
 
 var CreateContent = function(scene, content){
     return scene.rexUI.add.BBCodeText(0, 0, content, { fontFamily: Style.fontFamilyName, fontSize: 48 });
-}
-
-var CreateAction = function(scene){
-    var actions = [
-        scene.rexUI.add.space(),
-        scene.rexUI.add.space()
-        ]
-    return actions;
 }
 
 var CreateButton = function (scene, img, txt, spaceSettings, bg) {
@@ -71,15 +53,15 @@ var CreateButton = function (scene, img, txt, spaceSettings, bg) {
     return label;
 }
 
-//buttonsData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
-var CreateButtons = function(scene, buttonsData){
+//choicesData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
+var CreateButtons = function(scene, choicesData){
     var btnArrSizerd = [];
     var btnArrResult = [];
     
     var btnArrPre = [];
     var btnArrPreShuffle = [];
     var btnArrPreFixed = [];
-    var list = buttonsData.list;
+    var list = choicesData.list;
     list.forEach(function(item, index, arr){
         item.space = { left: 20, right: 20, top: 20, bottom: 20, icon: 10 };
         item.bg = CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2)
@@ -94,7 +76,7 @@ var CreateButtons = function(scene, buttonsData){
         }
     })
 
-    if(buttonsData.ifShuffle == 1){
+    if(choicesData.ifShuffle == 1){
         Shuffle(btnArrPre);
         btnArrResult = btnArrPre.slice();
     } else {

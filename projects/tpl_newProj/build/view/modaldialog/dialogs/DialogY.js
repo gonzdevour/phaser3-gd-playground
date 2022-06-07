@@ -12,7 +12,7 @@ var DialogY = function (scene, config) {
         expand: { title: false, content: true },
     }
   }
-  addBehaviors(dialogConfig.actions, ['yoyoScale','ninja'])
+  addBehaviors(dialogConfig.actions, ['dialogYoyoScale','ninja'])
 
   return DialogDefault(scene, dialogConfig)
 }

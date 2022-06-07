@@ -1,20 +1,20 @@
 //utils
 import GetValue from "../../../plugins/utils/object/GetValue";
 
-var yoyoScale = function (label, config) {
+var dialogYoyoScale = function (label, config) {
   label
       .on('dialog.open',function(scene){
-          yoyoScaleStart(scene, label, config);
+        dialogYoyoScaleStart(scene, label, config);
       })
       .on('dialog.close',function(scene){
-          yoyoScaleRemove(label);
+        dialogYoyoScaleRemove(label);
       })
 
   return label;
 }
 
-var yoyoScaleStart = function(scene, yoyoTarget, config){
-  yoyoTarget.yoyoScale = scene.tweens.add({
+var dialogYoyoScaleStart = function(scene, yoyoTarget, config){
+  yoyoTarget.dialogYoyoScale = scene.tweens.add({
       targets: yoyoTarget,
       scale: GetValue(config, 'scale', 1.2),
       ease: GetValue(config, 'ease', 'Linear'),       // 'Cubic', 'Elastic', 'Bounce', 'Back'
@@ -25,11 +25,11 @@ var yoyoScaleStart = function(scene, yoyoTarget, config){
   return yoyoTarget;
 }
 
-var yoyoScaleRemove = function(yoyoTarget){
-  if(yoyoTarget.yoyoScale){
-      yoyoTarget.yoyoScale.restart().stop().remove();
+var dialogYoyoScaleRemove = function(yoyoTarget){
+  if(yoyoTarget.dialogYoyoScale){
+      yoyoTarget.dialogYoyoScale.restart().stop().remove();
   }
   return yoyoTarget;
 }
 
-export default yoyoScale;
+export default dialogYoyoScale;

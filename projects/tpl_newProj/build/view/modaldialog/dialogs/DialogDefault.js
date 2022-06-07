@@ -1,13 +1,11 @@
 import ModalDialogPromise from "../ModalDialogPromise";
 import Style from "../../../../settings/Style";
 import CreateRoundRectangleBackground from "../../style/CreateRoundRectangleBackground";
-
-//behaviors
-import yoyoScale from "../../../../../../templates/dialog/behavior/yoyoScale";
-import ninja from "../../../../../../templates/gameObject/behaviors/ninja";
+import RegisterBehaviors from "../../../../../../templates/gameObject/behaviors/RegisterBehaviors";
 
 //utils
 import GetValue from "../../../../../../plugins/utils/object/GetValue";
+import IsPlainObjectArray from "../../../../../../plugins/utils/object/IsPlainObjectArray";
 
 //複數個橫向決定按鈕的Dialog，透過actionsConfig指定button img和cbk
 var DialogDefault = function (scene, cfg) {
@@ -30,12 +28,12 @@ var DialogDefault = function (scene, cfg) {
     cfg.content = CreateContent(scene, cfg.content, extraConfig) //建立元件，可能需要考慮style，所以傳入extraConfig控制
   }
 
-  if ( Array.isArray(cfg.actions) ){ 
-    cfg.actions = CreateActions(scene, cfg.actions, extraConfig) //建立元件，可能需要考慮style，所以傳入extraConfig控制
+  if ( IsPlainObjectArray(cfg.actions) ){ //要確定cfg.actions不是建好的label群而必須是手寫的JSON array
+    cfg.actions = CreateActions(scene, cfg.actions, extraConfig) 
   }
 
-  if ( Array.isArray(cfg.choices) ){ 
-    cfg.choices = CreateChoices(scene, cfg.choices, extraConfig) //建立元件，可能需要考慮style，所以傳入extraConfig控制
+  if ( IsPlainObjectArray(cfg.choices) ){ //要確定cfg.choices不是建好的label群而必須是手寫的JSON array
+    cfg.choices = CreateChoices(scene, cfg.choices, extraConfig) 
   }
 
   //通用預設值
@@ -115,18 +113,8 @@ var CreateButton = function (scene, config) {
         text: config.text?scene.rexUI.add.BBCodeText(0, 0, config.text, { fontFamily: Style.fontFamilyName, fontSize: 60 }):undefined,
         space: config.spaceSettings?config.spaceSettings:{},
     });
-    var bhvs = GetValue(config, 'behavior', []);
-    bhvs.forEach(function(bhv, idx, arr){
-        if (RegisterBehaviors[bhv]){
-            RegisterBehaviors[bhv](label);
-        }
-    })
+    RegisterBehaviors(label, GetValue(config, 'behavior', []))
     return label;
-}
-
-var RegisterBehaviors = {
-    yoyoScale: yoyoScale,
-    ninja: ninja,
 }
 
 export default DialogDefault;

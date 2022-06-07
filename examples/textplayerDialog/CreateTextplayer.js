@@ -76,9 +76,11 @@ var CreateTextplayer = function(scene){
         })
         .on('wait.dialog', function(Callback){
             var waitDialog = async function(_scene){
-                //config.buttonsData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
-                var config = {
-                    buttonsData:{
+                //choicesData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
+                var result = await DialogSelect(_scene, {
+                    title: 'test title', 
+                    content: 'test content', 
+                    choicesData: {
                         ifShuffle:0,
                         list:[
                             {imgKey: 'yes', text: 'btn0', indexFixed:0},
@@ -87,8 +89,7 @@ var CreateTextplayer = function(scene){
                             {imgKey: 'yes', text: 'btn3', indexFixed:0},
                         ],
                     }
-                }
-                var result = await DialogSelect(_scene, 'test title', 'test content', config)
+                })
                 Callback();
             }
             waitDialog(scene);

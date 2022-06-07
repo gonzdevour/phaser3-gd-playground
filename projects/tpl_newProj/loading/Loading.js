@@ -1,5 +1,5 @@
 import LoadAPI from "../res/api/loadAPI.js";
-import { DialogFatal } from "../build/view/modaldialog/DialogType.js";
+import DialogDefault from "../build/view/modaldialog/dialogs/DialogDefault.js";
 import LoadingProgressUI from "./LoadingProgressUI.js";
 
 var Loading = function(scene) {
@@ -21,9 +21,13 @@ var Loading = function(scene) {
     LoadingProgressUI(scene);
     
     //onError
-    var lo = scene.localization;
+    var lo = scene.game.localization;
     scene.load.once('loaderror', function(fileObj){
-        DialogFatal(scene, lo.loc('loading-error-title'), lo.loc('loading-error-content',{ filename: fileObj.key }))
+        console.log('error-' + fileObj)
+        DialogDefault(scene, {
+            title: lo.loc('loading-error-title'), 
+            content: lo.loc('loading-error-content',{ filename: fileObj.key })
+        })
     }, scene);
 
 }
