@@ -1,6 +1,7 @@
 import Style from "../../../../settings/Style";
 import CreateRoundRectangleBackground from "../../style/CreateRoundRectangleBackground";
 import DialogDefault from "./DialogDefault";
+import RegisterBehaviors from "../../../../../../templates/gameObject/behaviors/RegisterBehaviors";
 
 //utils
 import GetValue from "../../../../../../plugins/utils/object/GetValue";
@@ -11,11 +12,9 @@ var DialogSelect = function (scene, config) {
       title: CreateTitle(scene, GetValue(config, 'title', '')),
       content: CreateContent(scene, GetValue(config, 'content', '')),
       choicesBackground: CreateRoundRectangleBackground(scene, 20, 0x110606, 0x663030, 6), //'#663030''#110606',
-      choices: CreateButtons(scene, GetValue(config, 'choicesData', [])),
+      choices: CreateChoices(scene, GetValue(config, 'choicesData', [])),
       background: CreateRoundRectangleBackground(scene, 20, 0x0, 0xffffff, 2),
-      extraConfig: { 
-          expand: { title: false, content: false, choices: true },
-      }
+      extraConfig: Object.assign({},{expand:{title:false,content:false,choices:true}},GetValue(config,'extraConfig',{}))
     }
     addBehaviors(dialogConfig.choices, ['ninja']);
   
@@ -42,55 +41,60 @@ var CreateContent = function(scene, content){
     return scene.rexUI.add.BBCodeText(0, 0, content, { fontFamily: Style.fontFamilyName, fontSize: 48 });
 }
 
-var CreateButton = function (scene, img, txt, spaceSettings, bg) {
+var CreateButton = function (scene, config) {
     var label = scene.rexUI.add.label({
-        background: bg?bg:undefined,
-        //icon: scene.rexUI.add.roundRectangle(0, 0, 90, 90, 20, undefined).setStrokeStyle(2, 0x00ff00),
-        icon: img?scene.add.image(0, 0, img).setDisplaySize(90, 90):undefined,
-        text: txt?scene.rexUI.add.BBCodeText(0, 0, txt, { fontFamily: Style.fontFamilyName, fontSize: 60 }):undefined,
-        space: spaceSettings?spaceSettings:{},
+        background: config.background?config.background:undefined,
+        icon: config.imageKey?scene.add.image(0, 0, config.imageKey).setDisplaySize(90, 90):undefined,
+        text: config.text?scene.rexUI.add.BBCodeText(0, 0, config.text, { fontFamily: Style.fontFamilyName, fontSize: 60 }):undefined,
+        space: config.spaceSettings?config.spaceSettings:{},
     });
+    RegisterBehaviors(label, GetValue(config, 'behavior', []))
     return label;
 }
 
 //choicesData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
-var CreateButtons = function(scene, choicesData){
-    var btnArrSizerd = [];
-    var btnArrResult = [];
+var CreateChoices = function(scene, choicesData){
+    var btnArrSizerd = [];//排好順序且包含rexUI space的button array
+    var btnArrResult = [];//排好順序的button array
     
-    var btnArrPre = [];
-    var btnArrPreShuffle = [];
-    var btnArrPreFixed = [];
-    var list = choicesData.list;
-    list.forEach(function(item, index, arr){
-        item.space = { left: 20, right: 20, top: 20, bottom: 20, icon: 10 };
-        item.bg = CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2)
-        var button = CreateButton(scene, item.imgKey, item.text, item.space, item.bg)
+    var btnArrPre = [];         //未分類的選項群
+    var btnArrPreShuffle = [];  //顯示位置不固定可shuffle的選項群
+    var btnArrPreFixed = [];    //顯示位置須固定不shuffle的選項群
+
+    var list = GetValue(choicesData, 'list', []);
+    list.forEach(function(item, index, arr){ //建立選項按鈕群
+        //button config
+        item.spaceSettings = { left: 20, right: 20, top: 20, bottom: 20, icon: 10 };
+        item.background = CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2);
+        item.behavior = ['ninja'];
+        var button = CreateButton(scene, item)
+        //assign properties
         button.index = index;
 
-        btnArrPre.push(button);
+        btnArrPre.push(button); //未分類的選項群
         if (item.indexFixed == 1){
-            btnArrPreFixed.push(button); //不shuffle的選項
+            btnArrPreFixed.push(button); //顯示位置不固定可shuffle的選項群
         } else {
-            btnArrPreShuffle.push(button); //要shuffle的選項
+            btnArrPreShuffle.push(button); //顯示位置須固定不shuffle的選項群
         }
     })
 
-    if(choicesData.ifShuffle == 1){
+    if(choicesData.ifShuffle == 1){ //如果choiceData要整個shuffle，無視item.indexFixed設定直接shuffle
         Shuffle(btnArrPre);
-        btnArrResult = btnArrPre.slice();
-    } else {
+        btnArrResult = btnArrPre.slice(); //排序完成後複製一份
+    } else { //如果choiceData不要整個shuffle，依據item.indexFixed設定來shuffle
         Shuffle(btnArrPreShuffle);
-        for (let i = 0; i < list.length; i++) {
+        for (let i = 0; i < list.length; i++) { //以未分類選項群的索引為基準，將固定位置的選項排到該位置
             if (list[i].indexFixed == 1){
                 btnArrResult.push(btnArrPre[i]);
             } else {
-                var btn = btnArrPreShuffle.pop();
+                var btn = btnArrPreShuffle.pop(); //其餘位置由可shuffle的選項群逐一填入
                 btnArrResult.push(btn);
             }
         }
     }
 
+    ////將排好順序的button array加入rexUI space後回傳給dialog使用
     btnArrSizerd.push(scene.rexUI.add.space());
     btnArrResult.forEach(function(item, index, arr){
         btnArrSizerd.push(item);

@@ -47,6 +47,7 @@ class Home extends Base {
                 DialogY(_scene, {
                     title: '系統設定',
                     content: CreateSettingsPanel(_scene),
+                    extraConfig: {expand: {title: false, content: true}}, //標題不延展panel延展
                 })
             })
             .on('button.help', function () { //todo

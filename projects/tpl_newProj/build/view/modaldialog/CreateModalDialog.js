@@ -1,5 +1,3 @@
-import CreateRoundRectangleBackground from '../style/CreateRoundRectangleBackground.js';
-
 //utils
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
 
@@ -9,7 +7,7 @@ var CreateModalDialog = function (scene, config) {
         config = {};
     }
     config.buttonMode = GetValue(config, 'buttonMode', 0)//按鈕模式，聯動控制modalPromise的manualClose設定是否手動關閉
-    
+
     var dialog = scene.rexUI.add.dialog(config);
 
     //將modal底板移到dialog的下層

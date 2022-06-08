@@ -1,5 +1,6 @@
 import phaser from 'phaser/src/phaser.js';
 import AllPlugins from '../../plugins/AllPlugins.js';
+import { DialogSelect } from '../../projects/tpl_newProj/build/view/modaldialog/DialogType.js';
 //proj
 import CreateQuiz from './CreateQuiz.js';
 import CreateTextplayer from './CreateTextplayer.js';
@@ -20,22 +21,52 @@ class Demo extends Phaser.Scene {
     }
 
     create() {
+        var _scene = this;
+
         //建立題庫
         var csvstring = this.cache.text.get('questions');
-        var quizArr = CreateQuiz(csvstring,10);
+        var quizArr = CreateQuiz(csvstring,10); //將csv轉taffydb並從中取出10題
         quizArr.forEach(function(item, index, arr){
             console.log(JSON.stringify(item['A1']));
         })
 
         //建立textplayer
         var textPlayer = CreateTextplayer(this);
+        textPlayer
+            .on('wait.timeout', function(Callback){
+                var waitTime = async function(ms){
+                    await new Promise(resolve => setTimeout(resolve, ms));
+                    Callback();
+                }
+                waitTime(2000);
+            })
+            .on('wait.dialog', function(Callback){
+                var waitDialog = async function(_scene){
+                    //choicesData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
+                    var result = await DialogSelect(_scene, {
+                        //title: 'test title', 
+                        //content: 'test content', 
+                        choicesData: {
+                            ifShuffle:0,
+                            list:[
+                                {imageKey: 'yes', text: 'btn0', indexFixed:0},
+                                {imageKey: 'yes', text: 'btn1', indexFixed:1},
+                                {imageKey: 'yes', text: 'btn2', indexFixed:0},
+                                {imageKey: 'yes', text: 'btn3', indexFixed:0},
+                            ],
+                        },
+                        extraConfig: {
+                            y: _scene.viewport.centerY-200, 
+                            cover: {color:0x663030, alpha: 0.1},
+                        }
+                    })
+                    Callback();
+                }
+                waitDialog(_scene);
+            })
 
         this.input.once('pointerdown', function () {
-            textPlayer.playPromise('hello [wait=dialog]textplayer')
-                .then(function () {
-                    console.log('Play complete');
-                })
-            
+            QuizPromise(textPlayer, quizArr);
             // text.showPage();  // Show all characters in this page
         })
     }
@@ -43,9 +74,11 @@ class Demo extends Phaser.Scene {
 
 //清理上一題，並將新題目與panel組合起來，以作答callback回傳給QuizPromise
 var SetupTextPlayer = function (textPlayer, question, onSubmit) { 
-    textPlayer
-        .once('submit', function (result) { //callback回傳答案
+    textPlayer.playPromise(question['Q'] + '[wait=click][wait=dialog]')
+        .then(function () {
+            console.log('Play complete');
             if (onSubmit) { //如果有傳入callback function
+                var result = 'test';
                 onSubmit(result); //呼叫callback，完成QuizPanelPromise，讓QuizPromise吐出next question循環
             }
         })

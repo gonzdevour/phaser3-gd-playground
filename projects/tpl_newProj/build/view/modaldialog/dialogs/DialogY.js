@@ -8,9 +8,7 @@ var DialogY = function (scene, config) {
     title: GetValue(config, 'title', ''),
     content: GetValue(config, 'content', ''),
     actions: GetValue(config, 'actions', [{imageKey:'yes', callback:undefined}]),
-    extraConfig: { 
-        expand: { title: false, content: true },
-    }
+    extraConfig: GetValue(config, 'extraConfig', {}),
   }
   addBehaviors(dialogConfig.actions, ['dialogYoyoScale','ninja'])
 

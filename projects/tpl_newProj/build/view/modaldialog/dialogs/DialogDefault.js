@@ -58,8 +58,8 @@ var DialogDefault = function (scene, cfg) {
     },
     expand:{
         title: false, //不隨dialog的排版延展
-        content: false,//隨dialog的排版延展
-        choices: true,
+        content: false,
+        choices: true, //隨dialog的排版延展
     },
     buttonMode: 1, //modalClose的模式選擇，0自動關閉，1手動關閉
   }

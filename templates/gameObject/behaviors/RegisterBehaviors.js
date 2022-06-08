@@ -1,11 +1,12 @@
 import dialogYoyoScale from "../../dialog/behavior/dialogYoyoScale";
 import ninja from "./ninja";
 
+var bhvMethods = {
+  dialogYoyoScale: dialogYoyoScale,
+  ninja: ninja,
+}
+
 var RegisterBehaviors = function(gameObject, bhvs){
-  var bhvMethods = {
-      dialogYoyoScale: dialogYoyoScale,
-      ninja: ninja,
-  }
   bhvs.forEach(function(bhv, idx, arr){
       if ( typeof(bhv) === 'string' ){ //如果是字串就透過RegisterBehaviors執行function
           if (bhvMethods[bhv]){
