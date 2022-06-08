@@ -7,12 +7,21 @@ import RegisterBehaviors from "../../../../../../templates/gameObject/behaviors/
 import GetValue from "../../../../../../plugins/utils/object/GetValue";
 import Shuffle from "../../../../../../plugins/utils/array/Shuffle";
 
-var DialogSelect = function (scene, config) {
+var DialogMultiSelect = function (scene, config) {
     var dialogConfig =  {
       title: CreateTitle(scene, GetValue(config, 'title', undefined)),
       content: CreateContent(scene, GetValue(config, 'content', undefined)),
       choicesBackground: CreateRoundRectangleBackground(scene, 20, 0x110606, 0x663030, 6), //'#663030''#110606',
       choices: CreateChoices(scene, GetValue(config, 'choicesData', [])),
+      choicesType: 'wrap-checkboxes',
+      choicesSetValueCallback: function (button, value) {
+        if (value) {
+            button.getElement('background').setFillStyle(0xff3333)
+        } else {
+            button.getElement('background').setFillStyle()
+        }
+      },
+      actions: CreateActions(scene, GetValue(config, 'actions', [])),
       background: CreateRoundRectangleBackground(scene, 20, 0x0, 0xffffff, 2),
       extraConfig: Object.assign({},{expand:{title:false,content:false,choices:true}},GetValue(config,'extraConfig',{}))
     }
@@ -50,6 +59,24 @@ var CreateButton = function (scene, config) {
     });
     RegisterBehaviors(label, GetValue(config, 'behavior', []))
     return label;
+}
+
+var CreateActions = function(scene, config){
+    var actions = [];
+    config.forEach(function(item, idx, arr){
+        //button config
+        item.spaceSettings = { left: 20, right: 20, top: 20, bottom: 20, icon: 10 };
+        item.textStyle = { fontFamily: Style.fontFamilyName, fontSize: 48 }
+        item.background = CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2);
+        item.behavior = ['ninja'];
+        //make buttons sizer
+        actions.push(scene.rexUI.add.space());
+        actions.push(CreateButton(scene, item).onClick(GetValue(item, 'callback', undefined)));
+        if(idx == arr.length-1){
+            actions.push(scene.rexUI.add.space());
+        }
+    })
+    return actions;
 }
 
 //choicesData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
@@ -105,4 +132,4 @@ var CreateChoices = function(scene, choicesData){
     return btnArrSizerd;
 }
 
-export default DialogSelect;
+export default DialogMultiSelect;

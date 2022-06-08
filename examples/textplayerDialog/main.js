@@ -1,6 +1,7 @@
 import phaser from 'phaser/src/phaser.js';
 import AllPlugins from '../../plugins/AllPlugins.js';
 import { DialogSelect } from '../../projects/tpl_newProj/build/view/modaldialog/DialogType.js';
+import { DialogMultiSelect } from '../../projects/tpl_newProj/build/view/modaldialog/DialogType.js';
 //proj
 import CreateQuiz from './CreateQuiz.js';
 import CreateTextplayer from './CreateTextplayer.js';
@@ -41,28 +42,28 @@ class Demo extends Phaser.Scene {
                 waitTime(2000);
             })
             .on('wait.dialog', function(Callback){
-                var waitDialog = async function(_scene){
+                var waitDialog = async function(_scene, question){
                     //choicesData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
-                    var result = await DialogSelect(_scene, {
+                    var result = await DialogMultiSelect(_scene, {
                         //title: 'test title', 
                         //content: 'test content', 
+                        actions: [
+                            {imageKey:'no', text: '清空', callback: undefined},
+                            {imageKey:'yes', text: '確定', callback: undefined},
+                        ],
                         choicesData: {
                             ifShuffle:0,
-                            list:[
-                                {imageKey: 'yes', text: 'btn0', indexFixed:0},
-                                {imageKey: 'yes', text: 'btn1', indexFixed:1},
-                                {imageKey: 'yes', text: 'btn2', indexFixed:0},
-                                {imageKey: 'yes', text: 'btn3', indexFixed:0},
-                            ],
+                            list: CreateChoiceList(question),
                         },
                         extraConfig: {
                             y: _scene.viewport.centerY-200, 
                             cover: {color:0x663030, alpha: 0.1},
                         }
                     })
+                    console.log('dialogResult:' + JSON.stringify(result))
                     Callback();
                 }
-                waitDialog(_scene);
+                waitDialog(_scene, textPlayer.question);
             })
 
         this.input.once('pointerdown', function () {
@@ -72,8 +73,23 @@ class Demo extends Phaser.Scene {
     }
 }
 
+var CreateChoiceList = function(question){
+    var result = [];
+    for (let index = 0; index < question.Cnt; index++) {
+        var data = {
+            imageKey: 'yes',
+            text: question['A'+(index+1)],
+            indexFixed: 1,
+        };
+        result.push(data);
+    }
+    //console.log(JSON.stringify(result))
+    return result;
+}
+
 //清理上一題，並將新題目與panel組合起來，以作答callback回傳給QuizPromise
 var SetupTextPlayer = function (textPlayer, question, onSubmit) { 
+    textPlayer.question = question;
     textPlayer.playPromise(question['Q'] + '[wait=click][wait=dialog]')
         .then(function () {
             console.log('Play complete');

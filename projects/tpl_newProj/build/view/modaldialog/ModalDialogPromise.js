@@ -17,7 +17,9 @@ var ModalDialogPromise = function (scene, config) {
             //原本這裡的寫法是dialog.emit('modal.requestClose', { index: index });
             //用scene.rexUI.modalClose把上面的dialog.emit包成直屬rexUI的函數
             //https://github.com/rexrainbow/phaser3-rex-notes/blob/master/plugins/behaviors/modal/ModalPromise.js#L32
-            scene.rexUI.modalClose(dialog, { index: index });
+            if (groupName === 'actions'){
+                scene.rexUI.modalClose(dialog, { index: index });
+            }
         })
         .on('modal.open', function(modalBehavior){
             dialog.broadcastEvent('dialog.open', scene);
