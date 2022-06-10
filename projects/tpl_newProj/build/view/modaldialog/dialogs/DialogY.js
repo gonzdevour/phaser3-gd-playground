@@ -5,9 +5,9 @@ import GetValue from "../../../../../../plugins/utils/object/GetValue";
 
 var DialogY = function (scene, config) {
   var dialogConfig =  {
-    title: GetValue(config, 'title', ''),
-    content: GetValue(config, 'content', ''),
-    actions: GetValue(config, 'actions', [{imageKey:'yes', callback:undefined}]),
+    title: GetValue(config, 'title', undefined),
+    content: GetValue(config, 'content', undefined),
+    actions: GetValue(config, 'actions', [{imageKey:'yes', callback:undefined, closeDialog:true}]),
     extraConfig: GetValue(config, 'extraConfig', {}),
   }
   addBehaviors(dialogConfig.actions, ['dialogYoyoScale','ninja'])

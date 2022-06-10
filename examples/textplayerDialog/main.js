@@ -49,7 +49,7 @@ class Demo extends Phaser.Scene {
                         //content: 'test content', 
                         actions: [
                             {imageKey:'no', text: '清空', callback: undefined},
-                            {imageKey:'yes', text: '確定', callback: undefined},
+                            {imageKey:'yes', text: '確定', callback: undefined, closeDialog:true},
                         ],
                         choicesData: {
                             ifShuffle:0,

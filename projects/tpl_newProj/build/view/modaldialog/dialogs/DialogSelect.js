@@ -48,6 +48,7 @@ var CreateButton = function (scene, config) {
         text: config.text?scene.rexUI.add.BBCodeText(0, 0, config.text, config.textStyle?config.textStyle:{ fontFamily: Style.fontFamilyName, fontSize: 60 }):undefined,
         space: config.spaceSettings?config.spaceSettings:{},
     });
+    label.closeDialog = GetValue(config, 'closeDialog', false);
     RegisterBehaviors(label, GetValue(config, 'behavior', []))
     return label;
 }

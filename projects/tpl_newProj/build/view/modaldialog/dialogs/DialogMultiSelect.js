@@ -13,8 +13,9 @@ var DialogMultiSelect = function (scene, config) {
       content: CreateContent(scene, GetValue(config, 'content', undefined)),
       choicesBackground: CreateRoundRectangleBackground(scene, 20, 0x110606, 0x663030, 6), //'#663030''#110606',
       choices: CreateChoices(scene, GetValue(config, 'choicesData', [])),
-      choicesType: 'wrap-checkboxes',
+      choicesType: 'y-checkboxes',
       choicesSetValueCallback: function (button, value) {
+          console.log(value);
         if (value) {
             button.getElement('background').setFillStyle(0xff3333)
         } else {
@@ -57,6 +58,7 @@ var CreateButton = function (scene, config) {
         text: config.text?scene.rexUI.add.BBCodeText(0, 0, config.text, config.textStyle?config.textStyle:{ fontFamily: Style.fontFamilyName, fontSize: 60 }):undefined,
         space: config.spaceSettings?config.spaceSettings:{},
     });
+    label.closeDialog = GetValue(config, 'closeDialog', false);
     RegisterBehaviors(label, GetValue(config, 'behavior', []))
     return label;
 }
@@ -98,6 +100,7 @@ var CreateChoices = function(scene, choicesData){
         var button = CreateButton(scene, item)
         //assign properties
         button.index = index;
+        button.name = String(index+1);
 
         btnArrPre.push(button); //未分類的選項群
         if (item.indexFixed == 1){

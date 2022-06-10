@@ -76,8 +76,8 @@ class Home extends Base {
 
 ©PLAYONE 2022`,
                     actions: [
-                        {imageKey:'mail', callback: function(){ _scene.game.api.iab.open('https://forms.gle/uc51sDPiUZ34Qiws9') }},
-                        {imageKey:'yes', callback: undefined},
+                        {imageKey:'mail', callback: function(){ _scene.game.api.iab.open('https://forms.gle/uc51sDPiUZ34Qiws9') }, closeDialog:true},
+                        {imageKey:'yes', callback: undefined, closeDialog:true},
                     ],
                     extraConfig: { 
                         contentStyle: { fontFamily: Style.fontFamilyName, fontSize: 40 },

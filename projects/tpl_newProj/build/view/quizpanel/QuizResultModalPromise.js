@@ -1,4 +1,6 @@
 import ModalDialogPromise from '../modaldialog/ModalDialogPromise.js';
+import DialogDefault from '../modaldialog/dialogs/DialogDefault.js';
+import { DialogY } from '../modaldialog/DialogType.js';
 import Character from '../../../gameobjects/character/Character.js'
 import { Initials, Media, Vowel } from '../../../model/bopomofo/Bopomofo.js'
 import Style from '../../../settings/Style.js';
@@ -17,10 +19,12 @@ result:
 var QuizResultModalPromise = function (scene, result, onCloseCallback) {
     if (result.result) {  //答對回傳content:打勾圖片
         scene.game.api.sound.play(scene, 'right');
-        return  ModalDialogPromise(scene, {
+        return  DialogDefault(scene, {
             content: scene.add.image(0, 0, 'right').setDisplaySize(540, 540),
-            background: null,
-            buttonMode: 0,
+            extraConfig:{
+                background: null,
+                buttonMode: 0,
+            }
         })
 
     } else {  // 答錯回傳content:正確答案Character
@@ -45,9 +49,11 @@ var QuizResultModalPromise = function (scene, result, onCloseCallback) {
         })
             .setCharacter(result.character) //設定character label的bbcodeText
 
-        return ModalDialogPromise(scene, {
+        return DialogY(scene, {
             content: characterUI, //在Modal Dialog的content處放CharacterSizer
-            buttonMode: 1,
+            extraConfig:{
+                width: 0
+            }
         })
     }
 }
