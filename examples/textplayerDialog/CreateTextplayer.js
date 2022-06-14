@@ -35,8 +35,8 @@ var CreateTextplayer = function(scene){
                     }
                 }
             },
+            clickTarget: null,
             wrap: { charWrap: true, maxLines: 5, padding: { bottom: 10 }, },
-            clickTarget: scene,
             nextPageInput: 'click|2000'
             // nextPageInput: function(callback) {
             //     console.log('Custom next-page-input')
@@ -45,8 +45,22 @@ var CreateTextplayer = function(scene){
 
         }
     )
+    //指定click target
+    textPlayer.setClickTarget(textPlayer);
+    textPlayer.clickTarget.on('pointerup', function () {
+        if (!textPlayer.isPlaying) {
+            return;
+        }
+
+        if (textPlayer.isPageTyping) {
+            //textPlayer.showPage();  // Show all characters in this page
+        } else {
+            textPlayer.typingNextPage();
+        }
+    })
     //在scene上畫出inst
     scene.add.existing(textPlayer);
+
     return textPlayer
 }
 

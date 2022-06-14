@@ -16,6 +16,28 @@ var DialogDefault = function (scene, cfg) {
       cfg = {};
   }
 
+  if (cfg.name === undefined){
+    cfg.name = 'DialogDefault';
+  }
+
+  if (cfg.dialogButtonClickCallback === undefined){ //每個dialog的目的與結構不同，應特製on button click的callback，不特製時，callback設定為直接關閉dialog
+    cfg.dialogButtonClickCallback = function (button, groupName, index, pointer, event) {
+        // To invoke modal.requestClose(result)
+        //modalPromise會把dialog用modal behavior再包裝過，掛上dialog.on('modal.requestClose', modal.requestClose(result))
+        //※emit的規則：必須同一物件收發，ee.emit → ee.on
+        //https://github.com/rexrainbow/phaser3-rex-notes/blob/master/plugins/behaviors/modal/ModalPromise.js#L15
+        //原本這裡的寫法是dialog.emit('modal.requestClose', { index: index });
+        //用scene.rexUI.modalClose把上面的dialog.emit包成直屬rexUI的函數
+        //https://github.com/rexrainbow/phaser3-rex-notes/blob/master/plugins/behaviors/modal/ModalPromise.js#L32
+        if (button.closeDialog === true){
+            scene.rexUI.modalClose(dialog, { 
+                buttonType: button.type,
+                choicesState: choicesState,
+            });
+        }
+    }
+  }
+
   if (cfg.background === undefined) {
     cfg.background = CreateRoundRectangleBackground(scene, 20, 0x0, 0xffffff, 2);
   }
@@ -46,7 +68,8 @@ var DialogDefault = function (scene, cfg) {
         right: 40, 
         top: 40, 
         bottom: 40, 
-        item: 40, 
+        item: 20, 
+        action: 20, 
         choices: 0, //跟action的間距
         choicesLeft: 0,
         choicesRight: 0,
@@ -98,7 +121,7 @@ var CreateChoices = function(scene, config){
     var choices = [];
     config.forEach(function(item, idx, arr){
         choices.push(scene.rexUI.add.space());
-        choices.push(CreateButton(scene, item).onClick(item.callback));
+        choices.push(CreateButton(scene, item));
         if(idx == arr.length-1){
             choices.push(scene.rexUI.add.space());
         }
@@ -113,8 +136,17 @@ var CreateButton = function (scene, config) {
         text: config.text?scene.rexUI.add.BBCodeText(0, 0, config.text, { fontFamily: Style.fontFamilyName, fontSize: 60 }):undefined,
         space: config.spaceSettings?config.spaceSettings:{},
     });
-    label.closeDialog = GetValue(config, 'closeDialog', false);
+    //註冊pointer特效
     RegisterBehaviors(label, GetValue(config, 'behavior', []))
+    //賦予按鈕類型
+    label.type = GetValue(config, 'type', 'none');
+    //此按鈕是否關閉dialog
+    label.closeDialog = GetValue(config, 'closeDialog', false);
+    //註冊callback
+    if ( typeof(config.callback) === 'function' ){ 
+        label.onClick(config.callback)
+    }
+
     return label;
 }
 

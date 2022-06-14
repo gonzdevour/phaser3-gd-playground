@@ -1,4 +1,3 @@
-import ModalDialogPromise from '../modaldialog/ModalDialogPromise.js';
 import DialogDefault from '../modaldialog/dialogs/DialogDefault.js';
 import { DialogY } from '../modaldialog/DialogType.js';
 import Character from '../../../gameobjects/character/Character.js'
@@ -51,9 +50,7 @@ var QuizResultModalPromise = function (scene, result, onCloseCallback) {
 
         return DialogY(scene, {
             content: characterUI, //在Modal Dialog的content處放CharacterSizer
-            extraConfig:{
-                width: 0
-            }
+            extraConfig:{ width: 0 } //以chracterUI和Ybutton排出的寬度為dialog寬度
         })
     }
 }

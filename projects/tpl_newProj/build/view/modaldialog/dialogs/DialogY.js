@@ -5,6 +5,7 @@ import GetValue from "../../../../../../plugins/utils/object/GetValue";
 
 var DialogY = function (scene, config) {
   var dialogConfig =  {
+    name: 'DialogY',
     title: GetValue(config, 'title', undefined),
     content: GetValue(config, 'content', undefined),
     actions: GetValue(config, 'actions', [{imageKey:'yes', callback:undefined, closeDialog:true}]),

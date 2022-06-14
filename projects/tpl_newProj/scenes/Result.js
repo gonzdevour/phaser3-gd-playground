@@ -3,7 +3,7 @@ import Base from './Base.js';
 import * as SceneKey from '../settings/SceneKey.js';
 import CreateResultPanel from '../build/view/resultpanel/CreateResultPanel.js';
 import CreateReviewPanel from '../build/view/resultpanel/CreateReviewPanel.js';
-import ModalDialogPromise from '../build/view/modaldialog/ModalDialogPromise.js';
+import { DialogY } from '../build/view/modaldialog/DialogType.js';
 
 // Result
 class Result extends Base {
@@ -41,11 +41,10 @@ class Result extends Base {
             .on('button.review', function () { //開啟review modalPromise
                 _scene.game.api.sound.play(_scene, 'right');
                 _scene.log('button.help')
-                ModalDialogPromise(_scene, {
+                DialogY(_scene, {
                     title: '複習列表',
                     content: CreateReviewPanel(_scene,{wrongList: _scene.model.appData.record.wrongList}),
-                    buttonMode: 1,        
-                    width: _scene.viewport.displayWidth-50,
+                    extraConfig: {expand: {title: false, content: true}}
                 })
             }, this)
 

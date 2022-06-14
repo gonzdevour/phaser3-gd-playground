@@ -9,6 +9,7 @@ import Shuffle from "../../../../../../plugins/utils/array/Shuffle";
 
 var DialogSelect = function (scene, config) {
     var dialogConfig =  {
+      name: 'DialogSelect',
       title: CreateTitle(scene, GetValue(config, 'title', undefined)),
       content: CreateContent(scene, GetValue(config, 'content', undefined)),
       choicesBackground: CreateRoundRectangleBackground(scene, 20, 0x110606, 0x663030, 6), //'#663030''#110606',
@@ -48,8 +49,17 @@ var CreateButton = function (scene, config) {
         text: config.text?scene.rexUI.add.BBCodeText(0, 0, config.text, config.textStyle?config.textStyle:{ fontFamily: Style.fontFamilyName, fontSize: 60 }):undefined,
         space: config.spaceSettings?config.spaceSettings:{},
     });
-    label.closeDialog = GetValue(config, 'closeDialog', false);
+    //註冊pointer特效
     RegisterBehaviors(label, GetValue(config, 'behavior', []))
+    //賦予按鈕類型
+    label.type = GetValue(config, 'type', 'none');
+    //此按鈕是否關閉dialog
+    label.closeDialog = GetValue(config, 'closeDialog', false);
+    //註冊callback
+    if ( typeof(config.callback) === 'function' ){ 
+        label.onClick(config.callback)
+    }
+
     return label;
 }
 
@@ -66,7 +76,14 @@ var CreateChoices = function(scene, choicesData){
     list.forEach(function(item, index, arr){ //建立選項按鈕群
         //button config
         item.spaceSettings = { left: 20, right: 20, top: 20, bottom: 20, icon: 10 };
-        item.textStyle = { fontFamily: Style.fontFamilyName, fontSize: 48 }
+        item.textStyle = { 
+            fontFamily: Style.fontFamilyName,
+            fontSize: 48,
+            wrap: {
+                mode: 'character', // 0|'none'|1|'word'|2|'char'|'character'
+                width: scene.viewport.width*0.7,
+            }
+        }
         item.background = CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2);
         item.behavior = ['ninja'];
         var button = CreateButton(scene, item)
