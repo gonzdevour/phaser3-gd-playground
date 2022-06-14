@@ -20,24 +20,6 @@ var DialogDefault = function (scene, cfg) {
     cfg.name = 'DialogDefault';
   }
 
-  if (cfg.dialogButtonClickCallback === undefined){ //每個dialog的目的與結構不同，應特製on button click的callback，不特製時，callback設定為直接關閉dialog
-    cfg.dialogButtonClickCallback = function (button, groupName, index, pointer, event) {
-        // To invoke modal.requestClose(result)
-        //modalPromise會把dialog用modal behavior再包裝過，掛上dialog.on('modal.requestClose', modal.requestClose(result))
-        //※emit的規則：必須同一物件收發，ee.emit → ee.on
-        //https://github.com/rexrainbow/phaser3-rex-notes/blob/master/plugins/behaviors/modal/ModalPromise.js#L15
-        //原本這裡的寫法是dialog.emit('modal.requestClose', { index: index });
-        //用scene.rexUI.modalClose把上面的dialog.emit包成直屬rexUI的函數
-        //https://github.com/rexrainbow/phaser3-rex-notes/blob/master/plugins/behaviors/modal/ModalPromise.js#L32
-        if (button.closeDialog === true){
-            scene.rexUI.modalClose(dialog, { 
-                buttonType: button.type,
-                choicesState: choicesState,
-            });
-        }
-    }
-  }
-
   if (cfg.background === undefined) {
     cfg.background = CreateRoundRectangleBackground(scene, 20, 0x0, 0xffffff, 2);
   }

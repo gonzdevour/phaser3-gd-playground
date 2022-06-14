@@ -2,9 +2,12 @@ import phaser from 'phaser/src/phaser.js';
 import AllPlugins from '../../plugins/AllPlugins.js';
 import { DialogSelect } from '../../projects/tpl_newProj/build/view/modaldialog/DialogType.js';
 import { DialogMultiSelect } from '../../projects/tpl_newProj/build/view/modaldialog/DialogType.js';
+import dialogButtonClickCallback from './dialog/dialogButtonClickCallback.js';
 //proj
 import CreateQuiz from './CreateQuiz.js';
 import CreateTextplayer from './CreateTextplayer.js';
+//utils
+import GetValue from '../../plugins/utils/object/GetValue.js';
 
 class Demo extends Phaser.Scene {
     constructor() {
@@ -41,84 +44,12 @@ class Demo extends Phaser.Scene {
                 }
                 waitTime(2000);
             })
-            .on('wait.dialog', function(Callback){ //目前沒有用，練習備份
-                var waitDialog = async function(_scene, question){
-                    //choicesData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
-                    var result = await DialogMultiSelect(_scene, {
-                        //title: 'test title', 
-                        //content: 'test content', 
-                        actions: [
-                            {imageKey:'no', text: '清空', type: 'clear', callback: undefined},
-                            {imageKey:'yes', text: '確定', type: 'confirm', callback: undefined, closeDialog:true},
-                        ],
-                        choicesData: {
-                            ifShuffle:0,
-                            list: CreateChoiceList(question),
-                        },
-                        extraConfig: {
-                            y: _scene.viewport.centerY-200, 
-                            cover: {color:0x663030, alpha: 0.1},
-                            dialogButtonClickCallback: dialogButtonClickCallback,
-                        }
-                    })
-                    console.log('dialogResult:' + JSON.stringify(result))
-                    Callback();
-                }
-                waitDialog(_scene, textPlayer.question);
-            })
 
+        //啟動問答
         this.input.once('pointerdown', function () {
             QuizPromise(textPlayer, quizArr);
             // text.showPage();  // Show all characters in this page
         })
-    }
-}
-
-var dialogButtonClickCallback = function (button, groupName, index, pointer, event) {
-
-    //依按鈕類型賦予名稱以便指定
-    var btn = {};
-    var actions = dialog.getElement('actions');
-    actions.forEach(function(act, idx, arr){
-        btn[act.type] = btn; //btn['confirm'|'clear']
-    })
-
-    //取得選項狀態
-    var choicesState = dialog.getChoicesButtonStates();
-
-    for (var name in choicesState) {
-        if (choicesState[name] === true){}
-    }
-
-    //如果有選
-    if (choicesState.length > 0){
-
-    }
-
-    if (button.type === 'clear'){
-        dialog.clearChoicesButtonStates();
-    }
-
-    //console.log(button.type);
-
-    var s = ''
-    for (var name in choicesState) {
-        s += `${name}: ${choicesState[name]}\n`;
-    }
-    //console.log(s);
-
-    // To invoke modal.requestClose(result)
-    //modalPromise會把dialog用modal behavior再包裝過，掛上dialog.on('modal.requestClose', modal.requestClose(result))
-    //※emit的規則：必須同一物件收發，ee.emit → ee.on
-    //https://github.com/rexrainbow/phaser3-rex-notes/blob/master/plugins/behaviors/modal/ModalPromise.js#L15
-    //原本這裡的寫法是dialog.emit('modal.requestClose', { index: index });
-    //用scene.rexUI.modalClose把上面的dialog.emit包成直屬rexUI的函數
-    //https://github.com/rexrainbow/phaser3-rex-notes/blob/master/plugins/behaviors/modal/ModalPromise.js#L32
-    if (button.closeDialog === true){
-        scene.rexUI.modalClose(dialog, { 
-            buttonType: button.type,
-            choicesState: choicesState,
-        });
     }
 }
 
@@ -141,10 +72,11 @@ var waitDialog = async function(textPlayer){
         extraConfig: {
             y: _scene.viewport.centerY-200, 
             cover: {color:0x663030, alpha: 0.1},
+            dialogButtonClickCallback: dialogButtonClickCallback,
         }
     })
     console.log('dialogResult:' + JSON.stringify(result))
-    await textPlayer.playPromise(question['Say1']+'[wait=click][wait=500]')
+    await textPlayer.playPromise(question['Say' + GetValue(result, 'singleSelectedName', 1) ]+'[wait=click][wait=500]')
     return result;
 }
 

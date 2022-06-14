@@ -9,7 +9,26 @@ QuizResultModalPromise:
 var ModalDialogPromise = function (scene, config) {
     var dialog = CreateModalDialog(scene, config)
         .layout()
-        .on('button.click', config.dialogButtonClickCallback)
+        .on('button.click', function (button, groupName, index, pointer, event){
+            if ( typeof(config.dialogButtonClickCallback) === 'function' ){
+                config.dialogButtonClickCallback(scene, dialog, button, groupName, index);
+            } else {
+                // To invoke modal.requestClose(result)
+                //modalPromise會把dialog用modal behavior再包裝過，掛上dialog.on('modal.requestClose', modal.requestClose(result))
+                //※emit的規則：必須同一物件收發，ee.emit → ee.on
+                //https://github.com/rexrainbow/phaser3-rex-notes/blob/master/plugins/behaviors/modal/ModalPromise.js#L15
+                //原本這裡的寫法是dialog.emit('modal.requestClose', { index: index });
+                //用scene.rexUI.modalClose把上面的dialog.emit包成直屬rexUI的函數
+                //https://github.com/rexrainbow/phaser3-rex-notes/blob/master/plugins/behaviors/modal/ModalPromise.js#L32
+                var choicesState = dialog.getChoicesButtonStates();
+                if (button.closeDialog === true){
+                    scene.rexUI.modalClose(dialog, { 
+                        buttonType: button.type,
+                        choicesState: choicesState,
+                    });
+                }
+            }
+        })
         .on('modal.open', function(modalBehavior){
             dialog.broadcastEvent('dialog.open', scene);
         })

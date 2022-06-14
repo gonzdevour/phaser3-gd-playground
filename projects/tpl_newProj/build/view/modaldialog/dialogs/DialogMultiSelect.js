@@ -28,7 +28,7 @@ var DialogMultiSelect = function (scene, config) {
       extraConfig: Object.assign({},{expand:{title:false,content:false,choices:true}},GetValue(config,'extraConfig',{}))
     }
     addBehaviors(dialogConfig.choices, ['ninja']);
-  
+
     return DialogDefault(scene, dialogConfig);
 }
 
@@ -122,7 +122,7 @@ var CreateChoices = function(scene, choicesData){
         var button = CreateButton(scene, item)
         //assign properties
         button.index = index;
-        button.name = String(index+1);
+        button.name = String(index+1); //等同於db中選項1234，以此判斷選了哪項
 
         btnArrPre.push(button); //未分類的選項群
         if (item.indexFixed == 1){
