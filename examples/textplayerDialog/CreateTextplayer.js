@@ -45,6 +45,12 @@ var CreateTextplayer = function(scene){
 
         }
     )
+
+    textPlayer.on('page.start', function() {
+        //console.log('typingSpeed: ' + textPlayer.typingSpeed)
+        textPlayer.setTypingSpeed(100);
+    })
+
     //指定click target
     textPlayer.setClickTarget(textPlayer);
     textPlayer.clickTarget.on('pointerup', function () {
@@ -53,6 +59,7 @@ var CreateTextplayer = function(scene){
         }
 
         if (textPlayer.isPageTyping) {
+            textPlayer.setTypingSpeed(0);
             //textPlayer.showPage();  // Show all characters in this page
         } else {
             textPlayer.typingNextPage();

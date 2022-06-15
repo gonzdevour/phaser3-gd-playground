@@ -16,12 +16,14 @@ var dialogButtonClickCallback = function (scene, dialog, button, groupName, inde
 
 var stateCheck = function(dialog, button){
 
-  //依按鈕類型賦予名稱以便指定
+  //如果有actions的話，依按鈕類型賦予名稱以便指定
   var btn = {};
   var actions = dialog.getElement('actions');
-  actions.forEach(function(act, idx, arr){
+  if (actions){
+    actions.forEach(function(act, idx, arr){
       btn[act.type] = act; //btn['confirm'|'clear']
   })
+  }
 
   //取得選項狀態
   var choicesState = dialog.getChoicesButtonStates();

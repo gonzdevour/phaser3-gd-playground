@@ -14,6 +14,14 @@ var DialogSelect = function (scene, config) {
       content: CreateContent(scene, GetValue(config, 'content', undefined)),
       choicesBackground: CreateRoundRectangleBackground(scene, 20, 0x110606, 0x663030, 6), //'#663030''#110606',
       choices: CreateChoices(scene, GetValue(config, 'choicesData', [])),
+      choicesType: 'y-radio',
+      choicesSetValueCallback: function (button, value) {
+        if (value) {
+            button.getElement('background').setFillStyle(0xff3333)
+        } else {
+            button.getElement('background').setFillStyle()
+        }
+      },
       background: CreateRoundRectangleBackground(scene, 20, 0x0, 0xffffff, 2),
       extraConfig: Object.assign({},{expand:{title:false,content:false,choices:true}},GetValue(config,'extraConfig',{}))
     }
@@ -86,9 +94,11 @@ var CreateChoices = function(scene, choicesData){
         }
         item.background = CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2);
         item.behavior = ['ninja'];
+        item.closeDialog = true;
         var button = CreateButton(scene, item)
         //assign properties
         button.index = index;
+        button.name = String(index+1); //等同於db中選項1234，以此判斷選了哪項
 
         btnArrPre.push(button); //未分類的選項群
         if (item.indexFixed == 1){

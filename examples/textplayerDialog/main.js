@@ -53,9 +53,11 @@ class Demo extends Phaser.Scene {
             })
 
         //啟動問答
-        this.input.once('pointerdown', function () {
+        this.input.once('pointerup', function () {
             QuizPromise(textPlayer, quizArr, tbIntroHeroes)
-                .then()
+                .then(function(tbOut){
+                    textPlayer.playPromise(tbOut.get(tbOut.curChampKey, 'say'))
+                })
             // text.showPage();  // Show all characters in this page
         })
     }
@@ -66,7 +68,7 @@ var waitDialog = async function(textPlayer){
     var question = textPlayer.question;
     await textPlayer.playPromise(question['Q']);
     //choicesData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
-    var result = await DialogMultiSelect(_scene, {
+    var result = await DialogSelect(_scene, {
         //title: 'test title', 
         //content: 'test content', 
         actions: [
@@ -104,6 +106,20 @@ var CreateChoiceList = function(question){
 
 var resultHandler = function(result, curQ, tbIntroHeroes){
     console.log('handling result:\n' + JSON.stringify(result));
+
+    //有正確答案但未答對時重新詢問同一題
+    if (curQ['Correct'] != 0){ //有正確答案
+        var correct = curQ['Correct'];
+        var answer = 'A' + result.singleSelectedName;
+        if (answer != correct){
+            tbIntroHeroes.ifAskAgain = true;
+        } else {
+            tbIntroHeroes.ifAskAgain = false;
+        }
+    } else {
+        tbIntroHeroes.ifAskAgain = false;
+    }
+
     console.log(curQ['Score' + result.singleSelectedName])
     //從result取出單選結果對應的加分表，並將字串加分表轉為物件
     var score = JSON.parse(curQ['Score' + result.singleSelectedName]);
@@ -139,7 +155,6 @@ var resultHandler = function(result, curQ, tbIntroHeroes){
 var SetupTextPlayer = async function (textPlayer, question, onSubmit) { 
     textPlayer.question = question;
     var result = await waitDialog(textPlayer);
-    console.log('Q complete');
 
     if (onSubmit) { //如果有傳入callback function
         onSubmit(result); //呼叫callback，完成QuizPanelPromise，讓QuizPromise吐出next question循環
@@ -156,7 +171,9 @@ var QuizPromise = async function (textPlayer, quizArr, out) {
         var result = await TextPlayerPromise(textPlayer, curQ);//清理上一題，將下一題與textPlayer組合起來，回傳上一題作答結果
         out = resultHandler(result, curQ, out);
         //await QuizResultModalPromise(textPlayer.scene, result); //顯示上一題作答結果(傳入scene和config給彈出面板Modal)
-        curQIdx++;
+        if (out.ifAskAgain === false){ //是否要重問同一題
+            curQIdx++;
+        }
     }
     //最後一題，回傳結束
     return out;
