@@ -1,5 +1,6 @@
 import phaser from 'phaser/src/phaser.js';
 import AllPlugins from '../../plugins/AllPlugins.js';
+import CSVToHashTable from '../../../phaser3-rex-notes/plugins/csvtohashtable.js';
 import { DialogSelect } from '../../projects/tpl_newProj/build/view/modaldialog/DialogType.js';
 import { DialogMultiSelect } from '../../projects/tpl_newProj/build/view/modaldialog/DialogType.js';
 import dialogButtonClickCallback from './dialog/dialogButtonClickCallback.js';
@@ -8,6 +9,7 @@ import CreateQuiz from './CreateQuiz.js';
 import CreateTextplayer from './CreateTextplayer.js';
 //utils
 import GetValue from '../../plugins/utils/object/GetValue.js';
+import GetRandom from '../../plugins/utils/array/GetRandom.js';
 
 class Demo extends Phaser.Scene {
     constructor() {
@@ -22,10 +24,15 @@ class Demo extends Phaser.Scene {
 
     preload() { 
         this.load.text('questions','https://docs.google.com/spreadsheets/d/e/2PACX-1vQjdECX4kOj4uvdr_5w7iP5P8h-7m1QBr5XoOXy7Hn6PpAsSXtqPBwrc94uvBOzWOPUB7q7TSciAKku/pub?gid=0&single=true&output=csv')
+        this.load.text('introHeroes', 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzW9q8TTKhWlHxsi4PnhSpwo3PacMcZRX6O_YURwbQ7N6hAqRZgMwsRXg6ilakRLkBAt381wM1jvv6/pub?gid=1348914508&single=true&output=csv')
     }
 
     create() {
         var _scene = this;
+
+        //建立測試結果列表資料
+        var tbIntroHeroes = new CSVToHashTable().loadCSV(this.cache.text.get('introHeroes'));
+        //console.log(tbIntroHeroes.get('12', 'name'))
 
         //建立題庫
         var csvstring = this.cache.text.get('questions');
@@ -47,7 +54,8 @@ class Demo extends Phaser.Scene {
 
         //啟動問答
         this.input.once('pointerdown', function () {
-            QuizPromise(textPlayer, quizArr);
+            QuizPromise(textPlayer, quizArr, tbIntroHeroes)
+                .then()
             // text.showPage();  // Show all characters in this page
         })
     }
@@ -75,7 +83,7 @@ var waitDialog = async function(textPlayer){
             dialogButtonClickCallback: dialogButtonClickCallback,
         }
     })
-    console.log('dialogResult:' + JSON.stringify(result))
+    //console.log('dialogResult:' + JSON.stringify(result))
     await textPlayer.playPromise(question['Say' + GetValue(result, 'singleSelectedName', 1) ]+'[wait=click][wait=500]')
     return result;
 }
@@ -94,6 +102,39 @@ var CreateChoiceList = function(question){
     return result;
 }
 
+var resultHandler = function(result, curQ, tbIntroHeroes){
+    console.log('handling result:\n' + JSON.stringify(result));
+    console.log(curQ['Score' + result.singleSelectedName])
+    //從result取出單選結果對應的加分表，並將字串加分表轉為物件
+    var score = JSON.parse(curQ['Score' + result.singleSelectedName]);
+    //依加分表對table中的每個加分項目加上分數
+    for(var key in score){
+        var newValue = tbIntroHeroes.get(key, 'Vote') + score[key]
+        tbIntroHeroes.set(key, 'Vote', newValue)
+        //tbIntroHeroes.add(key, 'Vote', score[key])
+        console.log(tbIntroHeroes.get(key, 'name') + tbIntroHeroes.get(key, 'Vote'))
+    }
+    //整理加分完成的table，取出最高分的rowKey以得知最高分
+    tbIntroHeroes.sortCol('Vote', 'descending');
+    var topRowkey = tbIntroHeroes.rowKeys[0];
+    var topVoteCnt = tbIntroHeroes.get(topRowkey, 'Vote')
+
+    //取出所有符合最高分的rowKey，隨機決定其中之一為冠軍
+    var champions = [];
+    tbIntroHeroes.rowKeys.forEach(function(key, idx, arr){
+        if(tbIntroHeroes.get(key, 'Vote') == topVoteCnt){
+            champions.push(key);
+        }
+    })
+    var curChampKey = GetRandom(champions);
+    console.log('curChamp:' + tbIntroHeroes.get(curChampKey, 'name') + tbIntroHeroes.get(curChampKey, 'Vote'))
+
+    //把冠軍rowKey掛在table上回傳
+    tbIntroHeroes.curChampKey = curChampKey;
+
+    return tbIntroHeroes;
+}
+
 //清理上一題，並將新題目與panel組合起來，以作答callback回傳給QuizPromise
 var SetupTextPlayer = async function (textPlayer, question, onSubmit) { 
     textPlayer.question = question;
@@ -107,16 +148,18 @@ var SetupTextPlayer = async function (textPlayer, question, onSubmit) {
     return textPlayer;
 }
 
-var QuizPromise = async function (textPlayer, quizArr) {
+var QuizPromise = async function (textPlayer, quizArr, out) {
     var curQIdx = 0;
-    var lastQIdx = quizArr.length-1;
+    var lastQIdx = quizArr.length;
     while (curQIdx !== lastQIdx) { //如果不是最後一題
-        var result = await TextPlayerPromise(textPlayer, quizArr[curQIdx]);//清理上一題，將下一題與textPlayer組合起來，回傳上一題作答結果
-        console.log('quizResult: ' + result);
+        var curQ = quizArr[curQIdx]
+        var result = await TextPlayerPromise(textPlayer, curQ);//清理上一題，將下一題與textPlayer組合起來，回傳上一題作答結果
+        out = resultHandler(result, curQ, out);
         //await QuizResultModalPromise(textPlayer.scene, result); //顯示上一題作答結果(傳入scene和config給彈出面板Modal)
         curQIdx++;
     }
     //最後一題，回傳結束
+    return out;
 }
 
 var TextPlayerPromise = function (textPlayer, question) { //清理上一題，並將quiz吐出的新question與textPlayer組合起來
