@@ -42,7 +42,6 @@ var CreateTextplayer = function(scene){
             //     console.log('Custom next-page-input')
             //     callback();
             // }
-
         }
     )
 
@@ -60,7 +59,6 @@ var CreateTextplayer = function(scene){
 
         if (textPlayer.isPageTyping) {
             textPlayer.setTypingSpeed(0);
-            //textPlayer.showPage();  // Show all characters in this page
         } else {
             textPlayer.typingNextPage();
         }

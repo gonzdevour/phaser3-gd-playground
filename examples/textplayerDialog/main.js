@@ -1,9 +1,10 @@
 import phaser from 'phaser/src/phaser.js';
 import AllPlugins from '../../plugins/AllPlugins.js';
 import CSVToHashTable from '../../../phaser3-rex-notes/plugins/csvtohashtable.js';
-import { DialogSelect } from '../../projects/tpl_newProj/build/view/modaldialog/DialogType.js';
-import { DialogMultiSelect } from '../../projects/tpl_newProj/build/view/modaldialog/DialogType.js';
-import dialogButtonClickCallback from './dialog/dialogButtonClickCallback.js';
+//gdk
+import { DialogSelect } from './gdk/modaldialog/DialogType';
+import { DialogMultiSelect } from './gdk/modaldialog/DialogType';
+import dialogButtonClickCallback from './gdk/modaldialog/dialogButtonClickCallback.js';
 //proj
 import CreateQuiz from './CreateQuiz.js';
 import CreateTextplayer from './CreateTextplayer.js';
