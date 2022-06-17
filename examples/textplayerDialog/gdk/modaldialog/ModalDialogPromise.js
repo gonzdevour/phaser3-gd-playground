@@ -1,25 +1,14 @@
 import CreateModalDialog from './CreateModalDialog.js';
 
-/*
-QuizResultModalPromise: 
-    return ModalDialogPromise(scene, {
-        content: characterUI,
-    })
-*/
 var ModalDialogPromise = function (scene, config) {
     var dialog = CreateModalDialog(scene, config)
         .layout()
         .on('button.click', function (button, groupName, index, pointer, event){
             if ( typeof(config.dialogButtonClickCallback) === 'function' ){
+                //指定callback
                 config.dialogButtonClickCallback(scene, dialog, button, groupName, index);
             } else {
-                // To invoke modal.requestClose(result)
-                //modalPromise會把dialog用modal behavior再包裝過，掛上dialog.on('modal.requestClose', modal.requestClose(result))
-                //※emit的規則：必須同一物件收發，ee.emit → ee.on
-                //https://github.com/rexrainbow/phaser3-rex-notes/blob/master/plugins/behaviors/modal/ModalPromise.js#L15
-                //原本這裡的寫法是dialog.emit('modal.requestClose', { index: index });
-                //用scene.rexUI.modalClose把上面的dialog.emit包成直屬rexUI的函數
-                //https://github.com/rexrainbow/phaser3-rex-notes/blob/master/plugins/behaviors/modal/ModalPromise.js#L32
+                //通用callback
                 var choicesState = dialog.getChoicesButtonStates();
                 if (button.closeDialog === true){
                     scene.rexUI.modalClose(dialog, { 
@@ -37,12 +26,38 @@ var ModalDialogPromise = function (scene, config) {
         })
 
     config.manualClose = (config.buttonMode !== 0); //是否手動關閉，預設為true，可由CreateModalDialog設定manualClose來控制
-    config.transitionIn = 0;  //0('popUp')|1('fadeIn')|false(null)|customCallback(obj,dur)
-    config.transitionOut = 0; //0('scaleDown')|1('fadeOut')|false(null)|customCallback(obj,dur)
+    config.transitIn = 0;  //0('popUp')|1('fadeIn')|false(null)|customCallback(obj,dur)
+    //config.transitOut = 0; //0('scaleDown')|1('fadeOut')|false(null)|customCallback(obj,dur)
+    config.transitOut = function(dialog, duration) {
+        //取出dialog中被選中的buttons
+        var selectedButtons = [];
+        var choicesState = dialog.getChoicesButtonStates();
+        var idx = 0;
+        for (var name in choicesState) {
+            if (choicesState[name] === true){
+                selectedButtons.push(dialog.getChoice(idx))
+            }
+            idx++;
+        }
+        //取出被選中的buttons的backgrounds
+        var selectedBgs = [];
+        selectedButtons.forEach(function(item, idx, arr){
+            selectedBgs.push(item.getElement('background'));
+        })
+        //依序執行tween
+        scene.tweens.add({targets: selectedBgs, ease: 'Linear', alpha: 0, duration: 300, yoyo: true, repeat:-1,})
+        scene.tweens.timeline({
+            tweens: [
+                { targets: selectedButtons, ease: 'Linear', y: '-=20', duration: 1000,},
+                { targets: dialog, ease: 'Cubic', scale: 0, duration: 400,},
+            ]
+
+        });
+    }
     config.duration = { //如果刪除會使用預設值
         in: 200,
         hold: 2000, //自動關閉前的持續時間，manualClose為true時會disable這個數值
-        out: 200
+        out: 1400
     };
     //scene.drawBounds(dialog);
 

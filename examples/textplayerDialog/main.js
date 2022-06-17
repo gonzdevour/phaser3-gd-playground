@@ -78,7 +78,7 @@ var waitDialog = async function(textPlayer){
         ],
         choicesData: {
             ifShuffle:0,
-            list: CreateChoiceList(question),
+            list: CreateChoiceDataList(question),
         },
         extraConfig: {
             y: _scene.viewport.centerY-200, 
@@ -91,11 +91,11 @@ var waitDialog = async function(textPlayer){
     return result;
 }
 
-var CreateChoiceList = function(question){
+var CreateChoiceDataList = function(question){
     var result = [];
     for (let index = 0; index < question.Cnt; index++) {
         var data = {
-            imageKey: 'yes',
+            imageKey: undefined,
             text: question['A'+(index+1)],
             indexFixed: 1,
         };
@@ -152,18 +152,6 @@ var resultHandler = function(result, curQ, tbIntroHeroes){
     return tbIntroHeroes;
 }
 
-//清理上一題，並將新題目與panel組合起來，以作答callback回傳給QuizPromise
-var SetupTextPlayer = async function (textPlayer, question, onSubmit) { 
-    textPlayer.question = question;
-    var result = await waitDialog(textPlayer);
-
-    if (onSubmit) { //如果有傳入callback function
-        onSubmit(result); //呼叫callback，完成QuizPanelPromise，讓QuizPromise吐出next question循環
-    }
-
-    return textPlayer;
-}
-
 var QuizPromise = async function (textPlayer, quizArr, out) {
     var curQIdx = 0;
     var lastQIdx = quizArr.length;
@@ -186,6 +174,18 @@ var TextPlayerPromise = function (textPlayer, question) { //清理上一題，�
             resolve(result); //回傳作答結果
         })
     });
+}
+
+//清理上一題，並將新題目與panel組合起來，以作答callback回傳給QuizPromise
+var SetupTextPlayer = async function (textPlayer, question, onSubmit) { 
+    textPlayer.question = question;
+    var result = await waitDialog(textPlayer);
+
+    if (onSubmit) { //如果有傳入callback function
+        onSubmit(result); //呼叫callback，完成QuizPanelPromise，讓QuizPromise吐出next question循環
+    }
+
+    return textPlayer;
 }
 
 var config = {

@@ -10,7 +10,7 @@ var CreateTextplayer = function(scene){
             width: scene.viewport.width-50, height: 400,  // Fixed width and height
 
             background: { stroke: 'white', cornerRadius: 20 },
-            innerBounds: { stroke: '#A52A2A' },
+            //innerBounds: { stroke: '#A52A2A' },
             padding: 20,
             style: {
                 fontSize: '48px',

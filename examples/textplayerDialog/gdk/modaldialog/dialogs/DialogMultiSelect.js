@@ -4,8 +4,8 @@ import DialogDefault from "./DialogDefault.js";
 import RegisterBehaviors from "../../behaviors/RegisterBehaviors.js";
 
 //utils
-import GetValue from "../../utils/object/GetValue.js";
-import Shuffle from '../../utils/array/Shuffle.js';
+import GetValue from "../../../../../plugins/utils/object/GetValue.js";
+import Shuffle from '../../../../../plugins/utils/array/Shuffle.js';
 
 var DialogMultiSelect = function (scene, config) {
     var dialogConfig =  {

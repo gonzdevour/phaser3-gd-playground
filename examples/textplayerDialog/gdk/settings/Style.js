@@ -1,4 +1,4 @@
-import { getOS } from '../utils/os/os.js';
+import { getOS } from '../../../../plugins/utils/os/os.js';
 //get OS status
 var OS = getOS();
 var fontFamilyName = OS.desktop?'DFKai-SB':'Noto Sans CJK';

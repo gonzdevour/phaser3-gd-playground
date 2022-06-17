@@ -1,5 +1,5 @@
 //utils
-import GetValue from "../utils/object/GetValue";
+import GetValue from "../../../../plugins/utils/object/GetValue";
 
 var CreateModalDialog = function (scene, config) {
     //這邊開始處理dialog要用到的config

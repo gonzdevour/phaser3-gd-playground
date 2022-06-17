@@ -1,5 +1,5 @@
 //utils
-import GetValue from "../utils/object/GetValue";
+import GetValue from "../../../../plugins/utils/object/GetValue";
 
 var dialogYoyoScale = function (label, config) {
   label

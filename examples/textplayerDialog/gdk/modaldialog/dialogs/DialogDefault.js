@@ -4,8 +4,8 @@ import CreateRoundRectangleBackground from '../../templates/CreateRoundRectangle
 import RegisterBehaviors from '../../behaviors/RegisterBehaviors.js';
 
 //utils
-import GetValue from '../../utils/object/GetValue.js';
-import IsPlainObjectArray from '../../utils/object/IsPlainObjectArray.js';
+import GetValue from '../../../../../plugins/utils/object/GetValue';
+import IsPlainObjectArray from '../../../../../plugins/utils/object/IsPlainObjectArray.js';
 
 //複數個橫向決定按鈕的Dialog，透過actionsConfig指定button img和cbk
 var DialogDefault = function (scene, cfg) {
@@ -46,10 +46,10 @@ var DialogDefault = function (scene, cfg) {
     x: scene.viewport.centerX,
     y: scene.viewport.centerY,
     space: { 
-        left: 40, 
-        right: 40, 
-        top: 40, 
-        bottom: 40, 
+        left: 20, 
+        right: 20, 
+        top: 20, 
+        bottom: 20, 
         item: 20, 
         action: 20, 
         choices: 0, //跟action的間距

@@ -1,7 +1,7 @@
 import DialogDefault from "./DialogDefault.js";
 
 //utils
-import GetValue from "../../utils/object/GetValue.js";
+import GetValue from "../../../../../plugins/utils/object/GetValue.js";
 
 var DialogY = function (scene, config) {
   var dialogConfig =  {
