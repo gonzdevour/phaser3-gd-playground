@@ -4,6 +4,8 @@ import CSVToHashTable from '../../../phaser3-rex-notes/plugins/csvtohashtable.js
 //gdk
 import { DialogSelect } from './gdk/modaldialog/DialogType';
 import { DialogMultiSelect } from './gdk/modaldialog/DialogType';
+import { TransitionChoicesUpScaleDown } from './gdk/modaldialog/TransistionType.js';
+import { TransitionLR } from './gdk/modaldialog/TransistionType.js';
 import dialogButtonClickCallback from './gdk/modaldialog/dialogButtonClickCallback.js';
 //proj
 import CreateQuiz from './CreateQuiz.js';
@@ -83,6 +85,9 @@ var waitDialog = async function(textPlayer){
         extraConfig: {
             y: _scene.viewport.centerY-200, 
             cover: {color:0x663030, alpha: 0.1},
+            transitIn: TransitionLR,
+            transitOut: TransitionChoicesUpScaleDown,
+            duration:{ in: 600, out: 1400 },
             dialogButtonClickCallback: dialogButtonClickCallback,
         }
     })

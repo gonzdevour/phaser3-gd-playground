@@ -16,27 +16,27 @@ var DialogDefault = function (scene, cfg) {
       cfg = {};
   }
 
-  if (cfg.name === undefined){
+  if (cfg.name === undefined){ //可以用dialog.name來取得名稱
     cfg.name = 'DialogDefault';
   }
 
-  if (cfg.background === undefined) {
+  if (cfg.background === undefined) { //背景
     cfg.background = CreateRoundRectangleBackground(scene, 20, 0x0, 0xffffff, 2);
   }
 
-  if ( typeof(cfg.title) === 'string' ){ 
+  if ( typeof(cfg.title) === 'string' ){  //標題
     cfg.title = CreateTitle(scene, cfg.title, extraConfig) //建立元件，可能需要考慮style，所以傳入extraConfig控制
   }
 
-  if ( typeof(cfg.content) === 'string' ){ 
+  if ( typeof(cfg.content) === 'string' ){  //內容
     cfg.content = CreateContent(scene, cfg.content, extraConfig) //建立元件，可能需要考慮style，所以傳入extraConfig控制
   }
 
-  if ( IsPlainObjectArray(cfg.actions) ){ //要確定cfg.actions不是建好的label群而必須是手寫的JSON array
+  if ( IsPlainObjectArray(cfg.actions) ){ //下方按鈕群 (要確定cfg.actions不是建好的label群而必須是手寫的JSON array)
     cfg.actions = CreateActions(scene, cfg.actions, extraConfig) 
   }
 
-  if ( IsPlainObjectArray(cfg.choices) ){ //要確定cfg.choices不是建好的label群而必須是手寫的JSON array
+  if ( IsPlainObjectArray(cfg.choices) ){ //選項按鈕群 (要確定cfg.choices不是建好的label群而必須是手寫的JSON array)
     cfg.choices = CreateChoices(scene, cfg.choices, extraConfig) 
   }
 
@@ -66,7 +66,14 @@ var DialogDefault = function (scene, cfg) {
         content: false,
         choices: true, //隨dialog的排版延展
     },
-    buttonMode: 1, //modalClose的模式選擇，0自動關閉，1手動關閉
+    manualClose: true, //modalClose的模式選擇，自動關閉/手動關閉
+    transitIn:0, //0('popUp')|1('fadeIn')|false(null)|customCallback(obj,dur)
+    transitOut:0, //0('scaleDown')|1('fadeOut')|false(null)|customCallback(obj,dur)
+    duration:{ //transition的時間
+      in: 200,
+      hold: 2000, //自動關閉前的持續時間，manualClose為true時會disable這個數值
+      out: 200
+    },
   }
 
   //如果extraConfig有值則對dialogConfig覆蓋原值或加入新值

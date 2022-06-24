@@ -1,5 +1,6 @@
 import phaser from 'phaser/src/phaser.js';
 import TextPlayer from "../../../phaser3-rex-notes/plugins/textplayer";
+import AutoRemoveTween from '../../../phaser3-rex-notes/plugins/utils/tween/AutoRemoveTween';
 
 var CreateTextplayer = function(scene){
     var Cubic = Phaser.Math.Easing.Cubic.Out;
@@ -45,9 +46,26 @@ var CreateTextplayer = function(scene){
         }
     )
 
+    var triangle = scene.add.triangle(200, 200, 0, 36, 36, 36, 18, 72, 0xffffff).setVisible(false); //#ffffff
+    triangle.setPosition(textPlayer.x + 0.5*textPlayer.width - 40, textPlayer.y + 0.5*textPlayer.height - 85);
+    triangle.tween = AutoRemoveTween(triangle, {
+        y: '+=10',
+        ease: 'Linear',
+        duration: 500,
+        yoyo: true,
+        repeat: -1,
+        //paused: true,
+    })
+
     textPlayer.on('page.start', function() {
         //console.log('typingSpeed: ' + textPlayer.typingSpeed)
         textPlayer.setTypingSpeed(100);
+        triangle.setVisible(false);
+    })
+
+    textPlayer.on('wait.click', function() {
+        console.log('wait click')
+        triangle.setVisible(true);
     })
 
     //指定click target

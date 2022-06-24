@@ -1,3 +1,5 @@
+//決定按下dialog中的任何按鈕會回傳什麼
+
 var dialogButtonClickCallback = function (scene, dialog, button, groupName, index) {
 
   //如果按下了clear按鈕則使所有選中的選項還原

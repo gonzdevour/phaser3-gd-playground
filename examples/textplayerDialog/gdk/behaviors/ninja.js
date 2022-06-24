@@ -1,5 +1,6 @@
 //utils
 import GetValue from "../../../../plugins/utils/object/GetValue";
+import AddEvent from '../../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddEvent';
 
 var ninja = function (gameObject, config) {
 
@@ -7,11 +8,11 @@ var ninja = function (gameObject, config) {
   var alphaOut = GetValue(config, 'alphaOut', 1);
 
   //給予button共通的over/out反應
-  gameObject.on('pointerover',function(pointer, localX, localY, event){
+  AddEvent(gameObject, gameObject, 'pointerover', function(pointer, localX, localY, event){
     gameObject.setAlpha(alphaOver);
   });
 
-  gameObject.on('pointerout',function(pointer, event){
+  AddEvent(gameObject, gameObject, 'pointerout', function(pointer, localX, localY, event){
     gameObject.setAlpha(alphaOut);
   });
 
