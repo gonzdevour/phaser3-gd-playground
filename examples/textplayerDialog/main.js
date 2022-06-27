@@ -10,6 +10,7 @@ import dialogButtonClickCallback from './gdk/modaldialog/dialogButtonClickCallba
 //proj
 import CreateQuiz from './CreateQuiz.js';
 import CreateTextplayer from './CreateTextplayer.js';
+import CreateChar from './CreateChar.js';
 //utils
 import GetValue from '../../plugins/utils/object/GetValue.js';
 import GetRandom from '../../plugins/utils/array/GetRandom.js';
@@ -25,13 +26,21 @@ class Demo extends Phaser.Scene {
         this.viewport = this.cameras.main; 
     }
 
-    preload() { 
+    preload() {
         this.load.text('questions','https://docs.google.com/spreadsheets/d/e/2PACX-1vQjdECX4kOj4uvdr_5w7iP5P8h-7m1QBr5XoOXy7Hn6PpAsSXtqPBwrc94uvBOzWOPUB7q7TSciAKku/pub?gid=0&single=true&output=csv')
         this.load.text('introHeroes', 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzW9q8TTKhWlHxsi4PnhSpwo3PacMcZRX6O_YURwbQ7N6hAqRZgMwsRXg6ilakRLkBAt381wM1jvv6/pub?gid=1348914508&single=true&output=csv')
+        this.load.rexLive2dCoreScript('assets/live2d/core/live2dcubismcore.js');
+        this.load.rexLive2d('Haru', 'https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/destiny_child_kr%20%E5%A4%A9%E5%91%BD%E4%B9%8B%E5%AD%90/c000_10/model.json')
+        //this.load.rexLive2d('Haru', 'assets/live2d/Haru/Haru.model3.json');
+        //load pack
+        this.load.pack('pack', 'assets/pack.json'); 
     }
 
     create() {
         var _scene = this;
+
+        //建立角色
+        var character = CreateChar(this);
 
         //建立測試結果列表資料
         var tbIntroHeroes = new CSVToHashTable().loadCSV(this.cache.text.get('introHeroes'));
@@ -56,7 +65,7 @@ class Demo extends Phaser.Scene {
             })
 
         //啟動問答
-        this.input.once('pointerup', function () {
+        textPlayer.once('pointerup', function () {
             QuizPromise(textPlayer, quizArr, tbIntroHeroes)
                 .then(function(tbOut){
                     textPlayer.playPromise(tbOut.get(tbOut.curChampKey, 'say'))

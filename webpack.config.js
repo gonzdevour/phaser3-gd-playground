@@ -29,11 +29,12 @@ if (projectRoot) {
     }
 }
 
-// console.log(projectRoot);
-// console.log(projectMain);
-// console.log(htmlTemplate);
-// console.log(assetsFolder);
-// console.log(rootAssetsFolder);
+console.log('check path:');
+console.log(projectRoot);
+console.log(projectMain);
+console.log(htmlTemplate);
+console.log(assetsFolder);
+console.log(rootAssetsFolder);
 
 
 var plugins = [];

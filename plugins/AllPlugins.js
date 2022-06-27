@@ -8,6 +8,7 @@ import ClockPlugin from '../../phaser3-rex-notes/plugins/clock-plugin.js';
 import WebFontLoaderPlugin from '../../phaser3-rex-notes/plugins/webfontloader-plugin.js';
 import AwayTimePlugin from '../../phaser3-rex-notes/plugins/awaytime-plugin.js';
 import RealTimeTimersPlugin from '../../phaser3-rex-notes/plugins/realtimetimers-plugin.js';
+import Live2dPlugin from '../../phaser3-rex-notes/dist/rexlive2dplugin.min.js';
 
 export default {
     scene: [
@@ -62,6 +63,11 @@ export default {
         {
             key: 'rexWebFontLoader',
             plugin: WebFontLoaderPlugin,
+            start: true
+        },
+        {
+            key: 'rexLive2dPlugin',
+            plugin: Live2dPlugin,
             start: true
         },
     ]
