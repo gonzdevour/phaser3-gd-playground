@@ -5,102 +5,102 @@
         "type": "audio",
         "key": "right",
         "url": [
-          "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/audio/right.m4a",
-          "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/audio/right.mp3",
-          "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/audio/right.ogg"
+          "assets/audio/right.m4a",
+          "assets/audio/right.mp3",
+          "assets/audio/right.ogg"
         ]
       },
       {
         "type": "bitmapFont",
         "key": "bf0",
-        "textureURL": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/bitmapFont/bf0.png",
-        "fontDataURL": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/bitmapFont/bf0.xml"
+        "textureURL": "assets/bitmapFont/bf0.png",
+        "fontDataURL": "assets/bitmapFont/bf0.xml"
       },
       {
         "type": "bitmapFont",
         "key": "bf1",
-        "textureURL": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/bitmapFont/bf1.png",
-        "fontDataURL": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/bitmapFont/bf1.xml"
+        "textureURL": "assets/bitmapFont/bf1.png",
+        "fontDataURL": "assets/bitmapFont/bf1.xml"
       },
       {
         "type": "image",
         "key": "arrowL",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/image/arrowL.png"
+        "url": "assets/image/arrowL.png"
       },
       {
         "type": "image",
         "key": "cfg",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/image/cfg.png"
+        "url": "assets/image/cfg.png"
       },
       {
         "type": "image",
         "key": "confirm",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/image/confirm.png"
+        "url": "assets/image/confirm.png"
       },
       {
         "type": "image",
         "key": "delete",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/image/delete.png"
+        "url": "assets/image/delete.png"
       },
       {
         "type": "image",
         "key": "eraser",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/image/eraser.png"
+        "url": "assets/image/eraser.png"
       },
       {
         "type": "image",
         "key": "info",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/image/info.png"
+        "url": "assets/image/info.png"
       },
       {
         "type": "image",
         "key": "mail",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/image/mail.png"
+        "url": "assets/image/mail.png"
       },
       {
         "type": "image",
         "key": "music",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/image/music.png"
+        "url": "assets/image/music.png"
       },
       {
         "type": "image",
         "key": "no",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/image/no.png"
+        "url": "assets/image/no.png"
       },
       {
         "type": "image",
         "key": "qcnt",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/image/qcnt.png"
+        "url": "assets/image/qcnt.png"
       },
       {
         "type": "image",
         "key": "right",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/image/right.png"
+        "url": "assets/image/right.png"
       },
       {
         "type": "image",
         "key": "search",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/image/search.png"
+        "url": "assets/image/search.png"
       },
       {
         "type": "image",
         "key": "sound",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/image/sound.png"
+        "url": "assets/image/sound.png"
       },
       {
         "type": "image",
         "key": "speak",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/image/speak.png"
+        "url": "assets/image/speak.png"
       },
       {
         "type": "image",
         "key": "yes",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/image/yes.png"
+        "url": "assets/image/yes.png"
       },
       {
         "type": "text",
         "key": "version",
-        "url": "C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/examples/assets/text/version.txt"
+        "url": "assets/text/version.txt"
       }
     ]
   }
