@@ -30,17 +30,20 @@ class Demo extends Phaser.Scene {
         this.load.text('questions','https://docs.google.com/spreadsheets/d/e/2PACX-1vQjdECX4kOj4uvdr_5w7iP5P8h-7m1QBr5XoOXy7Hn6PpAsSXtqPBwrc94uvBOzWOPUB7q7TSciAKku/pub?gid=0&single=true&output=csv')
         this.load.text('introHeroes', 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzW9q8TTKhWlHxsi4PnhSpwo3PacMcZRX6O_YURwbQ7N6hAqRZgMwsRXg6ilakRLkBAt381wM1jvv6/pub?gid=1348914508&single=true&output=csv')
         this.load.rexLive2dCoreScript('assets/live2d/core/live2dcubismcore.js');
-        this.load.rexLive2d('Haru', 'https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/destiny_child_kr%20%E5%A4%A9%E5%91%BD%E4%B9%8B%E5%AD%90/c000_10/model.json')
-        //this.load.rexLive2d('Haru', 'assets/live2d/Haru/Haru.model3.json');
+        //this.load.rexLive2d('Haru', 'https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/Live2D/Senko_Normals/senko.model3.json')
+        this.load.rexLive2d('Haru', 'assets/live2d/Haru/Haru.model3.json');
         //load pack
-        this.load.pack('pack', 'assets/pack.json'); 
+        this.load.pack('pack', 'assets/pack.json');
+        this.load.json('pkg', 'https://api.github.com/repos/Eikanya/Live2d-model/git/trees/master')
     }
 
     create() {
         var _scene = this;
 
+        console.log(JSON.stringify(this.cache.json.get('pkg')));
+
         //建立角色
-        var character = CreateChar(this);
+        var character = CreateChar(this, 'Haru');
 
         //建立測試結果列表資料
         var tbIntroHeroes = new CSVToHashTable().loadCSV(this.cache.text.get('introHeroes'));

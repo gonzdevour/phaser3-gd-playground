@@ -10,7 +10,11 @@ var CreateTextplayer = function(scene){
             x: scene.viewport.centerX, y: scene.viewport.height-200-25,
             width: scene.viewport.width-50, height: 400,  // Fixed width and height
 
-            background: { stroke: 'white', cornerRadius: 20 },
+            background: { 
+                stroke: 'white', strokeThickness: 6, cornerRadius: 20, 
+                color: 'rgba(8, 9, 107, 1)', color2: 'rgba(8, 9, 107, 0.5)', horizontalGradient: true, 
+            }, //rgba(8, 9, 107, 0.2)
+
             //innerBounds: { stroke: '#A52A2A' },
             padding: 20,
             style: {
@@ -46,17 +50,6 @@ var CreateTextplayer = function(scene){
         }
     )
 
-    var triangle = scene.add.triangle(200, 200, 0, 36, 36, 36, 18, 72, 0xffffff).setVisible(false); //#ffffff
-    triangle.setPosition(textPlayer.x + 0.5*textPlayer.width - 40, textPlayer.y + 0.5*textPlayer.height - 85);
-    triangle.tween = AutoRemoveTween(triangle, {
-        y: '+=10',
-        ease: 'Linear',
-        duration: 500,
-        yoyo: true,
-        repeat: -1,
-        //paused: true,
-    })
-
     textPlayer.on('page.start', function() {
         //console.log('typingSpeed: ' + textPlayer.typingSpeed)
         textPlayer.setTypingSpeed(100);
@@ -83,6 +76,17 @@ var CreateTextplayer = function(scene){
     })
     //在scene上畫出inst
     scene.add.existing(textPlayer);
+
+    var triangle = scene.add.triangle(200, 200, 0, 36, 36, 36, 18, 72, 0xffffff).setVisible(false); //#ffffff
+    triangle.setPosition(textPlayer.x + 0.5*textPlayer.width - 40, textPlayer.y + 0.5*textPlayer.height - 85);
+    triangle.tween = AutoRemoveTween(triangle, {
+        y: '+=10',
+        ease: 'Linear',
+        duration: 500,
+        yoyo: true,
+        repeat: -1,
+        //paused: true,
+    })
 
     return textPlayer
 }
