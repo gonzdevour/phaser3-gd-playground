@@ -1,0 +1,11 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "image",
+        "key": "yes",
+        "url": "assets/image/yes.png"
+      }
+    ]
+  }
+}
