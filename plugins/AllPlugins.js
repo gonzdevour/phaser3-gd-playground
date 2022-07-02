@@ -9,6 +9,7 @@ import WebFontLoaderPlugin from '../../phaser3-rex-notes/plugins/webfontloader-p
 import AwayTimePlugin from '../../phaser3-rex-notes/plugins/awaytime-plugin.js';
 import RealTimeTimersPlugin from '../../phaser3-rex-notes/plugins/realtimetimers-plugin.js';
 import Live2dPlugin from '../../phaser3-rex-notes/dist/rexlive2dplugin.min.js';
+import AnchorPlugin from '../../phaser3-rex-notes/plugins/anchor-plugin.js';
 
 export default {
     scene: [
@@ -70,5 +71,10 @@ export default {
             plugin: Live2dPlugin,
             start: true
         },
+        {
+            key: 'rexAnchor',
+            plugin: AnchorPlugin,
+            start: true
+        }
     ]
 };

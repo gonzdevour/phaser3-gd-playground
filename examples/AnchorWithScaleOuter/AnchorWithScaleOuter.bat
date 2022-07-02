@@ -1,5 +1,5 @@
 @echo off
-set project=./examples/pointerInScaleOuter
+set project=./examples/AnchorWithScaleOuter
 set main=main.js
 set htmlTemplate=index.tmpl
 set assets=assets

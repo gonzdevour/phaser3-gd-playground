@@ -32,18 +32,16 @@ var CreateModelMenu = function (scene, config) {
   ];
 
   var scene = scene;
-  var menu = undefined;
   scene.print = scene.add.text(0, 0, "");
+  var menu = CreateMenu(scene, 0, 0, items, function (button) {
+    scene.print.text += "Click " + button.text + "\n";
+  });
+
   scene.input.on( "pointerdown", function (pointer) {
-      if (menu === undefined) {
-          menu = CreateMenu(scene, pointer.worldX, pointer.worldY, items, function (button) {
-          scene.print.text += "Click " + button.text + "\n";
-        });
-      } else if (!menu.isInTouching(pointer)) {
-        menu.collapse();
-        menu = undefined;
-        scene.print.text = "";
-      }
+    if (!menu.isInTouching(pointer)) {
+          menu.collapseSubMenu();
+          scene.print.text = "";
+    }
   }, scene);
 };
 
@@ -55,32 +53,25 @@ var CreateMenu = function (scene, x, y, items, onClick) {
       x: x,
       y: y,
       orientation: exapndOrientation,
+      anchor: { right: 'left-10', top: 'top+10'},
+      space: { item: 10 },
       // subMenuSide: 'right',
 
       items: items,
       createButtonCallback: function (item, i, items) {
           return scene.rexUI.add.label({
               background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 0, COLOR_PRIMARY),
-              text: scene.add.text(0, 0, item.name, {
-                  fontSize: '20px'
-              }),
+              text: scene.add.text(0, 0, item.name, { fontSize: '48px', padding: 6}),
               icon: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 10, COLOR_DARK),
-              space: {
-                  left: 10,
-                  right: 10,
-                  top: 10,
-                  bottom: 10,
-                  icon: 10
-              }
+              space: { left: 10, right: 10, top: 10, bottom: 10, icon: 10 },
           })
       },
-
       // expandEvent: 'button.over'
   });
 
   menu
       .on('button.over', function (button) {
-          button.getElement('background').setStrokeStyle(1, 0xffffff);
+          button.getElement('background').setStrokeStyle(3, 0xffffff);
       })
       .on('button.out', function (button) {
           button.getElement('background').setStrokeStyle();

@@ -29,10 +29,7 @@ class Demo extends Phaser.Scene {
 
         console.log(JSON.stringify(this.cache.json.get('pkg')));
 
-        this.input.on('pointerdown', function(pointer){
-            this.add.image(pointer.x, pointer.y, 'yes');
-        },this)
-
+        //this.input.setDefaultCursor('url(assets/image/yes.png), pointer')
         //建立角色
         this.add.image(100,100,'yes');
         var character = CreateChar(this, 'Haru');

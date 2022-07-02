@@ -18,9 +18,23 @@ class Demo extends Phaser.Scene {
     }
 
     create() {
-        this.input.on('pointerdown', function(pointer){
-            this.add.image(pointer.x, pointer.y, 'yes');
-        },this)
+
+        var img = this.add.image(0,0,'yes');
+        this.plugins.get('rexAnchor').add(img, {
+            //left: 'left',
+            right: 'right',
+            top: 'top',
+            //bottom: 'bottom'
+        });
+
+        //draw viewport
+        this.add.graphics()
+            .clear()
+            .lineStyle(10, 0x00ff00)
+            .strokeRectShape(this.rexScaleOuter.innerViewport)
+            .lineStyle(30, 0xff0000)
+            .strokeRectShape(this.rexScaleOuter.outerViewport)
+
     }
 }
 
