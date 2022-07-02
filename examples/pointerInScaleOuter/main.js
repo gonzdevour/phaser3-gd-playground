@@ -23,8 +23,8 @@ class Demo extends Phaser.Scene {
         this.plugins.get('rexAnchor').add(img, {
             left: 'left+10',
             //right: 'right',
-            top: 'top+10',
-            //bottom: 'bottom'
+            //top: 'top',
+            bottom: 'bottom-10'
         });
 
         //draw viewport
