@@ -1,5 +1,6 @@
 import phaser from 'phaser/src/phaser.js';
 import AllPlugins from '../../plugins/AllPlugins.js';
+import CreateModelMenu from '../live2DViewer/CreateModelMenu.js';
 
 class Demo extends Phaser.Scene {
     constructor() {
@@ -10,6 +11,7 @@ class Demo extends Phaser.Scene {
 
     init() {
         this.rexScaleOuter.scale();
+        this.viewport = this.rexScaleOuter.outerViewport;
     }
 
     preload() {
@@ -18,14 +20,29 @@ class Demo extends Phaser.Scene {
     }
 
     create() {
+        //menu
+        var modelLoaderMenu = CreateModelMenu(this);
 
-        var img = this.add.image(0,0,'yes');
-        this.plugins.get('rexAnchor').add(img, {
-            left: 'left+10',
-            //right: 'right',
-            top: 'top+10',
-            //bottom: 'bottom'
-        });
+        this.rexUI.add.overlapSizer(this.viewport.x, this.viewport.y, this.viewport.width, this.viewport.height, {
+        })
+        .add(modelLoaderMenu,
+          {
+              key: 'modelLoaderMenu',
+              align: 'left-top',
+              expand: false, 
+          }
+        )
+        //.layout();
+
+        //test image for anchor
+
+        // var img = this.add.image(0,0,'yes');
+        // this.plugins.get('rexAnchor').add(img, {
+        //     left: 'left+10',
+        //     //right: 'right',
+        //     top: 'top+10',
+        //     //bottom: 'bottom'
+        // });
 
         //draw viewport
         this.add.graphics()

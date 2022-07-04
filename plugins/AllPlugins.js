@@ -10,6 +10,7 @@ import AwayTimePlugin from '../../phaser3-rex-notes/plugins/awaytime-plugin.js';
 import RealTimeTimersPlugin from '../../phaser3-rex-notes/plugins/realtimetimers-plugin.js';
 import Live2dPlugin from '../../phaser3-rex-notes/dist/rexlive2dplugin.min.js';
 import AnchorPlugin from '../../phaser3-rex-notes/plugins/anchor-plugin.js';
+import ButtonPlugin from '../../phaser3-rex-notes/plugins/button-plugin.js';
 
 export default {
     scene: [
@@ -75,6 +76,11 @@ export default {
             key: 'rexAnchor',
             plugin: AnchorPlugin,
             start: true
-        }
+        },
+        {
+            key: 'rexButton',
+            plugin: ButtonPlugin,
+            start: true
+        },
     ]
 };

@@ -33,8 +33,6 @@ class Demo extends Phaser.Scene {
         //建立角色
         this.add.image(100,100,'yes');
         var character = CreateChar(this, 'Haru');
-
-        CreateModelMenu(this);
     }
 }
 

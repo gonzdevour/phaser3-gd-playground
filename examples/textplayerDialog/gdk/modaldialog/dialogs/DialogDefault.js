@@ -42,7 +42,7 @@ var DialogDefault = function (scene, cfg) {
 
   //通用預設值
   var valueConfig = {
-    width: scene.viewport.displayWidth-50,
+    width: scene.viewport.width-50,
     x: scene.viewport.centerX,
     y: scene.viewport.centerY,
     space: { 

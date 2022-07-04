@@ -7,8 +7,8 @@ var CreateTextplayer = function(scene){
     var Linear = Phaser.Math.Linear;
     var textPlayer = new TextPlayer(scene,
         {
-            x: scene.viewport.centerX, y: scene.viewport.height-200-25,
-            width: scene.viewport.width-50, height: 400,  // Fixed width and height
+            x: scene.viewport.centerX+5, y: scene.viewport.top+200+25,
+            width: scene.viewport.displayWidth-50, height: 400,  // Fixed width and height
 
             background: { 
                 stroke: 'white', strokeThickness: 6, cornerRadius: 20, 
@@ -16,7 +16,7 @@ var CreateTextplayer = function(scene){
             }, //rgba(8, 9, 107, 0.2)
 
             //innerBounds: { stroke: '#A52A2A' },
-            padding: 20,
+            padding: {left: 40, right: 40, top: 20, bottom: 20},
             style: {
                 fontSize: '48px',
                 stroke: 'green', strokeThickness: 3,
@@ -40,7 +40,7 @@ var CreateTextplayer = function(scene){
                     }
                 }
             },
-            clickTarget: null,
+            clickTarget: null, //如果要自訂就填null再用setClickTarget設定
             wrap: { charWrap: true, maxLines: 5, padding: { bottom: 10 }, },
             nextPageInput: 'click|2000'
             // nextPageInput: function(callback) {
@@ -62,8 +62,9 @@ var CreateTextplayer = function(scene){
     })
 
     //指定click target
-    textPlayer.setClickTarget(textPlayer);
-    textPlayer.clickTarget.on('pointerup', function () {
+
+    textPlayer.setClickTarget(scene.touchArea);
+    textPlayer.clickTarget.onClick(function () {
         if (!textPlayer.isPlaying) {
             return;
         }
@@ -74,11 +75,14 @@ var CreateTextplayer = function(scene){
             textPlayer.typingNextPage();
         }
     })
+
     //在scene上畫出inst
     scene.add.existing(textPlayer);
+    textPlayer.angle = -2;
+    textPlayer.setVisible(false);
 
     var triangle = scene.add.triangle(200, 200, 0, 36, 36, 36, 18, 72, 0xffffff).setVisible(false); //#ffffff
-    triangle.setPosition(textPlayer.x + 0.5*textPlayer.width - 40, textPlayer.y + 0.5*textPlayer.height - 85);
+    triangle.setPosition(textPlayer.x + 0.5*textPlayer.width - 40, textPlayer.y + 0.5*textPlayer.height - 95); //-85
     triangle.tween = AutoRemoveTween(triangle, {
         y: '+=10',
         ease: 'Linear',

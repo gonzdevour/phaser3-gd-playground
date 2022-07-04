@@ -28,7 +28,6 @@ var ModalDialogPromise = function (scene, config) {
         .on('modal.close', function(closeEventData, modalBehavior){
             dialog.broadcastEvent('dialog.close', scene);
         })
-    //scene.drawBounds(dialog);
 
     //將dialog再包裝為modal，並建立promise
     return scene.rexUI.modalPromise(dialog, config);

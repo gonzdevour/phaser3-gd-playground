@@ -1,5 +1,6 @@
 import GetValue from "../../plugins/utils/object/GetValue";
 import CreateDropDownList from "./CreateDropDownList";
+import CreateModelMenu from "./CreateModelMenu";
 
 const COLOR_PRIMARY = 0x474747; //#474747
 const COLOR_LIGHT = 0x8f8f8f; //#8f8f8f
@@ -7,6 +8,8 @@ const COLOR_DARK = 0x222222; //#222222
 
 var CreateMainPanel = function(scene, config){
     var character = GetValue(config, 'character', undefined);
+
+    var modelLoaderMenu = CreateModelMenu(scene);
 
     var ctrlDisplay = scene.rexUI.add.sizer({
         orientation: 'x',
@@ -48,16 +51,26 @@ var CreateMainPanel = function(scene, config){
         // draggable: false,
         // sizerEvents: false,
     })
+    .add(modelLoaderMenu,
+      {
+          key: 'modelLoaderMenu',
+          align: 'left-top',
+          expand: false,
+          offsetX: 0,
+          offsetY: 0,
+          padding: {left: 20, right: 0, top: 20, bottom: 0},    
+      }
+    )
     .add(ctrlDisplay,
         {
             key: 'ctrlDisplay',
-            align: 'left-bottom',
+            align: 'right-bottom',
             expand: false,
             offsetX: 0,
             offsetY: 0,
             padding: {left: 0, right: 20, top: 0, bottom: 20},    
         }
-    );
+    )
 
     ctrlMain    
         .setPosition(scene.viewport.centerX, scene.viewport.centerY)

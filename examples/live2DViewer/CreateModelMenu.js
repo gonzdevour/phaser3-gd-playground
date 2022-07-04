@@ -43,6 +43,8 @@ var CreateModelMenu = function (scene, config) {
           scene.print.text = "";
     }
   }, scene);
+
+  return menu;
 };
 
 var CreateMenu = function (scene, x, y, items, onClick) {
@@ -53,7 +55,8 @@ var CreateMenu = function (scene, x, y, items, onClick) {
       x: x,
       y: y,
       orientation: exapndOrientation,
-      anchor: { right: 'left-10', top: 'top+10'},
+      //anchor: { left: 'left+10', bottom: 'bottom-10', right: 'right-10', top: 'top+10'},
+      //anchor: { left: 'left+10', bottom: 'bottom-10'},
       space: { item: 10 },
       // subMenuSide: 'right',
 

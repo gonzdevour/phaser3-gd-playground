@@ -5,7 +5,7 @@ import CSVToHashTable from '../../../phaser3-rex-notes/plugins/csvtohashtable.js
 import { DialogSelect } from './gdk/modaldialog/DialogType';
 import { DialogMultiSelect } from './gdk/modaldialog/DialogType';
 import { TransitionChoicesUpScaleDown } from './gdk/modaldialog/TransistionType.js';
-import { TransitionLR } from './gdk/modaldialog/TransistionType.js';
+import { TransitionBT } from './gdk/modaldialog/TransistionType.js';
 import dialogButtonClickCallback from './gdk/modaldialog/dialogButtonClickCallback.js';
 //proj
 import CreateQuiz from './CreateQuiz.js';
@@ -14,6 +14,7 @@ import CreateChar from './CreateChar.js';
 //utils
 import GetValue from '../../plugins/utils/object/GetValue.js';
 import GetRandom from '../../plugins/utils/array/GetRandom.js';
+import SetViewportDisplaySize from '../../plugins/utils/viewport/SetDisplaySize.js';
 
 class Demo extends Phaser.Scene {
     constructor() {
@@ -23,7 +24,10 @@ class Demo extends Phaser.Scene {
     }
 
     init() {
-        this.viewport = this.cameras.main; 
+        this.rexScaleOuter.scale();
+        this.viewport = this.rexScaleOuter.outerViewport; //on resize時this.viewport不隨之變動
+        SetViewportDisplaySize(this.viewport);
+        //this.viewport = this.cameras.main; 
     }
 
     preload() {
@@ -42,9 +46,6 @@ class Demo extends Phaser.Scene {
 
         console.log(JSON.stringify(this.cache.json.get('pkg')));
 
-        //建立角色
-        var character = CreateChar(this, 'Haru');
-
         //建立測試結果列表資料
         var tbIntroHeroes = new CSVToHashTable().loadCSV(this.cache.text.get('introHeroes'));
         //console.log(tbIntroHeroes.get('12', 'name'))
@@ -56,8 +57,35 @@ class Demo extends Phaser.Scene {
             console.log(JSON.stringify(item['A1']));
         })
 
+        //建立背景
+        var bg = this.add.image(this.viewport.centerX, this.viewport.centerY, 'bgPCRoom')
+        bg.setScale(this.viewport.height/bg.height).setAlpha(0.3);
+
+        //建立透明觸控板
+        this.touchArea = this.rexUI.add.overlapSizer({
+            x: this.viewport.centerX,
+            y: this.viewport.centerY,
+            width: this.viewport.width,
+            height: this.viewport.height,
+        })
+        .layout()
+
         //建立textplayer
         var textPlayer = CreateTextplayer(this);
+        //建立character
+        var character = CreateChar(this, 'Haru');
+
+        textPlayer.character = character;
+        textPlayer.character.lipTween = this.tweens.add({
+            targets: textPlayer.character,
+            lipSyncValue: {from:0, to:1},
+            ease: 'Linear',
+            //duration: textPlayer.typingSpeed,
+            duration: 150,
+            yoyo: true,
+            paused: true,
+        });
+
         textPlayer
             .on('wait.timeout', function(Callback){
                 var waitTime = async function(ms){
@@ -66,21 +94,49 @@ class Demo extends Phaser.Scene {
                 }
                 waitTime(2000);
             })
+            .on('typing', function(child) {
+                if (child.type === 'text') {
+                    textPlayer.character.lipTween.play();
+                }
+            })
+            .on('complete', function() {
+                textPlayer.character.lipTween.stop();
+                textPlayer.character.lipSyncValue = 0;
+            })
 
         //啟動問答
-        textPlayer.once('pointerup', function () {
+        this.input.once('pointerup', function () {
+            textPlayer.setVisible(true);
             QuizPromise(textPlayer, quizArr, tbIntroHeroes)
                 .then(function(tbOut){
                     textPlayer.playPromise(tbOut.get(tbOut.curChampKey, 'say'))
                 })
             // text.showPage();  // Show all characters in this page
         })
+        this.textPlayer = textPlayer;
+    }
+
+    update(){
+        // var pointer = this.input.activePointer;
+        // if (this.viewport.isDown){
+        //     this.textPlayer.character.lookAt( pointer.worldX, pointer.worldY, {
+        //         // camera: scene.cameras.main,
+        //         // eyeBallX: 1, eyeBallY: 1,
+        //         // angleX: 30, angleY: 30, angleZ: 30,
+        //         // bodyAngleX: 10
+        //     })
+        // } else {
+        //     this.textPlayer.character.lookForward();
+        // }
     }
 }
 
 var waitDialog = async function(textPlayer){
     var _scene = textPlayer.scene;
     var question = textPlayer.question;
+    var character = textPlayer.character;
+    character.timeScale = 1;
+    character.setExpression('F01').startMotion('Idle', 0, 'force')
     await textPlayer.playPromise(question['Q']);
     //choicesData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
     var result = await DialogSelect(_scene, {
@@ -95,15 +151,19 @@ var waitDialog = async function(textPlayer){
             list: CreateChoiceDataList(question),
         },
         extraConfig: {
-            y: _scene.viewport.centerY-200, 
+            x: _scene.viewport.centerX,
+            y: _scene.viewport.bottom,
+            width: game.config.width-50, 
             cover: {color:0x663030, alpha: 0.1},
-            transitIn: TransitionLR,
+            transitIn: TransitionBT,
             transitOut: TransitionChoicesUpScaleDown,
             duration:{ in: 600, out: 1400 },
             dialogButtonClickCallback: dialogButtonClickCallback,
         }
     })
     //console.log('dialogResult:' + JSON.stringify(result))
+    character.timeScale = 1.5;
+    character.setExpression('F06').stopAllMotions().startMotion('TapBody', 0, 'force')
     await textPlayer.playPromise(question['Say' + GetValue(result, 'singleSelectedName', 1) ]+'[wait=click][wait=500]')
     return result;
 }
@@ -211,7 +271,7 @@ var config = {
     width: 768,
     height: 1334,
     scale: {
-        mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     plugins: AllPlugins,

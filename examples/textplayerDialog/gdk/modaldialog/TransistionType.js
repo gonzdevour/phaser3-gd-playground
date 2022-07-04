@@ -27,7 +27,7 @@ var TransitionChoicesUpScaleDown = function(dialog, duration) {
   scene.tweens.timeline({
       tweens: [
           { targets: selectedButtons, ease: 'Cubic', y: '-=20', duration: 300, yoyo:true, completeDelay: 400 },
-          { targets: dialog, ease: 'Cubic', x: '+=300', alpha: 0, duration: 400,},
+          { targets: dialog, ease: 'Cubic', y: '+=400', alpha: 0, duration: 400,},
       ]
 
   });
@@ -35,7 +35,7 @@ var TransitionChoicesUpScaleDown = function(dialog, duration) {
 
 //In
 
-//Choice上浮、ChoiceBackground閃爍、dialog收縮
+//左滑到右
 var TransitionLR = function(dialog, duration) {
   var scene = dialog.scene;
   var choices = dialog.getElement('choices');
@@ -47,8 +47,35 @@ var TransitionLR = function(dialog, duration) {
   AutoRemoveTween(dialog, {ease: 'Cubic', x: { from: dialog.x-300, to: dialog.x }, alpha: { from: 0, to: 1 }, duration: 600,})
 }
 
+//右滑到左
+var TransitionRL = function(dialog, duration) {
+  var scene = dialog.scene;
+  var choices = dialog.getElement('choices');
+  choices.forEach(function(choice, idx, arr){
+    var Ang = choice.angle-5+Math.random()*10;
+    //dialog.tweenChild({targets: choice, ease: 'Linear', angle:Ang, duration: 300+100*Math.random(),});
+  })
+  //dialog.tweenChild({targets: choices, ease: 'Linear', x:{from: '-=100', to:0}, duration: 1400,});
+  AutoRemoveTween(dialog, {ease: 'Cubic', x: { from: dialog.x+300, to: dialog.x }, alpha: { from: 0, to: 1 }, duration: 600,})
+}
+
+//下滑到上
+var TransitionBT = function(dialog, duration) {
+  var scene = dialog.scene;
+  var choices = dialog.getElement('choices');
+  choices.forEach(function(choice, idx, arr){
+    var Ang = choice.angle-5+Math.random()*10;
+    //dialog.tweenChild({targets: choice, ease: 'Linear', angle:Ang, duration: 300+100*Math.random(),});
+  })
+  //dialog.tweenChild({targets: choices, ease: 'Linear', x:{from: '-=100', to:0}, duration: 1400,});
+  var yFrom = scene.viewport.bottom+0.5*dialog.height;
+  var yTo = scene.viewport.bottom-0.5*dialog.height;
+  AutoRemoveTween(dialog, {ease: 'Cubic', y: { from: yFrom, to: yTo }, alpha: { from: 0, to: 1 }, angle: { from: -45, to: 3 }, duration: 600,})
+}
 
 export {
   TransitionChoicesUpScaleDown,
   TransitionLR,
+  TransitionRL,
+  TransitionBT,
 };

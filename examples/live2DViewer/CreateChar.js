@@ -3,9 +3,9 @@ import CreateMainPanel from './CreateMainPanel';
 
 var CreateChar = function(scene, mocName){
     var character = scene.add.rexLive2d(scene.viewport.centerX, scene.viewport.centerY, mocName)
-        .setScale(0.25)
-        .setRandomExpression()
-        //.startMotion('Idle', undefined, 'idle')
+        .setScale(0.5)
+        .setExpression('F01')
+        .startMotion('Idle', undefined, 'idle')
         .on('expression.start', function (name) {
             console.log(`expression.start: ${name}`)
         })
