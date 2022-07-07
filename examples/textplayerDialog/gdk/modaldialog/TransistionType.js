@@ -15,18 +15,19 @@ var TransitionChoicesUpScaleDown = function(dialog, duration) {
       }
       idx++;
   }
-  //取出被選中的buttons的backgrounds
-  var selectedBgs = [];
-  selectedButtons.forEach(function(item, idx, arr){
-      var bbg = item.getElement('background')
-      AutoRemoveTween(bbg, {ease: 'Linear', alpha: 0, duration: 300, yoyo: true, repeat:5,})
-      selectedBgs.push(bbg);
-  })
+
+  //取出被選中的buttons的backgrounds做flash
+  // var selectedBgs = [];
+  // selectedButtons.forEach(function(item, idx, arr){
+  //     var bbg = item.getElement('background')
+  //     AutoRemoveTween(bbg, {ease: 'Linear', alpha: 0, duration: 200, yoyo: true, repeat:1,})
+  //     selectedBgs.push(bbg);
+  // })
+
   //依序執行tween
-  //AutoRemoveTween(selectedBgs, {ease: 'Linear', alpha: 0, duration: 300, yoyo: true, repeat:5,})
   scene.tweens.timeline({
       tweens: [
-          { targets: selectedButtons, ease: 'Cubic', y: '-=20', duration: 300, yoyo:true, completeDelay: 400 },
+          //{ targets: selectedButtons, ease: 'Cubic', y: '-=20', duration: 300, yoyo:true, completeDelay: 400 },
           { targets: dialog, ease: 'Cubic', y: '+=400', alpha: 0, duration: 400,},
       ]
 

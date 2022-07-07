@@ -12,9 +12,14 @@ import CreateQuiz from './CreateQuiz.js';
 import CreateTextplayer from './CreateTextplayer.js';
 import CreateChar from './CreateChar.js';
 //utils
+import addImageFromUrl from '../../plugins/utils/image/addImageFromUrl.js';
+import { WaitEvent } from '../../../phaser3-rex-notes/plugins/eventpromise.js';
+import { Delay } from '../../../phaser3-rex-notes/plugins/eventpromise.js';
 import GetValue from '../../plugins/utils/object/GetValue.js';
 import GetRandom from '../../plugins/utils/array/GetRandom.js';
 import SetViewportDisplaySize from '../../plugins/utils/viewport/SetDisplaySize.js';
+
+const cors = window.location.hostname == 'localhost'?'https://cors-anywhere-playone.herokuapp.com/':'';
 
 class Demo extends Phaser.Scene {
     constructor() {
@@ -39,16 +44,41 @@ class Demo extends Phaser.Scene {
         //load pack
         this.load.pack('pack', 'assets/pack.json');
         this.load.json('pkg', 'https://api.github.com/repos/Eikanya/Live2d-model/git/trees/master')
+        
     }
 
     create() {
         var _scene = this;
-
         console.log(JSON.stringify(this.cache.json.get('pkg')));
+
+        //測試外部讀取image(似乎必須透過cors-anywhere)
+        var loadImgPromise = async function(scene, config){
+            var x = GetValue(config, 'x', 0);
+            var y = GetValue(config, 'y', 0);
+            var imgKey = GetValue(config, 'imgKey', undefined);
+            var url = GetValue(config, 'url', undefined);
+            var img = await addImageFromUrl(scene, x, y, imgKey, url);
+            //在這裡設定img的其他屬性或功能
+            return img;
+        }
+        var testImg = loadImgPromise(this, {
+            x: this.viewport.centerX, 
+            y: this.viewport.centerY, 
+            imgKey: 'test', 
+            url: cors + 'https://playoneapps.com.tw/File/Stand/Hero/image09.png'
+        })
+
+        //建立camera跟隨的center物件(使用sizer以便直接套用easeMove的功能)
+        this.center = this.rexUI.add.label({
+            x: this.viewport.centerX,
+            y: this.viewport.centerY,
+            icon: this.add.image(0, 0, 'no'),
+        }).layout()
+        this.cameras.main.startFollow(this.center, true, 0.5, 0.5);
 
         //建立測試結果列表資料
         var tbIntroHeroes = new CSVToHashTable().loadCSV(this.cache.text.get('introHeroes'));
-        //console.log(tbIntroHeroes.get('12', 'name'))
+        //console.log(tbIntroHeroes.get('12', 'name'))//測試CSVToHashTable是否讀取成功
 
         //建立題庫
         var csvstring = this.cache.text.get('questions');
@@ -56,10 +86,6 @@ class Demo extends Phaser.Scene {
         quizArr.forEach(function(item, index, arr){
             console.log(JSON.stringify(item['A1']));
         })
-
-        //建立背景
-        var bg = this.add.image(this.viewport.centerX, this.viewport.centerY, 'bgPCRoom')
-        bg.setScale(this.viewport.height/bg.height).setAlpha(0.3);
 
         //建立透明觸控板
         this.touchArea = this.rexUI.add.overlapSizer({
@@ -70,8 +96,31 @@ class Demo extends Phaser.Scene {
         })
         .layout()
 
+        //建立背景
+        // var bg = this.add.image(this.viewport.centerX, this.viewport.centerY, 'bgPCRoom')
+        // bg.setScale(this.viewport.height/bg.height).setAlpha(0.3);
+        var bgSet = [];
+        for (let index = 6; index >= 0; index--) {
+            var bg = this.add.image(this.viewport.centerX, this.viewport.centerY, 'bgSetForestZ'+index);
+            bg.setScale(2);
+            bg.setScrollFactor(1-0.1*index);
+            //bg.setScale(this.viewport.height/bg.height).setScrollFactor(1-0.1*index);
+            bgSet.push(bg);
+        }
+
         //建立textplayer
         var textPlayer = CreateTextplayer(this);
+        textPlayer.popTween = this.tweens.add({
+            targets: textPlayer,
+            x: {from:textPlayer.x-20, to:textPlayer.x},
+            y: {from:textPlayer.y+20, to:textPlayer.y},
+            alpha: {from: 0, to:1},
+            ease: 'cubic',
+            //duration: textPlayer.typingSpeed,
+            duration: 500,
+            paused: true,
+        });
+
         //建立character
         var character = CreateChar(this, 'Haru');
 
@@ -100,6 +149,7 @@ class Demo extends Phaser.Scene {
                 }
             })
             .on('complete', function() {
+                textPlayer.popTween.stop();
                 textPlayer.character.lipTween.stop();
                 textPlayer.character.lipSyncValue = 0;
             })
@@ -111,23 +161,34 @@ class Demo extends Phaser.Scene {
                 .then(function(tbOut){
                     textPlayer.playPromise(tbOut.get(tbOut.curChampKey, 'say'))
                 })
-            // text.showPage();  // Show all characters in this page
         })
         this.textPlayer = textPlayer;
     }
 
     update(){
-        // var pointer = this.input.activePointer;
-        // if (this.viewport.isDown){
-        //     this.textPlayer.character.lookAt( pointer.worldX, pointer.worldY, {
-        //         // camera: scene.cameras.main,
-        //         // eyeBallX: 1, eyeBallY: 1,
-        //         // angleX: 30, angleY: 30, angleZ: 30,
-        //         // bodyAngleX: 10
-        //     })
-        // } else {
-        //     this.textPlayer.character.lookForward();
-        // }
+        eyeTracking(this);
+    }
+}
+
+var eyeTracking = function(scene){
+    var pointer = scene.input.activePointer;
+
+    if (pointer.isDown){
+        scene.center.moveTo({x:pointer.worldX, y:pointer.worldY, ease: 'linear', speed: 300});
+    } else {
+        scene.center.moveTo({x:scene.viewport.centerX, y:scene.viewport.centerY, ease: 'linear', speed: 600});
+        //scene.center.moveStop();
+    } 
+
+    if (scene.touchArea.isInTouching){
+        scene.textPlayer.character.lookAt( pointer.worldX, pointer.worldY, {
+            // camera: scene.cameras.main,
+            // eyeBallX: 1, eyeBallY: 1,
+            // angleX: 30, angleY: 30, angleZ: 30,
+            // bodyAngleX: 10
+        })
+    } else {
+        scene.textPlayer.character.lookForward();
     }
 }
 
@@ -162,9 +223,9 @@ var waitDialog = async function(textPlayer){
         }
     })
     //console.log('dialogResult:' + JSON.stringify(result))
-    character.timeScale = 1.5;
-    character.setExpression('F06').stopAllMotions().startMotion('TapBody', 0, 'force')
-    await textPlayer.playPromise(question['Say' + GetValue(result, 'singleSelectedName', 1) ]+'[wait=click][wait=500]')
+    //character.timeScale = 1.5;
+    //character.setExpression('F06').stopAllMotions().startMotion('TapBody', 0, 'force')
+    //await textPlayer.playPromise(question['Say' + GetValue(result, 'singleSelectedName', 1) ]+'[wait=click][wait=500]')
     return result;
 }
 

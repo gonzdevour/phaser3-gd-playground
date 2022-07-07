@@ -22,6 +22,41 @@
       },
       {
         "type": "image",
+        "key": "bgSetForestZ0",
+        "url": "assets/image/bgSetForestZ0.png"
+      },
+      {
+        "type": "image",
+        "key": "bgSetForestZ1",
+        "url": "assets/image/bgSetForestZ1.png"
+      },
+      {
+        "type": "image",
+        "key": "bgSetForestZ2",
+        "url": "assets/image/bgSetForestZ2.png"
+      },
+      {
+        "type": "image",
+        "key": "bgSetForestZ3",
+        "url": "assets/image/bgSetForestZ3.png"
+      },
+      {
+        "type": "image",
+        "key": "bgSetForestZ4",
+        "url": "assets/image/bgSetForestZ4.png"
+      },
+      {
+        "type": "image",
+        "key": "bgSetForestZ5",
+        "url": "assets/image/bgSetForestZ5.png"
+      },
+      {
+        "type": "image",
+        "key": "bgSetForestZ6",
+        "url": "assets/image/bgSetForestZ6.png"
+      },
+      {
+        "type": "image",
         "key": "cfg",
         "url": "assets/image/cfg.png"
       },

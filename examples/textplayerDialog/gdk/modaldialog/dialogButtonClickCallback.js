@@ -1,3 +1,8 @@
+import GetValue from "../../../../plugins/utils/object/GetValue";
+import AutoRemoveTween from "../../../../../phaser3-rex-notes/plugins/utils/tween/AutoRemoveTween";
+import { Delay } from "../../../../../phaser3-rex-notes/plugins/eventpromise";
+import { WaitEvent } from "../../../../../phaser3-rex-notes/plugins/eventpromise";
+
 //決定按下dialog中的任何按鈕會回傳什麼
 
 var dialogButtonClickCallback = function (scene, dialog, button, groupName, index) {
@@ -12,8 +17,36 @@ var dialogButtonClickCallback = function (scene, dialog, button, groupName, inde
 
   //如果按下了會關閉dialog的按鈕則關閉dialog
   if (button.closeDialog === true){
-      scene.rexUI.modalClose(dialog, result);
+    dialog.setAllButtonsEnable(false);
+    flash(button);
+    closeDialog(scene, dialog, result);
   }
+}
+
+var closeDialog = async function(scene, dialog, result){
+  await Delay(1000);
+  var textPlayer = scene.textPlayer;
+  textPlayer.character.timeScale = 1.5;
+  textPlayer.character.setExpression('F06').stopAllMotions().startMotion('TapBody', 0, 'force')
+  await textPlayer.playPromise(textPlayer.question['Say' + GetValue(result, 'singleSelectedName', 1) ]+'[wait=500]')
+  //中途加入nextQbutton的兩個方法：
+  //方法1:
+  // var btnNext = scene.rexUI.add.label({x:200, y:200, icon:scene.add.image(0,0,'yes')})
+    // .setInteractive()
+    // .layout()
+  // await WaitEvent(btnNext, 'pointerup');
+  //方法2:
+  // var btnNext = scene.rexUI.add.label({x:200, y:200, icon:scene.add.image(0,0,'yes')})
+  //   .onClick(function(button, gameObject){gameObject.emit('clicked')})
+  //   .layout()
+  // await WaitEvent(btnNext, 'clicked');
+  scene.rexUI.modalClose(dialog, result);
+}
+
+var flash = function(button){
+  var bbg = button.getElement('background')
+  AutoRemoveTween(bbg, {ease: 'linear', alpha: 0, duration: 200, yoyo: true, repeat:2,});
+  AutoRemoveTween(button, {ease: 'cubic', y: '-=20', duration: 300, yoyo:true, completeDelay: 400});
 }
 
 var stateCheck = function(dialog, button){

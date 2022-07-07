@@ -52,6 +52,7 @@ var CreateTextplayer = function(scene){
 
     textPlayer.on('page.start', function() {
         //console.log('typingSpeed: ' + textPlayer.typingSpeed)
+        textPlayer.popTween.play();
         textPlayer.setTypingSpeed(100);
         triangle.setVisible(false);
     })

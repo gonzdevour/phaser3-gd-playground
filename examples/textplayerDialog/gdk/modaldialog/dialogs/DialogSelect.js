@@ -12,17 +12,19 @@ var DialogSelect = function (scene, config) {
       name: 'DialogSelect',
       title: CreateTitle(scene, GetValue(config, 'title', undefined)),
       content: CreateContent(scene, GetValue(config, 'content', undefined)),
-      choicesBackground: CreateRoundRectangleBackground(scene, 20, 0x110606, 0x663030, 6), //'#663030''#110606',
+      choicesBackground: CreateRoundRectangleBackground(scene, 20, undefined, 0x9e9e9e, 3), //'#140c44''#4f5b62',
       choices: CreateChoices(scene, GetValue(config, 'choicesData', [])),
       choicesType: 'y-radio',
       choicesSetValueCallback: function (button, value) {
         if (value) {
-            button.getElement('background').setFillStyle(0xff3333)
+            button.getElement('background').setFillStyle(0x0, 0x00195c); //#00195c, 
+            button.getElement('text').setColor(0x00ffd5); //#00ffd5, 
         } else {
-            button.getElement('background').setFillStyle()
+            button.getElement('background').setFillStyle(0x020d1b, 0x002f6c) //#002f6c, #020d1b
+            button.getElement('text').setColor('white'); //#00ffd5, 
         }
       },
-      background: CreateRoundRectangleBackground(scene, 20, 0x0, 0xffffff, 2),
+      background: CreateRoundRectangleBackground(scene, 20, 'rgba(8, 9, 107, 1)', 0xffffff, 2, 'rgba(8, 9, 107, 0.5)'), //#ffffff
       extraConfig: Object.assign({},{expand:{title:false,content:false,choices:true}},GetValue(config,'extraConfig',{}))
     }
     addBehaviors(dialogConfig.choices, ['ninja']);
@@ -92,7 +94,7 @@ var CreateChoices = function(scene, choicesData){
                 width: scene.viewport.width*0.7,
             }
         }
-        item.background = CreateRoundRectangleBackground(scene, 20, undefined, 0xffffff, 2);
+        item.background = CreateRoundRectangleBackground(scene, 20, 0x002f6c, 0xffffff, 4); //#002f6c
         item.behavior = ['ninja'];
         item.closeDialog = true;
         var button = CreateButton(scene, item)

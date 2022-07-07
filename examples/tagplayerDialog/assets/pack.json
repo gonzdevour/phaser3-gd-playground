@@ -1,0 +1,100 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "audio",
+        "key": "right",
+        "url": [
+          "assets/audio/right.m4a",
+          "assets/audio/right.mp3",
+          "assets/audio/right.ogg"
+        ]
+      },
+      {
+        "type": "image",
+        "key": "arrowL",
+        "url": "assets/image/arrowL.png"
+      },
+      {
+        "type": "image",
+        "key": "bgPCRoom",
+        "url": "assets/image/bgPCRoom.jpg"
+      },
+      {
+        "type": "image",
+        "key": "cfg",
+        "url": "assets/image/cfg.png"
+      },
+      {
+        "type": "image",
+        "key": "confirm",
+        "url": "assets/image/confirm.png"
+      },
+      {
+        "type": "image",
+        "key": "delete",
+        "url": "assets/image/delete.png"
+      },
+      {
+        "type": "image",
+        "key": "eraser",
+        "url": "assets/image/eraser.png"
+      },
+      {
+        "type": "image",
+        "key": "info",
+        "url": "assets/image/info.png"
+      },
+      {
+        "type": "image",
+        "key": "mail",
+        "url": "assets/image/mail.png"
+      },
+      {
+        "type": "image",
+        "key": "music",
+        "url": "assets/image/music.png"
+      },
+      {
+        "type": "image",
+        "key": "no",
+        "url": "assets/image/no.png"
+      },
+      {
+        "type": "image",
+        "key": "qcnt",
+        "url": "assets/image/qcnt.png"
+      },
+      {
+        "type": "image",
+        "key": "right",
+        "url": "assets/image/right.png"
+      },
+      {
+        "type": "image",
+        "key": "search",
+        "url": "assets/image/search.png"
+      },
+      {
+        "type": "image",
+        "key": "sound",
+        "url": "assets/image/sound.png"
+      },
+      {
+        "type": "image",
+        "key": "speak",
+        "url": "assets/image/speak.png"
+      },
+      {
+        "type": "image",
+        "key": "yes",
+        "url": "assets/image/yes.png"
+      },
+      {
+        "type": "text",
+        "key": "version",
+        "url": "assets/text/version.txt"
+      }
+    ]
+  }
+}
