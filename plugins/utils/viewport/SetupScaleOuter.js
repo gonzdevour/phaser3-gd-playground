@@ -1,8 +1,11 @@
-var SetViewportDisplaySize = function(scaleOuterViewport, widthRatio){
+var SetupScaleOuter = function(scene, widthRatio){
   if (typeof(widthRatio) != 'number'){
     widthRatio = 1.6 //如果無值或非數值則給予預設值
   }
-  var v = scaleOuterViewport;
+  scene.rexScaleOuter.scale(); //scaleOuter在進入scene時不會自動執行
+  scene.viewport = scene.rexScaleOuter.outerViewport; //on resize時scene.viewport不隨之變動
+  scene.viewport.originalZoom = scene.cameras.main.zoom; //用來控制scaleOuter zoom
+  var v = scene.viewport;
   var vw = v.width;
   var vh = v.height; 
   v.portrait = vh>vw?true:false;
@@ -16,4 +19,4 @@ var SetViewportDisplaySize = function(scaleOuterViewport, widthRatio){
   return v; 
 }
 
-export default SetViewportDisplaySize;
+export default SetupScaleOuter;

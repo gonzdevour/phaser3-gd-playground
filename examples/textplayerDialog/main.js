@@ -1,4 +1,5 @@
 import phaser from 'phaser/src/phaser.js';
+import Base from './Base.js';
 import AllPlugins from '../../plugins/AllPlugins.js';
 import CSVToHashTable from '../../../phaser3-rex-notes/plugins/csvtohashtable.js';
 //gdk
@@ -11,28 +12,20 @@ import dialogButtonClickCallback from './gdk/modaldialog/dialogButtonClickCallba
 import CreateQuiz from './CreateQuiz.js';
 import CreateTextplayer from './CreateTextplayer.js';
 import CreateChar from './CreateChar.js';
+import CreateParallelBackgrounds from './CreateParallelBackgrounds.js';
 //utils
+import zoomFrom from '../../plugins/utils/viewport/zoomFrom.js';
 import addImageFromUrl from '../../plugins/utils/image/addImageFromUrl.js';
-import { WaitEvent } from '../../../phaser3-rex-notes/plugins/eventpromise.js';
-import { Delay } from '../../../phaser3-rex-notes/plugins/eventpromise.js';
 import GetValue from '../../plugins/utils/object/GetValue.js';
 import GetRandom from '../../plugins/utils/array/GetRandom.js';
-import SetViewportDisplaySize from '../../plugins/utils/viewport/SetDisplaySize.js';
 
 const cors = window.location.hostname == 'localhost'?'https://cors-anywhere-playone.herokuapp.com/':'';
 
-class Demo extends Phaser.Scene {
+class Demo extends Base {
     constructor() {
         super({
             key: 'examples'
         })
-    }
-
-    init() {
-        this.rexScaleOuter.scale();
-        this.viewport = this.rexScaleOuter.outerViewport; //on resize時this.viewport不隨之變動
-        SetViewportDisplaySize(this.viewport);
-        //this.viewport = this.cameras.main; 
     }
 
     preload() {
@@ -51,6 +44,8 @@ class Demo extends Phaser.Scene {
         var _scene = this;
         console.log(JSON.stringify(this.cache.json.get('pkg')));
 
+        zoomFrom(this, 0.9, 2000);
+
         //測試外部讀取image(似乎必須透過cors-anywhere)
         var loadImgPromise = async function(scene, config){
             var x = GetValue(config, 'x', 0);
@@ -61,10 +56,10 @@ class Demo extends Phaser.Scene {
             //在這裡設定img的其他屬性或功能
             return img;
         }
-        var testImg = loadImgPromise(this, {
+        var ResultCard = loadImgPromise(this, {
             x: this.viewport.centerX, 
             y: this.viewport.centerY, 
-            imgKey: 'test', 
+            imgKey: 'resultHero', 
             url: cors + 'https://playoneapps.com.tw/File/Stand/Hero/image09.png'
         })
 
@@ -87,39 +82,12 @@ class Demo extends Phaser.Scene {
             console.log(JSON.stringify(item['A1']));
         })
 
-        //建立透明觸控板
-        this.touchArea = this.rexUI.add.overlapSizer({
-            x: this.viewport.centerX,
-            y: this.viewport.centerY,
-            width: this.viewport.width,
-            height: this.viewport.height,
-        })
-        .layout()
-
         //建立背景
-        // var bg = this.add.image(this.viewport.centerX, this.viewport.centerY, 'bgPCRoom')
-        // bg.setScale(this.viewport.height/bg.height).setAlpha(0.3);
-        var bgSet = [];
-        for (let index = 6; index >= 0; index--) {
-            var bg = this.add.image(this.viewport.centerX, this.viewport.centerY, 'bgSetForestZ'+index);
-            bg.setScale(2);
-            bg.setScrollFactor(1-0.1*index);
-            //bg.setScale(this.viewport.height/bg.height).setScrollFactor(1-0.1*index);
-            bgSet.push(bg);
-        }
+        var bgSet = CreateParallelBackgrounds(this, this.viewport.centerX, this.viewport.centerY, 'bgSetForestZ', 6);
 
         //建立textplayer
         var textPlayer = CreateTextplayer(this);
-        textPlayer.popTween = this.tweens.add({
-            targets: textPlayer,
-            x: {from:textPlayer.x-20, to:textPlayer.x},
-            y: {from:textPlayer.y+20, to:textPlayer.y},
-            alpha: {from: 0, to:1},
-            ease: 'cubic',
-            //duration: textPlayer.typingSpeed,
-            duration: 500,
-            paused: true,
-        });
+        this.textPlayer = textPlayer;
 
         //建立character
         var character = CreateChar(this, 'Haru');
@@ -162,7 +130,6 @@ class Demo extends Phaser.Scene {
                     textPlayer.playPromise(tbOut.get(tbOut.curChampKey, 'say'))
                 })
         })
-        this.textPlayer = textPlayer;
     }
 
     update(){

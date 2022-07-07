@@ -14,7 +14,7 @@ import CreateChar from './CreateChar.js';
 //utils
 import GetValue from '../../plugins/utils/object/GetValue.js';
 import GetRandom from '../../plugins/utils/array/GetRandom.js';
-import SetViewportDisplaySize from '../../plugins/utils/viewport/SetDisplaySize.js';
+import SetupScaleOuter from '../../plugins/utils/viewport/SetupScaleOuter.js';
 
 class Demo extends Phaser.Scene {
     constructor() {
@@ -24,10 +24,7 @@ class Demo extends Phaser.Scene {
     }
 
     init() {
-        this.rexScaleOuter.scale();
-        this.viewport = this.rexScaleOuter.outerViewport; //on resize時this.viewport不隨之變動
-        SetViewportDisplaySize(this.viewport);
-        //this.viewport = this.cameras.main; 
+        SetupScaleOuter(scene);
     }
 
     preload() {

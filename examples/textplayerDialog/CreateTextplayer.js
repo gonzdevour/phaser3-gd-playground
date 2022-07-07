@@ -54,12 +54,12 @@ var CreateTextplayer = function(scene){
         //console.log('typingSpeed: ' + textPlayer.typingSpeed)
         textPlayer.popTween.play();
         textPlayer.setTypingSpeed(100);
-        triangle.setVisible(false);
+        textPlayer.triangle.setVisible(false);
     })
 
     textPlayer.on('wait.click', function() {
         console.log('wait click')
-        triangle.setVisible(true);
+        textPlayer.triangle.setVisible(true);
     })
 
     //指定click target
@@ -82,9 +82,21 @@ var CreateTextplayer = function(scene){
     textPlayer.angle = -2;
     textPlayer.setVisible(false);
 
-    var triangle = scene.add.triangle(200, 200, 0, 36, 36, 36, 18, 72, 0xffffff).setVisible(false); //#ffffff
-    triangle.setPosition(textPlayer.x + 0.5*textPlayer.width - 40, textPlayer.y + 0.5*textPlayer.height - 95); //-85
-    triangle.tween = AutoRemoveTween(triangle, {
+    //對話框彈出效果
+    textPlayer.popTween = scene.tweens.add({
+        targets: textPlayer,
+        x: {from:textPlayer.x-20, to:textPlayer.x},
+        y: {from:textPlayer.y+20, to:textPlayer.y},
+        alpha: {from: 0, to:1},
+        ease: 'cubic',
+        //duration: textPlayer.typingSpeed,
+        duration: 500,
+        paused: true,
+    });
+
+    textPlayer.triangle = scene.add.triangle(200, 200, 0, 36, 36, 36, 18, 72, 0xffffff).setVisible(false); //#ffffff
+    textPlayer.triangle.setPosition(textPlayer.x + 0.5*textPlayer.width - 40, textPlayer.y + 0.5*textPlayer.height - 95); //-85
+    textPlayer.triangle.tween = AutoRemoveTween(textPlayer.triangle, {
         y: '+=10',
         ease: 'Linear',
         duration: 500,
