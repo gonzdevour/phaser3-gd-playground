@@ -1,6 +1,8 @@
 import phaser from 'phaser/src/phaser.js';
 import Base from './Base.js';
 import AllPlugins from '../../plugins/AllPlugins.js';
+//gdk
+import LoadingProgressUI from './gdk/loading/LoadingProgressUI.js';
 //proj
 import CreateTextplayer from './CreateTextplayer.js';
 import CreateParallelBackgrounds from './CreateParallelBackgrounds.js';
@@ -8,7 +10,7 @@ import StartQuiz from './StartQuiz.js';
 //utils
 import zoomFrom from '../../plugins/utils/viewport/zoomFrom.js';
 import panFrom from '../../plugins/utils/viewport/panFrom.js';
-import addImageFromUrl from '../../plugins/utils/image/addImageFromUrl.js';
+import loadImageFromUrl from '../../plugins/utils/image/loadImageFromUrl.js';
 import GetValue from '../../plugins/utils/object/GetValue.js';
 import eyeTracking from './eyeTracking.js';
 
@@ -50,16 +52,21 @@ class Demo extends Base {
             var y = GetValue(config, 'y', 0);
             var imgKey = GetValue(config, 'imgKey', undefined);
             var url = GetValue(config, 'url', undefined);
-            var img = await addImageFromUrl(scene, x, y, imgKey, url);
+            await loadImageFromUrl(scene, imgKey, url, LoadingProgressUI, 1000);
+            var img = scene.add.image(x, y, imgKey)
+            //var img = await addImageFromUrl(scene, x, y, imgKey, url);
             //在這裡設定img的其他屬性或功能
             return img;
         }
-        var ResultCard = loadOnlineImagePromise(this, {
-            x: this.viewport.centerX, 
-            y: this.viewport.centerY, 
-            imgKey: 'resultHero', 
-            url: cors + 'https://playoneapps.com.tw/File/Stand/Hero/image09.png'
-        })
+
+        this.input.once('wheel', function () {
+            var ResultCard = loadOnlineImagePromise(this, {
+                x: this.viewport.centerX, 
+                y: this.viewport.centerY, 
+                imgKey: 'resultHero', 
+                url: cors + 'https://playoneapps.com.tw/File/Stand/Hero/image09.png'
+            })
+        },this)
 
         //建立textplayer
         this.textPlayer = CreateTextplayer(this);

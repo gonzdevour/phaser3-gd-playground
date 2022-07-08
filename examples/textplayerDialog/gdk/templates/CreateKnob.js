@@ -1,5 +1,5 @@
 //utils
-import GetValue from '../../../../../plugins/utils/object/GetValue.js';
+import GetValue from "../../../../plugins/utils/object/GetValue";
 
 const DEG_TO_RAD = Math.PI / 180;
 

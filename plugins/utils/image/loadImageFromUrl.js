@@ -1,11 +1,10 @@
-var addImageFromUrl = function(scene,x,y,key,url, loadingProgressUI, pseudoDuration){
+var loadImageFromUrl = function(scene,key,url, loadingProgressUI, pseudoDuration){
     return new Promise(function (resolve, reject) {
         scene.load
             .image(key,url)
             .once('filecomplete-image-' + key, function (key, type, data){
-                console.log('add online image ' + key + ' complete');
-                var result = scene.add.image(x,y,key);
-                resolve(result);
+                console.log('load online image ' + key + ' complete');
+                resolve();
             }, scene)
             .start()
         if (typeof(loadingProgressUI === 'function')){
@@ -14,4 +13,4 @@ var addImageFromUrl = function(scene,x,y,key,url, loadingProgressUI, pseudoDurat
     });
 }
 
-export default addImageFromUrl;
+export default loadImageFromUrl;
