@@ -7,6 +7,8 @@ var CreateTouchArea = function(scene) {
       height: scene.viewport.height,
   })
   .layout()
+
+  return scene.touchArea;
 }
 
 export default CreateTouchArea;

@@ -1,5 +1,5 @@
-import phaser from 'phaser/src/phaser.js';
 import TextPlayer from "../../../phaser3-rex-notes/plugins/textplayer";
+import CreateChar from './CreateChar';
 import AutoRemoveTween from '../../../phaser3-rex-notes/plugins/utils/tween/AutoRemoveTween';
 
 var CreateTextplayer = function(scene){
@@ -50,33 +50,6 @@ var CreateTextplayer = function(scene){
         }
     )
 
-    textPlayer.on('page.start', function() {
-        //console.log('typingSpeed: ' + textPlayer.typingSpeed)
-        textPlayer.popTween.play();
-        textPlayer.setTypingSpeed(100);
-        textPlayer.triangle.setVisible(false);
-    })
-
-    textPlayer.on('wait.click', function() {
-        console.log('wait click')
-        textPlayer.triangle.setVisible(true);
-    })
-
-    //指定click target
-
-    textPlayer.setClickTarget(scene.touchArea);
-    textPlayer.clickTarget.onClick(function () {
-        if (!textPlayer.isPlaying) {
-            return;
-        }
-
-        if (textPlayer.isPageTyping) {
-            textPlayer.setTypingSpeed(0);
-        } else {
-            textPlayer.typingNextPage();
-        }
-    })
-
     //在scene上畫出inst
     scene.add.existing(textPlayer);
     textPlayer.angle = -2;
@@ -94,6 +67,7 @@ var CreateTextplayer = function(scene){
         paused: true,
     });
 
+    //對話斷點的三角形特效
     textPlayer.triangle = scene.add.triangle(200, 200, 0, 36, 36, 36, 18, 72, 0xffffff).setVisible(false); //#ffffff
     textPlayer.triangle.setPosition(textPlayer.x + 0.5*textPlayer.width - 40, textPlayer.y + 0.5*textPlayer.height - 95); //-85
     textPlayer.triangle.tween = AutoRemoveTween(textPlayer.triangle, {
@@ -104,6 +78,64 @@ var CreateTextplayer = function(scene){
         repeat: -1,
         //paused: true,
     })
+
+    //建立textPlayer專用的live2D角色
+    //this.children.moveBelow(textPlayer, character);
+    textPlayer.character = CreateChar(scene, 'Haru');
+    textPlayer.character.lipTween = scene.tweens.add({
+        targets: textPlayer.character,
+        lipSyncValue: {from:0, to:1},
+        ease: 'Linear',
+        //duration: textPlayer.typingSpeed,
+        duration: 150,
+        yoyo: true,
+        paused: true,
+    });
+
+    //指定click target
+    textPlayer.setClickTarget(scene.touchArea);
+    textPlayer.clickTarget.onClick(function () {
+        if (!textPlayer.isPlaying) {
+            return;
+        }
+
+        if (textPlayer.isPageTyping) {
+            textPlayer.setTypingSpeed(0);
+        } else {
+            textPlayer.typingNextPage();
+        }
+    })
+
+    //事件觸發
+    
+    textPlayer
+        .on('wait.timeout', function(Callback){ //custom tag的範例
+            var waitTime = async function(ms){
+                await new Promise(resolve => setTimeout(resolve, ms));
+                Callback();
+            }
+            waitTime(2000);
+        })
+        .on('page.start', function() {
+            //console.log('typingSpeed: ' + textPlayer.typingSpeed)
+            textPlayer.popTween.play();
+            textPlayer.setTypingSpeed(100);
+            textPlayer.triangle.setVisible(false);
+        })
+        .on('wait.click', function() {
+            console.log('wait click')
+            textPlayer.triangle.setVisible(true);
+        })
+        .on('typing', function(child) {
+            if (child.type === 'text') {
+                textPlayer.character.lipTween.play();
+            }
+        })
+        .on('complete', function() {
+            textPlayer.popTween.stop();
+            textPlayer.character.lipTween.stop();
+            textPlayer.character.lipSyncValue = 0;
+        })
 
     return textPlayer
 }

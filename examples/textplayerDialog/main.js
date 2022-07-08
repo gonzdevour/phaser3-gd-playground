@@ -1,23 +1,16 @@
 import phaser from 'phaser/src/phaser.js';
 import Base from './Base.js';
 import AllPlugins from '../../plugins/AllPlugins.js';
-import CSVToHashTable from '../../../phaser3-rex-notes/plugins/csvtohashtable.js';
-//gdk
-import { DialogSelect } from './gdk/modaldialog/DialogType';
-import { DialogMultiSelect } from './gdk/modaldialog/DialogType';
-import { TransitionChoicesUpScaleDown } from './gdk/modaldialog/TransistionType.js';
-import { TransitionBT } from './gdk/modaldialog/TransistionType.js';
-import dialogButtonClickCallback from './gdk/modaldialog/dialogButtonClickCallback.js';
 //proj
-import CreateQuiz from './CreateQuiz.js';
 import CreateTextplayer from './CreateTextplayer.js';
-import CreateChar from './CreateChar.js';
 import CreateParallelBackgrounds from './CreateParallelBackgrounds.js';
+import StartQuiz from './StartQuiz.js';
 //utils
 import zoomFrom from '../../plugins/utils/viewport/zoomFrom.js';
+import panFrom from '../../plugins/utils/viewport/panFrom.js';
 import addImageFromUrl from '../../plugins/utils/image/addImageFromUrl.js';
 import GetValue from '../../plugins/utils/object/GetValue.js';
-import GetRandom from '../../plugins/utils/array/GetRandom.js';
+import eyeTracking from './eyeTracking.js';
 
 const cors = window.location.hostname == 'localhost'?'https://cors-anywhere-playone.herokuapp.com/':'';
 
@@ -44,10 +37,15 @@ class Demo extends Base {
         var _scene = this;
         console.log(JSON.stringify(this.cache.json.get('pkg')));
 
+        //建立背景
+        var bgSet = CreateParallelBackgrounds(this, this.viewport.centerX, this.viewport.centerY, 'bgSetForestZ', 6);
+
+        //cam縮放位移
         zoomFrom(this, 0.9, 2000);
+        panFrom(this, 0, -50, 2000);
 
         //測試外部讀取image(似乎必須透過cors-anywhere)
-        var loadImgPromise = async function(scene, config){
+        var loadOnlineImagePromise = async function(scene, config){
             var x = GetValue(config, 'x', 0);
             var y = GetValue(config, 'y', 0);
             var imgKey = GetValue(config, 'imgKey', undefined);
@@ -56,241 +54,26 @@ class Demo extends Base {
             //在這裡設定img的其他屬性或功能
             return img;
         }
-        var ResultCard = loadImgPromise(this, {
+        var ResultCard = loadOnlineImagePromise(this, {
             x: this.viewport.centerX, 
             y: this.viewport.centerY, 
             imgKey: 'resultHero', 
             url: cors + 'https://playoneapps.com.tw/File/Stand/Hero/image09.png'
         })
 
-        //建立camera跟隨的center物件(使用sizer以便直接套用easeMove的功能)
-        this.center = this.rexUI.add.label({
-            x: this.viewport.centerX,
-            y: this.viewport.centerY,
-            icon: this.add.image(0, 0, 'no'),
-        }).layout()
-        this.cameras.main.startFollow(this.center, true, 0.5, 0.5);
-
-        //建立測試結果列表資料
-        var tbIntroHeroes = new CSVToHashTable().loadCSV(this.cache.text.get('introHeroes'));
-        //console.log(tbIntroHeroes.get('12', 'name'))//測試CSVToHashTable是否讀取成功
-
-        //建立題庫
-        var csvstring = this.cache.text.get('questions');
-        var quizArr = CreateQuiz(csvstring,10); //將csv轉taffydb並從中取出10題
-        quizArr.forEach(function(item, index, arr){
-            console.log(JSON.stringify(item['A1']));
-        })
-
-        //建立背景
-        var bgSet = CreateParallelBackgrounds(this, this.viewport.centerX, this.viewport.centerY, 'bgSetForestZ', 6);
-
         //建立textplayer
-        var textPlayer = CreateTextplayer(this);
-        this.textPlayer = textPlayer;
-
-        //建立character
-        var character = CreateChar(this, 'Haru');
-
-        textPlayer.character = character;
-        textPlayer.character.lipTween = this.tweens.add({
-            targets: textPlayer.character,
-            lipSyncValue: {from:0, to:1},
-            ease: 'Linear',
-            //duration: textPlayer.typingSpeed,
-            duration: 150,
-            yoyo: true,
-            paused: true,
-        });
-
-        textPlayer
-            .on('wait.timeout', function(Callback){
-                var waitTime = async function(ms){
-                    await new Promise(resolve => setTimeout(resolve, ms));
-                    Callback();
-                }
-                waitTime(2000);
-            })
-            .on('typing', function(child) {
-                if (child.type === 'text') {
-                    textPlayer.character.lipTween.play();
-                }
-            })
-            .on('complete', function() {
-                textPlayer.popTween.stop();
-                textPlayer.character.lipTween.stop();
-                textPlayer.character.lipSyncValue = 0;
-            })
+        this.textPlayer = CreateTextplayer(this);
 
         //啟動問答
         this.input.once('pointerup', function () {
-            textPlayer.setVisible(true);
-            QuizPromise(textPlayer, quizArr, tbIntroHeroes)
-                .then(function(tbOut){
-                    textPlayer.playPromise(tbOut.get(tbOut.curChampKey, 'say'))
-                })
-        })
+            this.textPlayer.setVisible(true);
+            StartQuiz(this, this.textPlayer);
+        },this)
     }
 
     update(){
-        eyeTracking(this);
+        //eyeTracking(this);
     }
-}
-
-var eyeTracking = function(scene){
-    var pointer = scene.input.activePointer;
-
-    if (pointer.isDown){
-        scene.center.moveTo({x:pointer.worldX, y:pointer.worldY, ease: 'linear', speed: 300});
-    } else {
-        scene.center.moveTo({x:scene.viewport.centerX, y:scene.viewport.centerY, ease: 'linear', speed: 600});
-        //scene.center.moveStop();
-    } 
-
-    if (scene.touchArea.isInTouching){
-        scene.textPlayer.character.lookAt( pointer.worldX, pointer.worldY, {
-            // camera: scene.cameras.main,
-            // eyeBallX: 1, eyeBallY: 1,
-            // angleX: 30, angleY: 30, angleZ: 30,
-            // bodyAngleX: 10
-        })
-    } else {
-        scene.textPlayer.character.lookForward();
-    }
-}
-
-var waitDialog = async function(textPlayer){
-    var _scene = textPlayer.scene;
-    var question = textPlayer.question;
-    var character = textPlayer.character;
-    character.timeScale = 1;
-    character.setExpression('F01').startMotion('Idle', 0, 'force')
-    await textPlayer.playPromise(question['Q']);
-    //choicesData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
-    var result = await DialogSelect(_scene, {
-        //title: 'test title', 
-        //content: 'test content', 
-        actions: [
-            {imageKey:'no', text: '清空', type: 'clear', callback: undefined},
-            {imageKey:'yes', text: '確定', type: 'confirm', callback: undefined, closeDialog:true},
-        ],
-        choicesData: {
-            ifShuffle:0,
-            list: CreateChoiceDataList(question),
-        },
-        extraConfig: {
-            x: _scene.viewport.centerX,
-            y: _scene.viewport.bottom,
-            width: game.config.width-50, 
-            cover: {color:0x663030, alpha: 0.1},
-            transitIn: TransitionBT,
-            transitOut: TransitionChoicesUpScaleDown,
-            duration:{ in: 600, out: 1400 },
-            dialogButtonClickCallback: dialogButtonClickCallback,
-        }
-    })
-    //console.log('dialogResult:' + JSON.stringify(result))
-    //character.timeScale = 1.5;
-    //character.setExpression('F06').stopAllMotions().startMotion('TapBody', 0, 'force')
-    //await textPlayer.playPromise(question['Say' + GetValue(result, 'singleSelectedName', 1) ]+'[wait=click][wait=500]')
-    return result;
-}
-
-var CreateChoiceDataList = function(question){
-    var result = [];
-    for (let index = 0; index < question.Cnt; index++) {
-        var data = {
-            imageKey: undefined,
-            text: question['A'+(index+1)],
-            indexFixed: 1,
-        };
-        result.push(data);
-    }
-    //console.log(JSON.stringify(result))
-    return result;
-}
-
-var resultHandler = function(result, curQ, tbIntroHeroes){
-    console.log('handling result:\n' + JSON.stringify(result));
-
-    //有正確答案但未答對時重新詢問同一題
-    if (curQ['Correct'] != 0){ //有正確答案
-        var correct = curQ['Correct'];
-        var answer = 'A' + result.singleSelectedName;
-        if (answer != correct){
-            tbIntroHeroes.ifAskAgain = true;
-        } else {
-            tbIntroHeroes.ifAskAgain = false;
-        }
-    } else {
-        tbIntroHeroes.ifAskAgain = false;
-    }
-
-    console.log(curQ['Score' + result.singleSelectedName])
-    //從result取出單選結果對應的加分表，並將字串加分表轉為物件
-    var score = JSON.parse(curQ['Score' + result.singleSelectedName]);
-    //依加分表對table中的每個加分項目加上分數
-    for(var key in score){
-        var newValue = tbIntroHeroes.get(key, 'Vote') + score[key]
-        tbIntroHeroes.set(key, 'Vote', newValue)
-        //tbIntroHeroes.add(key, 'Vote', score[key])
-        console.log(tbIntroHeroes.get(key, 'name') + tbIntroHeroes.get(key, 'Vote'))
-    }
-    //整理加分完成的table，取出最高分的rowKey以得知最高分
-    tbIntroHeroes.sortCol('Vote', 'descending');
-    var topRowkey = tbIntroHeroes.rowKeys[0];
-    var topVoteCnt = tbIntroHeroes.get(topRowkey, 'Vote')
-
-    //取出所有符合最高分的rowKey，隨機決定其中之一為冠軍
-    var champions = [];
-    tbIntroHeroes.rowKeys.forEach(function(key, idx, arr){
-        if(tbIntroHeroes.get(key, 'Vote') == topVoteCnt){
-            champions.push(key);
-        }
-    })
-    var curChampKey = GetRandom(champions);
-    console.log('curChamp:' + tbIntroHeroes.get(curChampKey, 'name') + tbIntroHeroes.get(curChampKey, 'Vote'))
-
-    //把冠軍rowKey掛在table上回傳
-    tbIntroHeroes.curChampKey = curChampKey;
-
-    return tbIntroHeroes;
-}
-
-var QuizPromise = async function (textPlayer, quizArr, out) {
-    var curQIdx = 0;
-    var lastQIdx = quizArr.length;
-    while (curQIdx !== lastQIdx) { //如果不是最後一題
-        var curQ = quizArr[curQIdx]
-        var result = await TextPlayerPromise(textPlayer, curQ);//清理上一題，將下一題與textPlayer組合起來，回傳上一題作答結果
-        out = resultHandler(result, curQ, out);
-        //await QuizResultModalPromise(textPlayer.scene, result); //顯示上一題作答結果(傳入scene和config給彈出面板Modal)
-        if (out.ifAskAgain === false){ //是否要重問同一題
-            curQIdx++;
-        }
-    }
-    //最後一題，回傳結束
-    return out;
-}
-
-var TextPlayerPromise = function (textPlayer, question) { //清理上一題，並將quiz吐出的新question與textPlayer組合起來
-    return new Promise(function (resolve, reject) {
-        SetupTextPlayer(textPlayer, question, function (result) {
-            resolve(result); //回傳作答結果
-        })
-    });
-}
-
-//清理上一題，並將新題目與panel組合起來，以作答callback回傳給QuizPromise
-var SetupTextPlayer = async function (textPlayer, question, onSubmit) { 
-    textPlayer.question = question;
-    var result = await waitDialog(textPlayer);
-
-    if (onSubmit) { //如果有傳入callback function
-        onSubmit(result); //呼叫callback，完成QuizPanelPromise，讓QuizPromise吐出next question循環
-    }
-
-    return textPlayer;
 }
 
 var config = {

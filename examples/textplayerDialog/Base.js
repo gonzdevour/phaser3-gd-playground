@@ -1,6 +1,7 @@
 import 'phaser';
 import SetupScaleOuter from '../../plugins/utils/viewport/SetupScaleOuter';
 import CreateTouchArea from '../../plugins/utils/viewport/CreateTouchArea';
+import CreateCameraCenter from '../../plugins/utils/viewport/CreateCameraCenter';
 
 class Base extends Phaser.Scene {
 
@@ -20,8 +21,9 @@ class Base extends Phaser.Scene {
         return style;
     }
     init() { //要確定引用的scene沒有init，否則該scene要加super.init()
-        SetupScaleOuter(this);
-        CreateTouchArea(this);//因為會用到viewport, 這條必須在SetupScaleOuter後
+        SetupScaleOuter(this);    //this.viewport
+        CreateTouchArea(this);    //this.toucharea, 因為會用到viewport, 這條必須在SetupScaleOuter後
+        CreateCameraCenter(this); //this.center, camera main follows easeMove-able center label
         this.setupTransition();
     }
 

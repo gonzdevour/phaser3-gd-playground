@@ -6,7 +6,7 @@ var ModalDialogPromise = function (scene, config) {
         .on('button.click', function (button, groupName, index, pointer, event){
             if ( typeof(config.dialogButtonClickCallback) === 'function' ){
                 //指定callback
-                config.dialogButtonClickCallback(scene, dialog, button, groupName, index);
+                config.dialogButtonClickCallback(scene, dialog, button, groupName, index, config);
             } else {
                 //通用callback
                 var choicesState = dialog.getChoicesButtonStates();
