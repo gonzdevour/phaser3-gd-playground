@@ -1,0 +1,21 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "image",
+        "key": "cardBack",
+        "url": "assets/image/cardBack.png"
+      },
+      {
+        "type": "image",
+        "key": "cardBg",
+        "url": "assets/image/cardBg.png"
+      },
+      {
+        "type": "image",
+        "key": "cardFront",
+        "url": "assets/image/cardFront.png"
+      }
+    ]
+  }
+}

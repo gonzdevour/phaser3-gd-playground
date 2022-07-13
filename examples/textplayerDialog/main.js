@@ -53,20 +53,44 @@ class Demo extends Base {
             var imgKey = GetValue(config, 'imgKey', undefined);
             var url = GetValue(config, 'url', undefined);
             await loadImageFromUrl(scene, imgKey, url, LoadingProgressUI, 1000);
-            var img = scene.add.image(x, y, imgKey)
+            var img = scene.rexUI.add.label({
+                x: x, y:y,
+                icon: scene.add.image(0, 0, imgKey),
+            }).layout()
             //var img = await addImageFromUrl(scene, x, y, imgKey, url);
             //在這裡設定img的其他屬性或功能
+
+            var perspective = scene.rexUI.add.perspective(img, {hideCCW: false});
+            perspective.enter();  // Snapshot before tween
+            scene.tweens.add({
+                targets: perspective,
+                angleY: { start: 0, to: -180 },
+                ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+                duration: 2000,
+                repeat: 2,            // -1: infinity
+                yoyo: true,
+    
+                onStart: function () {
+                    // perspective.enter();
+                },
+                onComplete: function () {
+                    perspective.exit();
+                }
+            });
+
             return img;
         }
 
+        var Resultcard;
         this.input.once('wheel', function () {
-            var ResultCard = loadOnlineImagePromise(this, {
+            var Card = loadOnlineImagePromise(this, {
                 x: this.viewport.centerX, 
                 y: this.viewport.centerY, 
                 imgKey: 'resultHero', 
                 url: cors + 'https://playoneapps.com.tw/File/Stand/Hero/image09.png'
             })
         },this)
+
 
         //建立textplayer
         this.textPlayer = CreateTextplayer(this);
