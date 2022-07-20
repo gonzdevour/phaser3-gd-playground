@@ -46,6 +46,7 @@ class Test extends Phaser.Scene {
 
 var LoadImageTesting = function (scene) {
     scene.add.image(300, 300, 'bolt');
+    scene.add.image(300, 400, 'add');
 }
 
 var LoadTextTesting = function (scene) {

@@ -27,6 +27,11 @@
         "url": "assets/image/bolt.png"
       },
       {
+        "type": "image",
+        "key": "add",
+        "url": "assets/image/obj/add.png"
+      },
+      {
         "type": "spritesheet",
         "key": "explosion",
         "frameConfig": {
