@@ -6,6 +6,7 @@ import LoadingProgressUI from './gdk/loading/LoadingProgressUI.js';
 //proj
 import loadImageFromUrl from '../../plugins/utils/image/loadImageFromUrl.js';
 import GetValue from '../../plugins/utils/object/GetValue.js';
+import { TextStyle } from 'phaser/src/gameobjects';
 
 const cors = window.location.hostname == 'localhost'?'https://cors-anywhere-playone.herokuapp.com/':'';
 
@@ -36,7 +37,7 @@ class Demo extends Base {
             var card = scene.rexUI.add.perspectiveCard({
                 x:x,
                 y:y,    
-                front: CreateLabel(scene, 'cardFrontWithImage'),
+                front: CreateLabel(scene, 'cardFrontWithImage', 'super rate card which every player want to get no matter what will happen.'),
                 back: CreateLabel(scene, 'cardBack'),
                 face: 'back',
         
@@ -61,21 +62,21 @@ class Demo extends Base {
             // card.flip.on('complete', function(){
             //     card.flip.flipLeft();
             // })
-            card.flip.flipRight(5000, 4);
+            card.flip.flipRight(4000, 2);
 
             scene.tweens.timeline({
                 targets: card,
                 tweens:[
-                {ease: 'cubic-easeIn', angle:{from: 360, to: -2}, scale: {from: 0, to: 1}, y: {from: card.y-800, to: card.y}, duration: 3000},
                 {props:{
-                    //y: {value: {from: card.y, to: card.y-30}, ease: 'linear', duration: 1000},
-                    //angle: {value:{from: -2, to: 1}, ease: 'cubic-easeIn', duration: 3000},
-                    angleZ: {value:{from: 0, to: 30}, ease: 'cubic-easeIn', duration: 3000},
+                    y:{value: {from: card.y-800, to: card.y}, ease: 'back'},
+                    angle:{value: {from: 0, to: 362}, ease: 'cubic'},
+                    scale:{value: {from:0, to:1}, ease: 'linear'},
+                }, duration: 4000},
+                {props:{
+                    y: {value: {from: card.y, to: card.y-30}, ease: 'cubic-easeIn', duration: 1000},
                 }, yoyo: true, repeat: -1},
                 ]   
             })
-            debugger
-
             return card;
         }
 
@@ -93,6 +94,12 @@ class Demo extends Base {
     update(){
         //eyeTracking(this);
     }
+}
+
+var Test = function(card){
+    //debugger
+    //card.angleY = 0;
+    console.log('test card')
 }
 
 var DrawCard = function(scene, cardKey, bgKey, imgKey, frontKey){
@@ -117,12 +124,26 @@ var DrawFrame = function(rt, imgKey, x, y){
     rt.draw(imgKey, x-0.5*imgFrame.width, y-0.5*imgFrame.height);
 }
 
-var CreateLabel = function(scene, imgKey){
+var CreateLabel = function(scene, imgKey, text){
     var label = scene.rexUI.add.label({
         icon: scene.add.image(0, 0, imgKey),
     })
     return label;
 }
+
+// var CreateLabel = function(scene, imgKey, text){
+//     var label = scene.rexUI.add.label({
+//         orientation:'y',
+//         text: text?scene.add.text(0,0,text,{
+//             fontSize:36,
+//             //color: '0x0',
+//             wordWrap: { width: 600 - 20 - 20 }
+//         }):undefined,
+//         icon: scene.add.image(0, 0, imgKey),
+//         space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10, }
+//     })
+//     return label;
+// }
 
 var config = {
     type: Phaser.AUTO,

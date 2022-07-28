@@ -1,4 +1,4 @@
-var loadImageFromUrl = function(scene,key,url, loadingProgressUI, pseudoDuration){
+var loadImageFromUrl = function(scene,key,url, LoadingProgress, progressUI, pseudoDuration){
     return new Promise(function (resolve, reject) {
         scene.load
             .image(key,url)
@@ -7,8 +7,8 @@ var loadImageFromUrl = function(scene,key,url, loadingProgressUI, pseudoDuration
                 resolve();
             }, scene)
             .start()
-        if (typeof(loadingProgressUI === 'function')){
-            loadingProgressUI(scene, pseudoDuration);
+        if (typeof(LoadingProgress === 'function')){
+            LoadingProgress(scene, progressUI, pseudoDuration);
         }
     });
 }

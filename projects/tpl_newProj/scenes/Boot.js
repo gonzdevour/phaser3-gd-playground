@@ -16,6 +16,7 @@ class Boot extends Base {
         })
     }
     init() {
+        super.scaleOuter(); //Base: this.rexScaleOuter.scale();
         ToolsPrepare(this);//建立lsData, appData, localization, api, rtt
     }
     preload() {

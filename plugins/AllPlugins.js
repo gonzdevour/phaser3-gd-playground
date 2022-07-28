@@ -11,7 +11,7 @@ import RealTimeTimersPlugin from '../../phaser3-rex-notes/plugins/realtimetimers
 import Live2dPlugin from '../../phaser3-rex-notes/dist/rexlive2dplugin.min.js';
 import AnchorPlugin from '../../phaser3-rex-notes/plugins/anchor-plugin.js';
 import ButtonPlugin from '../../phaser3-rex-notes/plugins/button-plugin.js';
-import PerspectiveImagePlugin from '../../phaser3-rex-notes/plugins/perspectiveimage-plugin';
+import PerspectiveImagePlugin from '../../phaser3-rex-notes/plugins/perspectiveimage-plugin.js';
 
 export default {
     scene: [

@@ -1,0 +1,35 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "audio",
+        "key": "right",
+        "url": [
+          "assets/audio/right.m4a",
+          "assets/audio/right.mp3",
+          "assets/audio/right.ogg"
+        ]
+      },
+      {
+        "type": "image",
+        "key": "cardBack",
+        "url": "assets/image/cardBack.png"
+      },
+      {
+        "type": "image",
+        "key": "cardBg",
+        "url": "assets/image/cardBg.png"
+      },
+      {
+        "type": "image",
+        "key": "cardFront",
+        "url": "assets/image/cardFront.png"
+      },
+      {
+        "type": "text",
+        "key": "version",
+        "url": "assets/text/version.txt"
+      }
+    ]
+  }
+}

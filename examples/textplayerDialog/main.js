@@ -108,6 +108,7 @@ class Demo extends Base {
 }
 
 var config = {
+    title:'textplayerDialog',
     type: Phaser.AUTO,
     parent: 'phaser-example',
     width: 768,

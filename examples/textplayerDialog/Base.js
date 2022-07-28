@@ -1,7 +1,9 @@
 import 'phaser';
+import { DefaultData } from './gdk/settings/DefaultData';
 import SetupScaleOuter from '../../plugins/utils/viewport/SetupScaleOuter';
 import CreateTouchArea from '../../plugins/utils/viewport/CreateTouchArea';
 import CreateCameraCenter from '../../plugins/utils/viewport/CreateCameraCenter';
+import CreateLsData from './gdk/storage/CreateLsData';
 
 class Base extends Phaser.Scene {
 
@@ -21,10 +23,16 @@ class Base extends Phaser.Scene {
         return style;
     }
     init() { //要確定引用的scene沒有init，否則該scene要加super.init()
+
+        //scene kits
         SetupScaleOuter(this);    //this.viewport
         CreateTouchArea(this);    //this.toucharea, 因為會用到viewport, 這條必須在SetupScaleOuter後
         CreateCameraCenter(this); //this.center, camera main follows easeMove-able center label
         this.setupTransition();
+
+        //game kits
+        console.log('gameTitle: ' + this.game.config.gameTitle);
+        this.game.lsData = CreateLsData(this.game.config.gameTitle, DefaultData );
     }
 
     drawBounds(sizer, color) {

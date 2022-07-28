@@ -1,0 +1,155 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "audio",
+        "key": "right",
+        "url": [
+          "assets/audio/right.m4a",
+          "assets/audio/right.mp3",
+          "assets/audio/right.ogg"
+        ]
+      },
+      {
+        "type": "image",
+        "key": "cardBack",
+        "url": "assets/image/cardBack.png"
+      },
+      {
+        "type": "image",
+        "key": "cardBg",
+        "url": "assets/image/cardBg.png"
+      },
+      {
+        "type": "image",
+        "key": "cardFront",
+        "url": "assets/image/cardFront.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_arrowL",
+        "url": "assets/image/ico_arrowL.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_confirm",
+        "url": "assets/image/ico_confirm.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_delete",
+        "url": "assets/image/ico_delete.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_eraser",
+        "url": "assets/image/ico_eraser.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_gear",
+        "url": "assets/image/ico_gear.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_info",
+        "url": "assets/image/ico_info.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_mail",
+        "url": "assets/image/ico_mail.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_music",
+        "url": "assets/image/ico_music.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_no",
+        "url": "assets/image/ico_no.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_qcnt",
+        "url": "assets/image/ico_qcnt.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_search",
+        "url": "assets/image/ico_search.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_sound",
+        "url": "assets/image/ico_sound.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_speak",
+        "url": "assets/image/ico_speak.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_yes",
+        "url": "assets/image/ico_yes.png"
+      },
+      {
+        "type": "image",
+        "key": "lightball0",
+        "url": "assets/image/lightball0.png"
+      },
+      {
+        "type": "image",
+        "key": "lightball1",
+        "url": "assets/image/lightball1.png"
+      },
+      {
+        "type": "image",
+        "key": "right",
+        "url": "assets/image/right.png"
+      },
+      {
+        "type": "image",
+        "key": "bgSetForestZ0",
+        "url": "assets/image/bg/bgSetForestZ0.png"
+      },
+      {
+        "type": "image",
+        "key": "bgSetForestZ1",
+        "url": "assets/image/bg/bgSetForestZ1.png"
+      },
+      {
+        "type": "image",
+        "key": "bgSetForestZ2",
+        "url": "assets/image/bg/bgSetForestZ2.png"
+      },
+      {
+        "type": "image",
+        "key": "bgSetForestZ3",
+        "url": "assets/image/bg/bgSetForestZ3.png"
+      },
+      {
+        "type": "image",
+        "key": "bgSetForestZ4",
+        "url": "assets/image/bg/bgSetForestZ4.png"
+      },
+      {
+        "type": "image",
+        "key": "bgSetForestZ5",
+        "url": "assets/image/bg/bgSetForestZ5.png"
+      },
+      {
+        "type": "image",
+        "key": "bgSetForestZ6",
+        "url": "assets/image/bg/bgSetForestZ6.png"
+      },
+      {
+        "type": "text",
+        "key": "version",
+        "url": "assets/text/version.txt"
+      }
+    ]
+  }
+}
