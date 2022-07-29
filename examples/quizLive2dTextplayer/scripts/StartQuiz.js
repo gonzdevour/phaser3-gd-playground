@@ -93,9 +93,14 @@ var SetupTextPlayer = async function (textPlayer, question, onSubmit) { //清理
 
 var result = async function(scene, textPlayer, tbOut){
     textPlayer.backTween.play();
-    var cardText = tbOut.get(tbOut.curChampKey, 'say') + '\n\n' + tbOut.get(tbOut.curChampKey, 'description');
+    var cardText = {
+        name: tbOut.get(tbOut.curChampKey, 'name'),
+        slogan: tbOut.get(tbOut.curChampKey, 'slogan'),
+        say: tbOut.get(tbOut.curChampKey, 'say'),
+        description: tbOut.get(tbOut.curChampKey, 'description')
+    }
     var imgUrl = 'https://playoneapps.com.tw/File/Stand/Hero/image0' + tbOut.get(tbOut.curChampKey, 'img') + '.png';
-    await CreateCard(scene, {
+    var card = await CreateCard(scene, {
         x: scene.viewport.centerX,
         y: scene.viewport.centerY,
         text: cardText,

@@ -1,10 +1,11 @@
 //gdk
 import CreateKnob from '../gdk/templates/CreateKnob.js';
 import LoadingProgress from '../gdk/loading/LoadingProgress.js';
-//proj
+//utils
 import loadImageFromUrl from '../../../plugins/utils/image/loadImageFromUrl.js';
 import GetValue from '../../../plugins/utils/object/GetValue.js';
 import { Delay } from '../../../../phaser3-rex-notes/plugins/eventpromise.js';
+import DrawToTexture from '../../../plugins/utils/image/DrawToTexture.js';
 
 //測試外部讀取image(似乎必須透過cors-anywhere)
 var loadOnlineImagePromise = async function(scene, config){
@@ -50,10 +51,22 @@ var loadOnlineImagePromise = async function(scene, config){
 
 
 var CreateCardFront = function(scene, bgKey, iconKey, text){
-    text = '[stroke][b][i]'+text+'[/i][/b][/stroke]';
     var bg = scene.add.image(0,0,bgKey);
-    var char = scene.add.image(0, 0, iconKey).setScale(2);
-    var txt = scene.rexUI.add.BBCodeText(0, 0, text, { 
+    var char = scene.add.image(0, 0, iconKey).setScale(2).setOrigin(0.5,0.7);
+
+    var txtName = scene.rexUI.add.BBCodeText(0, 0, '[stroke][b][i]' + text.name + '[/i][/b][/stroke]', { 
+        fontFamily: 'arial', fontSize: 64, testString: '|MÉqgy回', padding: {left:40, right:40, top:20, bottom:20}, 
+        color:'#ffd900', stroke:'#666666', strokeThickness: 3,
+    }).setOrigin(1)
+
+    var txtSay = scene.rexUI.add.BBCodeText(0, 0, '[stroke][b][i]' + text.say + '[/i][/b][/stroke]', { 
+        fontFamily: 'arial', fontSize: 40, testString: '|MÉqgy回', padding: {left:70, right:70, top:20, bottom:20}, 
+        color:'white', stroke:'#242424', strokeThickness: 3, fixedWidth: 600, wrap: { mode: 'character' },
+        backgroundColor: 'rgba(0,0,0,0.4)',  // #111111
+        backgroundColor2: 'rgba(100,100,100,0.4)',  // #333333
+    }).setOrigin(0.5)
+
+    var txtDesc = scene.rexUI.add.BBCodeText(0, 0, '[stroke][b][i]' + text.description + '[/i][/b][/stroke]', { 
         fontFamily: 'arial',
         fontSize: 40, 
         lineSpacing: 8,
@@ -61,18 +74,27 @@ var CreateCardFront = function(scene, bgKey, iconKey, text){
         padding: 20,
         color:'white', 
         fixedWidth: 500-2*20, 
-        fixedHeight: 500-2*20, 
+        fixedHeight: 300-2*20, 
         wrap: { mode: 'character' },
         //align: 'center',
         stroke:'#666666', 
         strokeThickness: 3,
-        backgroundColor: '#5a5a5a',  // #111111
-        backgroundColor2: '#ebebeb',  // #333333
+        backgroundColor: '#111111',  // #111111
+        backgroundColor2: '#777777',  // #333333
         backgroundHorizontalGradient: false,
         //backgroundStrokeColor: '#113344',  // #113344
         //backgroundStrokeLineWidth: 2,
         backgroundCornerRadius: 20,
-    }).setOrigin(0.5,0.5)
+    }).setOrigin(0.5)
+
+    var cover = scene.add.image(0,0,'cardFront');
+
+    DrawToTexture(scene, 0, 0, bg.width, bg.height, [bg,char], 'newImg', true);
+    var newImg = scene.add.image(0, 0, 'newImg');
+
+    // var sizerMain = scene.rexUI.add.label({
+    //     icon: newImg
+    // }).layout()
 
     // var label = scene.rexUI.add.label({
     //     orientation: 'y',
@@ -82,22 +104,22 @@ var CreateCardFront = function(scene, bgKey, iconKey, text){
     //     space:{top:100}
     // }).layout()
 
-    var cover = scene.add.image(0,0,'cardFront');
+    var sizerMain = scene.rexUI.add.overlapSizer({
+    })
+    .setMinSize(600,800)
+    .add(newImg,{ key:'bg', align: 'center', expand: false, })
+    .add(txtName,{ align: 'right-top', expand: false, })
+    .add(txtSay,{ align: 'center', expand: false, offsetY: 60, })
+    .add(txtDesc,{ align: 'bottom', expand: false, })
+    .add(cover,{ align: 'center' })
+    .moveDepthBelow(newImg)
+    .layout()
 
-    // var sizerMain = scene.rexUI.add.overlapSizer({
-    // })
-    // .setMinSize(600,800)
-    // .add(bg,{ align: 'center' })
-    // .add(txt,{ align: 'bottom', expand: false, })
-    // //.add(char,{ align: 'center', expand: false, })
-    // .add(cover,{ align: 'center' })
-    // .layout()
-
-    var sizerMain = scene.rexUI.add.container(0,0,600,800)
-        .add(bg)
-        //.add(txt)
-        .add(char)
-        .add(cover)
+    // var sizerMain = scene.rexUI.add.container(0,0,600,800)
+    //     .add(bg)
+    //     .add(txt)
+    //     .add(char)
+    //     .add(cover)
 
     return sizerMain;
 }
@@ -121,12 +143,15 @@ var CreateCard = async function(scene, config){
         x: centerX, 
         y: centerY, 
         imgKey: GetValue(config, 'imgKey', 'resultHero'), 
-        text: GetValue(config, 'text', 'Unknown Runes'),
+        text: GetValue(config, 'text', {description: 'Unknown Runes'}),
         url: GetValue(config, 'url', undefined)
     })
     await Delay(4000);
     var lightball = scene.add.image(centerX, centerY, 'lightball1');
     Card.moveDepthBelow(lightball) //因為Card是containerlite所以要用moveDepthBelow做群組移動
+    Card.setInteractive().on('pointerup', function(pointer){
+        Card.flip.flipRight(2000, 3);
+    })
     //scene.children.moveBelow(lightball, Card)
     scene.tweens.timeline({
         targets: lightball,
@@ -141,6 +166,7 @@ var CreateCard = async function(scene, config){
             },
         ],
     })
+    return Card;
 }
 
 export default CreateCard;

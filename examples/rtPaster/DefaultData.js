@@ -1,5 +1,5 @@
 import Boot from "./scenes/Boot";
-import Home from './Home'
+import Test from './Test'
 
 import AppLang from "../../plugins/utils/language/AppLang";
 import DeviceLang from "../../plugins/utils/language/DeviceLang";
@@ -10,10 +10,10 @@ var DefaultAppConfig = {
     appID: 'rtPaster',
     width: 768,
     height: 1334,
-    scenes: [Boot, Home],
+    scenes: [Boot, Test],
     sceneKey: {
         Boot: 'Boot',
-        Home: 'Home',
+        Home: 'Test',
     },
     IfCleanStorage: false,
     cors: window.location.hostname == 'localhost'?'https://cors-anywhere-playone.herokuapp.com/':'',

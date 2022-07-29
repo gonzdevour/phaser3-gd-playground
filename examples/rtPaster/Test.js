@@ -4,7 +4,7 @@ import { DefaultAppConfig } from './DefaultData.js';
 //utils
 import DrawToTexture from '../../plugins/utils/image/DrawToTexture.js';
 
-class Home extends Base {
+class Test extends Base {
     constructor() {
         super({
             key: DefaultAppConfig.sceneKey.Home
@@ -12,16 +12,16 @@ class Home extends Base {
     }
     create() {
 
-        DrawToTexture(this, 0, 0, 200, 400, [
-            this.add.image(0, 0, 'ico_arrowL').setOrigin(0,0).setScale(3).setAngle(15),
-            this.add.image(0, 0, 'ico_confirm').setOrigin(0,0).setScale(0.5).setAngle(5),
-            this.rexUI.add.alphaMaskImage(0,0,'ico_confirm',{ 
+        DrawToTexture(this, 300, 300, 300, 400, [
+            this.add.image(300, 300, 'ico_arrowL').setScale(3).setAngle(15),
+            this.add.image(300, 300, 'ico_confirm').setScale(0.5).setAngle(5),
+            this.rexUI.add.alphaMaskImage(300,300,'ico_confirm',{ 
                 mask: {
                     key: 'ico_arrowL',
                     // invertAlpha: true,
                     // scale: 4,
                 }
-            }).setOrigin(0,0).setAngle(30)
+            }).setAngle(30)
         ], 'newImg', true)
 
         this.input.on('pointerdown', function(pointer){
@@ -31,4 +31,4 @@ class Home extends Base {
 }
 
 
-export default Home;
+export default Test;
