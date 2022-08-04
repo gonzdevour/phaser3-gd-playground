@@ -1,5 +1,6 @@
 import Boot from "./scenes/Boot";
 import Home from "./scenes/Home";
+import Hud from "./scenes/Hud";
 
 import AppLang from "../../plugins/utils/language/AppLang";
 import DeviceLang from "../../plugins/utils/language/DeviceLang";
@@ -10,10 +11,11 @@ var DefaultAppConfig = {
     appID: 'quizLive2dTextplayer',
     width: 768,
     height: 1334,
-    scenes: [Boot, Home],
+    scenes: [Boot, Home, Hud],
     sceneKey: {
         Boot: 'Boot',
         Home: 'Home',
+        Hud: 'Hud',
     },
     IfCleanStorage: false,
     cors: window.location.hostname == 'localhost'?'https://cors-anywhere-playone.herokuapp.com/':'',

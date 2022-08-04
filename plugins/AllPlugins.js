@@ -12,6 +12,8 @@ import Live2dPlugin from '../../phaser3-rex-notes/dist/rexlive2dplugin.min.js';
 import AnchorPlugin from '../../phaser3-rex-notes/plugins/anchor-plugin.js';
 import ButtonPlugin from '../../phaser3-rex-notes/plugins/button-plugin.js';
 import PerspectiveImagePlugin from '../../phaser3-rex-notes/plugins/perspectiveimage-plugin.js';
+import CustomProgressPlugin from '../../phaser3-rex-notes/plugins/customprogress-plugin';
+import WarpPipelinePlugin from '../../phaser3-rex-notes/plugins/warppipeline-plugin';
 
 export default {
     scene: [
@@ -86,6 +88,16 @@ export default {
         {
             key: 'rexPerspectiveImagePlugin',
             plugin: PerspectiveImagePlugin,
+            start: true
+        },
+        {
+            key: 'rexCustomProgressPlugin',
+            plugin: CustomProgressPlugin,
+            start: true
+        },
+        {
+            key: 'rexWarppipelinePlugin',
+            plugin: WarpPipelinePlugin,
             start: true
         },
     ]

@@ -4,7 +4,6 @@ import { DefaultAppConfig } from '../DefaultData.js';
 import CreateParallelBackgrounds from '../scripts/CreateParallelBackgrounds.js';
 import CreateTextplayer from '../scripts/CreateTextplayer.js';
 import StartQuiz from '../scripts/StartQuiz.js';
-import CreateCard from '../scripts/CreateCard.js';
 import eyeTracking from '../scripts/eyeTracking.js';
 //utils
 import zoomFrom from '../gdk/viewport/zoomFrom.js';
@@ -17,6 +16,7 @@ class Home extends Base {
     }
     create() {
 
+        this.scene.launch('Hud');
         //console.log(JSON.stringify(this.cache.json.get('pkg')));
 
         //建立背景

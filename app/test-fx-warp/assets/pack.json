@@ -1,0 +1,21 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "image",
+        "key": "fire",
+        "url": "assets/image/fire.png"
+      },
+      {
+        "type": "image",
+        "key": "logo",
+        "url": "assets/image/logo.png"
+      },
+      {
+        "type": "image",
+        "key": "right",
+        "url": "assets/image/right.png"
+      }
+    ]
+  }
+}

@@ -23,7 +23,7 @@ var CreateBar = function(scene, config){
             //background: sliderBackgroundGameObject,
             track: scene.rexUI.add.roundRectangle(0, 0, 0, 36, 18, COLOR_PRIMARY),
             indicator: scene.rexUI.add.roundRectangle(0, 0, 0, 36, 18, COLOR_LIGHT),
-            //thumb: sliderThumbGameObject,
+            thumb: scene.add.pointlight(0, 0, 0xffd900, 64, 0.2),
             input: 'none',
             easeValue: {
                 duration: 2000,

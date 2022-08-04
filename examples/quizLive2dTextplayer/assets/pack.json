@@ -107,6 +107,11 @@
       },
       {
         "type": "image",
+        "key": "rect",
+        "url": "assets/image/rect.png"
+      },
+      {
+        "type": "image",
         "key": "right",
         "url": "assets/image/right.png"
       },

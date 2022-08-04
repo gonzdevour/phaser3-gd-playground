@@ -1,6 +1,10 @@
 //gdk
 import CreateKnob from '../gdk/templates/CreateKnob.js';
 import LoadingProgress from '../gdk/loading/LoadingProgress.js';
+//effects
+import CreateSlash from './CreateSlash.js';
+import dat from '../../../../phaser3-rex-notes/plugins/utils/dat.gui/dat.gui.min.js';
+import AddUpdateEvent from '../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddUpdateEvent';
 //utils
 import loadImageFromUrl from '../../../plugins/utils/image/loadImageFromUrl.js';
 import GetValue from '../../../plugins/utils/object/GetValue.js';
@@ -16,7 +20,8 @@ var loadOnlineImagePromise = async function(scene, config){
     var url = GetValue(config, 'url', undefined);
     var progressUI = CreateKnob(scene).layout();
     await loadImageFromUrl(scene, imgKey, url, LoadingProgress, progressUI, 1000);
-    var card = scene.rexUI.add.perspectiveCard({
+
+    var card = scene.add.rexPerspectiveCard({
         x:x,
         y:y,    
         front: CreateCardFront(scene,'cardBg', imgKey, cardInfoText),
@@ -29,7 +34,7 @@ var loadOnlineImagePromise = async function(scene, config){
             duration: 1000,
             ease: 'Cubic-easeIn'
         }
-    }).layout()
+    })
 
     card.flip.flipRight(4000, 2);
 
@@ -89,22 +94,10 @@ var CreateCardFront = function(scene, bgKey, iconKey, text){
 
     var cover = scene.add.image(0,0,'cardFront');
 
-    DrawToTexture(scene, 0, 0, bg.width, bg.height, [bg,char], 'newImg', true);
-    var newImg = scene.add.image(0, 0, 'newImg');
+    DrawToTexture(scene, 0, 0, bg.width, bg.height, [bg,char], 'cardFrontNewBg', true);
+    var newImg = scene.add.image(0, 0, 'cardFrontNewBg');
 
-    // var sizerMain = scene.rexUI.add.label({
-    //     icon: newImg
-    // }).layout()
-
-    // var label = scene.rexUI.add.label({
-    //     orientation: 'y',
-    //     background: bgKey?scene.add.image(0,0,bgKey):undefined,
-    //     icon: iconKey?scene.add.image(0, 0, iconKey).setScale(2):undefined,
-    //     text: text?scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: 'arial'}):undefined,
-    //     space:{top:100}
-    // }).layout()
-
-    var sizerMain = scene.rexUI.add.overlapSizer({
+    var cardBuilder = scene.rexUI.add.overlapSizer({
     })
     .setMinSize(600,800)
     .add(newImg,{ key:'bg', align: 'center', expand: false, })
@@ -115,17 +108,14 @@ var CreateCardFront = function(scene, bgKey, iconKey, text){
     .moveDepthBelow(newImg)
     .layout()
 
-    // var sizerMain = scene.rexUI.add.container(0,0,600,800)
-    //     .add(bg)
-    //     .add(txt)
-    //     .add(char)
-    //     .add(cover)
+    cardBuilder.snapshot({padding: 3, saveTexture:'cardFrontNew'});
+    cardBuilder.destroy();
 
-    return sizerMain;
+    return {key:'cardFrontNew'}
 }
 
 var CreateCardBack = function(scene, bgKey, iconKey, text){
-    var label = scene.rexUI.add.label({
+    var cardBuilder = scene.rexUI.add.label({
         background: bgKey?scene.add.image(0,0,bgKey):undefined,
         icon: iconKey?scene.add.image(0, 0, iconKey):undefined,
         text: text?scene.rexUI.add.BBCodeText(0, 0, text, { 
@@ -133,13 +123,17 @@ var CreateCardBack = function(scene, bgKey, iconKey, text){
             color:'red',
         }):undefined
     })
-    return label;    
+
+    cardBuilder.snapshot({padding: 3, saveTexture:'cardBackNew'});
+    cardBuilder.destroy();
+
+    return {key:'cardBackNew'}
 }
 
 var CreateCard = async function(scene, config){
     var centerX = GetValue(config, 'x', scene.viewport.centerX);
     var centerY = GetValue(config, 'y', scene.viewport.centerY);
-    var Card = await loadOnlineImagePromise(scene, {
+    var card = await loadOnlineImagePromise(scene, {
         x: centerX, 
         y: centerY, 
         imgKey: GetValue(config, 'imgKey', 'resultHero'), 
@@ -147,12 +141,11 @@ var CreateCard = async function(scene, config){
         url: GetValue(config, 'url', undefined)
     })
     await Delay(4000);
-    var lightball = scene.add.image(centerX, centerY, 'lightball1');
-    Card.moveDepthBelow(lightball) //因為Card是containerlite所以要用moveDepthBelow做群組移動
-    Card.setInteractive().on('pointerup', function(pointer){
-        Card.flip.flipRight(2000, 3);
-    })
-    //scene.children.moveBelow(lightball, Card)
+
+    //建立卡背的旋轉光效
+    var lightball = scene.add.image(centerX, centerY, 'lightball1')//.setBlendMode(Phaser.BlendModes.ADD);
+    card.moveDepthBelow(lightball) //因為card是containerlite所以要用moveDepthBelow做群組移動
+    scene.children.moveBelow(lightball, card)
     scene.tweens.timeline({
         targets: lightball,
         repeat: -1,
@@ -166,7 +159,81 @@ var CreateCard = async function(scene, config){
             },
         ],
     })
-    return Card;
+
+    //在卡面card.frontFace上建立mask內的閃光
+    // var cardMask = card.frontFace.createBitmapMask();
+    // var cardBlink = scene.rexUI.add.roundRectangle(centerX, centerY, 200, 1000, 0, 0xffffff, 0.1).setAngle(15)//.setBlendMode(Phaser.BlendModes.ADD);//#ffffee
+    // cardBlink.setMask(cardMask);
+    // scene.tweens.add({
+    //     targets: cardBlink,
+    //     x: {from:cardBlink.x-450, to:cardBlink.x+450},
+    //     alpha: 0.5,
+    //     repeat: -1,
+    //     duration: 1000,
+    //     ease: 'back-easeOutIn',
+    //     repeatDelay:5000,
+    // })
+
+    //在卡片card.frontFace上用custom progress建立閃光
+    var slash = CreateSlash(scene, 130, 100)
+    .setSize(200, 400)
+    .setFillStyle(0xffffff, 1)
+    .setPosition(400, 300)
+    .setAlpha(0.1)
+    .setBlendMode(Phaser.BlendModes.ADD)
+
+    AddUpdateEvent(slash, function(time, delta){
+        slash.width = card.frontFace.width;
+        slash.height = card.frontFace.height;
+        slash.angle = card.frontFace.angle;
+        slash.x = card.frontFace.x;
+        slash.y = card.frontFace.y;
+    })
+
+    // scene.tweens.add({
+    //     targets: slash,
+    //     value: 1,
+    //     repeat: -1,
+    //     duration: 1000,
+    //     ease: 'linear',
+    //     repeatDelay:5000,
+    // })
+    scene.tweens.timeline({
+        targets: slash,
+        repeat: -1,
+        tweens:[
+            {
+                props:{
+                    value:{value: 1, duration: 1000, repeatDelay: 4000},
+                    alpha:{value: {from: 0.1, to: 0.3}, duration: 500, yoyo: true},
+                }, 
+            },
+        ],
+    })
+
+    // var graphics = scene.add.graphics()
+    //     .lineStyle(2, 0xff0000, 0.5)
+    //     .strokeRectShape(slash.getBounds())
+
+    // var gui = new dat.GUI();
+    // gui.add(slash, 'value', 0, 1);
+
+    //點畫面卡片翻轉
+    scene.input.on('pointerdown', function(pointer){
+        card.flip.flipRight(1500, 3);
+    })
+
+    //卡片翻轉時光效關閉
+    card.flip
+        .on('start', function(flip, card){
+            slash.setVisible(false);
+        })
+        .on('complete', function(flip, card){
+            slash.setVisible(true);
+        });
+
+
+    return card;
 }
 
 export default CreateCard;

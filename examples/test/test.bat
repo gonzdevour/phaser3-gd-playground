@@ -1,9 +1,10 @@
 @echo off
-set project=examples
-set main=test/test.js
-set htmlTemplate=example.tmpl
+set project=./examples/test
+set main=test.js
+set htmlTemplate=index.tmpl
 set assets=assets
 set packFolderOutput=assets/pack.json
+set root=root
 cd ..
 cd ..
 npm run dev
