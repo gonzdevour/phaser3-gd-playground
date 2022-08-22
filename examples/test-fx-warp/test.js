@@ -1,6 +1,6 @@
 import 'phaser';
 import dat from '../../plugins/datGUI/dat.js';
-import fxWarp from '../../../phaser3-rex-notes/plugins/warppipelinecontroller'; 
+import fxWarp from '../../../phaser3-rex-notes/plugins/warppipelinebehavior'; 
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -20,7 +20,8 @@ class Test extends Phaser.Scene {
             frequencyY: 25,
             amplitudeX: 3,
             amplitudeY: 10,
-        });
+        }).getPipeline();
+        
         this.tweens.add({
             targets: postFxPipeline,
             progress: 1,

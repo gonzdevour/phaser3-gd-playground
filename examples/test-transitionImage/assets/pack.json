@@ -1,0 +1,41 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "image",
+        "key": "test-angry0",
+        "url": "assets/image/test-angry0.png"
+      },
+      {
+        "type": "image",
+        "key": "test-angry1",
+        "url": "assets/image/test-angry1.png"
+      },
+      {
+        "type": "image",
+        "key": "test-fear0",
+        "url": "assets/image/test-fear0.png"
+      },
+      {
+        "type": "image",
+        "key": "test-fear1",
+        "url": "assets/image/test-fear1.png"
+      },
+      {
+        "type": "image",
+        "key": "test-normal0",
+        "url": "assets/image/test-normal0.png"
+      },
+      {
+        "type": "image",
+        "key": "test-shock0",
+        "url": "assets/image/test-shock0.png"
+      },
+      {
+        "type": "image",
+        "key": "test-shock1",
+        "url": "assets/image/test-shock1.png"
+      }
+    ]
+  }
+}

@@ -1,18 +1,28 @@
+//basic
 import RexUI from '../../phaser3-rex-notes/templates/ui/ui-plugin.js';
 import rexscaleouterplugin from '../../phaser3-rex-notes/plugins/scaleouter-plugin.js';
-import CSVToHashTablePlugin from '../../phaser3-rex-notes/plugins/csvtohashtable-plugin.js';
-import AwaitLoaderPlugin from '../../phaser3-rex-notes/plugins/awaitloader-plugin.js';
 import LoadingProgressPlugin from '../../phaser3-rex-notes/plugins/loadingprogress-plugin.js';
-import EventPromisePlugin from '../../phaser3-rex-notes/plugins/eventpromise-plugin.js';
-import ClockPlugin from '../../phaser3-rex-notes/plugins/clock-plugin.js';
-import WebFontLoaderPlugin from '../../phaser3-rex-notes/plugins/webfontloader-plugin.js';
-import AwayTimePlugin from '../../phaser3-rex-notes/plugins/awaytime-plugin.js';
-import RealTimeTimersPlugin from '../../phaser3-rex-notes/plugins/realtimetimers-plugin.js';
-import Live2dPlugin from '../../phaser3-rex-notes/dist/rexlive2dplugin.min.js';
+//image
+import TransitionImagePlugin from '../../phaser3-rex-notes/plugins/transitionimage-plugin.js';
+//db
+import CSVToHashTablePlugin from '../../phaser3-rex-notes/plugins/csvtohashtable-plugin.js';
+//ui
 import AnchorPlugin from '../../phaser3-rex-notes/plugins/anchor-plugin.js';
 import ButtonPlugin from '../../phaser3-rex-notes/plugins/button-plugin.js';
+//event
+import AwaitLoaderPlugin from '../../phaser3-rex-notes/plugins/awaitloader-plugin.js';
+import EventPromisePlugin from '../../phaser3-rex-notes/plugins/eventpromise-plugin.js';
+//timer
+import ClockPlugin from '../../phaser3-rex-notes/plugins/clock-plugin.js';
+import AwayTimePlugin from '../../phaser3-rex-notes/plugins/awaytime-plugin.js';
+import RealTimeTimersPlugin from '../../phaser3-rex-notes/plugins/realtimetimers-plugin.js';
+//misc
+import Live2dPlugin from '../../phaser3-rex-notes/dist/rexlive2dplugin.min.js';
 import PerspectiveImagePlugin from '../../phaser3-rex-notes/plugins/perspectiveimage-plugin.js';
 import CustomProgressPlugin from '../../phaser3-rex-notes/plugins/customprogress-plugin';
+//text
+import WebFontLoaderPlugin from '../../phaser3-rex-notes/plugins/webfontloader-plugin.js';
+//fx
 import WarpPipelinePlugin from '../../phaser3-rex-notes/plugins/warppipeline-plugin';
 
 export default {
@@ -98,6 +108,11 @@ export default {
         {
             key: 'rexWarppipelinePlugin',
             plugin: WarpPipelinePlugin,
+            start: true
+        },
+        {
+            key: 'rexTransitionImagePlugin',
+            plugin: TransitionImagePlugin,
             start: true
         },
     ]

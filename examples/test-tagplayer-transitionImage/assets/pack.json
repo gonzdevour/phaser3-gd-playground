@@ -1,0 +1,119 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "audio",
+        "key": "Fate",
+        "url": [
+          "assets/audio/Fate.mp3",
+          "assets/audio/Fate.ogg"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "jungle",
+        "url": [
+          "assets/audio/jungle.mp3",
+          "assets/audio/jungle.ogg"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "oedipus_wizball_highscore",
+        "url": [
+          "assets/audio/oedipus_wizball_highscore.mp3",
+          "assets/audio/oedipus_wizball_highscore.ogg"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "twinkle_twinkle",
+        "url": [
+          "assets/audio/twinkle_twinkle.mid"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "explosion",
+        "url": [
+          "assets/audio/soundeffect/explosion.mp3"
+        ]
+      },
+      {
+        "type": "image",
+        "key": "char-Jade-fear0",
+        "url": "assets/image/char-Jade-fear0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Jade-normal0",
+        "url": "assets/image/char-Jade-normal0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Jade-shock0",
+        "url": "assets/image/char-Jade-shock0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Jade-shock1",
+        "url": "assets/image/char-Jade-shock1.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-angry0",
+        "url": "assets/image/char-Spring-angry0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-angry1",
+        "url": "assets/image/char-Spring-angry1.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-fear0",
+        "url": "assets/image/char-Spring-fear0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-fear1",
+        "url": "assets/image/char-Spring-fear1.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-normal0",
+        "url": "assets/image/char-Spring-normal0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-shock0",
+        "url": "assets/image/char-Spring-shock0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-shock1",
+        "url": "assets/image/char-Spring-shock1.png"
+      },
+      {
+        "type": "image",
+        "key": "dude",
+        "url": "assets/image/dude.png"
+      },
+      {
+        "type": "image",
+        "key": "house",
+        "url": "assets/image/house.jpg"
+      },
+      {
+        "type": "image",
+        "key": "nextPage",
+        "url": "assets/image/nextPage.png"
+      },
+      {
+        "type": "image",
+        "key": "right",
+        "url": "assets/image/right.png"
+      }
+    ]
+  }
+}

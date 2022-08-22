@@ -2,19 +2,104 @@
   "packKey": {
     "files": [
       {
-        "type": "image",
-        "key": "fire",
-        "url": "assets/image/fire.png"
+        "type": "atlas",
+        "key": "cube",
+        "atlasURL": "assets/atlas/cube.json",
+        "textureURL": "assets/atlas/cube.png"
+      },
+      {
+        "type": "atlas",
+        "key": "knight",
+        "atlasURL": "assets/atlas/knight.json",
+        "textureURL": "assets/atlas/knight.png"
+      },
+      {
+        "type": "audio",
+        "key": "Fate",
+        "url": [
+          "assets/audio/Fate.mp3",
+          "assets/audio/Fate.ogg"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "jungle",
+        "url": [
+          "assets/audio/jungle.mp3",
+          "assets/audio/jungle.ogg"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "oedipus_wizball_highscore",
+        "url": [
+          "assets/audio/oedipus_wizball_highscore.mp3",
+          "assets/audio/oedipus_wizball_highscore.ogg"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "twinkle_twinkle",
+        "url": [
+          "assets/audio/twinkle_twinkle.mid"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "explosion",
+        "url": [
+          "assets/audio/soundeffect/explosion.mp3"
+        ]
       },
       {
         "type": "image",
-        "key": "logo",
-        "url": "assets/image/logo.png"
+        "key": "dude",
+        "url": "assets/image/dude.png"
+      },
+      {
+        "type": "image",
+        "key": "nextPage",
+        "url": "assets/image/nextPage.png"
       },
       {
         "type": "image",
         "key": "right",
         "url": "assets/image/right.png"
+      },
+      {
+        "type": "image",
+        "key": "test-angry0",
+        "url": "assets/image/test-angry0.png"
+      },
+      {
+        "type": "image",
+        "key": "test-angry1",
+        "url": "assets/image/test-angry1.png"
+      },
+      {
+        "type": "image",
+        "key": "test-fear0",
+        "url": "assets/image/test-fear0.png"
+      },
+      {
+        "type": "image",
+        "key": "test-fear1",
+        "url": "assets/image/test-fear1.png"
+      },
+      {
+        "type": "image",
+        "key": "test-normal0",
+        "url": "assets/image/test-normal0.png"
+      },
+      {
+        "type": "image",
+        "key": "test-shock0",
+        "url": "assets/image/test-shock0.png"
+      },
+      {
+        "type": "image",
+        "key": "test-shock1",
+        "url": "assets/image/test-shock1.png"
       }
     ]
   }
