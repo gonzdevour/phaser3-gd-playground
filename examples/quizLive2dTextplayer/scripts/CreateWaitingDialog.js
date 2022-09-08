@@ -28,7 +28,7 @@ var CreateWaitingDialog = async function(textPlayer){
             ifShuffle:0,
             list: CreateChoiceDataList(question),
         },
-        extraConfig: {
+        extraConfig: { //客製調整參數
             x: scene.viewport.centerX,
             y: scene.viewport.bottom,
             width: scene.game.config.width-50, 
@@ -36,8 +36,8 @@ var CreateWaitingDialog = async function(textPlayer){
             transitIn: TransitionBT,
             transitOut: TransitionChoicesUpScaleDown,
             duration:{ in: 600, out: 1400 },
-            dialogButtonClickCallback: dialogButtonClickCallback,
-            actionsBeforeDialogClose: actionsBeforeDialogClose,
+            dialogButtonClickCallback: dialogButtonClickCallback, //通用流程處理後回傳result: buttonType, choicesState, singleSelectedName
+            actionsBeforeDialogClose: actionsBeforeDialogClose, //點擊選項後面板收合前的客製反應；等待按鈕閃爍、角色表情動作、等待播放評語
         }
     })
     //console.log('dialogResult:' + JSON.stringify(result))

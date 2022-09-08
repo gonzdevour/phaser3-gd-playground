@@ -17,15 +17,25 @@ class Test extends Phaser.Scene { //'#000000'
         this.add.image(512,400,'house');
 
         var tagPlayer = new TagPlayer(this ,{
-            texts: false, sprites: false,//關閉預設物件
+            texts: false,  //關閉預設物件
+            sprites: false,//關閉預設物件
             parser: {
                 delimiters: '<>',
                 comment: '//'
             },
         })
+        tagPlayer
             .addGameObjectManager({
                 name: 'char',
-                createGameObject: CreateActor
+                createGameObject: CreateActor,
+                fade:500,
+            })
+            .on('+fadeOutAllTalk', function(parser, a, b) {
+                var allChars = tagPlayer.getGameObject('char');
+                for (var key in allChars) {
+                    var char = allChars[key];
+                    char.stopTalk();
+                }
             })
             .playPromise(content)
             .then(function () {

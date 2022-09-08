@@ -18,10 +18,20 @@ var CreateChar = function(scene, charID, expression, expressionIndex){
     charTextureKey: charGetTextureKey(char)
     })
     .on('changedata-charTextureKey', function(gameObject, value, previousValue){
-        char.transit(value, 0);
+        char.transit({
+          key: value, 
+          frame: 0,
+          duration: 1000,
+        });
     })
 
   char.setExpression = function(expressionName, expressionIndex){
+    if (expression == undefined){
+      expression = 'normal';
+    }
+    if (expressionIndex == undefined){
+      expressionIndex = '';
+    }
     char.setData({
       charExpressionIndex:expressionIndex,
       charExpression:expressionName,

@@ -1,7 +1,11 @@
 import CreateChar from './CreateChar.js';
 import CreateTextbox from './CreateTextbox.js';
-import ContainerLite from '../../../../phaser3-rex-notes/plugins/containerlite.js';
-import TwoPointersTracer from '../../../../phaser3-rex-notes/plugins/input/gestures/twopointerstracer/TwoPointersTracer.js';
+import ContainerLite from '../../../../../phaser3-rex-notes/plugins/containerlite.js';
+import TwoPointersTracer from '../../../../../phaser3-rex-notes/plugins/input/gestures/twopointerstracer/TwoPointersTracer.js';
+import FadeOutDestroy from '../../../../../phaser3-rex-notes/plugins/fade-out-destroy.js';
+
+//methods
+import MethodsMove from './MethodsMove.js';
 
 class Actor extends ContainerLite {
   constructor(scene, charID, x, y) {
@@ -10,21 +14,24 @@ class Actor extends ContainerLite {
       //var center = scene.rexUI.add.roundRectangle(sprite.x,sprite.y,100,1000,undefined,0xff0000);
       //super(scene, 0, 0, [sprite, center]);
       super(scene, 0, 0, [sprite]);
-      super.setPosition(x,y);
-      sprite.stageCenter = 512;
       this.sprite = sprite;
       this.text = text;
+      scene.plugins.get('rexViewportCoordinate').add(this, scene.scenarioDirector.viewport);
+      this.setVPosition(x,y);
       this.appear();
   }
 
-  get flipX() {
-      return this.sprite.flipX;
-  }
-  set flipX(value) {
-      this.sprite.flipX = value;
-  }
-  get flipY() {
-      return this.sprite.flipY;
+  setVPosition(x, y) {
+    if (x == undefined){
+      x = 0.5;
+    }
+    if (y == undefined){
+      y = 1.2;
+    }
+    this.vpx = x;
+    this.vpy = y;
+
+    return this;
   }
 
   appear() {
@@ -58,9 +65,37 @@ class Actor extends ContainerLite {
           if(this.sprite.frontImage){
             this.sprite.frontImage.setTint(Phaser.Display.Color.GetColor(value, value, value));
           }
+      },
+      onComplete: function(){
+        FadeOutDestroy(this, 1000);
       }
     });
     return this;
+  }
+
+  get x() {
+    return super.x;
+  }
+
+  set x(value) {
+    super.x = value;
+    if (this.vpx !== undefined){
+      if (this.vpx > 0.5){
+        this.sprite.flipX = true;
+      } else {
+        this.sprite.flipX = false;
+      }
+    }
+  }
+  
+  get flipX() {
+    return this.sprite.flipX;
+  }
+  set flipX(value) {
+      this.sprite.flipX = value;
+  }
+  get flipY() {
+      return this.sprite.flipY;
   }
 
   setflip(x, y) {
@@ -74,22 +109,6 @@ class Actor extends ContainerLite {
     return this;
   }
 
-  jumpTo(x, y, jumpHeight) {
-    this.scene.tweens.timeline({
-      targets: this,
-      ease: 'Cubic',
-      tweens:[
-          {
-              props:{
-                  x:{value: x, duration: 4000},
-                  y:{value: y-jumpHeight, duration: 300, yoyo: true, repeat: 3},
-              }, 
-          },
-      ],
-    })
-    return this;
-  }
-
   textPop(duration, ease) {
     this.text.setVisible(true);
     this.scene.tweens.add({
@@ -100,17 +119,6 @@ class Actor extends ContainerLite {
       duration:duration?duration:1000,
       ease: ease?ease:'linear',
     })
-    return this;
-  }
-
-  textCleanOthers(myName) {
-    var allChars = this.tagPlayer.getGameObject('char');
-    for (var key in allChars) {
-      if(key !== myName){
-        var char = allChars[key];
-        char.stopTalk();
-      }
-    }
     return this;
   }
 
@@ -130,6 +138,17 @@ class Actor extends ContainerLite {
       return this;
   }
 
+  textCleanOthers(myName) {
+    var allChars = this.tagPlayer.getGameObject('char');
+    for (var key in allChars) {
+      if(key !== myName){
+        var char = allChars[key];
+        char.stopTalk();
+      }
+    }
+    return this;
+  }
+
   talk(speed, waitTyping) {
     if (typeof (speed) === 'boolean') {
         waitTyping = speed;
@@ -144,7 +163,7 @@ class Actor extends ContainerLite {
     if (speed !== undefined) {
         textBox.setTypeSpeed(speed); //指定語氣速度
     } else {
-        textBox.setTypeSpeed(20); //如不指定則使用預設速度
+        textBox.setTypeSpeed(50); //如不指定則使用預設速度
     }
     this.waitTyping = waitTyping;
     this.tagPlayer.setContentCallback(this.typing, this);
@@ -159,6 +178,11 @@ class Actor extends ContainerLite {
       return this;
   }
 }
+
+Object.assign(
+  Actor.prototype,
+  MethodsMove
+);
 
 var CreateActor = function (scene, charID, expression, expressionIndex) {
   var newActor = new Actor(scene, charID, expression, expressionIndex);

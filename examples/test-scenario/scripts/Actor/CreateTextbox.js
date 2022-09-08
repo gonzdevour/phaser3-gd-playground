@@ -67,7 +67,8 @@ var CreateTextbox = function (scene, speaker, width, height) {
 
 var CreateBuiltInText = function (scene, wrapWidth, width, height) {
     return scene.rexUI.add.BBCodeText(0, 0, '', {
-        fontSize: '64px',
+        fontSize: '36px',
+        testString: '回',
         lineSpacing: 10,
         wrap: {
             mode: 'character',

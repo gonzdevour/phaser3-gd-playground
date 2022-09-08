@@ -9,6 +9,8 @@ import CSVToHashTablePlugin from '../../phaser3-rex-notes/plugins/csvtohashtable
 //ui
 import AnchorPlugin from '../../phaser3-rex-notes/plugins/anchor-plugin.js';
 import ButtonPlugin from '../../phaser3-rex-notes/plugins/button-plugin.js';
+//viewport
+import ViewportCoordinatePlugin from '../../phaser3-rex-notes/plugins/viewportcoordinate-plugin.js';
 //event
 import AwaitLoaderPlugin from '../../phaser3-rex-notes/plugins/awaitloader-plugin.js';
 import EventPromisePlugin from '../../phaser3-rex-notes/plugins/eventpromise-plugin.js';
@@ -115,5 +117,10 @@ export default {
             plugin: TransitionImagePlugin,
             start: true
         },
+        {
+            key: 'rexViewportCoordinate',
+            plugin: ViewportCoordinatePlugin,
+            start: true
+        }
     ]
 };
