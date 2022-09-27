@@ -10,21 +10,21 @@ import Shuffle from "../../../../../plugins/utils/array/Shuffle";
 var DialogSelect = function (scene, config) {
     var dialogConfig =  {
       name: 'DialogSelect',
-      title: CreateTitle(scene, GetValue(config, 'title', undefined)),
-      content: CreateContent(scene, GetValue(config, 'content', undefined)),
-      choicesBackground: CreateRoundRectangleBackground(scene, 20, undefined, 0x9e9e9e, 3), //'#140c44''#4f5b62',
+      //title: CreateTitle(scene, GetValue(config, 'title', undefined)),
+      //content: CreateContent(scene, GetValue(config, 'content', undefined)),
+      //choicesBackground: CreateRoundRectangleBackground(scene, 20, undefined, 0x9e9e9e, 3), //'#140c44''#4f5b62',
       choices: CreateChoices(scene, GetValue(config, 'choicesData', [])),
       choicesType: 'y-radio',
       choicesSetValueCallback: function (button, value) {
         if (value) {
-            button.getElement('background').setFillStyle(0x0, 0x00195c); //#00195c, 
-            button.getElement('text').setColor(0x00ffd5); //#00ffd5, 
+            button.getElement('background').setFillStyle(0x0, 0x00195c); //#00195c, 選中時的按鈕背板顏色
+            button.getElement('text').setColor(0x00ffd5); //#00ffd5, 選中時的文字顏色
         } else {
-            button.getElement('background').setFillStyle(0x020d1b, 0x002f6c) //#002f6c, #020d1b
-            button.getElement('text').setColor('white'); //#00ffd5, 
+            button.getElement('background').setFillStyle(0x020d1b, 0x002f6c) //#002f6c, 未選時的按鈕背板顏色
+            button.getElement('text').setColor('white'); //未選時的文字顏色
         }
       },
-      background: CreateRoundRectangleBackground(scene, 20, 'rgba(8, 9, 107, 1)', 0xffffff, 2, 'rgba(8, 9, 107, 0.5)'), //#ffffff
+      //background: CreateRoundRectangleBackground(scene, 20, 'rgba(8, 9, 107, 1)', 0xffffff, 2, 'rgba(8, 9, 107, 0.5)'), //#ffffff, 漸層背景
       extraConfig: Object.assign({},{expand:{title:false,content:false,choices:true}},GetValue(config,'extraConfig',{}))
     }
     addBehaviors(dialogConfig.choices, ['ninja']);

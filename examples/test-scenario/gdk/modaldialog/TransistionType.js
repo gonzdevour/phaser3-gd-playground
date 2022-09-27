@@ -69,9 +69,10 @@ var TransitionBT = function(dialog, duration) {
     //dialog.tweenChild({targets: choice, ease: 'Linear', angle:Ang, duration: 300+100*Math.random(),});
   })
   //dialog.tweenChild({targets: choices, ease: 'Linear', x:{from: '-=100', to:0}, duration: 1400,});
-  var yFrom = scene.viewport.bottom+0.5*dialog.height;
-  var yTo = scene.viewport.bottom-0.5*dialog.height;
-  AutoRemoveTween(dialog, {ease: 'Cubic', y: { from: yFrom, to: yTo }, alpha: { from: 0, to: 1 }, angle: { from: -45, to: 3 }, duration: 600,})
+  var yFrom = dialog.viewport.bottom+0.5*dialog.height;
+  var yTo = dialog.viewport.bottom-1*dialog.height;
+  //AutoRemoveTween(dialog, {ease: 'Cubic', y: { from: yFrom, to: yTo }, alpha: { from: 0, to: 1 }, angle: { from: -45, to: 3 }, duration: 600,})
+  AutoRemoveTween(dialog, {ease: 'Cubic', y: { from: yFrom, to: yTo }, alpha: { from: 0, to: 1 }, duration: 600,})
 }
 
 export {

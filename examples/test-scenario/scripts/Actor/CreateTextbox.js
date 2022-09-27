@@ -14,10 +14,14 @@ var CreateTextbox = function (scene, speaker, width, height) {
         text: CreateBuiltInText(scene, 400, width, height),
         //action: scene.add.image(0, 0, 'nextPage').setTint(COLOR_LIGHT).setVisible(false),
         space: { left: 20, right: 20, top: 20, bottom: 60, icon: 20, text: 20,}
-    }).setOrigin(0.5, 1).layout();
+    }).setOrigin(0.5, 1).layout().setAlpha(0);
 
-
-
+    textBox.charNameText = scene.rexUI.add.BBCodeText(textBox.x+80, textBox.y-30,'[weight=900]Char Name[/weight]', { 
+        fontSize: 32, 
+        backgroundColor: '#555',
+        color: '#ffffff',
+        align: 'right',
+    }).setOrigin(1,1);
 
     textBox
         .setInteractive()
@@ -29,6 +33,8 @@ var CreateTextbox = function (scene, speaker, width, height) {
                 }else if(speaker.x < centerX){
                     this.setOrigin(0.4, 1)
                 }
+                textBox.charNameText.setPosition(textBox.right, textBox.bottom) //※先setPostion完再pin會依新位置重pin
+                textBox.pin(textBox.charNameText);
                 var bg = this.getElement('background');
                 bg.tailOriginX = this.originX;
             }

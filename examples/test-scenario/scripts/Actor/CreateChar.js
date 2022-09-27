@@ -1,16 +1,9 @@
-var CreateChar = function(scene, charID, expressionName, expressionIndex){
-  if (expressionName == undefined){
-    expressionName = 'normal';
-  }
-  if (expressionIndex == undefined){
-    expressionIndex = '';
-  }
-  var char = scene.add.rexTransitionImage(0, 0, 'char-' + charID + '-' + expressionName + expressionIndex, 0, {
+var CreateChar = function(scene, charID, expressionName){
+  var char = scene.add.rexTransitionImage(0, 0, 'char-' + charID + '-' + expressionName, 0, {
   })
   .setOrigin(0.5,1)
   .setData({
       charID:charID,
-      charExpressionIndex:expressionIndex,
       charExpressionName:expressionName,
   })
 
@@ -25,20 +18,11 @@ var CreateChar = function(scene, charID, expressionName, expressionIndex){
         });
     })
 
-  char.setExpression = function(expressionName, expressionIndex){
-    if (expressionName == undefined){
-      expressionName = 'normal';
-    }
-    if (expressionIndex == undefined){
-      expressionIndex = '';
-    }
-    var CurcharExpressionIndex = char.getData('charExpressionIndex');
+  char.setExpression = function(expressionName){
     var CurcharExpressionName = char.getData('charExpressionName');
-    var IsTheSame = expressionName == CurcharExpressionName && expressionIndex == CurcharExpressionIndex
-    if (!IsTheSame){
+    if (expressionName != CurcharExpressionName){
       char.setData({
-        charExpressionIndex:expressionIndex,
-        charExpression:expressionName,
+        charExpressionName:expressionName,
       })
       char.setData('charTextureKey', charGetTextureKey(char))
     }
@@ -49,9 +33,8 @@ var CreateChar = function(scene, charID, expressionName, expressionIndex){
 
 var charGetTextureKey = function(char){
   var charID = char.getData('charID');
-  var charExpressionIndex = char.getData('charExpressionIndex');
   var charExpressionName = char.getData('charExpressionName');
-  var key = 'char-' + charID + '-' + charExpressionName + charExpressionIndex;
+  var key = 'char-' + charID + '-' + charExpressionName;
   return key;
 }
 

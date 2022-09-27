@@ -21,7 +21,7 @@ var DialogDefault = function (scene, cfg) {
   }
 
   if (cfg.background === undefined) { //背景
-    cfg.background = CreateRoundRectangleBackground(scene, 20, 0x0, 0xffffff, 2);
+    //cfg.background = CreateRoundRectangleBackground(scene, 20, 0x0, 0xffffff, 2);
   }
 
   if ( typeof(cfg.title) === 'string' ){  //標題

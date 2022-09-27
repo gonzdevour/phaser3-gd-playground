@@ -29,6 +29,11 @@ var ModalDialogPromise = function (scene, config) {
             dialog.broadcastEvent('dialog.close', scene);
         })
 
+    if(config.viewport){
+        dialog.viewport = config.viewport;
+        scene.plugins.get('rexViewportCoordinate').add(dialog, dialog.viewport);
+    }
+
     //將dialog再包裝為modal，並建立promise
     return scene.rexUI.modalPromise(dialog, config);
 }

@@ -8,6 +8,8 @@ import CsvScenario from '../../../phaser3-rex-notes/plugins/csvscenario.js';
 import ScenarioDirector from './gdk/ScenarioDirector/ScenarioDirector.js';
 import CreateScenarioViewport from './scripts/CreateScenarioViewport.js';
 
+import CreateWaitingDialog from './scripts/CreateWaitingDialog.js';
+
 class Test extends Base { //'#000000'
     constructor() {
         super({
@@ -48,18 +50,36 @@ class Test extends Base { //'#000000'
         var storyCSV = this.cache.text.get('story');
         //console.log(storyCSV);
         this.scenario = new CsvScenario(this);
-        this.scenarioDirector = new ScenarioDirector(this, tagPlayer);
+        var viewport = CreateScenarioViewport(this);
+        this.scenario.director = new ScenarioDirector(this, tagPlayer, viewport);
+        this.scenario.layer_Chars = this.add.layer();
 
         var scenario = this.scenario;
-        var scenarioDirector = this.scenarioDirector;
+        var director = this.scenario.director;
+
         scenario
             .on('log', function (msg) {
                 console.log('sLog: ' + msg)
-            }, this)
+            })
+            .on('wait.choose', function (scenario) {
+                console.log(director.choices)
+                var scene = scenario.scene;
+                var dialog = async function(){
+                    var result = await CreateWaitingDialog(scene, director.choices, viewport);
+                    var resultIndex = result.singleSelectedName-1; //singleSelectedName從1開始，1234
+                    console.log(director.choices);
+                    console.log(resultIndex);
+                    console.log('result:' + director.choices[resultIndex].value)
+                    director.exec(director.choices[resultIndex].value)
+                    director.choices = []; //清空choices
+                    scenario.continue('choose');
+                }
+                dialog();
+            })
             .on('complete', function () {
                 console.log('sLog: ' + 'complete')
-            }, this)
-            .load(storyCSV, scenarioDirector, {
+            })
+            .load(storyCSV, director, {
                 timeUnit: 'sec'
             })
             .start();
