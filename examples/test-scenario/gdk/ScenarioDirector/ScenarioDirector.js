@@ -29,10 +29,10 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
   }
   清除對話(charName) {
     if (charName){
-      var char = this.tagPlayer.getGameObject('char', charName); //清除指定角色對話
+      var char = this.manager.getGameObject('char', charName); //清除指定角色對話
       char.cleanTalk();
     } else {
-      var allChars = this.tagPlayer.getGameObject('char'); //清除所有角色對話
+      var allChars = this.manager.getGameObject('char'); //清除所有角色對話
       for (var key in allChars) {
           var char = allChars[key];
           char.cleanTalk();
@@ -97,6 +97,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
 
     var content = ``;
     if (this.ifSingleChar && ifNotSameChar){
+      this.清除對話()
       content = content + `</char>`
     }
     if (!actor) {

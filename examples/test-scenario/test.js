@@ -35,7 +35,7 @@ class Test extends Base { //'#000000'
             .addGameObjectManager({
                 name: 'char',
                 createGameObject: CreateActor,
-                fade:500,
+                fade:300,
             })
             .on('+fadeOutAllTalk', function(parser, a, b) {
                 var allChars = tagPlayer.getGameObject('char');

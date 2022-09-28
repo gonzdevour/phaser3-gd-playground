@@ -11,9 +11,9 @@ class Actor extends Phaser.GameObjects.Container {
       var text = CreateTextbox(scene, sprite).setPosition(sprite.x, sprite.getTopRight().y+100).setVisible(true);
       //var center = scene.rexUI.add.roundRectangle(sprite.x,sprite.y,100,1000,undefined,0xff0000);
       //super(scene, 0, 0, [sprite, center]);
-      super(scene, 0, 0, [sprite, text]);
+      super(scene, 0, 0, [sprite]); 
       this.sprite = sprite;
-      this.text = text;
+      this.text = text; //addToLayer和container.add都會加入displayList，兩個都用就會render成兩個。所以text如果要保證在sprite上方就不能綁進actor
       this.scenario = scene.scenario;
       this.scenario.layer_Chars.add(this);
       this.text.addToLayer(this.scenario.layer_Chars);
@@ -139,6 +139,8 @@ class Actor extends Phaser.GameObjects.Container {
   }
 
   cleanTalk() {
+    debugger
+    this.scenario.layer_Chars.remove(this.text)
     this.text.destroy();
     return this;
   }
