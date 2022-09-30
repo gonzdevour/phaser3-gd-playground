@@ -18,6 +18,7 @@ var DefaultAppConfig = {
         Boot: 'Boot',
         Home: 'test',
     },
+    layers: ['bg','main','scenario','story','choices','ui','dialog'],
     scaleMode: Phaser.Scale.RESIZE,
     scaleAutoCenter: Phaser.Scale.CENTER_BOTH,
     plugins: AllPlugins,

@@ -2,6 +2,7 @@
 import RexUI from '../../phaser3-rex-notes/templates/ui/ui-plugin.js';
 import rexscaleouterplugin from '../../phaser3-rex-notes/plugins/scaleouter-plugin.js';
 import LoadingProgressPlugin from '../../phaser3-rex-notes/plugins/loadingprogress-plugin.js';
+import LayerManagerPlugin from '../../phaser3-rex-notes/plugins/layermanager-plugin.js';
 //image
 import TransitionImagePlugin from '../../phaser3-rex-notes/plugins/transitionimage-plugin.js';
 //db
@@ -41,6 +42,11 @@ export default {
         },
     ],
     global: [
+        {
+            key: 'rexLayerManager',
+            plugin: LayerManagerPlugin,
+            start: true
+        },
         {
             key: 'rexCsvToHashTable',
             plugin: CSVToHashTablePlugin,

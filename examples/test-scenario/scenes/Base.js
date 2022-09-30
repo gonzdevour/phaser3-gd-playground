@@ -1,3 +1,4 @@
+import SetupLayerManager from '../gdk/layer/SetupLayerManager';
 import SetupScaleOuter from '../gdk/viewport/SetupScaleOuter';
 import CreateTouchArea from '../gdk/viewport/CreateTouchArea';
 import CreateCameraCenter from '../gdk/viewport/CreateCameraCenter';
@@ -20,6 +21,7 @@ class Base extends Phaser.Scene {
     }
     init() { //要確定引用的scene沒有init，否則該scene要加super.init()
         //scene kits
+        this.layerManager = SetupLayerManager(this);
         this.viewport = SetupScaleOuter(this);    //this.viewport//setup時會順便做一次scale()
         this.toucharea = CreateTouchArea(this);    //this.toucharea, 因為會用到viewport, 這條必須在SetupScaleOuter後
         this.center = CreateCameraCenter(this); //this.center, camera main follows easeMove-able center label

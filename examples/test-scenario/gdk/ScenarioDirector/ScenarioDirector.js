@@ -3,25 +3,36 @@ import mustache from 'mustache';
 import tfdb from '../../../../plugins/taffydb/taffy-min.js';
 
 class ScenarioDirector extends Phaser.Events.EventEmitter {
-  constructor(scene, manager, viewport) {
+  constructor(scene, manager, viewport, textPlayer) {
       super();
       this.scene = scene;
       this.scenario = scene.scenario;
       this.camera = scene.cameras.main;
       this.sound = scene.sound;
       this.manager = manager;
-      this.viewport = viewport
+      this.viewport = viewport;
+      this.textPlayer = textPlayer;
       this.background = scene.add.rexTransitionImage(viewport.centerX, viewport.centerY, 'park', 0, {})
+      scene.layerManager.addToLayer('story', this.textPlayer);
+      scene.layerManager.addToLayer('scenario', this.background);
+      scene.plugins.get('rexViewportCoordinate').add(this.textPlayer, viewport, 0.5, 0.9);
       scene.plugins.get('rexViewportCoordinate').add(this.background, viewport);
+      this.textPlayer.playPromise(`hello text player, god bless p3!!!`)
+      .then(function () {
+          console.log('tp complete');
+      })
 
       this.decisionRecord = tfdb.taffy();
       this.nextLabel = '';
       this.coin = 50;
       this.choices = [];
 
-      this.ifSingleChar = true;
+      this.mode_singleChar = false;
       this.lastTalkerID = '';
       this.mtView = {玩家名稱: 'GD'};
+
+      this.initVPX = 0.5;
+      this.initVPY = 1.2;
   }
   清空() {
     this.清除對話();
@@ -32,6 +43,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       var char = this.manager.getGameObject('char', charName); //清除指定角色對話
       char.cleanTalk();
     } else {
+      console.log('清除所有對話')
       var allChars = this.manager.getGameObject('char'); //清除所有角色對話
       for (var key in allChars) {
           var char = allChars[key];
@@ -53,6 +65,19 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       .then(function () {
           console.log('清除角色' + charName)
       })
+  }
+  隱藏對話(charName) {
+    if (charName){
+      var char = this.manager.getGameObject('char', charName); //清除指定角色對話
+      char.text.setVisible(false);
+    } else {
+      console.log('隱藏所有對話')
+      var allChars = this.manager.getGameObject('char'); //清除所有角色對話
+      for (var key in allChars) {
+          var char = allChars[key];
+          char.text.setVisible(false);
+      }
+    }
   }
   背景(filename, duration){
     console.log('背景: ' + filename + ' - ' +duration)
@@ -78,26 +103,85 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     var choice = {text: text, value: yaml.load(value)}
     this.choices.push(choice);
   }
-  說話(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration) {
+  移動(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration) {
     var actor = GetActor(this.manager, actorID);
     var ease = AliasToEase(easeAlias);
     var expression = AliasToExpression(expressionAlias);
     duration = duration?duration*1000:0;
-    serif = mustache.render(serif, this.mtView);
 
     if (x == undefined){
-      x = 0.5;
+      x = this.initVPX;
     }
     if (y == undefined){
-      y = 1.2;
+      y = this.initVPY;
     }
 
     var ifNotSameChar = this.lastTalkerID == actorID ? false : true;
     this.lastTalkerID = actorID;
 
+    this.隱藏對話();
+
     var content = ``;
-    if (this.ifSingleChar && ifNotSameChar){
-      this.清除對話()
+    if (this.mode_singleChar && ifNotSameChar){
+      //this.隱藏對話();
+      content = content + `</char>`
+    }
+    if (!actor) {
+      content = content + `<char.${actorID}=${actorID},${x},${y}>`
+    }
+    if (expression) {
+      content = content + `<char.${actorID}.setExpression=${expression}>`
+    }
+    if (x && !xFrom){
+      content = content + `<char.${actorID}.vpx.to=${x},${duration},${ease}>`
+    }
+    if (y && !yFrom){
+      content = content + `<char.${actorID}.vpy.to=${y},${duration},${ease}>`
+    }
+    if (xFrom){
+      if (x && x != this.vpx){
+        content = content + `<char.${actorID}.vpx=${x}>`
+      }
+      content = content + `<char.${actorID}.vpx.from=${xFrom},${duration},${ease}>`
+    }
+    if (yFrom){
+      if (y && y != this.vpy){
+        content = content + `<char.${actorID}.vpy=${y}>`
+      }
+      content = content + `<char.${actorID}.vpy.from=${yFrom},${duration},${ease}>`
+    }
+
+    console.log(content);
+    this.manager
+      .playPromise(content)
+      .then(function () {
+          console.log('Complete')
+      })  
+
+  }
+  說話(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration) {
+    var actor = GetActor(this.manager, actorID);
+    var ease = AliasToEase(easeAlias);
+    var expression = AliasToExpression(expressionAlias);
+    duration = duration?duration*1000:0;
+
+    serif = mustache.render(serif, this.mtView);
+
+    if (x == undefined){
+      x = this.initVPX;
+    }
+    if (y == undefined){
+      y = this.initVPY;
+    }
+
+    var ifNotSameChar = this.lastTalkerID == actorID ? false : true;
+    this.lastTalkerID = actorID;
+
+    this.隱藏對話();
+
+    var content = ``;
+    if (this.mode_singleChar && ifNotSameChar){
+      //this.隱藏對話();
       content = content + `</char>`
     }
     if (!actor) {
@@ -156,6 +240,14 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
   }
   sumRecord(name, dataType) { //ex: sumRecord('Jade', '好感')
     return this.decisionRecord().sum(name + dataType);
+  }
+  finishTyping() { //立即完成text typing
+    console.log('try to finish typing')
+    var allChars = this.manager.getGameObject('char'); //清除所有角色對話
+    for (var key in allChars) {
+        var char = allChars[key];
+        char.text.setTypeSpeed(0);
+    }
   }
   print(msg) {
     this.scene.appendText(msg)

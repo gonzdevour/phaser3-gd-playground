@@ -1,10 +1,10 @@
 import AddUpdateEvent from "../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddUpdateEvent";
 
-var CreateScenarioViewport = function(scene){
+var CreateScenarioViewport = function(scene, x, y, width, height){
     var viewport = new Phaser.Geom.Rectangle();
     var UpdateViewport = (function() {
         //viewport.setTo(scene.viewport.left+10, scene.viewport.top+10, scene.viewport.width - 20, scene.viewport.height - 20);
-        viewport.setTo(scene.viewport.left+600, scene.viewport.top+300, 800, 600);
+        viewport.setTo(scene.viewport.left+x, scene.viewport.top+y, width, height);
     });
     scene.scale.on('resize', UpdateViewport);
     UpdateViewport();

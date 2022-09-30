@@ -2,13 +2,13 @@ import Base from './scenes/Base.js';
 
 import TagPlayer from '../../../phaser3-rex-notes/plugins/tagplayer.js';
 import CreateActor from './scripts/Actor/CreateActor.js';
-import content from './scripts/CreateContent.js';
 
 import CsvScenario from '../../../phaser3-rex-notes/plugins/csvscenario.js';
 import ScenarioDirector from './gdk/ScenarioDirector/ScenarioDirector.js';
 import CreateScenarioViewport from './scripts/CreateScenarioViewport.js';
 
 import CreateWaitingDialog from './scripts/CreateWaitingDialog.js';
+import CreateTextplayer from './scripts/CreateTextplayer.js';
 
 class Test extends Base { //'#000000'
     constructor() {
@@ -50,9 +50,10 @@ class Test extends Base { //'#000000'
         var storyCSV = this.cache.text.get('story');
         //console.log(storyCSV);
         this.scenario = new CsvScenario(this);
-        var viewport = CreateScenarioViewport(this);
-        this.scenario.director = new ScenarioDirector(this, tagPlayer, viewport);
-        this.scenario.layer_Chars = this.add.layer();
+        var viewport = CreateScenarioViewport(this, 600, 300, 800, 600);
+        var textPlayer = CreateTextplayer(this, viewport.centerX+5, viewport.bottom-viewport.height*0.25, viewport.width*0.95, viewport.height*0.3);
+        this.scenario.director = new ScenarioDirector(this, tagPlayer, viewport, textPlayer);
+        this.scenario.isPlayingText = false;
 
         var scenario = this.scenario;
         var director = this.scenario.director;
@@ -85,7 +86,17 @@ class Test extends Base { //'#000000'
             .start();
 
         this.input.on('pointerup', function () {
-            scenario.continue('click');
+            if (this.scenario.isPlayingText){
+                console.log('request finish typing');
+                director.finishTyping();
+            } else {
+                if (tagPlayer.isPlaying){ //如果tagPlayer正在播放且不處於wait的狀態
+                    tagPlayer.setTimeScale(10);
+                } else {
+                    tagPlayer.setTimeScale(1);
+                    scenario.continue('click');
+                }
+            }
         },this);
 
     }

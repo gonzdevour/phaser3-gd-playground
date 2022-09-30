@@ -1,24 +1,28 @@
 import CreateChar from './CreateChar.js';
 import CreateTextbox from './CreateTextbox.js';
 import FadeOutDestroy from '../../../../../phaser3-rex-notes/plugins/fade-out-destroy.js';
+import ContainerLite from '../../../../../phaser3-rex-notes/plugins/containerlite.js';
 
 //methods
 import MethodsMove from './MethodsMove.js';
 
-class Actor extends Phaser.GameObjects.Container {
+class Actor extends ContainerLite {
   constructor(scene, charID, x, y) {
       var sprite = CreateChar(scene, charID, 'normal0');
-      var text = CreateTextbox(scene, sprite).setPosition(sprite.x, sprite.getTopRight().y+100).setVisible(true);
+      var text = CreateTextbox(scene, sprite).setPosition(sprite.x, sprite.getTopRight().y+100).setVisible(true)
       //var center = scene.rexUI.add.roundRectangle(sprite.x,sprite.y,100,1000,undefined,0xff0000);
       //super(scene, 0, 0, [sprite, center]);
-      super(scene, 0, 0, [sprite]); 
+      super(scene, 0, 0, [sprite,text]); 
       this.sprite = sprite;
       this.text = text; //addToLayer和container.add都會加入displayList，兩個都用就會render成兩個。所以text如果要保證在sprite上方就不能綁進actor
       this.scenario = scene.scenario;
-      this.scenario.layer_Chars.add(this);
-      this.text.addToLayer(this.scenario.layer_Chars);
-      //this.scenario.layer_Chars.add(this.getLayer());//layer目前版本不支援巢狀
-      //this.scenario.layer_Chars.add(text.getLayer());//layer目前版本不支援巢狀
+
+      scene.layerManager.addToLayer('scenario', this);
+
+      text.on('complete', function(){
+        this.scenario.isPlayingText = false;
+      },this);
+
       scene.plugins.get('rexViewportCoordinate').add(text, scene.scenario.director.viewport);
       scene.plugins.get('rexViewportCoordinate').add(this, scene.scenario.director.viewport);
       this.setVPosition(x,y);
@@ -114,8 +118,9 @@ class Actor extends Phaser.GameObjects.Container {
   }
 
   textPop(duration, ease) {
+    this.text.setAlpha(0);
     this.text.setVisible(true);
-    this.scenario.layer_Chars.bringToTop(this.text.getLayer());
+    this.text.bringToTop();
     this.scene.tweens.add({
       targets:this.text,
       vpx: {from:this.vpx, to:this.vpx},
@@ -139,8 +144,6 @@ class Actor extends Phaser.GameObjects.Container {
   }
 
   cleanTalk() {
-    debugger
-    this.scenario.layer_Chars.remove(this.text)
     this.text.destroy();
     return this;
   }
@@ -169,10 +172,7 @@ class Actor extends Phaser.GameObjects.Container {
     if (waitTyping === undefined) {
         waitTyping = true;
     }
-    //this.scene.children.bringToTop(this.getLayer());
-
-    this.scenario.layer_Chars.bringToTop(this);
-    this.textCleanOthers(this.name);//清除其他人的對話
+    this.bringToTop();
     this.textPop();
     var textBox = this.text;
     textBox.charNameText.setText(this.name);//顯示說話者的名字
@@ -188,6 +188,7 @@ class Actor extends Phaser.GameObjects.Container {
 
   typing(content) {
       if (this.waitTyping) {
+          this.scenario.isPlayingText = true;
           this.tagPlayer.pauseUntilEvent(this.text, 'complete');
       }
       this.text.start(content);
