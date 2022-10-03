@@ -1,5 +1,5 @@
 import CreateChar from './CreateChar.js';
-import CreateTextbox from './CreateTextbox.js';
+import CreateTextbubble from './CreateTextbubble.js';
 import FadeOutDestroy from '../../../../../phaser3-rex-notes/plugins/fade-out-destroy.js';
 import ContainerLite from '../../../../../phaser3-rex-notes/plugins/containerlite.js';
 
@@ -9,7 +9,7 @@ import MethodsMove from './MethodsMove.js';
 class Actor extends ContainerLite {
   constructor(scene, charID, x, y) {
       var sprite = CreateChar(scene, charID, 'normal0');
-      var text = CreateTextbox(scene, sprite).setPosition(sprite.x, sprite.getTopRight().y+100).setVisible(true)
+      var text = CreateTextbubble(scene, sprite).setPosition(sprite.x, sprite.getTopRight().y+100).setVisible(true)
       //var center = scene.rexUI.add.roundRectangle(sprite.x,sprite.y,100,1000,undefined,0xff0000);
       //super(scene, 0, 0, [sprite, center]);
       super(scene, 0, 0, [sprite,text]); 

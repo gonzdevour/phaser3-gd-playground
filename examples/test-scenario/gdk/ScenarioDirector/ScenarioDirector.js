@@ -3,7 +3,7 @@ import mustache from 'mustache';
 import tfdb from '../../../../plugins/taffydb/taffy-min.js';
 
 class ScenarioDirector extends Phaser.Events.EventEmitter {
-  constructor(scene, manager, viewport, textPlayer) {
+  constructor(scene, manager, viewport, storyBox) {
       super();
       this.scene = scene;
       this.scenario = scene.scenario;
@@ -11,15 +11,21 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       this.sound = scene.sound;
       this.manager = manager;
       this.viewport = viewport;
-      this.textPlayer = textPlayer;
-      this.background = scene.add.rexTransitionImage(viewport.centerX, viewport.centerY, 'park', 0, {})
-      scene.layerManager.addToLayer('story', this.textPlayer);
+
+      this.background = scene.add.rexTransitionImage(viewport.centerX, viewport.centerY, 'park', 0, {}).setAlpha(0.2)
       scene.layerManager.addToLayer('scenario', this.background);
-      scene.plugins.get('rexViewportCoordinate').add(this.textPlayer, viewport, 0.5, 0.9);
       scene.plugins.get('rexViewportCoordinate').add(this.background, viewport);
-      this.textPlayer.playPromise(`hello text player, god bless p3!!!`)
-      .then(function () {
-          console.log('tp complete');
+
+      this.storyBox = storyBox;
+      scene.layerManager.addToLayer('story', this.storyBox);
+      //scene.plugins.get('rexViewportCoordinate').add(this.storyBox, viewport, 0.5, 0.9);
+
+      scene.tweens.add({
+        targets: storyBox,
+        y: '-=100',
+        yoyo: true,
+        repeat: -1,
+        duration: 2000,
       })
 
       this.decisionRecord = tfdb.taffy();
@@ -84,11 +90,13 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     if (duration === undefined){
       duration = 1000;
     }
-    this.background.transit({
-      key: filename, 
-      frame: 0,
-      duration: duration,
-    });
+    if (this.background){
+      this.background.transit({
+        key: filename, 
+        frame: 0,
+        duration: duration,
+      });
+    }
   }
   淡入(duration) {
     duration = duration?duration:1000;
@@ -102,6 +110,13 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
   選項(text, value) {
     var choice = {text: text, value: yaml.load(value)}
     this.choices.push(choice);
+  }
+  旁白(name, expressionAlias, serif) {
+    serif = mustache.render(serif, this.mtView);
+    this.storyBox.playPromise(serif)
+      .then(function () {
+          console.log('旁白完畢');
+      })
   }
   移動(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration) {
     var actor = GetActor(this.manager, actorID);

@@ -1,7 +1,7 @@
 const COLOR_PRIMARY = 0x000000; //'#4e342e'
 const COLOR_LIGHT = 0xffffff; //'#00ff00'
 
-var CreateTextbox = function (scene, speaker, width, height) {
+var CreateTextbubble = function (scene, speaker, width, height) {
     if (width === undefined) {
         width = 0;
     }
@@ -146,4 +146,4 @@ var CreateSpeechBubbleShape = function (scene, speaker) {
     return shape;
 }
 
-export default CreateTextbox;
+export default CreateTextbubble;

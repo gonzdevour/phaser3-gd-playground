@@ -8,7 +8,7 @@ import ScenarioDirector from './gdk/ScenarioDirector/ScenarioDirector.js';
 import CreateScenarioViewport from './scripts/CreateScenarioViewport.js';
 
 import CreateWaitingDialog from './scripts/CreateWaitingDialog.js';
-import CreateTextplayer from './scripts/CreateTextplayer.js';
+import CreateStoryBox from './scripts/CreateStoryBox.js';
 
 class Test extends Base { //'#000000'
     constructor() {
@@ -51,8 +51,8 @@ class Test extends Base { //'#000000'
         //console.log(storyCSV);
         this.scenario = new CsvScenario(this);
         var viewport = CreateScenarioViewport(this, 600, 300, 800, 600);
-        var textPlayer = CreateTextplayer(this, viewport.centerX+5, viewport.bottom-viewport.height*0.25, viewport.width*0.95, viewport.height*0.3);
-        this.scenario.director = new ScenarioDirector(this, tagPlayer, viewport, textPlayer);
+        var storyBox = CreateStoryBox(this, viewport.centerX+5, viewport.bottom-viewport.height*0.25, viewport.width*0.95, viewport.height*0.3);
+        this.scenario.director = new ScenarioDirector(this, tagPlayer, viewport, storyBox);
         this.scenario.isPlayingText = false;
 
         var scenario = this.scenario;
