@@ -18,11 +18,12 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
 
       this.storyBox = storyBox;
       scene.layerManager.addToLayer('story', this.storyBox);
-      //scene.plugins.get('rexViewportCoordinate').add(this.storyBox, viewport, 0.5, 0.9);
+      scene.plugins.get('rexViewportCoordinate').add(this.storyBox, viewport, 0.5, 0.9);
 
       scene.tweens.add({
         targets: storyBox,
-        y: '-=100',
+        //vpy: '-=0.2',
+        y:'-=100',
         yoyo: true,
         repeat: -1,
         duration: 2000,
@@ -112,8 +113,10 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     this.choices.push(choice);
   }
   旁白(name, expressionAlias, serif) {
+    var expression = AliasToExpression(expressionAlias);
+    name = mustache.render(name, this.mtView);
     serif = mustache.render(serif, this.mtView);
-    this.storyBox.playPromise(serif)
+    this.storyBox.playPromise(name, expression, serif)
       .then(function () {
           console.log('旁白完畢');
       })

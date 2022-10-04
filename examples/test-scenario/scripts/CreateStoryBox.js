@@ -4,11 +4,17 @@ import AutoRemoveTween from '../../../../phaser3-rex-notes/plugins/utils/tween/A
 
 class StoryBox extends ContainerLite {
     constructor(scene, x, y, width, height) {
-        var background = CreateCustomShape(scene);
+
         var textPlayer = CreateTextPlayer(scene, x, y, width, height);
         var nameLabel = createNameLabel(scene, x-0.5*width, y-0.5*height);
+        var background = CreateCustomShape(scene, width+100, height+100).setFillStyle(0x0, 1).setStrokeStyle(3, 0xffffff, 1).setPosition(x, y);
+        //var marker = scene.rexUI.add.roundRectangle(x, y, 500, 500, 10, 0xff0000);
 
-        super(scene, 0, 0, [background, textPlayer, nameLabel]);
+        super(scene, x, y, [background, textPlayer, nameLabel]);
+        scene.add.existing(this);
+
+        background.setAlpha(0.8);
+        this.moveDepthBelow(background);
 
         this.background = background;
         this.textPlayer = textPlayer;
@@ -17,7 +23,11 @@ class StoryBox extends ContainerLite {
         this.scene = scene;
         this.scenario = scene.scenario;
     }
-    playPromise(content) {
+    playPromise(name, expression, content) {
+        this.moveDepthAbove(this.textPlayer);
+        if (name) {
+            this.nameLabel.setText(name);
+        }
         return this.textPlayer.playPromise(content);
     }
 }
@@ -25,12 +35,13 @@ class StoryBox extends ContainerLite {
 var createNameLabel = function (scene, x, y) {
     return scene.rexUI.add.label({
         x: x, y: y,
-        background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, '#49390c'),
-        text: scene.add.text(0, 0, 'Leonardo Dicapio', {fontSize: 48}),
-        icon: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 50, '#cfb366'),
-        align: 'center',
-        space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10},
+        background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, 0x999933),
+        text: scene.add.text(0, 0, 'Leonardo Dicapio', {fontSize: 48, testString: '|MÉqgy回',}),
+        icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10, 0xffff33),
+        align: 'left',
+        space: { left: 10, right: 10, top: 10, bottom: 10, icon: 10},
     })
+    .setOrigin(0,1)
     .layout();
 }
 
@@ -115,7 +126,7 @@ var CreateTextPlayer = function(scene, x, y, width, height){
     )
 
     //在scene上畫出inst
-    //scene.add.existing(textPlayer);
+    scene.add.existing(textPlayer);
     textPlayer.angle = -2;
     //textPlayer.setVisible(false);
 
@@ -199,7 +210,7 @@ var CreateTextPlayer = function(scene, x, y, width, height){
     return textPlayer
 }
 
-var CreateCustomShape = function (scene, speaker) {
+var CreateCustomShape = function (scene, width, height, speaker) {
     var shape = scene.rexUI.add.customShapes({
         create: { lines: 1 },
         update: function () {
@@ -207,13 +218,14 @@ var CreateCustomShape = function (scene, speaker) {
             var tailHeight = 30;
             var tailWidth = 40;
 
-            var left = 0, right = this.width,
-                top = 0, bottom = this.height, boxBottom = bottom - tailHeight,
+            var left = -0.5*width, right = 0.5*width,
+                top = -0.5*height, bottom = 0.5*height, 
+                boxBottom = bottom - tailHeight,
+                tailCenterX = 0,
                 //沒有指定speaker的時候尾巴置中
-                tailCenterX = this.tailOriginX*this.width,
-                indentRight = left + tailCenterX+0.5*tailWidth,
-                indentBottom = left + tailCenterX,
-                indentLeft = left + tailCenterX-0.5*tailWidth;
+                indentRight = 0.5*tailWidth,
+                indentBottom = 0,
+                indentLeft = 0.5*tailWidth;
 
             if(speaker){
                 var centerX = speaker.stageCenter?speaker.stageCenter:512;
@@ -230,22 +242,33 @@ var CreateCustomShape = function (scene, speaker) {
                 }
             }
 
+            // this.getShapes()[0]
+            //     .lineStyle(this.lineWidth, this.strokeColor, this.strokeAlpha)
+            //     .fillStyle(this.fillColor, this.fillAlpha)
+            //     // top line, right arc
+            //     .startAt(left + radius, top).lineTo(right - radius, top).arc(right - radius, top + radius, radius, 270, 360)
+            //     // right line, bottom arc
+            //     .lineTo(right, boxBottom - radius).arc(right - radius, boxBottom - radius, radius, 0, 90)
+            //     // bottom indent                    
+            //     .lineTo(indentRight, boxBottom).lineTo(indentBottom, bottom).lineTo(indentLeft, boxBottom)
+            //     // bottom line, left arc
+            //     .lineTo(left + radius, boxBottom).arc(left + radius, boxBottom - radius, radius, 90, 180)
+            //     // left line, top arc
+            //     .lineTo(left, top + radius).arc(left + radius, top + radius, radius, 180, 270)
+            //     .close();
+
             this.getShapes()[0]
                 .lineStyle(this.lineWidth, this.strokeColor, this.strokeAlpha)
                 .fillStyle(this.fillColor, this.fillAlpha)
-                // top line, right arc
-                .startAt(left + radius, top).lineTo(right - radius, top).arc(right - radius, top + radius, radius, 270, 360)
-                // right line, bottom arc
-                .lineTo(right, boxBottom - radius).arc(right - radius, boxBottom - radius, radius, 0, 90)
-                // bottom indent                    
-                .lineTo(indentRight, boxBottom).lineTo(indentBottom, bottom).lineTo(indentLeft, boxBottom)
-                // bottom line, left arc
-                .lineTo(left + radius, boxBottom).arc(left + radius, boxBottom - radius, radius, 90, 180)
-                // left line, top arc
-                .lineTo(left, top + radius).arc(left + radius, top + radius, radius, 180, 270)
-                .close();
+                .startAt(left, top)
+                .lineTo(right, top)
+                .lineTo(right, bottom)
+                .lineTo(left, bottom)
+                .lineTo(left, top)
+                .close()
         }
     })
+
     return shape;
 }
 
