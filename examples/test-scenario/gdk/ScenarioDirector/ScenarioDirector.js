@@ -3,43 +3,48 @@ import mustache from 'mustache';
 import tfdb from '../../../../plugins/taffydb/taffy-min.js';
 
 class ScenarioDirector extends Phaser.Events.EventEmitter {
-  constructor(scene, manager, viewport, storyBox) {
+  constructor(scene, tagPlayer, viewport) {
       super();
       this.scene = scene;
       this.scenario = scene.scenario;
+      this.scenario.director = this;
       this.camera = scene.cameras.main;
       this.sound = scene.sound;
-      this.manager = manager;
+      this.tagPlayer = tagPlayer;
       this.viewport = viewport;
 
       this.background = scene.add.rexTransitionImage(viewport.centerX, viewport.centerY, 'park', 0, {}).setAlpha(0.2)
       scene.layerManager.addToLayer('scenario', this.background);
       scene.plugins.get('rexViewportCoordinate').add(this.background, viewport);
 
-      this.storyBox = storyBox;
-      scene.layerManager.addToLayer('story', this.storyBox);
-      scene.plugins.get('rexViewportCoordinate').add(this.storyBox, viewport, 0.5, 0.9);
-
-      scene.tweens.add({
-        targets: storyBox,
-        //vpy: '-=0.2',
-        y:'-=100',
-        yoyo: true,
-        repeat: -1,
-        duration: 2000,
-      })
-
-      this.decisionRecord = tfdb.taffy();
-      this.nextLabel = '';
-      this.coin = 50;
-      this.choices = [];
-
       this.mode_singleChar = false;
-      this.lastTalkerID = '';
-      this.mtView = {玩家名稱: 'GD'};
+      this.mode_speechBubble = true;
 
       this.initVPX = 0.5;
       this.initVPY = 1.2;
+      this.typingSpeed = 50;
+
+      this.lastTalkerID = '';
+      this.nextLabel = '';
+      this.mtView = {玩家名稱: 'GD'};
+      this.decisionRecord = tfdb.taffy();
+      this.choices = [];
+
+      this.coin = 50;
+
+      this.createStoryBox();
+
+  }
+  createStoryBox() {
+    var storyBox = GetStoryBox(this.tagPlayer, 'story');
+    if (!storyBox) {
+      var content = `<text.story=story>`;
+      this.tagPlayer
+      .playPromise(content)
+      .then(function () {
+          console.log('故事框建立完成')
+      })
+    }
   }
   清空() {
     this.清除對話();
@@ -47,11 +52,11 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
   }
   清除對話(charName) {
     if (charName){
-      var char = this.manager.getGameObject('char', charName); //清除指定角色對話
+      var char = this.tagPlayer.getGameObject('char', charName); //清除指定角色對話
       char.cleanTalk();
     } else {
       console.log('清除所有對話')
-      var allChars = this.manager.getGameObject('char'); //清除所有角色對話
+      var allChars = this.tagPlayer.getGameObject('char'); //清除所有角色對話
       for (var key in allChars) {
           var char = allChars[key];
           char.cleanTalk();
@@ -67,23 +72,27 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       this.清除對話();  //清除所有角色的對話泡
       cmd = `</char>`; //清除所有角色
     }
-    this.manager
+    this.tagPlayer
       .playPromise(cmd)
       .then(function () {
           console.log('清除角色' + charName)
       })
   }
-  隱藏對話(charName) {
+  隱藏對話(charName) { //直接執行多個mode的子function，在子function中才判斷mode
     if (charName){
-      var char = this.manager.getGameObject('char', charName); //清除指定角色對話
-      char.text.setVisible(false);
+      var char = this.tagPlayer.getGameObject('char', charName); //清除指定角色對話氣泡
+      this.hideBubble(char.bubble);
     } else {
-      console.log('隱藏所有對話')
-      var allChars = this.manager.getGameObject('char'); //清除所有角色對話
+      var allChars = this.tagPlayer.getGameObject('char'); //清除所有角色對話氣泡
       for (var key in allChars) {
           var char = allChars[key];
-          char.text.setVisible(false);
+          this.hideBubble(char.bubble);
       }
+    }
+  }
+  hideBubble(bubble){
+    if (this.mode_speechBubble){ //bubble模式
+      bubble.setVisible(false);
     }
   }
   背景(filename, duration){
@@ -112,17 +121,88 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     var choice = {text: text, value: yaml.load(value)}
     this.choices.push(choice);
   }
-  旁白(name, expressionAlias, serif) {
-    var expression = AliasToExpression(expressionAlias);
-    name = mustache.render(name, this.mtView);
+  旁白(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration, displayName) {
+    actorID = mustache.render(actorID, this.mtView);
+    if(displayName){
+      displayName = mustache.render(displayName, this.mtView);
+    } else {
+      displayName = actorID
+    }
     serif = mustache.render(serif, this.mtView);
-    this.storyBox.playPromise(name, expression, serif)
+
+    var actor = GetActor(this.tagPlayer, actorID);
+    var ease = AliasToEase(easeAlias);
+    var expression = AliasToExpression(expressionAlias);
+    duration = duration?duration*1000:0;
+
+    if (x == undefined){
+      x = this.initVPX;
+    }
+    if (y == undefined){
+      y = this.initVPY;
+    }
+
+    var ifNotSameChar = this.lastTalkerID == actorID ? false : true;
+    this.lastTalkerID = actorID;
+
+    this.隱藏對話();
+
+    var content = ``;
+    // if (this.mode_singleChar && ifNotSameChar){
+    //   //this.隱藏對話();
+    //   content = content + `</char>`
+    // }
+    // if (!actor) {
+    //   content = content + `<char.${actorID}=${actorID},${x},${y}>`
+    // }
+    // if (displayName) {
+    //   content = content + `<char.${actorID}.setDisplayName=${displayName}>`
+    // }
+    // if (expression) {
+    //   content = content + `<char.${actorID}.setExpression=${expression}>`
+    // }
+    // if (x && !xFrom){
+    //   content = content + `<char.${actorID}.vpx.to=${x},${duration},${ease}>`
+    // }
+    // if (y && !yFrom){
+    //   content = content + `<char.${actorID}.vpy.to=${y},${duration},${ease}>`
+    // }
+    // if (xFrom){
+    //   if (x && x != this.vpx){
+    //     content = content + `<char.${actorID}.vpx=${x}>`
+    //   }
+    //   content = content + `<char.${actorID}.vpx.from=${xFrom},${duration},${ease}>`
+    // }
+    // if (yFrom){
+    //   if (y && y != this.vpy){
+    //     content = content + `<char.${actorID}.vpy=${y}>`
+    //   }
+    //   content = content + `<char.${actorID}.vpy.from=${yFrom},${duration},${ease}>`
+    // }
+    // if (duration){
+    //   content = content + `<wait=${duration}>`
+    // }
+    // if (serif){
+    //   content = content + `<wait=100>`
+    //   content = content + `<text.story.playPromise=${displayName},${expression},${serif}>`
+    // }
+    content = `<text.story.tell=${displayName},${expression}>${serif}`;
+    //content = `<text.story.playPromise=a,b,cccccccccccccccccccc>`;
+    //console.log(content);
+    this.tagPlayer
+      .playPromise(content)
       .then(function () {
-          console.log('旁白完畢');
+          console.log('Complete')
       })
   }
-  移動(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration) {
-    var actor = GetActor(this.manager, actorID);
+  移動(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration, displayName) {
+    actorID = mustache.render(actorID, this.mtView);
+    if(displayName){
+      displayName = mustache.render(displayName, this.mtView);
+    } else {
+      displayName = actorID
+    }
+    var actor = GetActor(this.tagPlayer, actorID);
     var ease = AliasToEase(easeAlias);
     var expression = AliasToExpression(expressionAlias);
     duration = duration?duration*1000:0;
@@ -146,6 +226,9 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     }
     if (!actor) {
       content = content + `<char.${actorID}=${actorID},${x},${y}>`
+    }
+    if (displayName) {
+      content = content + `<char.${actorID}.setDisplayName=${displayName}>`
     }
     if (expression) {
       content = content + `<char.${actorID}.setExpression=${expression}>`
@@ -170,20 +253,26 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     }
 
     console.log(content);
-    this.manager
+    this.tagPlayer
       .playPromise(content)
       .then(function () {
           console.log('Complete')
       })  
 
   }
-  說話(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration) {
-    var actor = GetActor(this.manager, actorID);
+  說話(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration, displayName) {
+    actorID = mustache.render(actorID, this.mtView);
+    if(displayName){
+      displayName = mustache.render(displayName, this.mtView);
+    } else {
+      displayName = actorID
+    }
+    serif = mustache.render(serif, this.mtView);
+
+    var actor = GetActor(this.tagPlayer, actorID);
     var ease = AliasToEase(easeAlias);
     var expression = AliasToExpression(expressionAlias);
     duration = duration?duration*1000:0;
-
-    serif = mustache.render(serif, this.mtView);
 
     if (x == undefined){
       x = this.initVPX;
@@ -204,6 +293,9 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     }
     if (!actor) {
       content = content + `<char.${actorID}=${actorID},${x},${y}>`
+    }
+    if (displayName) {
+      content = content + `<char.${actorID}.setDisplayName=${displayName}>`
     }
     if (expression) {
       content = content + `<char.${actorID}.setExpression=${expression}>`
@@ -234,7 +326,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       content = content + `<char.${actorID}.talk>${serif}`
     }
     console.log(content);
-    this.manager
+    this.tagPlayer
       .playPromise(content)
       .then(function () {
           console.log('Complete')
@@ -261,10 +353,15 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
   }
   finishTyping() { //立即完成text typing
     console.log('try to finish typing')
-    var allChars = this.manager.getGameObject('char'); //清除所有角色對話
+    var allChars = this.tagPlayer.getGameObject('char');
     for (var key in allChars) {
         var char = allChars[key];
-        char.text.setTypeSpeed(0);
+        char.bubble.setTypingSpeed(0); //立即完成所有bubble
+    }
+    var allTexts = this.tagPlayer.getGameObject('text');
+    for (var key in allTexts) {
+        var text = allTexts[key];
+        text.setTypingSpeed(0) //立即完成所有textPlayer
     }
   }
   print(msg) {
@@ -295,8 +392,12 @@ var dataMap = function(director, value){
   return value;
 }
 
-var GetActor = function(manager, actorID){
-  return manager.getGameObject('char', actorID);
+var GetActor = function(tagPlayer, actorID){
+  return tagPlayer.getGameObject('char', actorID);
+}
+
+var GetStoryBox = function(tagPlayer, storyBoxID){
+  return tagPlayer.getGameObject('text', storyBoxID);
 }
 
 var buildCharsData = function(director, decisionRecord){

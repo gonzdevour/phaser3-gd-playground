@@ -37,6 +37,11 @@ class Test extends Base { //'#000000'
                 createGameObject: CreateActor,
                 fade:300,
             })
+            .addGameObjectManager({
+                name: 'text',
+                createGameObject: CreateStoryBox,
+                fade:300,
+            })
             .on('+fadeOutAllTalk', function(parser, a, b) {
                 var allChars = tagPlayer.getGameObject('char');
                 for (var key in allChars) {
@@ -50,12 +55,12 @@ class Test extends Base { //'#000000'
         var storyCSV = this.cache.text.get('story');
         //console.log(storyCSV);
         this.scenario = new CsvScenario(this);
-        var viewport = CreateScenarioViewport(this, 600, 300, 800, 600);
-        var storyBox = CreateStoryBox(this, viewport.centerX+5, viewport.bottom-viewport.height*0.25, viewport.width*0.95, viewport.height*0.3);
-        this.scenario.director = new ScenarioDirector(this, tagPlayer, viewport, storyBox);
         this.scenario.isPlayingText = false;
+        this.scenario.viewport = CreateScenarioViewport(this, 600, 300, 800, 600);
+        this.scenario.director = new ScenarioDirector(this, tagPlayer, this.scenario.viewport);
 
         var scenario = this.scenario;
+        var viewport = this.scenario.viewport;
         var director = this.scenario.director;
 
         scenario

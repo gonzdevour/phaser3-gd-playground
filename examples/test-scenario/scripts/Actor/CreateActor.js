@@ -9,21 +9,31 @@ import MethodsMove from './MethodsMove.js';
 class Actor extends ContainerLite {
   constructor(scene, charID, x, y) {
       var sprite = CreateChar(scene, charID, 'normal0');
-      var text = CreateTextbubble(scene, sprite).setPosition(sprite.x, sprite.getTopRight().y+100).setVisible(true)
+      var bubble = CreateTextbubble(scene, sprite).setPosition(sprite.x, sprite.getTopRight().y+100).setVisible(true)
       //var center = scene.rexUI.add.roundRectangle(sprite.x,sprite.y,100,1000,undefined,0xff0000);
       //super(scene, 0, 0, [sprite, center]);
-      super(scene, 0, 0, [sprite,text]); 
+      super(scene, 0, 0, [sprite,bubble]); 
       this.sprite = sprite;
-      this.text = text; //addToLayer和container.add都會加入displayList，兩個都用就會render成兩個。所以text如果要保證在sprite上方就不能綁進actor
+      this.bubble = bubble; //addToLayer和container.add都會加入displayList，兩個都用就會render成兩個。所以bubble如果要保證在sprite上方就不能綁進actor
       this.scenario = scene.scenario;
+      this.director = scene.scenario.director;
+      this.storyBox = scene.scenario.director.storyBox
+
+      this.displayName = '';
+      this.expression = '';
 
       scene.layerManager.addToLayer('scenario', this);
 
-      text.on('complete', function(){
+      bubble.on('complete', function(){
         this.scenario.isPlayingText = false;
       },this);
 
-      scene.plugins.get('rexViewportCoordinate').add(text, scene.scenario.director.viewport);
+      var storyBox = this.storyBox;
+      storyBox.on('complete', function(){
+        this.scenario.isPlayingText = false;
+      },this);
+
+      scene.plugins.get('rexViewportCoordinate').add(bubble, scene.scenario.director.viewport);
       scene.plugins.get('rexViewportCoordinate').add(this, scene.scenario.director.viewport);
       this.setVPosition(x,y);
       this.appear();
@@ -40,6 +50,10 @@ class Actor extends ContainerLite {
     this.vpy = y;
 
     return this;
+  }
+
+  setDisplayName(displayName){
+    this.displayName = displayName;
   }
 
   appear() {
@@ -113,16 +127,17 @@ class Actor extends ContainerLite {
   }
 
   setExpression(expressionName) {
+    this.expression = expressionName;
     this.sprite.setExpression(expressionName);
     return this;
   }
 
-  textPop(duration, ease) {
-    this.text.setAlpha(0);
-    this.text.setVisible(true);
-    this.text.bringToTop();
+  bubblePop(duration, ease) {
+    this.bubble.setAlpha(0);
+    this.bubble.setVisible(true);
+    this.bubble.bringToTop();
     this.scene.tweens.add({
-      targets:this.text,
+      targets:this.bubble,
       vpx: {from:this.vpx, to:this.vpx},
       vpy: {from:this.vpy-1, to:this.vpy-1.1},
       alpha:{from:0, to:1},
@@ -133,8 +148,14 @@ class Actor extends ContainerLite {
   }
 
   stopTalk(duration, ease) {
+    var target;
+    if (this.scenario.director.mode_speechBubble){ //bubble模式
+      target = this.bubble
+    } else {
+
+    }
     this.scene.tweens.add({
-      targets:this.text,
+      targets:target,
       y: -100,
       alpha:{from:1, to:0},
       duration:duration?duration:1000,
@@ -144,7 +165,11 @@ class Actor extends ContainerLite {
   }
 
   cleanTalk() {
-    this.text.destroy();
+    if (this.scenario.director.mode_speechBubble){ //bubble模式
+      this.bubble.destroy();
+    } else {
+
+    }
     return this;
   }
 
@@ -165,6 +190,8 @@ class Actor extends ContainerLite {
   }
 
   talk(speed, waitTyping) {
+    this.bringToTop();
+
     if (typeof (speed) === 'boolean') {
         waitTyping = speed;
         speed = undefined;
@@ -172,28 +199,61 @@ class Actor extends ContainerLite {
     if (waitTyping === undefined) {
         waitTyping = true;
     }
-    this.bringToTop();
-    this.textPop();
-    var textBox = this.text;
-    textBox.charNameText.setText(this.name);//顯示說話者的名字
-    if (speed !== undefined) {
-        textBox.setTypeSpeed(speed); //指定語氣速度
-    } else {
-        textBox.setTypeSpeed(50); //如不指定則使用預設速度
-    }
     this.waitTyping = waitTyping;
-    this.tagPlayer.setContentCallback(this.typing, this);
+
+    if (this.scenario.director.mode_speechBubble){ //bubble模式
+
+      this.bubblePop();
+      var text = this.bubble;
+      text.nameLabel.setText(this.displayName);//顯示說話者的名字
+      if (speed !== undefined) {
+        text.setTypingSpeed(speed); //指定語氣速度
+      } else {
+        text.setTypingSpeed(this.director.typingSpeed); //如不指定則使用預設速度
+      }
+      this.tagPlayer.setContentCallback(this.bubbleTyping, this);
+
+    } else { //純文字框模式
+
+      if (this.displayName) {
+        this.storyBox.nameLabel.setText(displayName);
+        if (this.displayName != this.storyBox.speakerName){
+          this.storyBox.speakerName = this.displayName;
+            this.storyBox.nameLabelPop()
+        }
+      }
+
+      var text = this.storyBox;
+      text.nameLabel.setText(this.displayName);//顯示說話者的名字
+      if (speed !== undefined) {
+        text.setTypingSpeed(speed); //指定語氣速度
+      } else {
+        text.setTypingSpeed(this.director.typingSpeed); //如不指定則使用預設速度
+      }
+      this.tagPlayer.setContentCallback(this.storyBoxTyping, this);
+    }
+
     return this;
   }
 
-  typing(content) {
+  bubbleTyping(content) {
       if (this.waitTyping) {
           this.scenario.isPlayingText = true;
-          this.tagPlayer.pauseUntilEvent(this.text, 'complete');
+          this.tagPlayer.pauseUntilEvent(this.bubble, 'complete');
       }
-      this.text.start(content);
+      this.bubble.start(content);
       return this;
   }
+
+  storyBoxTyping(content) {
+    if (this.waitTyping) {
+        this.scenario.isPlayingText = true;
+        this.tagPlayer.pauseUntilEvent(this.storyBox.textPlayer, 'complete');
+    }
+    this.storyBox.textPlayer.playPromise(content);
+    return this;
+  }
+
 }
 
 Object.assign(

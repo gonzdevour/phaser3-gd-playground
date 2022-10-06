@@ -3,18 +3,39 @@ import ContainerLite from '../../../../phaser3-rex-notes/plugins/containerlite.j
 import AutoRemoveTween from '../../../../phaser3-rex-notes/plugins/utils/tween/AutoRemoveTween';
 
 class StoryBox extends ContainerLite {
-    constructor(scene, x, y, width, height) {
+    constructor(scene, storyBoxID, vpx, vpy, width, height) {
 
-        var textPlayer = CreateTextPlayer(scene, x, y, width, height);
-        var nameLabel = createNameLabel(scene, x-0.5*width, y-0.5*height);
-        var background = CreateCustomShape(scene, width+100, height+100).setFillStyle(0x0, 1).setStrokeStyle(3, 0xffffff, 1).setPosition(x, y);
+        if(vpx == undefined){vpx = 0.5};
+        if(vpy == undefined){vpy = 0.9};
+        if(width == undefined){width = scene.scenario.viewport.width*0.95};
+        if(height == undefined){height = scene.scenario.viewport.height*0.3};
+
+        var textPlayer = CreateTextPlayer(scene, 0, 0, width, height);
+        var nameLabel = createNameLabel(scene, 0-0.5*width, 0-0.5*height);
+        var background = CreateCustomShape(scene, width+100, height+100).setFillStyle(0x0, 1).setStrokeStyle(3, 0xffffff, 1).setPosition(0, 0);
         //var marker = scene.rexUI.add.roundRectangle(x, y, 500, 500, 10, 0xff0000);
 
-        super(scene, x, y, [background, textPlayer, nameLabel]);
+        super(scene, 0, 0, [background, textPlayer, textPlayer.triangle, nameLabel]);
         scene.add.existing(this);
 
-        background.setAlpha(0.8);
+        if(storyBoxID == 'story'){
+            scene.scenario.director.storyBox = this; //通用storyBox, tagPlayer代號text.story
+        }
+
+        background.setAlpha(0.5);
         this.moveDepthBelow(background);
+
+        scene.layerManager.addToLayer('story', this);
+        scene.plugins.get('rexViewportCoordinate').add(this, scene.scenario.viewport, vpx, vpy);
+  
+        // scene.tweens.add({
+        //   targets: storyBox,
+        //   //vpy: '-=0.2',
+        //   y:'-=100',
+        //   yoyo: true,
+        //   repeat: -1,
+        //   duration: 2000,
+        // })
 
         this.background = background;
         this.textPlayer = textPlayer;
@@ -22,13 +43,73 @@ class StoryBox extends ContainerLite {
 
         this.scene = scene;
         this.scenario = scene.scenario;
+        this.director = scene.scenario.director;
+        this.tagPlayer = scene.scenario.director.tagPlayer;
+
+        this.speakerName = '';
     }
-    playPromise(name, expression, content) {
-        this.moveDepthAbove(this.textPlayer);
-        if (name) {
-            this.nameLabel.setText(name);
+    tell(displayName, expression, speed, waitTyping) {
+        console.log('storyBox start to tell');
+        if (displayName) {
+            this.nameLabel.setText(displayName);
+            if (displayName != this.speakerName){
+                this.speakerName = displayName;
+                this.nameLabelPop()
+            }
         }
-        return this.textPlayer.playPromise(content);
+        if (typeof (speed) === 'boolean') {
+            waitTyping = speed;
+            speed = undefined;
+        }
+        if (waitTyping === undefined) {
+            waitTyping = true;
+        }
+        this.waitTyping = waitTyping;
+
+        if (speed !== undefined) {
+            this.textPlayer.setTypingSpeed(speed); //指定語氣速度
+        } else {
+            this.textPlayer.setTypingSpeed(this.director.typingSpeed); //如不指定則使用預設速度
+        }
+
+        this.tagPlayer.setContentCallback(this.storyBoxTyping, this);
+    }
+    storyBoxTyping(content) {
+        if (this.waitTyping) {
+            this.scenario.isPlayingText = true;
+            this.tagPlayer.pauseUntilEvent(this.textPlayer, 'complete');
+        }
+        this.textPlayer.playPromise(content);
+        return this;
+    }
+    setDisplayName(displayName){
+        this.displayName = displayName;
+    }
+    nameLabelPop() {
+        AutoRemoveTween(this.nameLabel, {
+            y: '-=20',
+            ease: 'Cubic',
+            duration: 500,
+            yoyo: true,
+        })
+    }
+    textPlayerPop() {
+        AutoRemoveTween(this.textPlayer, {
+            x: {from:this.textPlayer.x-20, to:this.textPlayer.x},
+            y: {from:this.textPlayer.y+20, to:this.textPlayer.y},
+            alpha: {from: 0, to:1},
+            ease: 'cubic',
+            duration: 500, //duration: this.textPlayer.typingSpeed,
+        })
+    }
+    textPlayerClose(){
+        AutoRemoveTween(this.textPlayer, {
+            x: '-=20',
+            y: '+=20',
+            alpha: 0,
+            ease: 'cubic',
+            duration: 500,
+        })
     }
 }
 
@@ -117,7 +198,8 @@ var CreateTextPlayer = function(scene, x, y, width, height){
             },
             clickTarget: null, //如果要自訂就填null再用setClickTarget設定
             wrap: { charWrap: true, maxLines: 5, padding: { bottom: 10 }, lineHeight: 48, },
-            nextPageInput: 'click|2000'
+
+            //nextPageInput: 'click|2000'
             // nextPageInput: function(callback) {
             //     console.log('Custom next-page-input')
             //     callback();
@@ -127,30 +209,9 @@ var CreateTextPlayer = function(scene, x, y, width, height){
 
     //在scene上畫出inst
     scene.add.existing(textPlayer);
+
+    //style
     textPlayer.angle = -2;
-    //textPlayer.setVisible(false);
-
-    //對話框彈出效果
-    textPlayer.popTween = scene.tweens.add({
-        targets: textPlayer,
-        x: {from:textPlayer.x-20, to:textPlayer.x},
-        y: {from:textPlayer.y+20, to:textPlayer.y},
-        alpha: {from: 0, to:1},
-        ease: 'cubic',
-        //duration: textPlayer.typingSpeed,
-        duration: 500,
-        paused: true,
-    });
-
-    textPlayer.backTween = scene.tweens.add({
-        targets: textPlayer,
-        x: '-=20',
-        y: '+=20',
-        alpha: 0,
-        ease: 'cubic',
-        duration: 500,
-        paused: true,
-    });
 
     //對話斷點的三角形特效
     textPlayer.triangle = scene.add.triangle(200, 200, 0, 36, 36, 36, 18, 72, 0xffffff).setVisible(false); //#ffffff
@@ -165,47 +226,17 @@ var CreateTextPlayer = function(scene, x, y, width, height){
     })
 
     //指定click target
-    textPlayer.setClickTarget(scene.toucharea);
-    textPlayer.clickTarget.onClick(function () {
-        if (!textPlayer.isPlaying) {
-            return;
-        }
-
-        if (textPlayer.isPageTyping) {
-            textPlayer.setTypingSpeed(0);
-        } else {
-            textPlayer.typingNextPage();
-        }
-    })
-
-    //事件觸發
-    
-    textPlayer
-        .on('wait.timeout', function(Callback){ //custom tag的範例
-            var waitTime = async function(ms){
-                await new Promise(resolve => setTimeout(resolve, ms));
-                Callback();
-            }
-            waitTime(2000);
-        })
-        .on('page.start', function() {
-            //console.log('typingSpeed: ' + textPlayer.typingSpeed)
-            textPlayer.popTween.play();
-            textPlayer.setTypingSpeed(100);
-            textPlayer.triangle.setVisible(false);
-        })
-        .on('wait.click', function() {
-            console.log('wait click')
-            textPlayer.triangle.setVisible(true);
-        })
-        .on('typing', function(child) {
-            if (child.type === 'text') {
-                //textPlayer.character.lipTween.play();
-            }
-        })
-        .on('complete', function() {
-            textPlayer.popTween.stop();
-        })
+    // textPlayer.setClickTarget(scene.toucharea);
+    // textPlayer.clickTarget.onClick(function () {
+    //     if (!textPlayer.isPlaying) {
+    //         return;
+    //     }
+    //     if (textPlayer.isPageTyping) {
+    //         textPlayer.setTypingSpeed(0);
+    //     } else {
+    //         textPlayer.typingNextPage();
+    //     }
+    // })
 
     return textPlayer
 }
@@ -272,11 +303,36 @@ var CreateCustomShape = function (scene, width, height, speaker) {
     return shape;
 }
 
-var CreateStoryBox = function (scene, x, y, width, height) {
-    var newBox = new StoryBox(scene, x, y, width, height);
-    //scene.add.existing(newBox); //因為layer.add會將物件放進displayList中並排序，scene.add.exsiting也會，同時使用會導致順序錯亂
-    //newBox.changeOrigin(200,200);
-    return newBox;
+var CreateStoryBox = function (scene, storyBoxID, vpx, vpy, width, height) {
+    var storyBox = new StoryBox(scene, storyBoxID, vpx, vpy, width, height);
+    var textPlayer = storyBox.textPlayer;
+    textPlayer
+        .on('wait.timeout', function(Callback){ //custom tag的範例
+            var waitTime = async function(ms){
+                await new Promise(resolve => setTimeout(resolve, ms));
+                Callback();
+            }
+            waitTime(2000);
+        })
+        .on('page.start', function() {
+            //console.log('typingSpeed: ' + textPlayer.typingSpeed)
+            storyBox.textPlayerPop();
+            textPlayer.setTypingSpeed(scene.scenario.director.typingSpeed);
+            textPlayer.triangle.setVisible(false);
+        })
+        .on('wait.click', function() {
+            console.log('wait click')
+            textPlayer.triangle.setVisible(true);
+        })
+        .on('typing', function(child) {
+            if (child.type === 'text') {
+                //textPlayer.character.lipTween.play();
+            }
+        })
+        .on('complete', function() {
+            //storyBox.textPlayerClose();
+        })
+    return storyBox;
   }
 
 export default CreateStoryBox;
