@@ -10,9 +10,9 @@ import { Delay } from "../../../../phaser3-rex-notes/plugins/eventpromise";
 
 //dialog與tagPlayer演出
 
-var CreateWaitingDialog = async function(scene, choices, viewport){
+var CreateWaitingDialog = async function(scene, choices, viewport){ //傳入viewport作為dialog加入vpc的目標viewport
     if (viewport == undefined){
-        viewport = scene.viewport;
+        viewport = scene.viewport; //如果沒有viewport就以scaleOuter為viewport
     }
     var result = await DialogSelect(scene, {
         //title: 'test title', 

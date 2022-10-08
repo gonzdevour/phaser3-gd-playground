@@ -65,7 +65,10 @@ class Test extends Base { //'#000000'
 
         scenario
             .on('log', function (msg) {
-                console.log('sLog: ' + msg)
+                //console.log('sLog: ' + msg)
+            })
+            .on('wait.click', function (scenario) {
+                //console.log('scenario wait click - ' + scenario.lastCustomCommandName)
             })
             .on('wait.choose', function (scenario) {
                 console.log(director.choices)

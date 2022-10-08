@@ -7,8 +7,8 @@ import ContainerLite from '../../../../../phaser3-rex-notes/plugins/containerlit
 import MethodsMove from './MethodsMove.js';
 
 class Actor extends ContainerLite {
-  constructor(scene, charID, x, y) {
-      var sprite = CreateChar(scene, charID, 'normal0');
+  constructor(scene, actorID, x, y) {
+      var sprite = CreateChar(scene, actorID, 'normal0');
       var bubble = CreateTextbubble(scene, sprite).setPosition(sprite.x, sprite.getTopRight().y+100).setVisible(true)
       //var center = scene.rexUI.add.roundRectangle(sprite.x,sprite.y,100,1000,undefined,0xff0000);
       //super(scene, 0, 0, [sprite, center]);
@@ -33,10 +33,17 @@ class Actor extends ContainerLite {
         this.scenario.isPlayingText = false;
       },this);
 
-      scene.plugins.get('rexViewportCoordinate').add(bubble, scene.scenario.director.viewport);
-      scene.plugins.get('rexViewportCoordinate').add(this, scene.scenario.director.viewport);
+      scene.vpc.add(bubble, scene.scenario.director.viewport);
+      scene.vpc.add(this, scene.scenario.director.viewport);
+
+      this.assignPrivateData(this.director.tb_Char.table[actorID]);
       this.setVPosition(x,y);
       this.appear();
+  }
+
+  assignPrivateData(data) {
+    this.privateData = data;
+    return this;
   }
 
   setVPosition(x, y) {
@@ -168,6 +175,8 @@ class Actor extends ContainerLite {
     if (this.scenario.director.mode_speechBubble){ //bubble模式
       this.bubble.destroy();
     } else {
+      this.storyBox.textPlayer.play('');
+      this.storyBox.close();
 
     }
     return this;
@@ -179,6 +188,7 @@ class Actor extends ContainerLite {
   }
 
   textCleanOthers(myName) {
+    this.storyBox.close();
     var allChars = this.tagPlayer.getGameObject('char');
     for (var key in allChars) {
       if(key !== myName){
@@ -204,8 +214,15 @@ class Actor extends ContainerLite {
     if (this.scenario.director.mode_speechBubble){ //bubble模式
 
       this.bubblePop();
+
       var text = this.bubble;
-      text.nameLabel.setText(this.displayName);//顯示說話者的名字
+      //text.nameLabel.getElement('background').setFillStyle(this.privateData.nameColor?this.privateData.nameColor:undefined)
+      var bg = text.nameLabel.getElement('background')
+      var style = this.privateData.nameColor?this.privateData.nameColor:undefined
+      bg.setFillStyle(style)
+      //bg.setFillStyle("0x824100")
+      text.nameLabel.setText(this.displayName).layout();//顯示說話者的名字
+      debugger
       if (speed !== undefined) {
         text.setTypingSpeed(speed); //指定語氣速度
       } else {
@@ -215,16 +232,24 @@ class Actor extends ContainerLite {
 
     } else { //純文字框模式
 
+      if (!this.storyBox.visible){
+        this.storyBox.pop();
+      }
+
       if (this.displayName) {
-        this.storyBox.nameLabel.setText(displayName);
+        console.log(this.privateData.nameColor)
+        this.storyBox.nameLabel.getElement('background').setFillStyle(this.privateData.nameColor?this.privateData.nameColor:undefined);
+        this.storyBox.nameLabel.setText(this.displayName).layout();
         if (this.displayName != this.storyBox.speakerName){
           this.storyBox.speakerName = this.displayName;
-            this.storyBox.nameLabelPop()
+          this.storyBox.nameLabelBounce();
+        } else if (!this.storyBox.visible){
+          this.storyBox.nameLabelBounce();
         }
       }
 
       var text = this.storyBox;
-      text.nameLabel.setText(this.displayName);//顯示說話者的名字
+      text.nameLabel.setText(this.displayName).layout();//顯示說話者的名字
       if (speed !== undefined) {
         text.setTypingSpeed(speed); //指定語氣速度
       } else {
@@ -261,8 +286,8 @@ Object.assign(
   MethodsMove
 );
 
-var CreateActor = function (scene, charID, x, y) {
-  var newActor = new Actor(scene, charID, x, y);
+var CreateActor = function (scene, actorID, x, y) {
+  var newActor = new Actor(scene, actorID, x, y);
   newActor.tagPlayer = this;
   //scene.add.existing(newActor); //因為layer.add會將物件放進displayList中並排序，scene.add.exsiting也會，同時使用會導致順序錯亂
   //newActor.changeOrigin(200,200);

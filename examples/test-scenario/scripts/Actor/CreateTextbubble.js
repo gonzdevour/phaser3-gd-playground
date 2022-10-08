@@ -1,6 +1,8 @@
 const COLOR_PRIMARY = 0x000000; //'#4e342e'
 const COLOR_LIGHT = 0xffffff; //'#00ff00'
 
+import CreateRoundRectangleBackground from "../../gdk/templates/CreateRoundRectangleBackground";
+
 var CreateTextbubble = function (scene, speaker, width, height) {
     if (width === undefined) {
         width = 0;
@@ -16,12 +18,25 @@ var CreateTextbubble = function (scene, speaker, width, height) {
         space: { left: 20, right: 20, top: 20, bottom: 60, icon: 20, text: 20,}
     }).setOrigin(0.5, 1).layout().setAlpha(0);
 
-    textBox.nameLabel = scene.rexUI.add.BBCodeText(textBox.x+80, textBox.y-30,'[weight=900]Char Name[/weight]', { 
-        fontSize: 32, 
-        backgroundColor: '#555',
-        color: '#ffffff',
-        align: 'right',
-    }).setOrigin(1,1);
+    textBox.nameLabel = scene.rexUI.add.label({
+      background: CreateRoundRectangleBackground(scene, 10, 0x555555, 0xffffff, 3),
+      //icon: !img ? undefined : scene.add.image(0, 0, img).setDisplaySize(72, 72),
+      text: scene.rexUI.add.BBCodeText(textBox.x+80, textBox.y-30, undefined, { 
+            fontSize: 36,
+            testString: '|MÉqgy回',
+            color: '#ffffff',
+            align: 'center',
+        }),
+      space: { left: 15, right: 15, top: 10, bottom: 20, icon: 10 },
+      //align: 'center'
+    }).setOrigin(1,0.6);
+
+    // textBox.nameLabel = scene.rexUI.add.BBCodeText(textBox.x+80, textBox.y-30,'[weight=900]Char Name[/weight]', { 
+    //     fontSize: 32, 
+    //     backgroundColor: '#555',
+    //     color: '#ffffff',
+    //     align: 'right',
+    // }).setOrigin(1,1);
 
     textBox
         .setInteractive()

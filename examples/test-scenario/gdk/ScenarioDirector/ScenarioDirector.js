@@ -15,10 +15,10 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
 
       this.background = scene.add.rexTransitionImage(viewport.centerX, viewport.centerY, 'park', 0, {}).setAlpha(0.2)
       scene.layerManager.addToLayer('scenario', this.background);
-      scene.plugins.get('rexViewportCoordinate').add(this.background, viewport);
+      scene.vpc.add(this.background, viewport);
 
       this.mode_singleChar = false;
-      this.mode_speechBubble = true;
+      this.mode_speechBubble = false;
 
       this.initVPX = 0.5;
       this.initVPY = 1.2;
@@ -27,6 +27,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       this.lastTalkerID = '';
       this.nextLabel = '';
       this.mtView = {玩家名稱: 'GD'};
+      this.tb_Char = scene.plugins.get('rexCsvToHashTable').add().loadCSV(scene.cache.text.get('dataChar'));
       this.decisionRecord = tfdb.taffy();
       this.choices = [];
 
@@ -79,6 +80,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       })
   }
   隱藏對話(charName) { //直接執行多個mode的子function，在子function中才判斷mode
+    //this.storyBox.close();
     if (charName){
       var char = this.tagPlayer.getGameObject('char', charName); //清除指定角色對話氣泡
       this.hideBubble(char.bubble);
@@ -146,6 +148,9 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     this.lastTalkerID = actorID;
 
     this.隱藏對話();
+    if (ifNotSameChar){ //bubble模式
+      this.storyBox.setVisible(false);
+    }
 
     var content = ``;
     // if (this.mode_singleChar && ifNotSameChar){
@@ -218,6 +223,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     this.lastTalkerID = actorID;
 
     this.隱藏對話();
+    this.storyBox.setVisible(false);
 
     var content = ``;
     if (this.mode_singleChar && ifNotSameChar){
@@ -285,6 +291,9 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     this.lastTalkerID = actorID;
 
     this.隱藏對話();
+    if (ifNotSameChar){ //bubble模式
+      this.storyBox.setVisible(false);
+    }
 
     var content = ``;
     if (this.mode_singleChar && ifNotSameChar){
@@ -361,7 +370,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     var allTexts = this.tagPlayer.getGameObject('text');
     for (var key in allTexts) {
         var text = allTexts[key];
-        text.setTypingSpeed(0) //立即完成所有textPlayer
+        text.textPlayer.setTypingSpeed(0) //立即完成所有textPlayer
     }
   }
   print(msg) {

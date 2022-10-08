@@ -28,7 +28,7 @@ var TransitionChoicesUpScaleDown = function(dialog, duration) {
   scene.tweens.timeline({
       tweens: [
           //{ targets: selectedButtons, ease: 'Cubic', y: '-=20', duration: 300, yoyo:true, completeDelay: 400 },
-          { targets: dialog, ease: 'Cubic', y: '+=400', alpha: 0, duration: 400,},
+          { targets: dialog, ease: 'Cubic', vpy: '+=0.5', alpha: 0, duration: 400,},
       ]
 
   });
@@ -69,10 +69,10 @@ var TransitionBT = function(dialog, duration) {
     //dialog.tweenChild({targets: choice, ease: 'Linear', angle:Ang, duration: 300+100*Math.random(),});
   })
   //dialog.tweenChild({targets: choices, ease: 'Linear', x:{from: '-=100', to:0}, duration: 1400,});
-  var yFrom = dialog.viewport.bottom+0.5*dialog.height;
-  var yTo = dialog.viewport.bottom-1*dialog.height;
+  var yFrom = 1.5;
+  var yTo = 0.4;
   //AutoRemoveTween(dialog, {ease: 'Cubic', y: { from: yFrom, to: yTo }, alpha: { from: 0, to: 1 }, angle: { from: -45, to: 3 }, duration: 600,})
-  AutoRemoveTween(dialog, {ease: 'Cubic', y: { from: yFrom, to: yTo }, alpha: { from: 0, to: 1 }, duration: 600,})
+  AutoRemoveTween(dialog, {ease: 'Cubic', vpy: { from: yFrom, to: yTo }, alpha: { from: 0, to: 1 }, duration: 600,})
 }
 
 export {

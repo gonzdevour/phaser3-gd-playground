@@ -19,6 +19,19 @@ var DefaultAppConfig = {
         Home: 'test',
     },
     layers: ['bg','main','scenario','story','choices','ui','dialog'],
+    assets: {
+        pack:{ key:'pack', url:'assets/pack.json' },
+        text:[
+            { 
+                key:'localization',
+                url:'https://docs.google.com/spreadsheets/d/e/2PACX-1vS7UIICMLMep8fMKULxkMu-OfDcuH3_k18YU1I9eEQQuMtXP7QgVvcvgW3nP488SsrwFhBTSNq9G6KK/pub?gid=1845660007&single=true&output=csv', 
+            },
+            { 
+                key:'dataChar',
+                url:'https://docs.google.com/spreadsheets/d/e/2PACX-1vTVH0ovFueknTvQVLeui-v7BzWilg__WAHtaCJpnojaTUnGLj_fCPJuJn5RlvAAk6nE4SftO0Ju_f_W/pub?gid=522351148&single=true&output=csv', 
+            },
+        ],
+    },
     scaleMode: Phaser.Scale.RESIZE,
     scaleAutoCenter: Phaser.Scale.CENTER_BOTH,
     plugins: AllPlugins,

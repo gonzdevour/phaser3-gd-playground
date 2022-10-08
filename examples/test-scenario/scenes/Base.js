@@ -21,6 +21,7 @@ class Base extends Phaser.Scene {
     }
     init() { //要確定引用的scene沒有init，否則該scene要加super.init()
         //scene kits
+        this.vpc = this.plugins.get('rexViewportCoordinate');
         this.layerManager = SetupLayerManager(this);
         this.viewport = SetupScaleOuter(this);    //this.viewport//setup時會順便做一次scale()
         this.toucharea = CreateTouchArea(this);    //this.toucharea, 因為會用到viewport, 這條必須在SetupScaleOuter後

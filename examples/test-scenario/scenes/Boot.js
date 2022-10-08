@@ -36,8 +36,16 @@ var initTools = function(scene){
 }
 
 var loadAssets = function(scene){
+
+    //load csv from googlesheet
+    var textToLoad = DefaultAppConfig.assets.text;
+    textToLoad.forEach(function(item, idx, arr){
+        scene.load.text(item.key, item.url);
+    });
+    
     //load pack
-    scene.load.pack('pack', 'assets/pack.json');
+    var pack = DefaultAppConfig.assets.pack;
+    scene.load.pack(pack.key, pack.url);
 }
 
 var createTools = async function(scene){

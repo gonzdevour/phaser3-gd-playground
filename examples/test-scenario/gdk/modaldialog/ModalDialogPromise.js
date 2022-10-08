@@ -31,7 +31,7 @@ var ModalDialogPromise = function (scene, config) {
 
     if(config.viewport){
         dialog.viewport = config.viewport;
-        scene.plugins.get('rexViewportCoordinate').add(dialog, dialog.viewport);
+        scene.vpc.add(dialog, dialog.viewport);
     }
 
     //將dialog再包裝為modal，並建立promise
