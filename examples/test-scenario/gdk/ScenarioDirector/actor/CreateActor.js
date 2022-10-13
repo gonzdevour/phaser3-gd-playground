@@ -1,7 +1,7 @@
 import CreateChar from './CreateChar.js';
 import CreateTextbubble from './CreateTextbubble.js';
-import FadeOutDestroy from '../../../../../phaser3-rex-notes/plugins/fade-out-destroy.js';
-import ContainerLite from '../../../../../phaser3-rex-notes/plugins/containerlite.js';
+import FadeOutDestroy from '../../../../../../phaser3-rex-notes/plugins/fade-out-destroy.js';
+import ContainerLite from '../../../../../../phaser3-rex-notes/plugins/containerlite.js';
 
 //methods
 import MethodsMove from './MethodsMove.js';
@@ -29,9 +29,10 @@ class Actor extends ContainerLite {
       },this);
 
       var storyBox = this.storyBox;
-      storyBox.on('complete', function(){
-        this.scenario.isPlayingText = false;
-      },this);
+      storyBox
+        .on('complete', function(){
+          this.scenario.isPlayingText = false;
+        },this);
 
       scene.vpc.add(bubble, scene.scenario.director.viewport);
       scene.vpc.add(this, scene.scenario.director.viewport);
@@ -216,18 +217,10 @@ class Actor extends ContainerLite {
       this.bubblePop();
 
       var text = this.bubble;
-      //text.nameLabel.getElement('background').setFillStyle(this.privateData.nameColor?this.privateData.nameColor:undefined)
-      var bg = text.nameLabel.getElement('background')
-      var style = this.privateData.nameColor?this.privateData.nameColor:undefined
-      bg.setFillStyle(style)
-      //bg.setFillStyle("0x824100")
+      var style = this.privateData.nameColor?'#'+this.privateData.nameColor:undefined
+      text.nameLabel.getElement('background').setFillStyle(style)
       text.nameLabel.setText(this.displayName).layout();//顯示說話者的名字
-      debugger
-      if (speed !== undefined) {
-        text.setTypingSpeed(speed); //指定語氣速度
-      } else {
-        text.setTypingSpeed(this.director.typingSpeed); //如不指定則使用預設速度
-      }
+      text.setTypingSpeed(this.director.getTypingSpeed(speed))
       this.tagPlayer.setContentCallback(this.bubbleTyping, this);
 
     } else { //純文字框模式
@@ -237,8 +230,9 @@ class Actor extends ContainerLite {
       }
 
       if (this.displayName) {
-        console.log(this.privateData.nameColor)
-        this.storyBox.nameLabel.getElement('background').setFillStyle(this.privateData.nameColor?this.privateData.nameColor:undefined);
+
+        var style = this.privateData.nameColor?'0x'+this.privateData.nameColor:undefined
+        this.storyBox.nameLabel.getElement('background').setFillStyle(Number(style));
         this.storyBox.nameLabel.setText(this.displayName).layout();
         if (this.displayName != this.storyBox.speakerName){
           this.storyBox.speakerName = this.displayName;
@@ -246,15 +240,24 @@ class Actor extends ContainerLite {
         } else if (!this.storyBox.visible){
           this.storyBox.nameLabelBounce();
         }
+
+        if (this.storyBox.background.actorVPX != this.vpx){
+          this.storyBox.background.actorVPX = this.vpx;
+          this.storyBox.background.setDirty();
+        } 
+
+      } else {
+
+        if (this.storyBox.background.actorVPX != undefined){
+          this.storyBox.background.actorVPX = undefined;
+          this.storyBox.background.setDirty();
+        } 
+
       }
 
       var text = this.storyBox;
       text.nameLabel.setText(this.displayName).layout();//顯示說話者的名字
-      if (speed !== undefined) {
-        text.setTypingSpeed(speed); //指定語氣速度
-      } else {
-        text.setTypingSpeed(this.director.typingSpeed); //如不指定則使用預設速度
-      }
+      text.setTypingSpeed(this.director.getTypingSpeed(speed))
       this.tagPlayer.setContentCallback(this.storyBoxTyping, this);
     }
 

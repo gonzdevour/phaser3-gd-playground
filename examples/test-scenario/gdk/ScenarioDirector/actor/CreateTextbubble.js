@@ -1,7 +1,7 @@
 const COLOR_PRIMARY = 0x000000; //'#4e342e'
 const COLOR_LIGHT = 0xffffff; //'#00ff00'
 
-import CreateRoundRectangleBackground from "../../gdk/templates/CreateRoundRectangleBackground";
+import CreateRoundRectangleBackground from "../../../gdk/templates/CreateRoundRectangleBackground";
 
 var CreateTextbubble = function (scene, speaker, width, height) {
     if (width === undefined) {

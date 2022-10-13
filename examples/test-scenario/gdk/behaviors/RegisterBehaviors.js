@@ -7,7 +7,10 @@ var bhvMethods = {
 }
 
 var RegisterBehaviors = function(gameObject, bhvs){
-  bhvs.forEach(function(bhv, idx, arr){
+
+  if (Array.isArray(bhvs)){ //如果是array
+
+    bhvs.forEach(function(bhv, idx, arr){
       if ( typeof(bhv) === 'string' ){ //如果是字串就透過RegisterBehaviors執行function
           if (bhvMethods[bhv]){
               bhvMethods[bhv](gameObject);
@@ -15,7 +18,16 @@ var RegisterBehaviors = function(gameObject, bhvs){
       } else if ( typeof(bhv) === 'function' ){ //如果已經給function了就不透過RegisterBehaviors
           bhv(gameObject);
       }
-  })
+    })
+
+  } else { //如果不是array
+
+    if ( typeof(bhvs) === 'string' ){ //如果是字串就透過RegisterBehaviors執行function
+      if (bhvMethods[bhvs]){
+          bhvMethods[bhvs](gameObject);
+      }
+  }
+  }
 }
 
 export default RegisterBehaviors;

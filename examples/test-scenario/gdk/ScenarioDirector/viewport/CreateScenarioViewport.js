@@ -1,4 +1,4 @@
-import AddUpdateEvent from "../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddUpdateEvent";
+import AddUpdateEvent from "../../../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddUpdateEvent";
 
 var CreateScenarioViewport = function(scene, x, y, width, height){
     var viewport = new Phaser.Geom.Rectangle();

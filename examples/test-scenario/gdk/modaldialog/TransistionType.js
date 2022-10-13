@@ -70,7 +70,7 @@ var TransitionBT = function(dialog, duration) {
   })
   //dialog.tweenChild({targets: choices, ease: 'Linear', x:{from: '-=100', to:0}, duration: 1400,});
   var yFrom = 1.5;
-  var yTo = 0.4;
+  var yTo = 0.3;
   //AutoRemoveTween(dialog, {ease: 'Cubic', y: { from: yFrom, to: yTo }, alpha: { from: 0, to: 1 }, angle: { from: -45, to: 3 }, duration: 600,})
   AutoRemoveTween(dialog, {ease: 'Cubic', vpy: { from: yFrom, to: yTo }, alpha: { from: 0, to: 1 }, duration: 600,})
 }

@@ -1,28 +1,36 @@
 import yaml from 'js-yaml';
 import mustache from 'mustache';
 import tfdb from '../../../../plugins/taffydb/taffy-min.js';
+import GetValue from '../../../../plugins/utils/object/GetValue.js';
+
+import CreateWaitingDialog from '../../scripts/CreateWaitingDialog.js';
 
 class ScenarioDirector extends Phaser.Events.EventEmitter {
-  constructor(scene, tagPlayer, viewport) {
+  constructor(scene, config) {
       super();
       this.scene = scene;
-      this.scenario = scene.scenario;
-      this.scenario.director = this;
       this.camera = scene.cameras.main;
       this.sound = scene.sound;
-      this.tagPlayer = tagPlayer;
-      this.viewport = viewport;
 
-      this.background = scene.add.rexTransitionImage(viewport.centerX, viewport.centerY, 'park', 0, {}).setAlpha(0.2)
+      this.scenario = GetValue(config, 'scenario', undefined)
+      this.tagPlayer = GetValue(config, 'tagPlayer', undefined)
+      this.viewport = GetValue(config, 'viewport', scene.viewport)
+
+      this.scenario.director = this;
+
+      this.background = scene.add.rexTransitionImage(this.viewport.centerX, this.viewport.centerY, 'park', 0, {}).setAlpha(0.2)
       scene.layerManager.addToLayer('scenario', this.background);
-      scene.vpc.add(this.background, viewport);
+      scene.vpc.add(this.background, this.viewport);
 
       this.mode_singleChar = false;
       this.mode_speechBubble = false;
+      this.mode_auto = false;
+      this.mode_skip = false;
+
 
       this.initVPX = 0.5;
       this.initVPY = 1.2;
-      this.typingSpeed = 50;
+      this.defaultTypingSpeed = 50;
 
       this.lastTalkerID = '';
       this.nextLabel = '';
@@ -35,6 +43,38 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
 
       this.createStoryBox();
 
+  }
+  choicePop() {
+    var scene = this.scene;
+    var scenario = this.scenario
+    var director = this;
+    var choices = this.choices;
+    var viewport = this.viewport;
+    var dialog = async function(){
+        var result = await CreateWaitingDialog(scene, choices, viewport);
+        var resultIndex = result.singleSelectedName-1; //singleSelectedName從1開始，1234
+        console.log(choices);
+        console.log(resultIndex);
+        console.log('result:' + choices[resultIndex].value)
+        director.exec(choices[resultIndex].value)
+        director.choices = []; //清空choices
+        scenario.continue('choose');
+    }
+    dialog();
+    return this;
+  }
+  getTypingSpeed(speed) {
+    if (speed == undefined){
+      speed = this.defaultTypingSpeed;
+      speed = this.mode_skip?0:speed;
+    }
+    return speed;
+  }
+  toggleAuto() {
+    this.mode_auto = this.mode_auto?false:true;
+  }
+  toggleSkip() {
+    this.mode_skip = this.mode_skip?false:true;
   }
   createStoryBox() {
     var storyBox = GetStoryBox(this.tagPlayer, 'story');
@@ -132,8 +172,6 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     }
     serif = mustache.render(serif, this.mtView);
 
-    var actor = GetActor(this.tagPlayer, actorID);
-    var ease = AliasToEase(easeAlias);
     var expression = AliasToExpression(expressionAlias);
     duration = duration?duration*1000:0;
 
@@ -152,48 +190,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       this.storyBox.setVisible(false);
     }
 
-    var content = ``;
-    // if (this.mode_singleChar && ifNotSameChar){
-    //   //this.隱藏對話();
-    //   content = content + `</char>`
-    // }
-    // if (!actor) {
-    //   content = content + `<char.${actorID}=${actorID},${x},${y}>`
-    // }
-    // if (displayName) {
-    //   content = content + `<char.${actorID}.setDisplayName=${displayName}>`
-    // }
-    // if (expression) {
-    //   content = content + `<char.${actorID}.setExpression=${expression}>`
-    // }
-    // if (x && !xFrom){
-    //   content = content + `<char.${actorID}.vpx.to=${x},${duration},${ease}>`
-    // }
-    // if (y && !yFrom){
-    //   content = content + `<char.${actorID}.vpy.to=${y},${duration},${ease}>`
-    // }
-    // if (xFrom){
-    //   if (x && x != this.vpx){
-    //     content = content + `<char.${actorID}.vpx=${x}>`
-    //   }
-    //   content = content + `<char.${actorID}.vpx.from=${xFrom},${duration},${ease}>`
-    // }
-    // if (yFrom){
-    //   if (y && y != this.vpy){
-    //     content = content + `<char.${actorID}.vpy=${y}>`
-    //   }
-    //   content = content + `<char.${actorID}.vpy.from=${yFrom},${duration},${ease}>`
-    // }
-    // if (duration){
-    //   content = content + `<wait=${duration}>`
-    // }
-    // if (serif){
-    //   content = content + `<wait=100>`
-    //   content = content + `<text.story.playPromise=${displayName},${expression},${serif}>`
-    // }
-    content = `<text.story.tell=${displayName},${expression}>${serif}`;
-    //content = `<text.story.playPromise=a,b,cccccccccccccccccccc>`;
-    //console.log(content);
+    var content = `<text.story.tell=${displayName},${expression}>${serif}`;
     this.tagPlayer
       .playPromise(content)
       .then(function () {
