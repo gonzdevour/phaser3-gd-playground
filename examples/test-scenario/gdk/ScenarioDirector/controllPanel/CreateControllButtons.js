@@ -4,25 +4,34 @@ import RegisterBehaviors from "../../behaviors/RegisterBehaviors";
 
 import GetValue from "../../../../../plugins/utils/object/GetValue";
 
-var log = function(scene){};
-var auto = function(scene){};
-var skip = function(scene){};
-var toggleVisible = function(scene){};
-var save = function(scene){};
-var load = function(scene){};
-var config = function(scene){};
-var leave = function(scene){};
+var CreateBtnData = function(scene){
 
-const btnData = [
-  {text:'LOG', fn:log},
-  {text:'AUTO', fn:auto},
-  {text:'SKIP', fn:skip},
-  {text:'HIDE', fn:toggleVisible},
-  {text:'SAVE', fn:save},
-  {text:'LOAD', fn:load},
-  {text:'CONFIG', fn:config},
-  {text:'LEAVE', fn:leave},
-]
+  var log = function(scene){};
+  var auto = function(scene){};
+
+  var skip = function(){
+    this.scenario.director.toggleSkip();
+  }
+
+  var toggleVisible = function(scene){};
+  var save = function(scene){};
+  var load = function(scene){};
+  var config = function(scene){};
+  var leave = function(scene){};
+
+  var btnData = [
+    {text:'LOG', fn:log},
+    {text:'AUTO', fn:auto},
+    {text:'SKIP', fn:skip},
+    {text:'HIDE', fn:toggleVisible},
+    {text:'SAVE', fn:save},
+    {text:'LOAD', fn:load},
+    {text:'CONFIG', fn:config},
+    {text:'LEAVE', fn:leave},
+  ]
+
+  return btnData;
+}
 
 var CreateOptionLabel = function (scene, config) {
   var btn = scene.rexUI.add.label({
@@ -40,8 +49,8 @@ var CreateOptionLabel = function (scene, config) {
 }
 
 //fixWidthButtons可以自動換行排列button
-var CreateStoryBoxButtons = function(scene, x, y, width, height){
-
+var CreateControllButtons = function(scene, x, y, width, height){
+  var btnData = CreateBtnData(scene);
   var buttons = [];
   for (var i = 0, cnt = btnData.length; i < cnt; i++) {
       buttons.push(
@@ -65,4 +74,4 @@ var CreateStoryBoxButtons = function(scene, x, y, width, height){
   return fixWidthButtons;
 }
 
-export default CreateStoryBoxButtons;
+export default CreateControllButtons;

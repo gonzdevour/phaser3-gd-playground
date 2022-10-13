@@ -2,8 +2,10 @@ import yaml from 'js-yaml';
 import mustache from 'mustache';
 import tfdb from '../../../../plugins/taffydb/taffy-min.js';
 import GetValue from '../../../../plugins/utils/object/GetValue.js';
+import { Delay } from '../../../../../phaser3-rex-notes/plugins/eventpromise.js';
 
 import CreateWaitingDialog from '../../scripts/CreateWaitingDialog.js';
+import { ThirdPersonControls } from 'enable3d';
 
 class ScenarioDirector extends Phaser.Events.EventEmitter {
   constructor(scene, config) {
@@ -31,6 +33,8 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       this.initVPX = 0.5;
       this.initVPY = 1.2;
       this.defaultTypingSpeed = 50;
+      this.defaultSkipTimeScale = 5;
+      this.defaultAutoDelayTime = 2000;
 
       this.lastTalkerID = '';
       this.nextLabel = '';
@@ -43,6 +47,70 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
 
       this.createStoryBox();
 
+      //this.toggleSkip()
+      //this.toggleAuto()
+
+  }
+  onClick() {
+    console.log('clickArea clicked')
+    if (this.mode_auto){
+      this.mode_auto = false;
+      this.mode_skip = false;
+      this.tagPlayer.setTimeScale(1);
+    }
+    if (this.scenario.isPlayingText){
+        console.log('request finish typing');
+        this.finishTyping();
+    } else {
+        if (this.tagPlayer.isPlaying){ //如果tagPlayer正在播放且不處於wait的狀態
+            this.tagPlayer.setTimeScale(10);
+        } else {
+            this.tagPlayer.setTimeScale(1);
+            this.scenario.continue('click');
+        }
+    }
+  }
+  onScenarioLog(msg) {
+    console.log('sLog: ' + msg)
+  }
+  onScenarioComplete() {
+    console.log('scenario complete')
+  }
+  async onTagPlayerComplete() {
+    //console.log('on tagPlayer complete')
+    if (this.mode_auto){
+      await Delay(this.getAutoDelayTime());
+      console.log('scenario auto continue click')
+      this.scenario.continue('click');
+    }
+  }
+  onWaitClick(waiterName, lastScenarioCmd) {
+    console.log(waiterName + ' on wait click - ' + lastScenarioCmd)
+  }
+  toggleAuto() {
+    this.onClick();
+    console.log('on toggleAuto')
+    this.mode_auto = this.mode_auto?false:true;
+  }
+  toggleSkip() {
+    this.onClick();
+    console.log('on toggleSkip')
+    this.mode_skip = this.mode_skip?false:true;
+    this.mode_auto = this.mode_skip?true:false;
+    this.tagPlayer.setTimeScale(this.getTagPlayerTimeScale());
+  }
+  getTypingSpeed(speed) {
+    if (speed == undefined){
+      speed = this.defaultTypingSpeed;
+      speed = this.mode_skip?1:speed;
+    }
+    return speed;
+  }
+  getAutoDelayTime() {
+    return this.mode_skip?0:this.defaultAutoDelayTime;
+  }
+  getTagPlayerTimeScale() {
+    return this.mode_skip?this.defaultSkipTimeScale:1;
   }
   choicePop() {
     var scene = this.scene;
@@ -62,19 +130,6 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     }
     dialog();
     return this;
-  }
-  getTypingSpeed(speed) {
-    if (speed == undefined){
-      speed = this.defaultTypingSpeed;
-      speed = this.mode_skip?0:speed;
-    }
-    return speed;
-  }
-  toggleAuto() {
-    this.mode_auto = this.mode_auto?false:true;
-  }
-  toggleSkip() {
-    this.mode_skip = this.mode_skip?false:true;
   }
   createStoryBox() {
     var storyBox = GetStoryBox(this.tagPlayer, 'story');
@@ -191,11 +246,9 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     }
 
     var content = `<text.story.tell=${displayName},${expression}>${serif}`;
-    this.tagPlayer
-      .playPromise(content)
-      .then(function () {
-          console.log('Complete')
-      })
+    this.tagPlayer.setTimeScale(this.getTagPlayerTimeScale());
+    this.tagPlayer.playPromise(content);
+
   }
   移動(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration, displayName) {
     actorID = mustache.render(actorID, this.mtView);
@@ -252,15 +305,14 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       if (y && y != this.vpy){
         content = content + `<char.${actorID}.vpy=${y}>`
       }
-      content = content + `<char.${actorID}.vpy.from=${yFrom},${duration},${ease}>`
+      content = content + `<char.${actorID}.vpy.from=${yFrom},${duration},${ease}>` 
     }
+    content = content + `<wait=${duration+100}>` //無typing的狀況也要加wait使tagPlayer complete晚於scenario.on('wait.click')
 
     console.log(content);
-    this.tagPlayer
-      .playPromise(content)
-      .then(function () {
-          console.log('Complete')
-      })  
+    this.tagPlayer.setTimeScale(this.getTagPlayerTimeScale());
+    this.tagPlayer.playPromise(content);
+ 
 
   }
   說話(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration, displayName) {
@@ -332,11 +384,8 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       content = content + `<char.${actorID}.talk>${serif}`
     }
     console.log(content);
-    this.tagPlayer
-      .playPromise(content)
-      .then(function () {
-          console.log('Complete')
-      })
+    this.tagPlayer.setTimeScale(this.getTagPlayerTimeScale());
+    this.tagPlayer.playPromise(content);
   }
   next(nextLabel) {
     nextLabel = nextLabel?nextLabel:this.nextLabel;

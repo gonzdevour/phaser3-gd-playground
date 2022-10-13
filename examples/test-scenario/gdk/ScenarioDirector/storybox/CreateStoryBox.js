@@ -2,7 +2,6 @@ import TextPlayer from "../../../../../../phaser3-rex-notes/plugins/textplayer";
 import ContainerLite from '../../../../../../phaser3-rex-notes/plugins/containerlite.js';
 import AutoRemoveTween from '../../../../../../phaser3-rex-notes/plugins/utils/tween/AutoRemoveTween';
 import CreateRoundRectangleBackground from "../../../gdk/templates/CreateRoundRectangleBackground";
-import CreateStoryBoxButtons from "./CreateStoryBoxButtons.js";
 
 const color_displayNameBackground = 0x333333;
 
@@ -20,14 +19,10 @@ class StoryBox extends ContainerLite {
             .setFillStyle(0x0, 0.7)
             .setStrokeStyle(3, 0xffffff, 1)
             .setPosition(0, 0);
-        var buttons = CreateStoryBoxButtons(scene, 0.5*width, 0-0.5*height-10, 0.5*width, 0.5*height)
-            .setOrigin(1,1)
-            .layout()
-
 
         //var marker = scene.rexUI.add.roundRectangle(0.5*width, 0-0.5*height, 0.5*width, 0.5*height, 10, 0xff0000);
 
-        super(scene, 0, 0, [background, textPlayer, textPlayer.triangle, nameLabel, buttons]);
+        super(scene, 0, 0, [background, textPlayer, textPlayer.triangle, nameLabel]);
         scene.add.existing(this);
 
         if(storyBoxID == 'story'){
@@ -46,9 +41,6 @@ class StoryBox extends ContainerLite {
         this.background = background;
         this.textPlayer = textPlayer;
         this.nameLabel = nameLabel;
-        this.buttons = buttons;
-
-        buttons.drawBounds(scene.add.graphics(), 0x00ff00)
 
         this.scene = scene;
         this.scenario = scene.scenario;
@@ -335,6 +327,7 @@ var CreateCustomShape = function (scene, width, height) {
 
 var CreateStoryBox = function (scene, storyBoxID, vpx, vpy, width, height) {
     var storyBox = new StoryBox(scene, storyBoxID, vpx, vpy, width, height);
+    var director = storyBox.director;
     var textPlayer = storyBox.textPlayer;
     textPlayer
         .on('wait.timeout', function(Callback){ //custom tag的範例
@@ -351,8 +344,8 @@ var CreateStoryBox = function (scene, storyBoxID, vpx, vpy, width, height) {
             textPlayer.triangle.setVisible(false);
         })
         .on('wait.click', function() {
-            console.log('wait click')
             textPlayer.triangle.setVisible(true);
+            director.onWaitClick('textPlayer');
         })
         .on('typing', function(child) {
             if (child.type === 'text') {
