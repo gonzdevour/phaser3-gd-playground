@@ -4,7 +4,7 @@ import RegisterBehaviors from "../../behaviors/RegisterBehaviors";
 import GetValue from "../../../../../plugins/utils/object/GetValue";
 
 import { DialogY } from "../../modaldialog/DialogType";
-import CreateGridLogPanel from "./CreateGridLogPanel";
+import CreateGridLogPanel from "./LogPanel/CreateGridLogPanel";
 
 var CreateBtnData = function(){
 
