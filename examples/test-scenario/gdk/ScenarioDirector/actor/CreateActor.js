@@ -217,8 +217,8 @@ class Actor extends ContainerLite {
       this.bubblePop();
 
       var text = this.bubble;
-      var style = this.privateData.nameColor?'#'+this.privateData.nameColor:undefined
-      text.nameLabel.getElement('background').setFillStyle(style)
+      var style = this.privateData.nameColor?'#'+this.privateData.nameColor:undefined //設定名字底板的顏色
+      text.nameLabel.getElement('background').setFillStyle(style) //bubble nameLabel的底板是customShapes，會吃'0x'字串
       text.nameLabel.setText(this.displayName).layout();//顯示說話者的名字
       text.setTypingSpeed(this.director.getTypingSpeed(speed))
       this.tagPlayer.setContentCallback(this.bubbleTyping, this);
@@ -231,13 +231,14 @@ class Actor extends ContainerLite {
 
       if (this.displayName) {
 
-        var style = this.privateData.nameColor?'0x'+this.privateData.nameColor:undefined
-        this.storyBox.nameLabel.getElement('background').setFillStyle(Number(style));
-        this.storyBox.nameLabel.setText(this.displayName).layout();
-        if (this.displayName != this.storyBox.speakerName){
+        var style = this.privateData.nameColor?'0x'+this.privateData.nameColor:undefined //設定名字底板的顏色
+        this.storyBox.nameLabel.getElement('background').setFillStyle(Number(style)); //storyBox nameLabel的底板是canvas，不吃字串，Number可將'0x'→0x
+        this.storyBox.nameLabel.setText(this.displayName).layout(); //依名字長短重新設定名字底板寬度
+
+        if (this.displayName != this.storyBox.speakerName){ //如果說話者跟前一個不同，名字底板彈跳
           this.storyBox.speakerName = this.displayName;
           this.storyBox.nameLabelBounce();
-        } else if (!this.storyBox.visible){
+        } else if (!this.storyBox.visible){ //如果原本故事框是隱藏的，顯示故事框後，名字底板也彈跳
           this.storyBox.nameLabelBounce();
         }
 

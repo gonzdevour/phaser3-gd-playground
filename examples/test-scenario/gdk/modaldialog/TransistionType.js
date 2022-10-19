@@ -15,7 +15,6 @@ var TransitionChoicesUpScaleDown = function(dialog, duration) {
       }
       idx++;
   }
-
   //取出被選中的buttons的backgrounds做flash
   // var selectedBgs = [];
   // selectedButtons.forEach(function(item, idx, arr){

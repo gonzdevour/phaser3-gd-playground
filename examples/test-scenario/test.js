@@ -13,7 +13,8 @@ class Test extends Base { //'#000000'
     create() {
 
         this.scenario = CreateScenario(this, 600, 300, 800, 600)
-        this.scenario.load(this.cache.text.get('story'), this.scenario.director, {timeUnit: 'sec'}).start();
+        this.scenario.load(this.cache.text.get('story'), this.scenario.director, {timeUnit: 'sec'});
+        this.scenario.director.next('範例');
 
     }
     update() { }

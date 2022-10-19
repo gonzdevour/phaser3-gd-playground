@@ -1,29 +1,54 @@
 import CreateRoundRectangleBackground from "../../templates/CreateRoundRectangleBackground";
 import Style from "../../settings/Style";
 import RegisterBehaviors from "../../behaviors/RegisterBehaviors";
-
 import GetValue from "../../../../../plugins/utils/object/GetValue";
 
-var CreateBtnData = function(scene){
+import { DialogY } from "../../modaldialog/DialogType";
+import CreateGridLogPanel from "./CreateGridLogPanel";
 
-  var log = function(scene){};
-  var auto = function(scene){};
+var CreateBtnData = function(){
+
+  var log = function(){
+    var viewport = this.scenario.director.viewport;
+    var logData = this.scenario.director.logData;
+    DialogY(this, {
+        //title: '複習列表',
+        content: CreateGridLogPanel(this, logData ),
+        actions: [
+          {imageKey:'ico_yes', text: '確定', type: 'confirm', callback: undefined, closeDialog:true},
+        ],
+        buttonMode: 1,        
+        extraConfig: { //客製調整參數
+          viewport: viewport,
+          width: viewport.width-50,
+          duration:{ in: 600, out: 300 },
+      }
+    })
+  };
+
+  var auto = function(){
+    this.scenario.director.toggleAuto();
+  };
 
   var skip = function(){
     this.scenario.director.toggleSkip();
   }
 
-  var toggleVisible = function(scene){};
-  var save = function(scene){};
-  var load = function(scene){};
-  var config = function(scene){};
-  var leave = function(scene){};
+  var hide = function(){
+    this.scenario.director.hideUI();
+  }
+
+  var save = function(){};
+  var load = function(){};
+
+  var config = function(){};
+  var leave = function(){};
 
   var btnData = [
     {text:'LOG', fn:log},
     {text:'AUTO', fn:auto},
     {text:'SKIP', fn:skip},
-    {text:'HIDE', fn:toggleVisible},
+    {text:'HIDE', fn:hide},
     {text:'SAVE', fn:save},
     {text:'LOAD', fn:load},
     {text:'CONFIG', fn:config},

@@ -122,7 +122,7 @@ var CreateButton = function (scene, config) {
     var label = scene.rexUI.add.label({
         background: config.background?config.background:undefined,
         icon: config.imageKey?scene.add.image(0, 0, config.imageKey).setDisplaySize(90, 90):undefined,
-        text: config.text?scene.rexUI.add.BBCodeText(0, 0, config.text, { fontFamily: Style.fontFamilyName, fontSize: 60 }):undefined,
+        text: config.text?scene.rexUI.add.BBCodeText(0, 0, config.text, { fontFamily: Style.fontFamilyName, fontSize: 36 }):undefined,
         space: config.spaceSettings?config.spaceSettings:{},
     });
     //註冊pointer特效

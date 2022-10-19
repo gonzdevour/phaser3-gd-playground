@@ -14,7 +14,8 @@ class StoryBox extends ContainerLite {
         if(height == undefined){height = scene.scenario.director.viewport.height*0.3};
 
         var textPlayer = CreateTextPlayer(scene, 0, 0, width, height);
-        var nameLabel = createNameLabel(scene, 0-0.5*width, 0-0.5*height);
+        var clickWaiter = createClickWaiter(scene, textPlayer.x + 0.5*textPlayer.width - 40, textPlayer.y + 0.5*textPlayer.height - 95);
+        var nameLabel = createNameLabel(scene, textPlayer.x-0.5*textPlayer.width, textPlayer.y-0.5*textPlayer.height);
         var background = CreateCustomShape(scene, width, height)
             .setFillStyle(0x0, 0.7)
             .setStrokeStyle(3, 0xffffff, 1)
@@ -22,7 +23,7 @@ class StoryBox extends ContainerLite {
 
         //var marker = scene.rexUI.add.roundRectangle(0.5*width, 0-0.5*height, 0.5*width, 0.5*height, 10, 0xff0000);
 
-        super(scene, 0, 0, [background, textPlayer, textPlayer.triangle, nameLabel]);
+        super(scene, 0, 0, [background, textPlayer, nameLabel, clickWaiter]);
         scene.add.existing(this);
 
         if(storyBoxID == 'story'){
@@ -41,6 +42,7 @@ class StoryBox extends ContainerLite {
         this.background = background;
         this.textPlayer = textPlayer;
         this.nameLabel = nameLabel;
+        this.clickWaiter = clickWaiter;
 
         this.scene = scene;
         this.scenario = scene.scenario;
@@ -96,8 +98,10 @@ class StoryBox extends ContainerLite {
     }
     nameLabelBounce() {
         this.setVisible(true);
+        var t = this.textPlayer;
+        var yFrom = t.y-0.5*t.height
         AutoRemoveTween(this.nameLabel, {
-            y: '-=20',
+            y: {from: yFrom, to:yFrom-20},
             ease: 'Cubic',
             duration: 250,
             yoyo: true,
@@ -127,6 +131,7 @@ class StoryBox extends ContainerLite {
         })
     }
     textPlayerPop() {
+        this.clickWaiter.setVisible(false);
         AutoRemoveTween(this.textPlayer, {
             x: {from:this.textPlayer.x-20, to:this.textPlayer.x},
             y: {from:this.textPlayer.y+20, to:this.textPlayer.y},
@@ -135,6 +140,22 @@ class StoryBox extends ContainerLite {
             duration: 600, //duration: this.textPlayer.typingSpeed,
         })
     }
+}
+
+var createClickWaiter = function(scene, x, y){
+    //對話斷點的三角形特效
+    var clickWaiter = scene.add.triangle(x, y, 0, 36, 36, 36, 18, 72, 0xffffff).setVisible(false); //#ffffff
+
+    clickWaiter.tween = AutoRemoveTween(clickWaiter, {
+        y: '+=10',
+        ease: 'Linear',
+        duration: 500,
+        yoyo: true,
+        repeat: -1,
+        //paused: true,
+    })
+
+    return clickWaiter
 }
 
 var createNameLabel = function (scene, x, y) {
@@ -165,7 +186,7 @@ var CreateTextPlayer = function(scene, x, y, width, height){
             },
 
             //innerBounds: { stroke: '#A52A2A' },
-            padding: {left: 30, right: 30, top: 10, bottom: 10},
+            padding: {left: 30, right: 50, top: 10, bottom: 10},
             style: {
                 fontSize: '36px',
                 stroke: 'green', strokeThickness: 3,
@@ -236,18 +257,6 @@ var CreateTextPlayer = function(scene, x, y, width, height){
 
     //style
     //textPlayer.angle = -1;
-
-    //對話斷點的三角形特效
-    textPlayer.triangle = scene.add.triangle(200, 200, 0, 36, 36, 36, 18, 72, 0xffffff).setVisible(false); //#ffffff
-    textPlayer.triangle.setPosition(textPlayer.x + 0.5*textPlayer.width - 40, textPlayer.y + 0.5*textPlayer.height - 95); //-85
-    textPlayer.triangle.tween = AutoRemoveTween(textPlayer.triangle, {
-        y: '+=10',
-        ease: 'Linear',
-        duration: 500,
-        yoyo: true,
-        repeat: -1,
-        //paused: true,
-    })
 
     //指定click target
     // textPlayer.setClickTarget(scene.toucharea);
@@ -341,10 +350,8 @@ var CreateStoryBox = function (scene, storyBoxID, vpx, vpy, width, height) {
             //console.log('typingSpeed: ' + textPlayer.typingSpeed)
             storyBox.textPlayerPop();
             textPlayer.setTypingSpeed(storyBox.director.getTypingSpeed());
-            textPlayer.triangle.setVisible(false);
         })
         .on('wait.click', function() {
-            textPlayer.triangle.setVisible(true);
             director.onWaitClick('textPlayer');
         })
         .on('typing', function(child) {

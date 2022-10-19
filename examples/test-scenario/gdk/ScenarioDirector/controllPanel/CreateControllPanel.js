@@ -6,7 +6,7 @@ var CreateControllPanel = function(scene, director, viewport){
 
     panel.clickArea = scene.rexUI.add.overlapSizer({})
         .onClick(function () {
-            director.onClick();
+            director.onClick(); //註冊onClick callback執行director的動作
         });
 
     panel.buttons = CreateControllButtons(scene, 0.5*viewport.width, 0-0.5*viewport.height-10, 0.5*viewport.width, 0.5*viewport.height)
@@ -24,13 +24,9 @@ var CreateControllPanel = function(scene, director, viewport){
     var UpdatePanel = (function() {
         panel.debugGraphics.clear();
         panel
-            .setMinSize(viewport.width, viewport.height)
+            .setMinSize(viewport.width, viewport.height) //clickArea的expand預設為true，所以會跟著panel的大小，不用另外設定
             .layout()
             .drawBounds(panel.debugGraphics, 0x00ff00)
-        panel.clickArea
-            .setMinSize(viewport.width,viewport.height)
-            .layout()
-            .drawBounds(panel.debugGraphics, 0x00ffff)
     });
 
     scene.scale.on('resize', UpdatePanel);

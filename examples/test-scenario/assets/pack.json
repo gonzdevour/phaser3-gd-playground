@@ -10,68 +10,8 @@
       },
       {
         "type": "image",
-        "key": "char-Jade-fear0",
-        "url": "assets/image/char-Jade-fear0.png"
-      },
-      {
-        "type": "image",
-        "key": "char-Jade-normal0",
-        "url": "assets/image/char-Jade-normal0.png"
-      },
-      {
-        "type": "image",
-        "key": "char-Jade-shock0",
-        "url": "assets/image/char-Jade-shock0.png"
-      },
-      {
-        "type": "image",
-        "key": "char-Jade-shock1",
-        "url": "assets/image/char-Jade-shock1.png"
-      },
-      {
-        "type": "image",
-        "key": "char-Spring-angry0",
-        "url": "assets/image/char-Spring-angry0.png"
-      },
-      {
-        "type": "image",
-        "key": "char-Spring-angry1",
-        "url": "assets/image/char-Spring-angry1.png"
-      },
-      {
-        "type": "image",
-        "key": "char-Spring-fear0",
-        "url": "assets/image/char-Spring-fear0.png"
-      },
-      {
-        "type": "image",
-        "key": "char-Spring-fear1",
-        "url": "assets/image/char-Spring-fear1.png"
-      },
-      {
-        "type": "image",
-        "key": "char-Spring-normal0",
-        "url": "assets/image/char-Spring-normal0.png"
-      },
-      {
-        "type": "image",
-        "key": "char-Spring-shock0",
-        "url": "assets/image/char-Spring-shock0.png"
-      },
-      {
-        "type": "image",
-        "key": "char-Spring-shock1",
-        "url": "assets/image/char-Spring-shock1.png"
-      },
-      {
-        "type": "image",
         "key": "nextPage",
         "url": "assets/image/nextPage.png"
-      },
-      {
-        "type": "image",
-        "key": "park",
-        "url": "assets/image/park.jpg"
       },
       {
         "type": "image",
@@ -80,8 +20,83 @@
       },
       {
         "type": "image",
+        "key": "park",
+        "url": "assets/image/bg/park.jpg"
+      },
+      {
+        "type": "image",
         "key": "房間",
-        "url": "assets/image/房間.jpg"
+        "url": "assets/image/bg/房間.jpg"
+      },
+      {
+        "type": "image",
+        "key": "char-Jade-fear0",
+        "url": "assets/image/char/char-Jade-fear0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Jade-normal0",
+        "url": "assets/image/char/char-Jade-normal0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Jade-shock0",
+        "url": "assets/image/char/char-Jade-shock0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Jade-shock1",
+        "url": "assets/image/char/char-Jade-shock1.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-angry0",
+        "url": "assets/image/char/char-Spring-angry0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-angry1",
+        "url": "assets/image/char/char-Spring-angry1.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-fear0",
+        "url": "assets/image/char/char-Spring-fear0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-fear1",
+        "url": "assets/image/char/char-Spring-fear1.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-normal0",
+        "url": "assets/image/char/char-Spring-normal0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-shock0",
+        "url": "assets/image/char/char-Spring-shock0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-shock1",
+        "url": "assets/image/char/char-Spring-shock1.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_no",
+        "url": "assets/image/ico/ico_no.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_user",
+        "url": "assets/image/ico/ico_user.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_yes",
+        "url": "assets/image/ico/ico_yes.png"
       }
     ]
   }
