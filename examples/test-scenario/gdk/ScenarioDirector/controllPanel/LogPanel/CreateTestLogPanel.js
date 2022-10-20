@@ -1,7 +1,7 @@
 import CreateRoundRectangleBackground from '../../../templates/CreateRoundRectangleBackground.js';
 import CreateCellContainerCallback from './CreateCellContainerCallback.js';
 
-var CreateTestLogPanel = function (scene, logData) {
+var CreateGridLogPanel = function (scene, logData) {
 
   var viewport = scene.scenario.director.viewport;
   logData = logData?logData:[];
@@ -64,4 +64,4 @@ var CreateTestLogPanel = function (scene, logData) {
   return mainPanel;
 }
 
-export default CreateTestLogPanel;
+export default CreateGridLogPanel;

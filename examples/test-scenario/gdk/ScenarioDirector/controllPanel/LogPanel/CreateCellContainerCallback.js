@@ -1,5 +1,5 @@
 import CreateRoundRectangleBackground from '../../../templates/CreateRoundRectangleBackground.js';
-import Style from '../../../settings/Style.js';
+import Style from '../../../../settings/Style.js';
 import GetValue from '../../../../../../plugins/utils/object/GetValue.js';
 
 /* 
@@ -17,25 +17,22 @@ cell.item:{
 */
 
 var CreateCellContainerCallback = function (cell, cellContainer) {
-
-  var scene = cell.scene, index = cell.index, 
-      width = cell.width, item = cell.item,
+  var scene = cell.scene, 
+      width = cell.width, 
+      item = cell.item,
+      index = cell.index, 
       viewport = scene.scenario.director.viewport,
-
       // 這裡可以有幾種變化：
       // var msgAlign = item['logSideIdx']==0?'left':'right'; //只要換人講話就切換位置
       // var msgAlign = item['logType']=='host'?'right':'left'; //模仿messenger，只有玩家講話在右側，其餘在左側
       msgAlign = item['logSideIdx']==0?'left':'right';
 
   if (cellContainer === null) {
-      cellContainer = CreateCellContainer(scene, viewport, msgAlign, item)
+      cellContainer = CreateCellContainer(scene, viewport, msgAlign, item).setOrigin(0);
       console.log(cell.index + ': create new cell-container');
   } else {
       console.log(cell.index + ': reuse cell-container');
   }
-
-  // Set min width
-  //cellContainer.setMinWidth(width);
 
   var nameLabel = cellContainer.getElement('logSizer.namedText.nameLabel');
   var portrait = cellContainer.getElement('logSizer.portrait');
@@ -61,7 +58,9 @@ var CreateCellContainerCallback = function (cell, cellContainer) {
   cellContainer
       .setDirty(true).layout()  // Run layout manually
       .setDirty(false)          // Don't run layout again
-  //cell.height = cellContainer.height + 10;
+
+  cell.height = cellContainer.height + 10;
+  cell.setCellContainerAlign(msgAlign);
 
   return cellContainer;
 }
@@ -90,6 +89,7 @@ var getBackgroundgRadius = function(item){
 var CreateCellContainer = function (scene, viewport, msgAlign, logData) {
   return scene.rexUI.add.sizer({
   })
+  .addBackground(scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x7b5e57))
   .add(CreateLogSizer(scene, viewport, msgAlign, logData), {align: msgAlign, key:'logSizer'})
 }
 
