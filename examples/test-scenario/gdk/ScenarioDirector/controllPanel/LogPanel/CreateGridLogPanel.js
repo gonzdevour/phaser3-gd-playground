@@ -46,7 +46,7 @@ var CreateTestLogPanel = function (scene, logData) {
       speed: 1,
     },
 
-    space: { left: 10, right: 10, top: 10, bottom: 10, table: 10, },
+    space: { left: 20, right: 20, top: 20, bottom: 20, table: 10, },
     createCellContainerCallback: CreateCellContainerCallback,
   })
   .layout()

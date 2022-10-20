@@ -5,6 +5,7 @@ import GetValue from "../../../../../plugins/utils/object/GetValue";
 
 import { DialogY } from "../../modaldialog/DialogType";
 import CreateGridLogPanel from "./LogPanel/CreateGridLogPanel";
+import CreateLogPanel from "./LogPanel/CreateLogPanel";
 
 var CreateBtnData = function(){
 

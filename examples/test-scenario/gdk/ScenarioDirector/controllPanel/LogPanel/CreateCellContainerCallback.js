@@ -34,6 +34,7 @@ var CreateCellContainerCallback = function (cell, cellContainer) {
       console.log(cell.index + ': reuse cell-container');
   }
 
+  var logSizer = cellContainer.getElement('logSizer');
   var nameLabel = cellContainer.getElement('logSizer.namedText.nameLabel');
   var portrait = cellContainer.getElement('logSizer.portrait');
   var background = cellContainer.getElement('logSizer.namedText.textLabel.background');
@@ -42,10 +43,10 @@ var CreateCellContainerCallback = function (cell, cellContainer) {
 
   if (item['logIsHeader']){
     cellContainer.show(nameLabel);
-    cellContainer.show(portrait);
+    portrait.setAlpha(1);
   } else {
     cellContainer.hide(nameLabel);
-    cellContainer.hide(portrait);
+    portrait.setAlpha(0);
   }
 
   var bgRadius = getBackgroundgRadius(item)
@@ -54,6 +55,9 @@ var CreateCellContainerCallback = function (cell, cellContainer) {
   background.setRadius(bgRadius).setFillStyle(logColor);
   contentText.setText(GetValue(item, 'serif', ''))
   titleText.setText(GetValue(item, 'displayName', ''))
+
+  logSizer.rtl = msgAlign=='right'?true:false;
+  nameLabel.rexSizer.align = msgAlign=='right'?2:0; //0左1中2右
 
   cellContainer
       .setDirty(true).layout()  // Run layout manually
@@ -89,7 +93,6 @@ var getBackgroundgRadius = function(item){
 var CreateCellContainer = function (scene, viewport, msgAlign, logData) {
   return scene.rexUI.add.sizer({
   })
-  .addBackground(scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x7b5e57))
   .add(CreateLogSizer(scene, viewport, msgAlign, logData), {align: msgAlign, key:'logSizer'})
 }
 
@@ -99,7 +102,7 @@ var CreateLogSizer = function (scene, viewport, msgAlign, logData) {
     rtl: msgAlign=='right'?true:false,
     space: { left:0, right: 0, top: 0, bottom: 0, item: 5, },
   });
-  var portrait = scene.add.image(0, 0, 'ico_user').setDisplaySize(90, 90)
+  var portrait = scene.add.image(0, 0, 'ico_user').setDisplaySize(90, 90);
   sizer.add(portrait, {align: 'top', key:'portrait'})
   sizer.add(CreateNamedText(scene, viewport, msgAlign, logData), {key:'namedText'})
 

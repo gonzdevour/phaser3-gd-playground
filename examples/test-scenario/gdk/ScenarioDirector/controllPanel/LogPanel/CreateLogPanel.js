@@ -1,6 +1,6 @@
-import CreateRoundRectangleBackground from '../../templates/CreateRoundRectangleBackground.js';
-import Style from '../../settings/Style.js';
-import GetValue from '../../../../../plugins/utils/object/GetValue.js';
+import CreateRoundRectangleBackground from '../../../templates/CreateRoundRectangleBackground.js';
+import Style from '../../../../settings/Style.js';
+import GetValue from '../../../../../../plugins/utils/object/GetValue.js';
 
 const COLOR_LIGHT = 0x7b5e57;
 const COLOR_DARK = 0x260e04;
