@@ -32,8 +32,8 @@ var CreateTestLogPanel = function (scene, logData) {
     //scroller
 
     slider: {
-      track: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, 0x260e04),
-      thumb: scene.rexUI.add.roundRectangle(0, 0, 10, 90, 10, 0x7b5e57),
+      track: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, 0x202020), //#202020
+      thumb: scene.rexUI.add.roundRectangle(0, 0, 10, 90, 10, 0xdfdfdf), //#dfdfdf
     },
     scroller: {
       threshold: 5,
@@ -48,6 +48,9 @@ var CreateTestLogPanel = function (scene, logData) {
 
     space: { left: 20, right: 20, top: 20, bottom: 20, table: 10, },
     createCellContainerCallback: CreateCellContainerCallback,
+  })
+  .once('sizer.postlayout', function(child, sizer){
+    child.getElement('table').setTableOYByPercentage(1).updateTable()
   })
   .layout()
   //.drawBounds(scene.add.graphics(), 0xff0000);

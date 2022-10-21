@@ -43,10 +43,20 @@ var CreateCellContainerCallback = function (cell, cellContainer) {
 
   if (item['logIsHeader']){
     cellContainer.show(nameLabel);
-    portrait.setAlpha(1);
+    cellContainer.setChildVisible(portrait, true);
   } else {
     cellContainer.hide(nameLabel);
-    portrait.setAlpha(0);
+    cellContainer.setChildVisible(portrait, false);
+  }
+
+  if (item['logType'] == 'choice'){
+    portrait.setTexture('ico_yes');
+  }
+  if (item['logType'] == 'host'){
+    portrait.setTexture('ico_no');
+  }
+  if (item['logType'] == 'actor'){
+    portrait.setTexture('ico_user');
   }
 
   var bgRadius = getBackgroundgRadius(item)
@@ -56,8 +66,9 @@ var CreateCellContainerCallback = function (cell, cellContainer) {
   contentText.setText(GetValue(item, 'serif', ''))
   titleText.setText(GetValue(item, 'displayName', ''))
 
-  logSizer.rtl = msgAlign=='right'?true:false;
-  nameLabel.rexSizer.align = msgAlign=='right'?2:0; //0左1中2右
+  logSizer.setRTL(msgAlign=='right'?true:false);
+  cellContainer.setChildAlign(nameLabel, msgAlign);
+  //nameLabel.rexSizer.align = msgAlign=='right'?2:0; //0左1中2右
 
   cellContainer
       .setDirty(true).layout()  // Run layout manually
