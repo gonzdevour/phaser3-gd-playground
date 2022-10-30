@@ -1,10 +1,15 @@
 import CreateRoundRectangleBackground from '../../../templates/CreateRoundRectangleBackground.js';
 import CreateCellContainerCallback from './CreateCellContainerCallback.js';
 
-var CreateGridLogPanel = function (scene, logData) {
+var CreateGridSavePanel = function (scene) {
 
   var viewport = scene.scenario.director.viewport;
-  logData = logData?logData:[];
+  var lsData = scene.game.lsData;
+  var items = [];
+  for (let index = 0; index < 30; index++) {
+    var item = lsData.get('scenario_save_slot' + index)
+    items.push(item);
+  }
 
   var mainPanel = scene.rexUI.add.sizer({
     orientation: 'x',
@@ -26,7 +31,7 @@ var CreateGridLogPanel = function (scene, logData) {
         },
         reuseCellContainer: true,
     },
-    items: logData,
+    items: items,
     //scroller
     slider: {
       track: scene.rexUI.add.roundRectangle(0, 0, 10, 10, 10, 0x202020), //#202020
@@ -46,9 +51,7 @@ var CreateGridLogPanel = function (scene, logData) {
     createCellContainerCallback: CreateCellContainerCallback,
   })
   .once('sizer.postlayout', function(child, sizer){
-    //var table = child.getElement('table');
-    //console.log(table.getTableOYPercentage())
-    child.scrollToBottom();
+    //child.scrollToBottom();
   })
   .layout()
   //.drawBounds(scene.add.graphics(), 0xff0000);
@@ -65,4 +68,4 @@ var CreateGridLogPanel = function (scene, logData) {
   return mainPanel;
 }
 
-export default CreateGridLogPanel;
+export default CreateGridSavePanel;

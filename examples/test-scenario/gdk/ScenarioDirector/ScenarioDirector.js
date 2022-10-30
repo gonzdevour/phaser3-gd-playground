@@ -10,8 +10,8 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
   constructor(scene, config) {
       super();
       this.scene = scene;
+      this.lsData = scene.game.lsData;
       this.camera = scene.cameras.main;
-      this.sound = scene.sound;
 
       this.scenario = GetValue(config, 'scenario', undefined)
       this.tagPlayer = GetValue(config, 'tagPlayer', undefined)
@@ -47,6 +47,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       this.logData = [];
       this.logSideIdx = 0; //每次換人說話+1
       this.logSideMod = 2; //用modulo決定log要排在哪一側
+      this.logSerifRowIdx = 0; //同一人連續說話+1
 
       this.coin = 50;
 
@@ -55,6 +56,36 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       //this.toggleSkip()
       //this.toggleAuto()
 
+  }
+  save(slotKey, extraData) {
+    var curLabel = this.scenario.lastLabel
+    var date = new Date();
+    var dateString = date.toLocaleString();
+    var saveState = {
+      label: curLabel,
+      decisionRecord: this.decisionRecord().stringify(),
+      coin: this.coin,
+      extraData: extraData?extraData:undefined,
+      savingDate: dateString,
+    }
+    console.log('save:' + '\n' + saveState)
+    this.lsData.set('scenario_save_slot' + slotKey, saveState)
+  }
+  load(slotKey) { //slotIdx可以是數字或字串
+    var saveState = this.lsData.get('scenario_save_slot' + slotKey)
+    if (saveState){
+      //讀取檔案
+      this.coin = saveState.coin;
+      this.decisionRecord().remove();
+      this.decisionRecord().insert(saveState.decisionRecord);
+      //初始化設定
+      this.mode_auto = false;
+      this.mode_skip = false;
+      this.mode_hideUI = false;
+      this.next(saveState.label);
+    } else {
+      console.log('scenario_save_slot' + slotKey + ' does not exist')
+    }
   }
   onClick() { //接收在clickArea上的任何點擊(排除上方的buttons)
     console.log('clickArea clicked')
@@ -221,7 +252,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
   }
   音效(filename) {
     console.log('音效: ' + filename)
-    this.sound.play(filename);
+    this.scene.audio.play(filename);
   }
   選項(text, value) {
     var choice = {text: text, value: yaml.load(value)}
@@ -298,10 +329,10 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     actorID = mustache.render(actorID, this.mtView);
     var logType = '';
     if(displayName){
-      logType = 'story';
+      logType = 'host';
       displayName = mustache.render(displayName, this.mtView);
     } else {
-      logType = 'host';
+      logType = 'story';
       displayName = actorID
     }
     serif = mustache.render(serif, this.mtView);
@@ -319,6 +350,12 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     this.lastActorID = actorID;
 
     var ifDifferentTalker = this.lastTalkerID == actorID ? false : true;
+    if (ifDifferentTalker){
+      this.logSerifRowIdx = 0;
+    } else {
+      this.logSerifRowIdx++
+    }
+    var logSerifRowIdx = this.logSerifRowIdx
     this.lastTalkerID = actorID;
 
     this.隱藏對話();
@@ -328,7 +365,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     }
 
     this.log({
-      logType: 'story',logColor: 0x0, logIsHeader: ifDifferentTalker,
+      logType: logType,logColor: 0x0, logIsHeader: ifDifferentTalker, logSerifRowIdx: logSerifRowIdx,
       actorID:actorID, displayName: displayName, expression: expression, serif: serif
     })
 
@@ -364,6 +401,12 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     this.lastActorID = actorID;
 
     var ifDifferentTalker = this.lastTalkerID == actorID ? false : true;
+    if (ifDifferentTalker){
+      this.logSerifRowIdx = 0;
+    } else {
+      this.logSerifRowIdx++
+    }
+    var logSerifRowIdx = this.logSerifRowIdx
     this.lastTalkerID = actorID;
 
     this.隱藏對話();
@@ -414,7 +457,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     console.log(content);
 
     this.log({
-      logType: 'actor',logColor: actorColor, logIsHeader: ifDifferentTalker,
+      logType: 'actor',logColor: actorColor, logIsHeader: ifDifferentTalker, logSerifRowIdx: logSerifRowIdx,
       actorID: actorID, displayName: displayName, expression: expression, serif: serif
     })
 
@@ -474,7 +517,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
         text.textPlayer.setTypingSpeed(0) //立即完成所有textPlayer
     }
   }
-  next(nextLabel) {
+  next(nextLabel) { //啟動
     this.logData = [];
     this.questionIdx = 0;
     nextLabel = nextLabel?nextLabel:this.nextLabel;

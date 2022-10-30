@@ -59,13 +59,19 @@ var CreateCellContainerCallback = function (cell, cellContainer) {
     portrait.setTexture('ico_user');
   }
 
-  var bgRadius = getBackgroundgRadius(item)
-  var logColor = Number('0x' + GetValue(item, 'logColor', 0)) //canvas只吃數字style
-
-  background.setRadius(bgRadius).setFillStyle(logColor);
   contentText.setText(GetValue(item, 'serif', ''))
   titleText.setText(GetValue(item, 'displayName', ''))
 
+  var bgRadius = getBackgroundgRadius(item);
+  var logColor = Number('0x' + GetValue(item, 'logColor', 0)); //canvas只吃數字style
+
+  background
+    .setData('bgRadius', bgRadius)
+    .setData('fillColor', logColor)
+    .setData('strokeColor', 0xffffff)
+    .setData('lineWidth', 2)
+    .setData('item', item)  //可以用DataManager傳入參數，待callback時再從customShape取出使用
+  background.setUpdateShapesCallback( msgAlign=='right' ? RightTailBubble : LeftTailBubble );
   logSizer.setRTL(msgAlign=='right'?true:false);
   cellContainer.setChildAlign(nameLabel, msgAlign);
   //nameLabel.rexSizer.align = msgAlign=='right'?2:0; //0左1中2右
@@ -107,6 +113,97 @@ var CreateCellContainer = function (scene, viewport, msgAlign, logData) {
   .add(CreateLogSizer(scene, viewport, msgAlign, logData), {align: msgAlign, key:'logSizer'})
 }
 
+var CreateSpeechBubbleShape = function (scene, bgRadius, fillColor, strokeColor, lineWidth, item) {
+  return scene.rexUI.add.customShapes({
+      create: { lines: 1 }
+  })
+  .setData('bgRadius', bgRadius)
+  .setData('fillColor', fillColor)
+  .setData('strokeColor', strokeColor)
+  .setData('lineWidth', lineWidth)
+  .setData('item', item)  //可以用DataManager傳入參數，待callback時再從customShape取出使用
+}
+
+var LeftTailBubble = function () {
+  var fillColor = this.getData('fillColor');
+  var strokeColor = this.getData('strokeColor');
+  var radius = this.getData('bgRadius'); //20;
+  var lineWidth = this.getData('lineWidth');
+  var item = this.getData('item');
+
+  var isHeader = item['logIsHeader'];
+  var isSpeaker = false;
+  if (item['logType'] == 'host' || item['logType'] == 'actor'){
+    isSpeaker = true;
+  }
+
+  var tailWidth = 20; //尾巴寬度
+  var tailHeight = 16 //尾巴高度
+  var left = 0 + tailWidth, right = this.width - tailWidth,
+      top = 0, bottom = this.height;
+  
+  var shape = this.getShapes()[0];
+  shape
+    .lineStyle(lineWidth, strokeColor, 1) //lineWidth, strokeColor, alpha
+    .fillStyle(fillColor, 1) //fillColor, alpha
+    // top line, right arc
+    .startAt(left + radius.tl, top).lineTo(right - radius.tr, top).arc(right - radius.tr, top + radius.tr, radius.tr, 270, 360)
+    // right line, bottom arc
+    .lineTo(right, bottom - radius.br).arc(right - radius.br, bottom - radius.br, radius.br, 0, 90)
+    // bottom line, left arc
+    .lineTo(left + radius.bl, bottom).arc(left + radius.bl, bottom - radius.bl, radius.bl, 90, 180)
+  if (isHeader && isSpeaker){
+    shape
+    .lineTo(left, bottom - 0.5*this.height + 0.5*tailHeight) //tail start
+    .lineTo(left - tailWidth, bottom - 0.7*this.height) //tail center
+    .lineTo(left, bottom - 0.5*this.height - 0.5*tailHeight) //tail end
+  }
+  shape //left line, top arc
+    .lineTo(left, top + radius.tl).arc(left + radius.tl, top + radius.tl, radius.tl, 180, 270)
+    .close();
+}
+
+var RightTailBubble = function () {
+  var textLabel = this.scene.rexUI.getParentSizer(this);
+
+  var fillColor = this.getData('fillColor');
+  var strokeColor = this.getData('strokeColor');
+  var radius = this.getData('bgRadius'); //20;
+  var lineWidth = this.getData('lineWidth');
+  var item = this.getData('item');
+
+  var isHeader = item['logIsHeader'];
+  var isSpeaker = false;
+  if (item['logType'] == 'host' || item['logType'] == 'actor'){
+    isSpeaker = true;
+  }
+
+  var tailWidth = 20; //尾巴寬度
+  var tailHeight = 16; //尾巴高度
+
+  var left = 0 + tailWidth, right = this.width - tailWidth,
+      top = 0, bottom = this.height;
+  var shape = this.getShapes()[0];
+  shape
+    .lineStyle(lineWidth, strokeColor, 1) //lineWidth, strokeColor, alpha
+    .fillStyle(fillColor, 1) //fillColor, alpha
+    // top line, right arc
+    .startAt(left + radius.tl, top).lineTo(right - radius.tr, top).arc(right - radius.tr, top + radius.tr, radius.tr, 270, 360)
+  if (isHeader && isSpeaker){
+    shape
+    .lineTo(right, bottom - 0.5*this.height - 0.5*tailHeight) //tail start
+    .lineTo(right + tailWidth, bottom - 0.7*this.height) //tail center
+    .lineTo(right, bottom - 0.5*this.height + 0.5*tailHeight) //tail end
+  }
+  shape
+    .lineTo(right, bottom - radius.br).arc(right - radius.br, bottom - radius.br, radius.br, 0, 90)
+    // bottom line, left arc
+    .lineTo(left + radius.bl, bottom).arc(left + radius.bl, bottom - radius.bl, radius.bl, 90, 180)
+    // left line, top arc
+    .lineTo(left, top + radius.tl).arc(left + radius.tl, top + radius.tl, radius.tl, 180, 270)
+    .close();
+}
+
 var CreateLogSizer = function (scene, viewport, msgAlign, logData) {
   var sizer = scene.rexUI.add.sizer({
     orientation: 'x',
@@ -135,7 +232,8 @@ var CreateTextLabel = function (scene, viewport, msgAlign, logData) {
   var bgRadius = getBackgroundgRadius(logData);
   var logColor = Number('0x' + GetValue(logData, 'logColor', 0)); //canvas只吃數字style
   return scene.rexUI.add.label({
-    background: CreateRoundRectangleBackground(scene, bgRadius, logColor, 0xffffff, 2),
+    background: CreateSpeechBubbleShape(scene, bgRadius, logColor, 0xffffff, 2, logData),
+    // background: CreateRoundRectangleBackground(scene, bgRadius, logColor, 0xffffff, 2),
     // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
     text: scene.rexUI.add.BBCodeText(0, 0, GetValue(logData, 'serif', ''), { 
       fontFamily: Style.fontFamilyName, 
@@ -145,9 +243,10 @@ var CreateTextLabel = function (scene, viewport, msgAlign, logData) {
         mode: 'character',  // 0|'none'|1|'word'|2|'char'|'character'
         width: viewport.width*0.5,
       },
+      padding: 10,
     }),
     align: 'center',
-    space: { left:20, right: 20, top: 20, bottom: 20 } //text在label中的天地
+    space: { left:20, right: 20, top: 10, bottom: 10 } //text在label中的天地
   });
 }
 

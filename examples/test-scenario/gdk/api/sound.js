@@ -1,6 +1,8 @@
 import { getOS } from "../../../../plugins/os.js";
 //utils
 import GetObjByKeyValue from "../../../../plugins/utils/array/GetObjByKeyValue.js";
+import ArrAdd from "../../../../plugins/utils/array/ArrAdd.js";
+import ArrRemove from "../../../../plugins/utils/array/ArrRemove.js";
 //get OS status
 var OS = getOS();
 
@@ -8,34 +10,68 @@ var OS = getOS();
 
 class cdv_sound {
   constructor(audioUrls) {
+    this.ArrBGM = [];
+    this.ArrSE = [];
     this.urls = audioUrls;
-    this.volume = 1;
     log("this.urls: " + this.urls.toJSON())
   }
-  setVolume(value) {
-    this.volume = Math.min(1, Math.max(0,value));
-    console.log('cdv.setVolume:' + this.volume);
+  get volumeSE() {
+    return this.lsData?this.lsData.get('volumeSE'):1; //如果沒有lsData則為1
   }
-  play(scene, key, config) { //要跟web audio共用所以scene參數要留著
+  get volumeBGM() {
+    return this.lsData?this.lsData.get('volumeBGM'):1; //如果沒有lsData則為1
+  }
+  setup(scene) {
+    this.scene = scene;
+    this.lsData = scene.game.lsData;
+    var audio = this;
+    var ArrSE = this.ArrSE;
+    var ArrBGM = this.ArrBGM;
+    this.lsData.events
+      .on('changedata-volumeSE', function(parent, key, value, previousValue){
+        ArrSE.forEach(function(se, idx, arr){
+          se.setVolume(audio.volumeSE);
+        })
+      })
+      .on('changedata-volumeBGM', function(parent, key, value, previousValue){
+        ArrBGM.forEach(function(bgm, idx, arr){
+          bgm.setVolume(audio.volumeBGM);
+        })
+      })
+    return this;
+  }
+  stop(se) {
+    ArrRemove(this.ArrSE, se);
+    ArrRemove(this.ArrBGM, se);
+    se.stop();
+    se.release();
+  }
+  play(key, config) {
     config = !config?{}:config;
+    var ArrSE = this.ArrSE;
     var se = new Media(
       this.getSrc(key),
-      function playSuccess() {
+      function playSuccess() { //se.stop也會觸發playSuccess
         log("media play success");
+        ArrRemove(ArrSE, se);
         se.release();
       },
       function playError(err) {
         log("media err: " + err.code);
       }
     );
-    se.setVolume(this.volume);
-    se.play(config);
+    se.soundKey = key;
+    ArrAdd(this.ArrSE, se)
+    var vol = config.volume?config.volume:this.volumeSE; //如果呼叫時沒給volume則取用lsData中的volume
+    se.setVolume(vol);
+    se.play(config); //這裡的config不是p3的。ios有{ numberOfLoops: 2, playAudioWhenScreenIsLocked : true }之類的config參數可填，見media的doc
+    return se;
   }
-  loop(scene, key, config) { //要跟web audio共用所以scene參數要留著
+  loop(key, config) {
     config = !config?{}:config;
     var se = new Media(
       this.getSrc(key),
-      function playSuccess() {
+      function playSuccess() { //se.stop也會觸發playSuccess
         log("media loop success");
         se.seek(0);
         se.play(config);
@@ -44,8 +80,11 @@ class cdv_sound {
         log("media err: " + err.code);
       }
     );
-    se.setVolume(this.volume);
-    se.play(config);
+    se.soundKey = key;
+    ArrAdd(this.ArrBGM, se)
+    var vol = config.volume?config.volume:this.volumeBGM; //如果呼叫時沒給volume則取用lsData中的volume
+    se.setVolume(vol);
+    se.play(config);  //這裡的config不是p3的。ios有{ numberOfLoops: 2, playAudioWhenScreenIsLocked : true }之類的config參數可填，見media的doc
     return se;
   }
   getSrc(key) {
@@ -71,26 +110,62 @@ class cdv_sound {
 
 class p3_sound {
   constructor(audioUrls) {
+    this.ArrBGM = [];
+    this.ArrSE = [];
     this.urls = audioUrls;
-    this.volume = 1;
     log("this.urls: " + JSON.stringify(this.urls))
   }
-  setVolume(value) {
-    this.volume = Math.min(1, Math.max(0,value));
-    console.log('p3.setVolume:' + this.volume);
+  get volumeSE() {
+    return this.lsData?this.lsData.get('volumeSE'):1; //如果沒有lsData則為1
   }
-  play(scene, key, config) {
+  get volumeBGM() {
+    return this.lsData?this.lsData.get('volumeBGM'):1; //如果沒有lsData則為1
+  }
+  setup(scene) {
+    this.scene = scene;
+    this.lsData = scene.game.lsData;
+    var audio = this;
+    var ArrSE = this.ArrSE;
+    var ArrBGM = this.ArrBGM;
+    this.lsData.events
+      .on('changedata-volumeSE', function(parent, key, value, previousValue){
+        ArrSE.forEach(function(se, idx, arr){
+          se.volume = audio.volumeSE;
+        })
+      })
+      .on('changedata-volumeBGM', function(parent, key, value, previousValue){
+        ArrBGM.forEach(function(bgm, idx, arr){
+          bgm.volume = audio.volumeBGM;
+        })
+      })
+    return this;
+  }
+  stop(se) {
+    ArrRemove(this.ArrSE, se);
+    ArrRemove(this.ArrBGM, se);
+    se.stop();
+    se.destroy();
+  }
+  play(key, config) {
     log("p3audio play " + key + ' vol' + this.volume);
-    config = !config?{}:config;
-    config.volume = this.volume;
-    scene.sound.play(key, config);
+    config = !config?{}:config; //如果沒有config就建一個config
+    config.volume = config.volume?config.volume:this.volumeSE; //如果呼叫時沒給volume則取用lsData中的volume
+    var se = this.scene.sound.add(key, config);
+    se.soundKey = key;
+    ArrAdd(this.ArrSE, se)
+    se.play(); //on complete時p3會自動destroy se，所以不用特別處理刪除
+    return se;
   }
-  loop(scene, key, config) {
+  loop(key, config) {
     log("p3audio loop " + key );
-    config = !config?{}:config;
-    config.volume = this.volume;
+    config = !config?{}:config; //如果沒有config就建一個config
+    config.volume = config.volume?config.volume:this.volumeBGM; //如果呼叫時沒給volume則取用lsData中的volume
     config.loop = true;
-    scene.sound.play(key, config);
+    var se = this.scene.sound.add(key, config);
+    se.soundKey = key;
+    ArrAdd(this.ArrBGM, se)
+    se.play();
+    return se;
   }
   getSrc(key) {
     if (this.urls[key]){

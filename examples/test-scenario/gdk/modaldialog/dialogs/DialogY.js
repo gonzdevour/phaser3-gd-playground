@@ -8,10 +8,11 @@ var DialogY = function (scene, config) {
     name: 'DialogY',
     title: GetValue(config, 'title', undefined),
     content: GetValue(config, 'content', undefined),
-    actions: GetValue(config, 'actions', [{imageKey:'yes', callback:undefined, closeDialog:true}]),
+    actions: GetValue(config, 'actions', [{imageKey:'ico_yes', callback:undefined, closeDialog:true}]),
     extraConfig: GetValue(config, 'extraConfig', {}),
   }
-  addBehaviors(dialogConfig.actions, ['dialogYoyoScale','ninja'])
+  //addBehaviors(dialogConfig.actions, ['dialogYoyoScale','ninja'])
+  addBehaviors(dialogConfig.actions, ['ninja'])
 
   return DialogDefault(scene, dialogConfig)
 }

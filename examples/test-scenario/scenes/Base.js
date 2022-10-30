@@ -27,6 +27,9 @@ class Base extends Phaser.Scene {
         this.toucharea = CreateTouchArea(this);    //this.toucharea, 因為會用到viewport, 這條必須在SetupScaleOuter後
         this.center = CreateCameraCenter(this); //this.center, camera main follows easeMove-able center label
 
+        //sound
+        this.audio = this.game.audio?this.game.audio.setup(this):this.game.sound; //將scene傳給this回傳audio，如果this.game.audio不存在則以內建sound為audio
+
         //scene transition
         this.setupTransition();
     }

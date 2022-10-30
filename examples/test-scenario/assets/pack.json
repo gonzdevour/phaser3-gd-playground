@@ -5,7 +5,16 @@
         "type": "audio",
         "key": "explosion",
         "url": [
-          "assets/audio/soundeffect/explosion.mp3"
+          "assets/audio/se/explosion.mp3"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "right",
+        "url": [
+          "assets/audio/se/right.m4a",
+          "assets/audio/se/right.mp3",
+          "assets/audio/se/right.ogg"
         ]
       },
       {
@@ -85,8 +94,23 @@
       },
       {
         "type": "image",
+        "key": "ico_lang",
+        "url": "assets/image/ico/ico_lang.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_music",
+        "url": "assets/image/ico/ico_music.png"
+      },
+      {
+        "type": "image",
         "key": "ico_no",
         "url": "assets/image/ico/ico_no.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_sound",
+        "url": "assets/image/ico/ico_sound.png"
       },
       {
         "type": "image",

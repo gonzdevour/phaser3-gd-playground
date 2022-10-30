@@ -53,7 +53,7 @@ var createTools = async function(scene){
     var iapValidatorLink = DefaultAppConfig.iapValidatorLink;
     await CordovaDeviceReady();//依OS.Cordova決定是否等待deviceready
     //工具列表
-    scene.game.sound = soundInit(packjson);
+    scene.game.audio = soundInit(packjson);
     scene.game.speech = speechInit();
     scene.game.admob = admobInit();
     scene.game.iap = iapInit(iapValidatorLink);

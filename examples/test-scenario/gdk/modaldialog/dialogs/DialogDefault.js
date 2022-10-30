@@ -41,7 +41,7 @@ var DialogDefault = function (scene, cfg) {
   }
 
   //通用預設值
-  var valueConfig = {
+  var defaultValueConfig = {
     width: scene.viewport.width-50,
     x: scene.viewport.centerX,
     y: scene.viewport.centerY,
@@ -77,7 +77,17 @@ var DialogDefault = function (scene, cfg) {
   }
 
   //如果extraConfig有值則對dialogConfig覆蓋原值或加入新值
-  var dialogConfig = Object.assign({}, cfg, valueConfig, extraConfig);
+  var dialogConfig = Object.assign({}, cfg, defaultValueConfig, extraConfig); //第一層key先全部覆蓋
+
+  if (extraConfig.space){ //基於預設值將下層調整補回
+    dialogConfig.space = Object.assign({}, defaultValueConfig.space, extraConfig.space);
+  }
+  if (extraConfig.expand){
+    dialogConfig.expand = Object.assign({}, defaultValueConfig.expand, extraConfig.expand);
+  }
+  if (extraConfig.duration){
+    dialogConfig.duration = Object.assign({}, defaultValueConfig.duration, extraConfig.duration);
+  }
 
   return ModalDialogPromise(scene, dialogConfig)
 }
