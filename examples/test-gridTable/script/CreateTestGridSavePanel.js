@@ -5,8 +5,7 @@ import ModalGridTablePromise from './ModalGridTablePromise.js';
 import CreateGridTable from './CreateGridTable.js';
 
 var CreateTestGridSavePanel = function (scene) {
-  //var viewport = scene.viewport;
-  var viewport = {centerX: 512, centerY:400, width: 1024, height:800}
+  var viewport = scene.viewport;
   var items = [];
   for (let index = 0; index < 30; index++) {
     var item = undefined;

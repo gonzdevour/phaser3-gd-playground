@@ -14,6 +14,7 @@ class Test1 extends Phaser.Scene {
     create() {
         //this.rexScaleOuter.scale(); //scaleOuter在進入scene時不會自動執行，必須每scene呼叫
         //this.viewport = this.rexScaleOuter.outerViewport; //on resize時scene.viewport不隨之變動
+        this.viewport = {centerX: 512, centerY:400, width: 1024, height:800}
 
         CreateTestGridSavePanel(this);
     }
@@ -26,6 +27,7 @@ var config = {
     width: 1024,
     height: 800,
     scale: {
+        //mode: Phaser.Scale.FIT,
         mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },

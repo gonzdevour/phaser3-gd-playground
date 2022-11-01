@@ -16,7 +16,7 @@ var CreateCellContainerCallback = function (cell, cellContainer) {
       item = cell.item,
       index = cell.index,
       table = cell.table,
-      viewport = {centerX: 512, centerY:400, width: 1024, height:800}
+      viewport = scene.viewport
 
   if (cellContainer === null) {
       cellContainer = CreateCellContainer(scene, viewport, index, item).setOrigin(0);
