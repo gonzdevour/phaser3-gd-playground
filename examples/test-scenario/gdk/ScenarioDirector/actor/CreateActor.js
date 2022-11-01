@@ -22,7 +22,7 @@ class Actor extends ContainerLite {
       this.displayName = '';
       this.expression = '';
 
-      scene.layerManager.addToLayer('scenario', this);
+      scene.layerManager.addToLayer('scenario_stage', this);
 
       bubble.on('complete', function(){
         this.scenario.isPlayingText = false;

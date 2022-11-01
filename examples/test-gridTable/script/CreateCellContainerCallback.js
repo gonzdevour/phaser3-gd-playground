@@ -1,6 +1,5 @@
-import CreateRoundRectangleBackground from '../../../templates/CreateRoundRectangleBackground.js';
-import Style from '../../../../settings/Style.js';
-import GetValue from '../../../../../../plugins/utils/object/GetValue.js';
+import CreateRoundRectangleBackground from './templates/CreateRoundRectangleBackground.js';
+import GetValue from '../../../plugins/utils/object/GetValue.js';
 
 /* 
 var saveState = {
@@ -17,8 +16,7 @@ var CreateCellContainerCallback = function (cell, cellContainer) {
       item = cell.item,
       index = cell.index,
       table = cell.table,
-      director = scene.scenario.director,
-      viewport = scene.scenario.director.viewport
+      viewport = {centerX: 512, centerY:400, width: 1024, height:800}
 
   if (cellContainer === null) {
       cellContainer = CreateCellContainer(scene, viewport, index, item).setOrigin(0);
@@ -69,7 +67,6 @@ var CreateIndexLabel = function (scene, viewport, index, item) {
     // background: CreateRoundRectangleBackground(scene, bgRadius, logColor, 0xffffff, 2),
     // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
     text: scene.rexUI.add.BBCodeText(0, 0, String(index+1).padStart(2, '0'), { 
-      fontFamily: Style.fontFamilyName, 
       fontSize: 24,
       testString: '|MÉqgy回',
       padding: 10,
@@ -85,7 +82,6 @@ var CreateScenarioLabel = function (scene, viewport, index, item) {
     // background: CreateRoundRectangleBackground(scene, bgRadius, logColor, 0xffffff, 2),
     // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
     text: scene.rexUI.add.BBCodeText(0, 0, GetValue(item, 'label', 'EMPTY'), { 
-      fontFamily: Style.fontFamilyName, 
       fontSize: 24,
       testString: '|MÉqgy回',
       padding: 10,
@@ -101,7 +97,6 @@ var CreateDateLabel = function (scene, viewport, index, item) {
     // background: CreateRoundRectangleBackground(scene, bgRadius, logColor, 0xffffff, 2),
     // icon: scene.add.image(0, 0, img).setDisplaySize(90, 90),
     text: scene.rexUI.add.BBCodeText(0, 0, GetValue(item, 'savingDate', ''), { 
-      fontFamily: Style.fontFamilyName, 
       fontSize: 24,
       testString: '|MÉqgy回',
       padding: 10,

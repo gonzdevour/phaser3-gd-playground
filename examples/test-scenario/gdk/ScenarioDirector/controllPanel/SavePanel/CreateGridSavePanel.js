@@ -2,7 +2,7 @@ import CreateRoundRectangleBackground from '../../../templates/CreateRoundRectan
 import CreateCellContainerCallback from './CreateCellContainerCallback.js';
 
 var CreateGridSavePanel = function (scene) {
-
+  var director = scene.scenario.director;
   var viewport = scene.scenario.director.viewport;
   var lsData = scene.game.lsData;
   var items = [];
@@ -55,6 +55,20 @@ var CreateGridSavePanel = function (scene) {
   })
   .layout()
   //.drawBounds(scene.add.graphics(), 0xff0000);
+
+  scrollablePanel
+    .on('cell.click', function(cellContainer, cellIndex, pointer){
+      console.log('cell.click')
+      director.save(cellIndex);
+      scrollablePanel.updateVisibleCell(cellIndex);
+    },this)
+    .on('cell.down', function(cellContainer, cellIndex, pointer){
+      console.log('cell.down')
+    },this)
+    .on('cell.up', function(cellContainer, cellIndex, pointer){
+      console.log('cell.up')
+    },this)
+
 
   mainPanel
   .add(scrollablePanel, {

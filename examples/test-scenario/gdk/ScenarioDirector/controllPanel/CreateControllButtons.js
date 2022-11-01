@@ -7,6 +7,7 @@ import { DialogY } from "../../modaldialog/DialogType";
 import CreateGridLogPanel from "./LogPanel/CreateGridLogPanel";
 import CreateSettingsPanel from "../../settings/CreateSettingsPanel";
 import CreateGridSavePanel from "./SavePanel/CreateGridSavePanel";
+import CreateTestGridSavePanel from "./SavePanel/CreateTestGridSavePanel";
 
 var CreateBtnData = function(){ //這裡的this都是onClick時傳過來的scope:scene
 
@@ -28,22 +29,27 @@ var CreateBtnData = function(){ //這裡的this都是onClick時傳過來的scope
     })
   };
 
+  // var save = function(){
+  //   var viewport = this.scenario.director.viewport;
+  //   DialogY(this, {
+  //       //title: '複習列表',
+  //       content: CreateGridSavePanel(this),
+  //       actions: [
+  //         {imageKey:'ico_no', text: '關閉', type: 'cancel', callback: undefined, closeDialog:true},
+  //       ],
+  //       buttonMode: 1, //是否手動manualClose      
+  //       extraConfig: { //客製調整參數
+  //         viewport: viewport,
+  //         width: viewport.width-50,
+  //         duration:{ in: 600, out: 300 },
+  //     }
+  //   })
+  // };
+
   var save = function(){
-    var viewport = this.scenario.director.viewport;
-    DialogY(this, {
-        //title: '複習列表',
-        content: CreateGridSavePanel(this),
-        actions: [
-          {imageKey:'ico_yes', text: '確定', type: 'confirm', callback: undefined, closeDialog:true},
-        ],
-        buttonMode: 1, //是否手動manualClose      
-        extraConfig: { //客製調整參數
-          viewport: viewport,
-          width: viewport.width-50,
-          duration:{ in: 600, out: 300 },
-      }
-    })
+    CreateTestGridSavePanel(this);
   };
+
   var load = function(){};
 
   var config = function(){

@@ -16,7 +16,7 @@ var CreateControllPanel = function(scene, director, viewport){
         .add(panel.clickArea)
         .add(panel.buttons)
 
-    scene.layerManager.addToLayer('ui', panel);
+    scene.layerManager.addToLayer('scenario_ui', panel);
     scene.vpc.add(panel, viewport, 0.5, 0.5);
 
     panel.debugGraphics = scene.add.graphics()

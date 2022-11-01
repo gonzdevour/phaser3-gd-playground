@@ -36,7 +36,7 @@ class StoryBox extends ContainerLite {
         background.setAlpha(0.5);
         this.moveDepthBelow(background);
 
-        scene.layerManager.addToLayer('story', this);
+        scene.layerManager.addToLayer('scenario_story', this);
         scene.vpc.add(this, scene.scenario.director.viewport, vpx, vpy);
 
         this.background = background;

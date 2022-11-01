@@ -20,7 +20,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       this.scenario.director = this;
 
       this.background = scene.add.rexTransitionImage(this.viewport.centerX, this.viewport.centerY, 'park', 0, {}).setAlpha(0.2)
-      scene.layerManager.addToLayer('scenario', this.background);
+      scene.layerManager.addToLayer('scenario_stage', this.background);
       scene.vpc.add(this.background, this.viewport);
 
       this.mode_singleChar = false;
