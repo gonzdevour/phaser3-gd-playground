@@ -1,15 +1,8 @@
 import CreateRoundRectangleBackground from '../../../templates/CreateRoundRectangleBackground.js';
 import CreateCellContainerCallback from './CreateCellContainerCallback.js';
 
-var CreateGridSavePanel = function (scene) {
-  var director = scene.scenario.director;
+var CreateGridSavePanel = function (scene, items) {
   var viewport = scene.scenario.director.viewport;
-  var lsData = scene.game.lsData;
-  var items = [];
-  for (let index = 0; index < 30; index++) {
-    var item = lsData.get('scenario_save_slot' + index)
-    items.push(item);
-  }
 
   var mainPanel = scene.rexUI.add.sizer({
     orientation: 'x',
@@ -19,9 +12,9 @@ var CreateGridSavePanel = function (scene) {
   .on('postlayout', function(){
     scene.log('mainPanel postlayout')
   })
-  .setMinSize(viewport.width-50, viewport.height*0.7)
+  .setMinSize(viewport.width-50, viewport.height*0.6)
 
-  var scrollablePanel = scene.rexUI.add.gridTable({
+  var gridTable = scene.rexUI.add.gridTable({
     scrollMode: 'vertical',
     background: CreateRoundRectangleBackground(scene, 10, undefined, 0xffffff, 2),
     table: {
@@ -56,24 +49,10 @@ var CreateGridSavePanel = function (scene) {
   .layout()
   //.drawBounds(scene.add.graphics(), 0xff0000);
 
-  scrollablePanel
-    .on('cell.click', function(cellContainer, cellIndex, pointer){
-      console.log('cell.click')
-      director.save(cellIndex);
-      scrollablePanel.updateVisibleCell(cellIndex);
-    },this)
-    .on('cell.down', function(cellContainer, cellIndex, pointer){
-      console.log('cell.down')
-    },this)
-    .on('cell.up', function(cellContainer, cellIndex, pointer){
-      console.log('cell.up')
-    },this)
-
-
   mainPanel
-  .add(scrollablePanel, {
+  .add(gridTable, {
     proportion: 1, align: 'center', expand: true,
-    key: 'scrollablePanel'
+    key: 'gridTable'
   })
   .once('postlayout', function (children, sizer) {
     //mainPanel.setMinSize(mainPanel.width, mainPanel.height);

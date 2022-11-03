@@ -74,9 +74,46 @@ var TransitionBT = function(dialog, duration) {
   AutoRemoveTween(dialog, {ease: 'Cubic', vpy: { from: yFrom, to: yTo }, alpha: { from: 0, to: 1 }, duration: 600,})
 }
 
+//title下滑到上
+var TransitionScaleUpTitleUP = function(dialog, duration) {
+  var title = dialog.getElement('title');
+  var separator = dialog.getElement('title.separator');
+  var text = dialog.getElement('title.text');
+
+  separator.setScale(0,1);
+  text.setScale(1,0);
+
+  title.tweenChild({
+    targets: text,
+    scaleY: { start: 0, to: 1 },
+    duration: 500,
+    delay: 500+300,
+    ease: 'Linear',
+  })
+
+  title.tweenChild({
+    targets: separator,
+    scaleX: { start: 0, to: 1 },
+    duration: 300,
+    delay: 500,
+    ease: 'Linear',
+  })
+
+  dialog.tweenChild({
+    targets: title,
+    y: '-=100',
+    duration: 1000,
+    delay: 0,
+    ease: 'Cubic',
+  })
+
+  AutoRemoveTween(dialog, {ease: 'Cubic', scale: { from: 0, to: 1 }, duration: 600,})
+}
+
 export {
   TransitionChoicesUpScaleDown,
   TransitionLR,
   TransitionRL,
   TransitionBT,
+  TransitionScaleUpTitleUP,
 };

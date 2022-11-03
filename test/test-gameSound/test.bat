@@ -1,6 +1,6 @@
 @echo off
 for %%I in (.) do set CurrDirName=%%~nxI
-set project=./examples/%CurrDirName%
+set project=./test/%CurrDirName%
 set main=test.js
 set htmlTemplate=index.tmpl
 set assets=assets

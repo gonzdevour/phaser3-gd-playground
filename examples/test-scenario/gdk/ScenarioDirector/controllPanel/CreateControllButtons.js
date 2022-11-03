@@ -4,10 +4,11 @@ import RegisterBehaviors from "../../behaviors/RegisterBehaviors";
 import GetValue from "../../../../../plugins/utils/object/GetValue";
 
 import { DialogY } from "../../modaldialog/DialogType";
+import { TransitionScaleUpTitleUP } from "../../modaldialog/TransistionType";
+
 import CreateGridLogPanel from "./LogPanel/CreateGridLogPanel";
 import CreateSettingsPanel from "../../settings/CreateSettingsPanel";
 import CreateGridSavePanel from "./SavePanel/CreateGridSavePanel";
-import CreateTestGridSavePanel from "./SavePanel/CreateTestGridSavePanel";
 
 var CreateBtnData = function(){ //這裡的this都是onClick時傳過來的scope:scene
 
@@ -29,34 +30,120 @@ var CreateBtnData = function(){ //這裡的this都是onClick時傳過來的scope
     })
   };
 
-  // var save = function(){
-  //   var viewport = this.scenario.director.viewport;
-  //   DialogY(this, {
-  //       //title: '複習列表',
-  //       content: CreateGridSavePanel(this),
-  //       actions: [
-  //         {imageKey:'ico_no', text: '關閉', type: 'cancel', callback: undefined, closeDialog:true},
-  //       ],
-  //       buttonMode: 1, //是否手動manualClose      
-  //       extraConfig: { //客製調整參數
-  //         viewport: viewport,
-  //         width: viewport.width-50,
-  //         duration:{ in: 600, out: 300 },
-  //     }
-  //   })
-  // };
-
   var save = function(){
-    CreateTestGridSavePanel(this);
+    var scene = this;
+    var lsData = scene.game.lsData;
+    var director = scene.scenario.director;
+    var viewport = scene.scenario.director.viewport;
+
+    var items = [];
+    for (let index = 0; index < 30; index++) {
+      var item = lsData.get('scenario_save_slot' + index)
+      items.push(item);
+    }
+
+    var savePanel = CreateGridSavePanel(this, items);
+    var gridTable = savePanel.getElement('gridTable');
+    gridTable
+      .on('cell.click', function(cellContainer, cellIndex, pointer){
+        console.log('cell.click' + cellIndex)
+        console.log(items[cellIndex])
+
+        var save = function(){
+          director.save(cellIndex);
+          gridTable.items[cellIndex] = lsData.get('scenario_save_slot' + cellIndex)
+          //gridTable.updateVisibleCell(cellIndex);
+          //cellContainer.shake(1000);
+
+          var xFrom = cellContainer.x+cellContainer.width;
+          var xTo = cellContainer.x;
+
+          scene.rexUI.add.roundRectangle(xFrom, cellContainer.y, 32, 32, 5, 0xff0000);
+          scene.rexUI.add.roundRectangle(xTo, cellContainer.y, 32, 32, 5, 0xff00ff);
+
+          var saveSlot = cellContainer.getElement('saveSlot');
+
+          gridTable.tweenChild({
+            targets: cellContainer,
+            x: { from: xFrom, to: xTo },
+            alpha: {from: 0, to: 1},
+            duration: 500,
+            ease: 'Linear',
+          })
+
+        }
+
+        if (items[cellIndex]){
+          DialogY(scene, {
+            //title: '複習列表',
+            content: `檔案${String(cellIndex+1).padStart(2, '0')}已存在，要覆蓋存檔嗎？`,
+            actions: [
+              {imageKey:'ico_no', text: '取消', type: 'cancel', callback: undefined, closeDialog:true},
+              {imageKey:'ico_yes', text: '確定', type: 'confirm', callback: save, closeDialog:true},
+            ],
+            buttonMode: 1, //是否手動manualClose
+            extraConfig: { //客製調整參數
+              background: scene.rexUI.add.roundRectangle(0, 0, 100, 100, 20, 0x1565c0),
+              viewport: viewport,
+              width: viewport.width-100,
+              duration:{ in: 600, out: 300 },
+              space: { top: 40 },
+            },
+          })
+        } else {
+          save();
+        }
+
+      })
+
+    //var tLabel_background = scene.rexUI.add.roundRectangle(0, 0, 100, 100, 10, 0x1565c0);
+    var tLabel_title = scene.rexUI.add.BBCodeText(0, 0, '冒險之書', {fontFamily: Style.fontFamilyName, fontSize:48, testString:'|MÉqgy回', padding: 10});
+    var tLabel_separator = scene.rexUI.add.roundRectangle(0, 0, 50, 4, 0, 0xffffff).setOrigin(0,0.5);
+    var tLabel_text = scene.rexUI.add.BBCodeText(0, 0, '選擇存檔欄位', {fontFamily: Style.fontFamilyName, fontSize:32, testString:'|MÉqgy回', padding: 10});
+    //var tLabel_icon = scene.add.rectangle(0, 0, 40, 40, 0xff00ff);
+    var tLabel = scene.rexUI.add.titleLabel({
+      //background: tLabel_background,
+      title: tLabel_title,
+      separator: tLabel_separator,
+      text: tLabel_text,
+      //icon: tLabel_icon,
+      align: { title: 'left', text: 'right'},
+      space: {
+          left: 20, right: 20, top: 20, bottom: -120, icon: 10, separator: 2, 
+          //separatorLeft: -60, separatorRight: -10,
+      }
+    });
+
+    DialogY(scene, {
+        // title: scene.rexUI.add.label({
+        //   background: scene.rexUI.add.roundRectangle(0, 0, 100, 100, 10, 0x1565c0),
+        //   text: scene.rexUI.add.BBCodeText(0, 0, '選擇存檔欄位：', {fontFamily: Style.fontFamilyName, fontSize:48, testString:'|MÉqgy回', padding: 10}),
+        //   space: { bottom: 0 },
+        // }),
+        title: tLabel,
+        content: savePanel,
+        actions: [
+          {imageKey:'ico_no', text: '關閉', type: 'cancel', callback: undefined, closeDialog:true},
+        ],
+        buttonMode: 1, //是否手動manualClose      
+        extraConfig: { //客製調整參數
+          viewport: viewport,
+          width: viewport.width-50,
+          transitIn: TransitionScaleUpTitleUP,
+          duration:{ in: 600, out: 300 },
+          align: {title: 'left'}, //讓dialog title靠左
+          expand: {title: true}, //讓dialog title的background延展
+      }
+    })
   };
 
   var load = function(){};
 
   var config = function(){
-    var _scene = this;
-    var viewport = _scene.scenario.director.viewport;
-    DialogY(_scene, {
-      title: CreateTextLabel(_scene, '系統設定'),
+    var scene = this;
+    var viewport = scene.scenario.director.viewport;
+    DialogY(scene, {
+      title: CreateTextLabel(scene, '系統設定'),
       content: CreateSettingsPanel(_scene, viewport),
       extraConfig: {
         viewport: viewport,
@@ -67,9 +154,10 @@ var CreateBtnData = function(){ //這裡的this都是onClick時傳過來的scope
   };
 
   var leave = function(){
-    var viewport = this.scenario.director.viewport;
-    var _scene = this;
-    DialogY(_scene, {
+    var scene = this;
+    var viewport = scene.scenario.director.viewport;
+
+    DialogY(scene, {
       //title: '複習列表',
       content: `要離開遊戲嗎？`,
       actions: [
@@ -78,9 +166,9 @@ var CreateBtnData = function(){ //這裡的this都是onClick時傳過來的scope
       ],
       buttonMode: 1, //是否手動manualClose
       extraConfig: { //客製調整參數
-        background: _scene.rexUI.add.roundRectangle(0, 0, 100, 100, 20, 0x1565c0),
+        background: scene.rexUI.add.roundRectangle(0, 0, 100, 100, 20, 0x1565c0),
         viewport: viewport,
-        width: viewport.width-50,
+        width: viewport.width-100,
         duration:{ in: 600, out: 300 },
         space: { top: 40 },
       },

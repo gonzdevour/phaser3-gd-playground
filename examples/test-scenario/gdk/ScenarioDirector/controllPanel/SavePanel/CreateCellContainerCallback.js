@@ -33,7 +33,7 @@ var CreateCellContainerCallback = function (cell, cellContainer) {
   scenarioLabel.setText(GetValue(item, 'label', ''))
   dateLabel.setText(GetValue(item, 'savingDate', ''))
 
-  indexLabel.setMinWidth(viewport.width*0.8);
+  indexLabel.setMinWidth(viewport.width*0.85); //以元件決定整體按鈕寬度
 
   cellContainer
   .setDirty(true).layout()  // Run layout manually
