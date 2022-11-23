@@ -89,7 +89,7 @@ var DialogDefault = function (scene, cfg) {
     dialogConfig.duration = Object.assign({}, defaultValueConfig.duration, extraConfig.duration);
   }
 
-  return ModalDialogPromise(scene, dialogConfig)
+  return ModalDialogPromise(scene, dialogConfig);
 }
 
 //客製函數
@@ -108,7 +108,7 @@ var CreateActions = function(scene, config){
     var actions = [];
     config.forEach(function(item, idx, arr){
         actions.push(scene.rexUI.add.space());
-        actions.push(CreateButton(scene, item).onClick(item.callback));
+        actions.push(CreateButton(scene, item));
         if(idx == arr.length-1){
             actions.push(scene.rexUI.add.space());
         }
@@ -130,10 +130,10 @@ var CreateChoices = function(scene, config){
 
 var CreateButton = function (scene, config) {
     var label = scene.rexUI.add.label({
-        background: config.background?config.background:undefined,
-        icon: config.imageKey?scene.add.image(0, 0, config.imageKey).setDisplaySize(90, 90):undefined,
-        text: config.text?scene.rexUI.add.BBCodeText(0, 0, config.text, { fontFamily: Style.fontFamilyName, fontSize: 36 }):undefined,
-        space: config.spaceSettings?config.spaceSettings:{},
+      background: GetValue(config, 'background', undefined),
+      icon: CreateIcon(scene, config),
+      text: CreateText(scene, config),
+      space: GetValue(config, 'spaceSettings', {}),
     });
     //註冊pointer特效
     RegisterBehaviors(label, GetValue(config, 'behavior', []))
@@ -147,6 +147,24 @@ var CreateButton = function (scene, config) {
     }
 
     return label;
+}
+
+var CreateIcon = function(scene, config){
+  var icon = undefined;
+  var imageKey = GetValue(config, 'imageKey', undefined);
+  if (imageKey){
+    icon = scene.add.image(0, 0, imageKey).setDisplaySize(90, 90)
+  }
+  return icon;
+}
+
+var CreateText = function(scene, config){
+  var textObj = undefined;
+  var text = GetValue(config, 'text', undefined);
+  if (text){
+    textObj = scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 36 })
+  }
+  return textObj;
 }
 
 export default DialogDefault;

@@ -2,6 +2,7 @@ import SetupLayerManager from '../gdk/layer/SetupLayerManager';
 import SetupScaleOuter from '../gdk/viewport/SetupScaleOuter';
 import CreateTouchArea from '../gdk/viewport/CreateTouchArea';
 import CreateCameraCenter from '../gdk/viewport/CreateCameraCenter';
+import CreateToast from '../gdk/toast/CreateToast';
 
 class Base extends Phaser.Scene {
 
@@ -26,6 +27,7 @@ class Base extends Phaser.Scene {
         this.viewport = SetupScaleOuter(this);    //this.viewport//setup時會順便做一次scale()
         this.toucharea = CreateTouchArea(this);    //this.toucharea, 因為會用到viewport, 這條必須在SetupScaleOuter後
         this.center = CreateCameraCenter(this); //this.center, camera main follows easeMove-able center label
+        this.toast = CreateToast(this);
 
         //sound
         this.audio = this.game.audio?this.game.audio.setup(this):this.game.sound; //將scene傳給this回傳audio，如果this.game.audio不存在則以內建sound為audio

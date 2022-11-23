@@ -2,6 +2,7 @@ import TextPlayer from "../../../../../../phaser3-rex-notes/plugins/textplayer";
 import ContainerLite from '../../../../../../phaser3-rex-notes/plugins/containerlite.js';
 import AutoRemoveTween from '../../../../../../phaser3-rex-notes/plugins/utils/tween/AutoRemoveTween';
 import CreateRoundRectangleBackground from "../../../gdk/templates/CreateRoundRectangleBackground";
+import CreatePortait from "./CreatePortrait";
 
 const color_displayNameBackground = 0x333333;
 
@@ -13,17 +14,25 @@ class StoryBox extends ContainerLite {
         if(width == undefined){width = scene.scenario.director.viewport.width*0.95};
         if(height == undefined){height = scene.scenario.director.viewport.height*0.3};
 
-        var textPlayer = CreateTextPlayer(scene, 0, 0, width, height);
-        var clickWaiter = createClickWaiter(scene, textPlayer.x + 0.5*textPlayer.width - 40, textPlayer.y + 0.5*textPlayer.height - 95);
-        var nameLabel = createNameLabel(scene, textPlayer.x-0.5*textPlayer.width, textPlayer.y-0.5*textPlayer.height);
-        var background = CreateCustomShape(scene, width, height)
-            .setFillStyle(0x0, 0.7)
-            .setStrokeStyle(3, 0xffffff, 1)
-            .setPosition(0, 0);
+        var textPlayer = CreateTextPlayer(scene, 0, 0, 100, 100);
+        var portrait = CreatePortait(scene, 'Spring', 'normal0').setDisplaySize(height*0.8, height*0.8);
 
-        //var marker = scene.rexUI.add.roundRectangle(0.5*width, 0-0.5*height, 0.5*width, 0.5*height, 10, 0xff0000);
+        var pTextPlayer = scene.rexUI.add.sizer({
+            width: width, height: height,
+            orientation:'x',
+            space: { left: 10, right:50, item: 10},
+        })
+        .add(portrait,{key:'portrait'})
+        .add(textPlayer,{key:'textPlayer', proportion:1, expand:true}) //proportion是根據orientation的區域分配, expand是orientation另一向度的展開
+        .layout()
 
-        super(scene, 0, 0, [background, textPlayer, nameLabel, clickWaiter]);
+        var nameLabel = createNameLabel(scene, pTextPlayer.x-0.5*pTextPlayer.width, pTextPlayer.y-0.5*pTextPlayer.height);
+        var clickWaiter = createClickWaiter(scene, pTextPlayer.x + 0.5*pTextPlayer.width - 35, pTextPlayer.y + 0.5*pTextPlayer.height - 85);
+        var background = CreateCustomShape(scene, pTextPlayer).setFillStyle(0x0, 0.7).setStrokeStyle(3, 0xffffff, 1)
+        background.setPosition(0,0); //注意這裡的textPlayer.x/y只是layout後相對於0的值
+        //background.setPosition(textPlayer.x, textPlayer.y); //注意這裡的textPlayer.x/y只是layout後相對於0的值
+
+        super(scene, 0, 0, [background, pTextPlayer, nameLabel, clickWaiter]);
         scene.add.existing(this);
 
         if(storyBoxID == 'story'){
@@ -39,8 +48,14 @@ class StoryBox extends ContainerLite {
         scene.layerManager.addToLayer('scenario_story', this);
         scene.vpc.add(this, scene.scenario.director.viewport, vpx, vpy);
 
+        this.graphics = scene.add.graphics(); //debug用
+
+        background.StoryBox = this; //將StoryBox傳入customShape的callback
+
         this.background = background;
         this.textPlayer = textPlayer;
+        this.portrait = portrait;
+        this.pTextPlayer = pTextPlayer; //portrait-textPlayer sizer
         this.nameLabel = nameLabel;
         this.clickWaiter = clickWaiter;
 
@@ -51,22 +66,53 @@ class StoryBox extends ContainerLite {
 
         this.speakerName = '';
 
+        if (this.director.mode_portrait){
+            this.pTextPlayer.hide(this.portrait).layout();
+        }
+
         this.close();
     }
     setTypingSpeed(speed){
         this.textPlayer.setTypingSpeed(speed);
     }
-    tell(displayName, expression, speed, waitTyping) {
+    setPortrait(id, expressionName) {
+        if (this.director.mode_portrait){
+            this.portrait.setPortrait(id, expressionName);
+        }
+        return this;
+    }
+    tell(actorID, actorColor, displayName, expression, speed, waitTyping) {
+
+        this.background.actorVPX = undefined;
+        this.background.setDirty(); //取消尾巴
+
+        if (actorID == 'Story'){ //說話時顯示nameLabel, story時隱藏nameLabel
+            this.nameLabel.setAlpha(0);
+        } else {
+            this.nameLabel.setAlpha(1);
+        }
+
+        if (this.director.mode_portrait){ //說話時顯示/切換portrait, story時隱藏portrait
+            if (actorID != 'Story'){ 
+                if (this.portrait.rexSizer.hidden){
+                    this.pTextPlayer.show(this.portrait).layout();
+                }
+                this.portrait.setPortrait(actorID, expression); //切換portrait
+            } else {
+                if (!this.portrait.rexSizer.hidden){
+                    this.pTextPlayer.hide(this.portrait).layout();
+                }
+            }
+        }
 
         console.log('storyBox start to tell');
         if (!this.visible){
             this.pop()
         }
-
-        this.nameLabel.getElement('background').setFillStyle(color_displayNameBackground)
+        this.nameLabel.getElement('background').setFillStyle(Number('0x' + actorColor))
         if (displayName) {
             this.nameLabel.setText(displayName).layout();
-            if (displayName = this.speakerName){
+            if (displayName == this.speakerName){
 
             } else {
                 this.speakerName = displayName;
@@ -97,8 +143,7 @@ class StoryBox extends ContainerLite {
         this.displayName = displayName;
     }
     nameLabelBounce() {
-        this.setVisible(true);
-        var t = this.textPlayer;
+        var t = this.pTextPlayer;
         var yFrom = t.y-0.5*t.height
         AutoRemoveTween(this.nameLabel, {
             y: {from: yFrom, to:yFrom-20},
@@ -112,7 +157,7 @@ class StoryBox extends ContainerLite {
     }
     pop() {
         this.setVisible(true);
-        this.textPlayerPop();
+        this.pTextPlayerPop();
         this.backgroundPop();
     }
     backgroundPop() {
@@ -130,11 +175,11 @@ class StoryBox extends ContainerLite {
             duration: 500,
         })
     }
-    textPlayerPop() {
+    pTextPlayerPop() {
         this.clickWaiter.setVisible(false);
-        AutoRemoveTween(this.textPlayer, {
-            x: {from:this.textPlayer.x-20, to:this.textPlayer.x},
-            y: {from:this.textPlayer.y+20, to:this.textPlayer.y},
+        AutoRemoveTween(this.pTextPlayer, {
+            x: {from:this.pTextPlayer.x-20, to:this.pTextPlayer.x},
+            y: {from:this.pTextPlayer.y+20, to:this.pTextPlayer.y},
             alpha: {from: 0, to:1},
             ease: 'cubic',
             duration: 600, //duration: this.textPlayer.typingSpeed,
@@ -179,14 +224,9 @@ var CreateTextPlayer = function(scene, x, y, width, height){
     var textPlayer = new TextPlayer(scene, 
         {
             x: x, y: y, width: width, height: height,  // Fixed width and height
-
-            background: { 
-                //stroke: 'white', strokeThickness: 6, cornerRadius: 20, 
-                //color: 'rgba(0, 0, 0, 0.7)', //color2: 'rgba(8, 9, 107, 0.5)', horizontalGradient: true, 
-            },
-
+            //background: { stroke: 'white', strokeThickness: 3, cornerRadius: 5, }, //color: 'rgba(0, 0, 0, 0.7)', color2: 'rgba(8, 9, 107, 0.5)', horizontalGradient: true,
             //innerBounds: { stroke: '#A52A2A' },
-            padding: {left: 30, right: 50, top: 10, bottom: 10},
+            padding: {left: 10, right: 10, top: 10, bottom: 10},
             style: {
                 fontSize: '36px',
                 stroke: 'green', strokeThickness: 3,
@@ -274,15 +314,22 @@ var CreateTextPlayer = function(scene, x, y, width, height){
     return textPlayer
 }
 
-var CreateCustomShape = function (scene, width, height) {
+var CreateCustomShape = function (scene, target) {
     var shape = scene.rexUI.add.customShapes({
         create: { lines: 1 },
         update: function () {
+            // this.StoryBox.graphics.clear(); //setDirty debug
+            // this.StoryBox.pTextPlayer.drawBounds(this.StoryBox.graphics, {color: 0xff0000, lineWidth:5})
+            // console.log('customShape updated');
+
+            var offsetX = 0;
+            var width = target.width;
+            var height = target.height;
             var radius = 20;
             var tailHeight = 0;
             var tailWidth = 40;
 
-            var left = -0.5*width, right = 0.5*width,
+            var left = offsetX-0.5*width, right = offsetX+0.5*width,
                 top = -0.5*height, bottom = 0.5*height, 
 
                 //沒有actor的時候尾巴置中
@@ -348,7 +395,7 @@ var CreateStoryBox = function (scene, storyBoxID, vpx, vpy, width, height) {
         })
         .on('page.start', function() {
             //console.log('typingSpeed: ' + textPlayer.typingSpeed)
-            storyBox.textPlayerPop();
+            //storyBox.pTextPlayerPop();
             textPlayer.setTypingSpeed(storyBox.director.getTypingSpeed());
         })
         .on('wait.click', function() {

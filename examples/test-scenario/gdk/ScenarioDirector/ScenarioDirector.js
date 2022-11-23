@@ -28,10 +28,10 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       this.mode_auto = false;
       this.mode_skip = false;
       this.mode_hideUI = false;
+      this.mode_portrait = true;
 
-
-      this.initVPX = 0.5;
-      this.initVPY = 1.2;
+      this.initVPX = 0.5; //說話、移動、旁白時如果有指定角色，角色使用的預設vpx
+      this.initVPY = 1.2; //說話、移動、旁白時如果有指定角色，角色使用的預設vpy
       this.defaultTypingSpeed = 50;
       this.defaultSkipTimeScale = 5;
       this.defaultAutoDelayTime = 2000;
@@ -51,7 +51,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
 
       this.coin = 50;
 
-      this.createStoryBox();
+      this.createStoryBox(); //CreateStoryBox時會設定director.storyBox
 
       //this.toggleSkip()
       //this.toggleAuto()
@@ -172,14 +172,19 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     return this.mode_skip?this.defaultSkipTimeScale:1;
   }
   createStoryBox() {
-    var storyBox = GetStoryBox(this.tagPlayer, 'story');
+    var tagPlayer = this.tagPlayer;
+    var storyBox = GetStoryBox(tagPlayer, 'story');
     if (!storyBox) {
       var content = `<text.story=story>`;
-      this.tagPlayer
+      tagPlayer
       .playPromise(content)
       .then(function () {
           console.log('故事框建立完成')
+          storyBox = GetStoryBox(tagPlayer, 'story');
+          return storyBox;
       })
+    } else {
+      return storyBox;
     }
   }
   清空() {
@@ -329,25 +334,32 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     actorID = mustache.render(actorID, this.mtView);
     var logType = '';
     if(displayName){
-      logType = 'host';
+      if(actorID == 'Host'){
+        logType = 'host';
+      } else {
+        logType = 'actor';
+      }
       displayName = mustache.render(displayName, this.mtView);
     } else {
       logType = 'story';
       displayName = actorID
     }
     serif = mustache.render(serif, this.mtView);
+    
+    var actorData = this.tb_Char.table[actorID] //取得actorData不需要actor存在畫面上
+    var actorColor = GetValue(actorData, 'nameColor', 333333)
 
     var expression = AliasToExpression(expressionAlias);
     duration = duration?duration*1000:0;
 
-    if (x == undefined){
+    if (x == undefined){ //理論上旁白不會用到vpxy，但是為了csv格式便利所以保留x,y,xFrom,yFrom,duration
       x = this.initVPX;
     }
     if (y == undefined){
       y = this.initVPY;
     }
 
-    this.lastActorID = actorID;
+    this.lastActorID = actorID; //旁白需要處理lastActorID，因為「旁白」指的是「不想要actor出現在畫面上時，storyBox上的actor對話呈現」
 
     var ifDifferentTalker = this.lastTalkerID == actorID ? false : true;
     if (ifDifferentTalker){
@@ -365,11 +377,11 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     }
 
     this.log({
-      logType: logType,logColor: 0x0, logIsHeader: ifDifferentTalker, logSerifRowIdx: logSerifRowIdx,
-      actorID:actorID, displayName: displayName, expression: expression, serif: serif
+      logType: logType,logColor: actorColor, logIsHeader: ifDifferentTalker, logSerifRowIdx: logSerifRowIdx,
+      actorID: actorID, displayName: displayName, expression: expression, serif: serif
     })
 
-    var content = `<text.story.tell=${displayName},${expression}>${serif}`;
+    var content = `<text.story.tell=${actorID},${actorColor},${displayName},${expression}>${serif}`;
 
     this.tagPlayer.setTimeScale(this.getTagPlayerTimeScale());
     this.tagPlayer.playPromise(content);
@@ -386,7 +398,8 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
 
     var actor = GetActor(this.tagPlayer, actorID);
     var actorData = this.tb_Char.table[actorID]
-    var actorColor = actorData.nameColor?actorData.nameColor:0x0
+    var actorColor = GetValue(actorData, 'nameColor', 333333)
+
     var ease = AliasToEase(easeAlias);
     var expression = AliasToExpression(expressionAlias);
     duration = duration?duration*1000:0;
@@ -427,7 +440,8 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       content = content + `<char.${actorID}.setDisplayName=${displayName}>`
     }
     if (expression) {
-      content = content + `<char.${actorID}.setExpression=${expression}>`
+      content = content + `<char.${actorID}.setExpression=${expression}>` //變更立繪
+      content = content + `<text.story.setPortrait=${actorID},${expression}>` //變更頭圖
     }
     if (x && !xFrom){
       content = content + `<char.${actorID}.vpx.to=${x},${duration},${ease}>`
@@ -452,7 +466,12 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     }
     if (serif){
       content = content + `<wait=100>`
-      content = content + `<char.${actorID}.talk>${serif}`
+      content = content + `<char.${actorID}.bringToTop>`
+      if (this.scenario.director.mode_speechBubble){ //bubble模式 or storyBox模式
+        content = content + `<char.${actorID}.talk>${serif}`
+      } else {
+        content = content + `<text.story.tell=${actorID},${actorColor},${displayName},${expression}>${serif}`;
+      }
     }
     console.log(content);
 

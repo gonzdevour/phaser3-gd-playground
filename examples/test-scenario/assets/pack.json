@@ -94,6 +94,66 @@
       },
       {
         "type": "image",
+        "key": "por-Host",
+        "url": "assets/image/char/por-Host.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Jade-fear0",
+        "url": "assets/image/char/por-Jade-fear0.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Jade-normal0",
+        "url": "assets/image/char/por-Jade-normal0.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Jade-shock0",
+        "url": "assets/image/char/por-Jade-shock0.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Jade-shock1",
+        "url": "assets/image/char/por-Jade-shock1.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Spring-angry0",
+        "url": "assets/image/char/por-Spring-angry0.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Spring-angry1",
+        "url": "assets/image/char/por-Spring-angry1.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Spring-fear0",
+        "url": "assets/image/char/por-Spring-fear0.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Spring-fear1",
+        "url": "assets/image/char/por-Spring-fear1.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Spring-normal0",
+        "url": "assets/image/char/por-Spring-normal0.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Spring-shock0",
+        "url": "assets/image/char/por-Spring-shock0.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Spring-shock1",
+        "url": "assets/image/char/por-Spring-shock1.png"
+      },
+      {
+        "type": "image",
         "key": "ico_lang",
         "url": "assets/image/ico/ico_lang.png"
       },

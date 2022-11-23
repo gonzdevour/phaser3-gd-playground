@@ -101,7 +101,7 @@ var TransitionScaleUpTitleUP = function(dialog, duration) {
 
   dialog.tweenChild({
     targets: title,
-    y: '-=100',
+    y: {from: 100, to:0},
     duration: 1000,
     delay: 0,
     ease: 'Cubic',

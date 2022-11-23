@@ -1,0 +1,33 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "audio",
+        "key": "jungle",
+        "url": [
+          "assets/audio/jungle.mp3",
+          "assets/audio/jungle.ogg"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "right",
+        "url": [
+          "assets/audio/right.m4a",
+          "assets/audio/right.mp3",
+          "assets/audio/right.ogg"
+        ]
+      },
+      {
+        "type": "image",
+        "key": "ico_no",
+        "url": "assets/image/ico_no.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_yes",
+        "url": "assets/image/ico_yes.png"
+      }
+    ]
+  }
+}

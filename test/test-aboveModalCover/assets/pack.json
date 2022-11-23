@@ -1,0 +1,30 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "audio",
+        "key": "right",
+        "url": [
+          "assets/audio/right.m4a",
+          "assets/audio/right.mp3",
+          "assets/audio/right.ogg"
+        ]
+      },
+      {
+        "type": "image",
+        "key": "classroom",
+        "url": "assets/image/classroom.jpg"
+      },
+      {
+        "type": "image",
+        "key": "woman0",
+        "url": "assets/image/woman0.png"
+      },
+      {
+        "type": "image",
+        "key": "woman1",
+        "url": "assets/image/woman1.png"
+      }
+    ]
+  }
+}

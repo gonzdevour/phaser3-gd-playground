@@ -18,7 +18,7 @@ var DefaultAppConfig = {
         Boot: 'Boot',
         Home: 'test',
     },
-    layers: ['bg','main','scenario_stage','scenario_story','scenario_choices','scenario_ui','ui','dialog'],
+    layers: ['bg','main','scenario_stage','scenario_story','scenario_choices','scenario_ui','ui','dialog','system'],
     assets: {
         pack:{ key:'pack', url:'assets/pack.json' },
         text:[

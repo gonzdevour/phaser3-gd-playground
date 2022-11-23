@@ -33,8 +33,8 @@ var ModalDialogPromise = function (scene, config) {
         dialog.viewport = config.viewport;
         scene.vpc.add(dialog, dialog.viewport);
     }
+    scene.layerManager.add('dialog', dialog);
 
-    //將dialog再包裝為modal，並建立promise
     return scene.rexUI.modalPromise(dialog, config);
 }
 

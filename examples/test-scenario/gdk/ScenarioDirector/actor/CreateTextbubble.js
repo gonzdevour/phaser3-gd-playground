@@ -100,17 +100,6 @@ var CreateBuiltInText = function (scene, wrapWidth, width, height) {
         .setSize(width, height);
 }
 
-// var CreateBuiltInText = function (scene, wrapWidth, width, height) {
-//     return scene.add.text(0, 0, '', {
-//         fontSize: '36px',
-//         wordWrap: {
-//             width: wrapWidth
-//         },
-//         maxLines: 3
-//     })
-//         .setFixedSize(width, height);
-// }
-
 var CreateSpeechBubbleShape = function (scene, speaker) {
     var shape = scene.rexUI.add.customShapes({
         create: { lines: 1 },
