@@ -11,8 +11,7 @@ class Test1 extends Phaser.Scene {
         this.load.pack('pack', 'assets/pack.json');
     }
     create() {
-        var layer1 = this.add.layer();
-        var layer2 = this.add.layer();
+        var layerManager = this.plugins.get('rexLayerManager').add(this, ['layer1', 'layer2']);
 
         var print = this.add.text(0, 0, '').setDepth(1);
         var bg = this.add.image(400, 300, 'classroom')
@@ -22,22 +21,24 @@ class Test1 extends Phaser.Scene {
             })
         var testObj = this.rexUI.add.roundRectangle(200, 200, 100, 100, 20, 0xff0000);
 
-        layer1.add([bg,print])
-        layer2.add(testObj);
-
+        layerManager.addToLayer('layer1', bg);
+        layerManager.addToLayer('layer1', print);
+        layerManager.addToLayer('layer2', testObj);
 
         var dialog = CreateDialog(this).setPosition(400, 300);
 
-        this.rexUI.modalPromise( dialog, { manaulClose: true, duration: { in: 500, out: 500} })
+        this.rexUI.modalPromise(dialog, { manaulClose: true, duration: { in: 500, out: 500 } })
             .then(function (result) {
                 print.text += `Click button ${result.index}: ${result.text}\n`;
             })
-        
-        layer1.add(dialog);
 
+        layerManager.addToLayer('layer1', dialog);
+
+        console.log(this.children.list)
     }
 
-    update() { }
+    update() {
+    }
 }
 
 var CreateDialog = function (scene) {
@@ -48,7 +49,7 @@ var CreateDialog = function (scene) {
             text: scene.add.text(0, 0, 'Title', {
                 fontSize: '24px'
             }),
-            space: { left: 15, right: 15, top: 10, bottom: 10}
+            space: { left: 15, right: 15, top: 10, bottom: 10 }
         }),
         content: scene.add.text(0, 0, 'Do you want to build a snow man?', {
             fontSize: '24px'
@@ -68,7 +69,7 @@ var CreateDialog = function (scene) {
             content: false,  // Content is a pure text object
         }
     })
-    .layout();
+        .layout();
 
     dialog
         .on('button.click', function (button, groupName, index, pointer, event) {
@@ -90,7 +91,7 @@ var CreateLabel = function (scene, text) {
         text: scene.add.text(0, 0, text, {
             fontSize: '24px'
         }),
-        space: { left: 10, right: 10, top: 10, bottom: 10}
+        space: { left: 10, right: 10, top: 10, bottom: 10 }
     });
 }
 
