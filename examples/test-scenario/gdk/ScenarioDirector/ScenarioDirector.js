@@ -19,10 +19,6 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
 
       this.scenario.director = this;
 
-      this.background = scene.add.rexTransitionImage(this.viewport.centerX, this.viewport.centerY, 'park', 0, {}).setAlpha(0.2)
-      scene.layerManager.addToLayer('scenario_stage', this.background);
-      scene.vpc.add(this.background, this.viewport);
-
       this.mode_singleChar = false;
       this.mode_speechBubble = false;
       this.mode_auto = false;
@@ -51,11 +47,50 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
 
       this.coin = 50;
 
-      this.createStoryBox(); //CreateStoryBox時會設定director.storyBox
-
       //this.toggleSkip()
       //this.toggleAuto()
 
+  }
+  async init(){
+    this.background = await this.createBackground('park',0)
+    this.storyBox = await this.createStoryBox();
+    return this;
+  }
+  createBackground(key, frame) {
+    var tagPlayer = this.tagPlayer;
+    var background = GetBackground(tagPlayer, 'story');
+    return new Promise(function(resolve, reject){
+      if (!background) {
+        var content = `<bg.story=story,${key},${frame}>`;
+        tagPlayer
+        .playPromise(content)
+        .then(function () {
+            console.log('背景建立完成')
+            background = GetBackground(tagPlayer, 'story');
+            resolve(background);
+        })
+      } else {
+        resolve(background);
+      }
+    })
+  }
+  createStoryBox() {
+    var tagPlayer = this.tagPlayer;
+    var storyBox = GetStoryBox(tagPlayer, 'story');
+    return new Promise(function(resolve, reject){
+      if (!storyBox) {
+        var content = `<text.story=story>`;
+        tagPlayer
+        .playPromise(content)
+        .then(function () {
+            console.log('故事框建立完成')
+            storyBox = GetStoryBox(tagPlayer, 'story');
+            resolve(storyBox);
+        })
+      } else {
+        resolve(storyBox);
+      }
+    })
   }
   save(slotKey, extraData) {
     var curLabel = this.scenario.lastLabel
@@ -71,17 +106,19 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     console.log('save:' + '\n' + saveState)
     this.lsData.set('scenario_save_slot' + slotKey, saveState)
   }
-  load(slotKey) { //slotIdx可以是數字或字串
+  async load(slotKey) { //slotIdx可以是數字或字串
     var saveState = this.lsData.get('scenario_save_slot' + slotKey)
     if (saveState){
       //讀取檔案
       this.coin = saveState.coin;
       this.decisionRecord().remove();
-      this.decisionRecord().insert(saveState.decisionRecord);
+      this.decisionRecord.insert(saveState.decisionRecord);
+      //console.log(this.decisionRecord().stringify())
       //初始化設定
       this.mode_auto = false;
       this.mode_skip = false;
       this.mode_hideUI = false;
+      await this.presetLoad(saveState.label) //讀取此label的預存舞台設定
       this.next(saveState.label);
     } else {
       console.log('scenario_save_slot' + slotKey + ' does not exist')
@@ -118,8 +155,10 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
   }
   async onTagPlayerComplete() {
     //console.log('on tagPlayer complete')
-    if (this.storyBox.visible && this.storyBox.alpha != 0){
-      this.storyBox.clickWaiter.setVisible(true);
+    if (this.storyBox != undefined){ //初始化的時候，tagPlayer.playPromise會用來建立預設物件，此時有可能storyBox和background都不存在
+      if (this.storyBox.visible && this.storyBox.alpha != 0){
+        this.storyBox.clickWaiter.setVisible(true);
+      }
     }
     if (this.mode_auto){
       await Delay(this.getAutoDelayTime());
@@ -170,22 +209,6 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
   }
   getTagPlayerTimeScale() {
     return this.mode_skip?this.defaultSkipTimeScale:1;
-  }
-  createStoryBox() {
-    var tagPlayer = this.tagPlayer;
-    var storyBox = GetStoryBox(tagPlayer, 'story');
-    if (!storyBox) {
-      var content = `<text.story=story>`;
-      tagPlayer
-      .playPromise(content)
-      .then(function () {
-          console.log('故事框建立完成')
-          storyBox = GetStoryBox(tagPlayer, 'story');
-          return storyBox;
-      })
-    } else {
-      return storyBox;
-    }
   }
   清空() {
     this.清除對話();
@@ -238,17 +261,20 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     }
   }
   背景(filename, duration){
-    console.log('背景: ' + filename + ' - ' +duration)
     if (duration === undefined){
       duration = 1000;
     }
-    if (this.background){
-      this.background.transit({
-        key: filename, 
-        frame: 0,
-        duration: duration,
-      });
-    }
+    // var bg = GetBackground(this.tagPlayer, 'story');
+    // bg.transit(filename,0);
+    // debugger
+    var content = ``;
+    //content = content + `<bg.story.setDuration=${duration}>`;
+    content = content + `<bg.story.transit=${filename},0>`;
+    this.tagPlayer.playPromise(content)
+      .then(function(){
+        console.log(content);
+        console.log('背景變化: ' + filename + ' - ' +duration);
+      })
   }
   淡入(duration) {
     duration = duration?duration:1000;
@@ -536,10 +562,51 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
         text.textPlayer.setTypingSpeed(0) //立即完成所有textPlayer
     }
   }
+  presetSave(label) {
+    if (label != undefined){
+      var content = ``;
+      var backgroundTextureKey = this.background.texture.key;
+      var portraitTextureKey = this.storyBox.portrait.texture.key;
+      var allChars = this.tagPlayer.getGameObject('char');
+      for (var key in allChars) {
+          var char = allChars[key];
+  
+          var actorID = char.name;
+          var displayName = char.displayName
+          var expression = char.expression
+          var x = char.vpx
+          var y = char.vpy
+          content = content + `<char.${actorID}=${actorID},${x},${y}>` //建立角色
+          content = content + `<char.${actorID}.setDisplayName=${displayName}>` //設定顯示名稱
+          content = content + `<char.${actorID}.setExpression=${expression}>` //變更立繪
+      }
+      content = content + `<text.story.setPortrait=${portraitTextureKey}>` //變更頭圖
+      content = content + `<bg.story.transit=${backgroundTextureKey}>` //變更頭圖
+      console.log(content);
+      this.lsData.set(`scenario_preset_${label}`, content);
+    }
+  }
+  async presetLoad(nextLabel) {
+    var tagPlayer = this.tagPlayer;
+    var content = this.lsData.get(`scenario_preset_${nextLabel}`); //字串content
+    return new Promise(function(resolve, reject){
+      if (content) {
+        tagPlayer
+        .playPromise(content)
+        .then(function () {
+            console.log('舞台預置完成')
+            resolve();
+        })
+      } else {
+        resolve();
+      }
+    })
+  }
   next(nextLabel) { //啟動
-    this.logData = [];
+    this.logData = []; //每段label結束都清空log
     this.questionIdx = 0;
     nextLabel = nextLabel?nextLabel:this.nextLabel;
+    this.presetSave(nextLabel) //將目前label的舞台走位等資訊存在nextLabel作為預設，待scenario load時可調用
     this.scenario.start({label: nextLabel});
   }
   log(config) {
@@ -605,6 +672,10 @@ var GetActor = function(tagPlayer, actorID){
 
 var GetStoryBox = function(tagPlayer, storyBoxID){
   return tagPlayer.getGameObject('text', storyBoxID);
+}
+
+var GetBackground = function(tagPlayer, backgroundID){
+  return tagPlayer.getGameObject('bg', backgroundID);
 }
 
 var buildCharsData = function(director, decisionRecord){

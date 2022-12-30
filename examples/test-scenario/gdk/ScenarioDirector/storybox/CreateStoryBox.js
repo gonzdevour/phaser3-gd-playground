@@ -35,9 +35,6 @@ class StoryBox extends ContainerLite {
         super(scene, 0, 0, [background, pTextPlayer, nameLabel, clickWaiter]);
         scene.add.existing(this);
 
-        if(storyBoxID == 'story'){
-            scene.scenario.director.storyBox = this; //通用storyBox, tagPlayer代號text.story
-        }
         textPlayer.on('complete', function(){
             this.scenario.isPlayingText = false;
           },scene);

@@ -14,15 +14,20 @@ class Test extends Base { //'#000000'
 
         this.scenario = CreateScenario(this, 600, 300, 800, 600)
         this.scenario.load(this.cache.text.get('story'), this.scenario.director, {timeUnit: 'sec'});
-        this.scenario.director.next('範例');
 
-        var topMostLayer = this.add.layer();
+        var director = this.scenario.director;
+        director.init()
+            .then(function(){
+                director.next('範例')
+            })
+
         var testObj = this.rexUI.add.roundRectangle(200,200,100,100,10,0xff0000);
-        this.layerManager.add('system', testObj);
+        this.layerManager.addToLayer('system', testObj);
         
         this.input.on('wheel', function(){
-            this.children.bringToTop(toast);
-            this.toast.showMessage('歡迎光臨！')
+            this.toast.bake('歡迎光臨！')
+            console.log(this.children.list)
+            this.scenario.director.presetSave();
         },this)
 
     }
