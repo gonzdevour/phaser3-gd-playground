@@ -1,0 +1,21 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "image",
+        "key": "park",
+        "url": "assets/image/park.jpg"
+      },
+      {
+        "type": "image",
+        "key": "woman0",
+        "url": "assets/image/woman0.png"
+      },
+      {
+        "type": "image",
+        "key": "woman1",
+        "url": "assets/image/woman1.png"
+      }
+    ]
+  }
+}

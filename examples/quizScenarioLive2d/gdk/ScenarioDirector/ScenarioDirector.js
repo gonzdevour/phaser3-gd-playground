@@ -361,7 +361,6 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     console.log(content);
     this.tagPlayer.setTimeScale(this.getTagPlayerTimeScale());
     this.tagPlayer.playPromise(content);
- 
 
   }
   旁白(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration, displayName) {
