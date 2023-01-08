@@ -30,8 +30,7 @@ var CreateScenarioDialog = async function(scene, choices, viewport){ //傳入vie
             y: viewport.bottom,
             viewport: viewport,
             //width: scene.game.config.width-50, 
-            //cover: {color:0x0, alpha: 0.3, transitIn(cover, dur){}, transitOut(cover, dur) {},}, //#663030
-            cover: {color:0xff0000, alpha: 0.6}, //#663030
+            cover: {color:0x0, alpha: 0.3, transitIn(cover, dur){}, transitOut(cover, dur) {},}, //#663030
             transitIn: TransitionBT,
             transitOut: TransitionChoicesUpScaleDown,
             duration:{ in: 600, out: 600 },

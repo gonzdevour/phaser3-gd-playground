@@ -1,4 +1,5 @@
 import CreateModalDialog from './CreateModalDialog.js';
+import AddEvent from '../../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddEvent.js';
 
 var ModalDialogPromise = function (scene, config) {
     var dialog = CreateModalDialog(scene, config)
@@ -33,6 +34,13 @@ var ModalDialogPromise = function (scene, config) {
         dialog.viewport = config.viewport;
         scene.vpc.add(dialog, dialog.viewport);
     }
+
+    var scale = scene.scale;
+    AddEvent(dialog, scale, 'resize', function(pointer, localX, localY, event){
+        dialog
+            .setMinWidth(scene.viewport.width-50)
+            .layout()
+    });
 
     return scene.rexUI.modalPromise(dialog, config);
 }

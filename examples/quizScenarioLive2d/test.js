@@ -16,7 +16,7 @@ class Test extends Base { //'#000000'
         var vy = this.viewport.centerY;
         var vw = this.viewport.width;
         var vh = this.viewport.height;
-        this.scenario = CreateScenario(this, vx, vy, vw, vh) //x,y,width,height
+        this.scenario = CreateScenario(this, vx, vy) //x,y,maxWidth,maxHeight
         this.scenario.load(this.cache.text.get('story'), this.scenario.director, {timeUnit: 'sec'});
 
         var director = this.scenario.director;
@@ -25,13 +25,13 @@ class Test extends Base { //'#000000'
                 director.next('範例')
             })
 
-        var testObj = this.rexUI.add.roundRectangle(200,200,100,100,10,0xff0000);
-        this.layerManager.addToLayer('system', testObj);
+        //var testObj = this.rexUI.add.roundRectangle(200,200,100,100,10,0xff0000);
+        //this.layerManager.addToLayer('system', testObj);
         
         this.input.on('wheel', function(){
             this.toast.bake('歡迎光臨！')
-            console.log(this.children.list)
-            this.scenario.director.presetSave();
+            //console.log(this.children.list)
+            //this.scenario.director.presetSave();
         },this)
 
     }

@@ -26,8 +26,11 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       this.mode_hideUI = false;
       this.mode_portrait = true;
 
+      this.backgroundAutoScale = true;
+
       this.initVPX = 0.5; //說話、移動、旁白時如果有指定角色，角色使用的預設vpx
       this.initVPY = 1.2; //說話、移動、旁白時如果有指定角色，角色使用的預設vpy
+      this.defaultActorScale = 1.7;
       this.defaultTypingSpeed = 50;
       this.defaultSkipTimeScale = 5;
       this.defaultAutoDelayTime = 2000;

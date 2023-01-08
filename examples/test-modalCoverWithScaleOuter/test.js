@@ -20,7 +20,7 @@ class Test extends Phaser.Scene {
         var print = this.add.text(0, 0, '').setDepth(1);
         this.rexUI.modalPromise(
             // Game object
-            CreateDialog(this).setPosition(400, 300),
+            CreateDialog(this).setPosition(this.viewport.centerX, this.viewport.centerY),
             // Config
             {
                 cover: {

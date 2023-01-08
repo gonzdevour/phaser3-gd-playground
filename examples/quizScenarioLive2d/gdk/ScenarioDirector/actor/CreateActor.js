@@ -245,10 +245,14 @@ Object.assign(
 );
 
 var CreateActor = function (scene, actorID, x, y) {
+  var director = scene.scenario.director;
   var newActor = new Actor(scene, actorID, x, y);
   newActor.tagPlayer = this;
   //scene.add.existing(newActor); //因為layer.add會將物件放進displayList中並排序，scene.add.exsiting也會，同時使用會導致順序錯亂
   //newActor.changeOrigin(200,200);
+  if (director.defaultActorScale != undefined){
+    newActor.setScale(director.defaultActorScale);
+  }
   return newActor;
 }
 

@@ -25,7 +25,7 @@ var DialogSelect = function (scene, config) {
         }
       },
       //background: CreateRoundRectangleBackground(scene, 20, 'rgba(8, 9, 107, 1)', 0xffffff, 2, 'rgba(8, 9, 107, 0.5)'), //#ffffff, 漸層背景
-      extraConfig: Object.assign({},{expand:{title:false,content:false,choices:true}},GetValue(config,'extraConfig',{}))
+      extraConfig: Object.assign({},{expand:{title:false,content:false,choices:false}},GetValue(config,'extraConfig',{}))
     }
     addBehaviors(dialogConfig.choices, ['ninja']);
   

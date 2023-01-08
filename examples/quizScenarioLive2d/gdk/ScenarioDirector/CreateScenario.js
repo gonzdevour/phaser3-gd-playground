@@ -8,13 +8,13 @@ import CreateActor from "./actor/CreateActor.js";
 import CreateStoryBox from "./storybox/CreateStoryBox.js";
 import CreateBackground from "./background/CreateBackground.js";
 
-var CreateScenario = function(scene, x, y, width, height){
+var CreateScenario = function(scene, x, y, maxWidth, maxHeight){
   //scenario
   scene.scenario = new CSVScenario(scene)
   scene.scenario.isPlayingText = false;
   scene.scenario.director = new ScenarioDirector(scene, {
       scenario: scene.scenario,
-      viewport: CreateScenarioViewport(scene, x, y, width, height),
+      viewport: CreateScenarioViewport(scene, x, y, maxWidth, maxHeight),
       tagPlayer: new TagPlayer(scene ,{
           texts: false,  //關閉預設物件
           sprites: false,//關閉預設物件

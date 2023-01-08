@@ -1,4 +1,5 @@
 import CreateControllButtons from "./CreateControllButtons.js";
+import AddEvent from "../../../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddEvent.js";
 
 var CreateControllPanel = function(scene, director, viewport){
 
@@ -28,9 +29,12 @@ var CreateControllPanel = function(scene, director, viewport){
             .layout()
             //.drawBounds(panel.debugGraphics, 0x00ff00)
     });
-
-    scene.scale.on('resize', UpdatePanel);
     UpdatePanel();
+
+    var scale = scene.scale;
+    AddEvent(panel, scale, 'resize', function(pointer, localX, localY, event){
+        UpdatePanel();
+    });
 
     return panel;
 }
