@@ -8,10 +8,12 @@ import { WaitEvent } from "../../../../phaser3-rex-notes/plugins/eventpromise";
 var actionsBeforeDialogClose = async function(scene, button, dialog, result){
   flash(button);
   await Delay(1000);
-  var textPlayer = scene.textPlayer;
-  textPlayer.character.timeScale = 1.5;
-  textPlayer.character.setExpression('F06').stopAllMotions().startMotion('TapBody', 0, 'force')
-  await textPlayer.playPromise(textPlayer.question['Say' + GetValue(result, 'singleSelectedName', 1) ]+'[wait=500]')
+  var qMaster = scene.qMaster;
+  var textPlayer = qMaster.textPlayer;
+  var char = qMaster.char;
+  char.timeScale = 1.5;
+  char.setExpression('F06').stopAllMotions().startMotion('TapBody', 0, 'force')
+  await textPlayer.playPromise(qMaster.question['Say' + GetValue(result, 'singleSelectedName', 1) ]+'[wait=500]')
   //中途加入nextQbutton的兩個方法：
   //方法1:
   // var btnNext = scene.rexUI.add.label({x:200, y:200, icon:scene.add.image(0,0,'yes')})

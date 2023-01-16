@@ -1,5 +1,6 @@
 import Boot from "../scenes/Boot";
-import Test from '../test.js';
+import Home from "../scenes/Home";
+//import Test from '../test.js';
 
 import AllPlugins from '../../../plugins/AllPlugins.js';
 import AppLang from "../../../plugins/utils/language/AppLang";
@@ -13,10 +14,10 @@ var DefaultAppConfig = {
     appID: 'demo',
     width: 768,
     height: 1334,
-    scenes: [Boot, Test],
+    scenes: [Boot, Home],
     sceneKey: {
         Boot: 'Boot',
-        Home: 'test',
+        Home: 'Home',
     },
     layers: ['bg','main','scenario_stage','scenario_story','scenario_choices','scenario_ui','ui','dialog','system'],
     assets: {
@@ -30,6 +31,10 @@ var DefaultAppConfig = {
                 key:'dataChar',
                 url:'https://docs.google.com/spreadsheets/d/e/2PACX-1vTVH0ovFueknTvQVLeui-v7BzWilg__WAHtaCJpnojaTUnGLj_fCPJuJn5RlvAAk6nE4SftO0Ju_f_W/pub?gid=522351148&single=true&output=csv', 
             },
+            { 
+                key:'story',
+                url:'https://docs.google.com/spreadsheets/d/e/2PACX-1vTVH0ovFueknTvQVLeui-v7BzWilg__WAHtaCJpnojaTUnGLj_fCPJuJn5RlvAAk6nE4SftO0Ju_f_W/pub?gid=1513197210&single=true&output=csv', 
+            },
         ],
     },
     scaleMode: Phaser.Scale.RESIZE,
@@ -37,7 +42,7 @@ var DefaultAppConfig = {
     plugins: AllPlugins,
     style: style,
     IfCleanStorage: false,
-    cors: window.location.hostname == 'localhost'?'https://cors-anywhere-playone.herokuapp.com/':'',
+    cors: window.location.hostname == 'localhost'?'https://cors-anywhere.herokuapp.com/':'',
     iapValidatorLink: "https://validator.fovea.cc/v1/validate?appName=com.playone.cp&apiKey=6b024545-4f20-4c11-9848-a30a9682823c",
     tableToJSONKeyHeader: 'tb.',
     rttimerToJSONKey: 'rtt',

@@ -67,9 +67,6 @@ var CreateScenario = function(scene, x, y, maxWidth, maxHeight){
     .on('wait.choose', function (scenario) {
       scenario.scope.choicePop();
     })
-    .on('complete', function () {
-      scenario.scope.onScenarioComplete();
-    })
   
   var controllPanel = CreateControllPanel(scene, director, viewport);
   director.controllPanel = controllPanel;

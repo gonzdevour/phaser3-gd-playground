@@ -1,8 +1,6 @@
 var CreateChar = function(scene, mocName){
-    var modelSizeRatio = 0.85*scene.viewport.height/2688;
-    var xAdd = scene.viewport.portrait?300:0;
-    var character = scene.add.rexLive2d(scene.viewport.displayLeft+xAdd, scene.viewport.displayBottom-250, mocName)
-        .setScale(modelSizeRatio)
+
+    var character = scene.add.rexLive2d(0, 0, mocName)
         .setExpression('F01')
         .startMotion('Idle', 0, 'idle')
         .on('expression.start', function (name) {

@@ -7,12 +7,12 @@ import RegisterBehaviors from "../../behaviors/RegisterBehaviors";
 import GetValue from "../../../../../plugins/utils/object/GetValue";
 import Shuffle from "../../../../../plugins/utils/array/Shuffle";
 
-var DialogSelect = function (scene, config) {
+var DialogSelectScenario = function (scene, config) {
     var dialogConfig =  {
-      name: 'DialogSelect',
+      name: 'DialogSelectScenario',
       //title: CreateTitle(scene, GetValue(config, 'title', undefined)),
       //content: CreateContent(scene, GetValue(config, 'content', undefined)),
-      choicesBackground: CreateRoundRectangleBackground(scene, 20, undefined, 0x9e9e9e, 3), //'#140c44''#4f5b62',
+      //choicesBackground: CreateRoundRectangleBackground(scene, 20, undefined, 0x9e9e9e, 3), //'#140c44''#4f5b62',
       choices: CreateChoices(scene, GetValue(config, 'choicesData', [])),
       choicesType: 'y-radio',
       choicesSetValueCallback: function (button, value) {
@@ -58,6 +58,7 @@ var CreateButton = function (scene, config) {
         icon: config.imageKey?scene.add.image(0, 0, config.imageKey).setDisplaySize(90, 90):undefined,
         text: config.text?scene.rexUI.add.BBCodeText(0, 0, config.text, config.textStyle?config.textStyle:{ fontFamily: Style.fontFamilyName, fontSize: 60 }):undefined,
         space: config.spaceSettings?config.spaceSettings:{},
+        align: config.align?config.align:'center',
     });
     //註冊pointer特效
     RegisterBehaviors(label, GetValue(config, 'behavior', []))
@@ -94,6 +95,7 @@ var CreateChoices = function(scene, choicesData){
                 width: scene.viewport.width*0.8,
             }
         }
+        item.align = 'center'
         item.background = CreateRoundRectangleBackground(scene, 20, 0x002f6c, 0xffffff, 4); //#002f6c
         item.behavior = ['ninja'];
         item.closeDialog = true;
@@ -135,4 +137,4 @@ var CreateChoices = function(scene, choicesData){
     return btnArrSizerd;
 }
 
-export default DialogSelect;
+export default DialogSelectScenario;

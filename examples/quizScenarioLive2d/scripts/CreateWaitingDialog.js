@@ -2,19 +2,20 @@
 import { DialogSelect } from '../gdk/modaldialog/DialogType';
 import { DialogMultiSelect } from '../gdk/modaldialog/DialogType';
 import { TransitionChoicesUpScaleDown } from '../gdk/modaldialog/TransistionType.js';
-import { TransitionBT } from '../gdk/modaldialog/TransistionType.js';
+import { TransitionBTAlignBottom } from '../gdk/modaldialog/TransistionType.js';
 import dialogButtonClickCallback from '../gdk/modaldialog/dialogButtonClickCallback.js';
 //proj
 import actionsBeforeDialogClose from './actionsBeforeDialogClose';
 
 //dialog與textplayer演出
 
-var CreateWaitingDialog = async function(textPlayer){
-    var scene = textPlayer.scene;
-    var question = textPlayer.question;
-    var character = textPlayer.character;
-    character.timeScale = 1;
-    character.setExpression('F01').startMotion('Idle', 0, 'force')
+var CreateWaitingDialog = async function(qMaster){
+    var scene = qMaster.scene;
+    var question = qMaster.question;
+    var char = qMaster.char;
+    var textPlayer = qMaster.textPlayer;
+    char.timeScale = 1;
+    char.setExpression('F01').startMotion('Idle', 0, 'force')
     await textPlayer.playPromise(question['Q']);
     //choicesData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
     var result = await DialogSelect(scene, {
@@ -32,8 +33,8 @@ var CreateWaitingDialog = async function(textPlayer){
             x: scene.viewport.centerX,
             y: scene.viewport.bottom,
             width: scene.game.config.width-50, 
-            cover: {color:0x663030, alpha: 0.1},
-            transitIn: TransitionBT,
+            cover: {color:0x663030, alpha: 0.1}, //#663030
+            transitIn: TransitionBTAlignBottom,
             transitOut: TransitionChoicesUpScaleDown,
             duration:{ in: 600, out: 1400 },
             dialogButtonClickCallback: dialogButtonClickCallback, //通用流程處理後回傳result: buttonType, choicesState, singleSelectedName

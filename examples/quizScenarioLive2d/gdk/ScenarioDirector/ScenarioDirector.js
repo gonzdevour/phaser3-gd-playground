@@ -57,7 +57,6 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
   async init(){
     this.background = await this.createBackground('park',0)
     this.storyBox = await this.createStoryBox();
-    return this;
   }
   createBackground(key, frame) {
     var tagPlayer = this.tagPlayer;
@@ -161,7 +160,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     content = content + `</char>`;
     this.tagPlayer.playPromise(content)
       .then(function(){
-        console.log('scenario complete')
+        //console.log('scenario tagPlayer complete')
       })
   }
   async onTagPlayerComplete() {
@@ -541,7 +540,6 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
         scenario.continue('choose');
     }
     dialog();
-    return this;
   }
   choiceExec(value) { //執行選擇結果
     var out = dataMap(this, value); //重新整理傳入資料，例如：[{"Jade":-1},{"Spring":2}] → dataMap → {{Jade好感: -1},{Spring好感: 2}}
@@ -612,7 +610,27 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       }
     })
   }
-  next(nextLabel) { //啟動
+  async start(label) { //啟動
+    var director = this;
+    var scenario = this.scenario;
+    return director.init()
+      .then(function(){
+          return scenario.playPromise({label:label})
+      })
+      .then(function(){
+          return director.onScenarioComplete()
+      })
+  }
+  async close() { //停止
+    var director = this;
+    var scenario = this.scenario;
+    var tagPlayer = this.tagPlayer;
+    tagPlayer.pause();
+    scenario.pause();
+    scenario.emit('complete');
+    return director.onScenarioComplete()
+  }
+  next(nextLabel) { //前往下一章節
     this.controllPanel.setVisible(true);
     this.logData = []; //每段label結束都清空log
     this.questionIdx = 0;

@@ -1,0 +1,215 @@
+import ContainerLite from "../../../../phaser3-rex-notes/plugins/containerlite";
+import TextPlayer from "../../../../phaser3-rex-notes/plugins/textplayer";
+import CreateChar from './CreateChar';
+import AutoRemoveTween from '../../../../phaser3-rex-notes/plugins/utils/tween/AutoRemoveTween';
+import AddEvent from "../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddEvent";
+
+class qMaster extends ContainerLite {
+    constructor(scene, masterID, vpx, vpy, width, height) {
+
+        if(vpx == undefined){vpx = 0.5};
+        if(vpy == undefined){vpy = 1};
+        if(width == undefined){width = scene.scenario.director.viewport.width*0.95};
+        if(height == undefined){height = scene.scenario.director.viewport.height*0.3};
+
+        var textPlayer = CreateTextplayer(scene);
+        var clickWaiter = createClickWaiter(scene, textPlayer.x + 0.5*textPlayer.width - 40, textPlayer.y + 0.5*textPlayer.height - 95)
+        var char = CreateChar(scene, 'Haru');
+        char.lipTween = scene.tweens.add({
+            targets: char,
+            lipSyncValue: {from:0, to:1},
+            ease: 'Linear',
+            //duration: textPlayer.typingSpeed,
+            duration: 150,
+            yoyo: true,
+            paused: true,
+        });
+        super(scene, 0, 0, [textPlayer, clickWaiter, char]);
+        scene.add.existing(this);
+        this.setVisible(false);
+
+        //textPlayer事件與char、clickWaiter的互動
+        textPlayer
+            .on('wait.timeout', function(Callback){ //custom tag的範例
+                var waitTime = async function(ms){
+                    await new Promise(resolve => setTimeout(resolve, ms));
+                    Callback();
+                }
+                waitTime(2000);
+            })
+            .on('page.start', function() {
+                //console.log('typingSpeed: ' + textPlayer.typingSpeed)
+                textPlayer.popTween.play();
+                textPlayer.setTypingSpeed(100);
+                clickWaiter.setVisible(false);
+            })
+            .on('wait.click', function() {
+                console.log('wait click')
+                clickWaiter.setVisible(true);
+            })
+            .on('typing', function(child) {
+                if (child.type === 'text') {
+                    char.lipTween.play();
+                }
+            })
+            .on('complete', function() {
+                textPlayer.popTween.stop();
+                char.lipTween.stop();
+                char.lipSyncValue = 0;
+            })
+
+        var updateDisplay = function(){
+            //取得resize後的viewport狀態
+            var v = scene.viewport;
+            var vw = v.width;
+            var vh = v.height; 
+            v.portrait = vh>vw?true:false;
+            v.landscape = vh>vw?false:true; 
+            var widthRatio = 1.6;   
+            v.displayWidth = vw>vh?(vh/widthRatio):vw;
+            v.displayHeight = vh;
+            v.displayLeft = v.centerX - 0.5*v.displayWidth;
+            v.displayRight = v.centerX + 0.5*v.displayWidth;
+            v.displayTop = v.centerY - 0.5*v.displayHeight;
+            v.displayBottom = v.centerY + 0.5*v.displayHeight;
+    
+            //重設live2D角色位置與大小
+            var modelSizeRatio = 0.85*scene.viewport.height/2688;
+            var xAdd = vh>vw?300:0; //如果是豎版，x要調整
+            char
+                .setPosition(scene.viewport.displayLeft+xAdd, scene.viewport.displayBottom-250)
+                .setScale(modelSizeRatio)
+        }
+    
+        var scale = scene.scale;
+        AddEvent(scene, scale, 'resize', function(pointer, localX, localY, event){
+            updateDisplay();
+        });
+
+        //加入layer與vpc控制
+        scene.layerManager.addToLayer('main', this);
+        scene.vpc.add(this, scene.scenario.director.viewport, vpx, vpy);
+
+        updateDisplay(); //必須放在vpc add之後才會正常運作
+
+        this.scene = scene;
+        this.textPlayer = textPlayer;
+        this.clickWaiter = clickWaiter;
+        this.char = char;
+
+        this.question = ''; //question屬性會由quizPromise使用
+    }
+}
+
+var CreateTextplayer = function(scene){
+    var Cubic = Phaser.Math.Easing.Cubic.Out;
+    var Linear = Phaser.Math.Linear;
+    var textPlayer = new TextPlayer(scene,
+        {
+            x: scene.viewport.centerX+5, y: scene.viewport.top+200+25,
+            width: scene.viewport.displayWidth-50, height: 400,  // Fixed width and height
+
+            background: { 
+                stroke: 'white', strokeThickness: 6, cornerRadius: 20, 
+                color: 'rgba(8, 9, 107, 1)', color2: 'rgba(8, 9, 107, 0.5)', horizontalGradient: true, 
+            }, //rgba(8, 9, 107, 0.2)
+
+            //innerBounds: { stroke: '#A52A2A' },
+            padding: {left: 40, right: 40, top: 20, bottom: 20},
+            style: {
+                fontSize: '48px',
+                stroke: 'green', strokeThickness: 3,
+                shadowColor: 'red', shadowOffsetX: 5, shadowOffsetY: 5, shadowBlur: 3
+            },
+            typing: {
+                speed: 100,  // 0: no-typing
+                animation: {
+                    duration: 300,
+                    yoyo: true,
+                    onStart: function (char) {
+                        char
+                            .setVisible()
+                            .setData('y', char.y);
+                    },
+                    onProgress: function (char, t) {
+                        var p0 = char.getData('y');
+                        var p1 = p0 - 20;
+                        var value = Linear(p0, p1, Cubic(t));
+                        char.setY(value);
+                    }
+                }
+            },
+            clickTarget: null, //如果要自訂就填null再用setClickTarget設定
+            wrap: { charWrap: true, maxLines: 5, padding: { bottom: 10 }, },
+            nextPageInput: 'click|2000'
+            // nextPageInput: function(callback) {
+            //     console.log('Custom next-page-input')
+            //     callback();
+            // }
+        }
+    )
+
+    //在scene上畫出inst
+    scene.add.existing(textPlayer);
+    textPlayer.angle = -2;
+
+    //對話框彈出效果
+    textPlayer.popTween = scene.tweens.add({
+        targets: textPlayer,
+        x: {from:textPlayer.x-20, to:textPlayer.x},
+        y: {from:textPlayer.y+20, to:textPlayer.y},
+        alpha: {from: 0, to:1},
+        ease: 'cubic',
+        //duration: textPlayer.typingSpeed,
+        duration: 500,
+        paused: true,
+    });
+
+    textPlayer.backTween = scene.tweens.add({
+        targets: textPlayer,
+        x: '-=20',
+        y: '+=20',
+        alpha: 0,
+        ease: 'cubic',
+        duration: 500,
+        paused: true,
+    });
+
+    //指定click target
+    textPlayer.setClickTarget(scene.toucharea);
+    textPlayer.clickTarget.onClick(function () {
+        if (!textPlayer.isPlaying) {
+            return;
+        }
+
+        if (textPlayer.isPageTyping) {
+            textPlayer.setTypingSpeed(0);
+        } else {
+            textPlayer.typingNextPage();
+        }
+    })
+
+    return textPlayer
+}
+
+var createClickWaiter = function(scene, x, y){
+    //對話斷點的三角形特效
+    var clickWaiter = scene.add.triangle(x, y, 0, 36, 36, 36, 18, 72, 0xffffff).setVisible(false); //#ffffff
+    clickWaiter.tween = AutoRemoveTween(clickWaiter, {
+        y: '+=10',
+        ease: 'Linear',
+        duration: 500,
+        yoyo: true,
+        repeat: -1,
+        //paused: true,
+    })
+
+    return clickWaiter
+}
+
+var CreateQMaster = function (scene, masterID, vpx, vpy, width, height) {
+    var master = new qMaster(scene, masterID, vpx, vpy, width, height);
+    return master;
+  }
+
+export default CreateQMaster;

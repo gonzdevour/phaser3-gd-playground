@@ -1,5 +1,5 @@
 //gdk
-import { DialogSelect } from './DialogType';
+import { DialogSelectScenario } from './DialogType';
 import { TransitionChoicesUpScaleDown } from './TransistionType.js';
 import { TransitionBT } from './TransistionType.js';
 import dialogButtonClickCallback from './dialogButtonClickCallback.js';
@@ -14,7 +14,7 @@ var CreateScenarioDialog = async function(scene, choices, viewport){ //傳入vie
     if (viewport == undefined){
         viewport = scene.viewport; //如果沒有viewport就以scaleOuter為viewport
     }
-    var result = await DialogSelect(scene, {
+    var result = await DialogSelectScenario(scene, {
         //title: 'test title', 
         //content: 'test content', 
         actions: [

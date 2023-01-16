@@ -1,5 +1,5 @@
 import CSVToHashTable from '../../../../phaser3-rex-notes/plugins/csvtohashtable.js';
-import { DefaultAppConfig } from '../DefaultData.js';
+import { DefaultAppConfig } from '../settings/DefaultData.js';
 //proj
 import CreateQuiz from './CreateQuiz.js';
 import CreateWaitingDialog from './CreateWaitingDialog.js';
@@ -58,14 +58,14 @@ var resultHandler = function(result, curQ, tbIntroHeroes){
 
 //quiz流程
 
-var QuizPromise = async function (textPlayer, quizArr, out) {
+var QuizPromise = async function (qMaster, quizArr, out) {
   var curQIdx = 0;
   var lastQIdx = quizArr.length;
   while (curQIdx !== lastQIdx) { //如果不是最後一題
       var curQ = quizArr[curQIdx]
-      var result = await TextPlayerPromise(textPlayer, curQ);//清理上一題，將下一題與textPlayer組合起來，回傳上一題作答結果
+      var result = await TextPlayerPromise(qMaster, curQ);//清理上一題，將下一題與qMaster組合起來，回傳上一題作答結果
       out = resultHandler(result, curQ, out);
-      //await QuizResultModalPromise(textPlayer.scene, result); //顯示上一題作答結果(傳入scene和config給彈出面板Modal)
+      //await QuizResultModalPromise(qMaster.scene, result); //顯示上一題作答結果(傳入scene和config給彈出面板Modal)
       if (out.ifAskAgain === false){ //是否要重問同一題
           curQIdx++;
       }
@@ -74,24 +74,25 @@ var QuizPromise = async function (textPlayer, quizArr, out) {
   return out;
 }
 
-var TextPlayerPromise = function (textPlayer, question) { //清理上一題，並將quiz吐出的新question與textPlayer組合起來
+var TextPlayerPromise = function (qMaster, question) { //清理上一題，並將quiz吐出的新question與qMaster組合起來
   return new Promise(function (resolve, reject) {
-      SetupTextPlayer(textPlayer, question, function (result) {
+      SetupTextPlayer(qMaster, question, function (result) {
           resolve(result); //回傳作答結果
       })
   });
 }
 
-var SetupTextPlayer = async function (textPlayer, question, onSubmit) { //清理上一題，並將新題目與panel組合起來，以作答callback回傳給QuizPromise
-  textPlayer.question = question;
-  var result = await CreateWaitingDialog(textPlayer);
+var SetupTextPlayer = async function (qMaster, question, onSubmit) { //清理上一題，並將新題目與panel組合起來，以作答callback回傳給QuizPromise
+  qMaster.question = question;
+  var result = await CreateWaitingDialog(qMaster);
   if (onSubmit) { //如果有傳入callback function
       onSubmit(result); //呼叫callback，完成QuizPanelPromise，讓QuizPromise吐出next question循環
   }
-  return textPlayer;
+  return qMaster;
 }
 
-var result = async function(scene, textPlayer, tbOut){
+var result = async function(scene, qMaster, tbOut){
+    var textPlayer = qMaster.textPlayer;
     textPlayer.backTween.play();
     var cardText = {
         name: tbOut.get(tbOut.curChampKey, 'name'),
@@ -107,14 +108,14 @@ var result = async function(scene, textPlayer, tbOut){
         imgKey: 'resultHero',
         url: DefaultAppConfig.cors + imgUrl
     })
-    textPlayer.height = 200;
-    textPlayer.y = textPlayer.y -200;
+    //textPlayer.height = 200;
+    //textPlayer.y = textPlayer.y -200;//用了這兩條之後不知為何原本的padding top會跑掉
     await textPlayer.playPromise('您的獸魂鑒定結果是：')
 }
 
 //執行quiz
 
-var StartQuiz = function(scene, textPlayer){
+var StartQuiz = async function(scene, qMaster){
   //建立測試結果列表資料
   var tbIntroHeroes = new CSVToHashTable().loadCSV(scene.cache.text.get('introHeroes'));
   //console.log(tbIntroHeroes.get('12', 'name'))//測試CSVToHashTable是否讀取成功
@@ -127,10 +128,9 @@ var StartQuiz = function(scene, textPlayer){
   })
 
   //啟動問答
-  QuizPromise(textPlayer, quizArr, tbIntroHeroes)
+  return QuizPromise(qMaster, quizArr, tbIntroHeroes)
   .then(function(tbOut){
-    result(scene, textPlayer, tbOut)//問答結束
-
+    return result(scene, qMaster, tbOut)//問答結束
   })
 }
 

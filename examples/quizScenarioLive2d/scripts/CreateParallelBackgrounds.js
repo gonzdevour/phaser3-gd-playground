@@ -1,5 +1,5 @@
 var CreateParallelBackgrounds = function(scene, x, y, SetKey, SetMaxIndex){
-  var rect = scene.add.image(x,y, 'rect').setDisplaySize(4200,2000);
+  var rect = scene.add.image(x,y, 'rect').setDisplaySize(4200,2000).setVisible(false);
   var mask = rect.createBitmapMask();
   var bgSet = [];
   for (let index = SetMaxIndex; index >= 0; index--) {

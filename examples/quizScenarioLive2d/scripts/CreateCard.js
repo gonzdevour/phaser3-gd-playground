@@ -13,13 +13,18 @@ import DrawToTexture from '../../../plugins/utils/image/DrawToTexture.js';
 
 //測試外部讀取image(似乎必須透過cors-anywhere)
 var loadOnlineImagePromise = async function(scene, config){
-    var x = GetValue(config, 'x', 0);
-    var y = GetValue(config, 'y', 0);
+
     var imgKey = GetValue(config, 'imgKey', undefined);
-    var cardInfoText = GetValue(config, 'text', '');
     var url = GetValue(config, 'url', undefined);
     var progressUI = CreateKnob(scene).layout();
-    await loadImageFromUrl(scene, imgKey, url, LoadingProgress, progressUI, 1000);
+    await loadImageFromUrl(scene, imgKey, url, LoadingProgress, progressUI, 1000).then(function(result){
+        var loadImageResult = result;
+        debugger
+    });
+
+    var x = GetValue(config, 'x', 0);
+    var y = GetValue(config, 'y', 0);
+    var cardInfoText = GetValue(config, 'text', '');
 
     var card = scene.add.rexPerspectiveCard({
         x:x,

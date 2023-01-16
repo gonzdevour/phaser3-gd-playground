@@ -294,9 +294,9 @@ var CreateTextPlayer = function(scene, x, y, width, height){
                 }
             },
             clickTarget: null, //如果要自訂就填null再用setClickTarget設定
-            wrap: { charWrap: true, maxLines: 5, padding: { bottom: 10 }, lineHeight: 48, },
+            wrap: { charWrap: true, padding: { bottom: 10 }, lineHeight: 48, },
 
-            nextPageInput: 'click|1000'
+            nextPageInput: 'click|2000'
             // nextPageInput: function(callback) {
             //     console.log('Custom next-page-input')
             //     callback();
@@ -422,6 +422,6 @@ var CreateStoryBox = function (scene, storyBoxID, vpx, vpy, width, height) {
             //storyBox.textPlayerClose();
         })
     return storyBox;
-  }
+}
 
 export default CreateStoryBox;

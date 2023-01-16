@@ -32,6 +32,12 @@ var ModalDialogPromise = function (scene, config) {
 
     if(config.viewport){
         dialog.viewport = config.viewport;
+    } else {
+        if (scene.viewport){
+            dialog.viewport = scene.viewport;
+        }
+    } 
+    if (dialog.viewport){
         scene.vpc.add(dialog, dialog.viewport);
     }
 
