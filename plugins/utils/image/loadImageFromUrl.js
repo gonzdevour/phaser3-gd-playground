@@ -6,13 +6,13 @@ var loadImageFromUrl = function (scene, key, url, LoadingProgress, progressUI, p
         loadSuccess = function (key, type, data) {
             console.log('load online image ' + key + ' complete');
             onComplete();
-            resolve();
+            resolve('success');
         }
 
         loadError = function (fileObj) {
             console.log('load online image ' + key + ' failed');
             onComplete();
-            resolve();
+            resolve('error');
         }
 
         onComplete = function () {

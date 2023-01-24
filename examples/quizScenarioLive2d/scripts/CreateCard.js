@@ -17,10 +17,7 @@ var loadOnlineImagePromise = async function(scene, config){
     var imgKey = GetValue(config, 'imgKey', undefined);
     var url = GetValue(config, 'url', undefined);
     var progressUI = CreateKnob(scene).layout();
-    await loadImageFromUrl(scene, imgKey, url, LoadingProgress, progressUI, 1000).then(function(result){
-        var loadImageResult = result;
-        debugger
-    });
+    var loadImageResult = await loadImageFromUrl(scene, imgKey, url, LoadingProgress, progressUI, 1000) //success, error判斷是否讀取成功
 
     var x = GetValue(config, 'x', 0);
     var y = GetValue(config, 'y', 0);
@@ -145,12 +142,14 @@ var CreateCard = async function(scene, config){
         text: GetValue(config, 'text', {description: 'Unknown Runes'}),
         url: GetValue(config, 'url', undefined)
     })
-    await Delay(4000);
+    //await Delay(4000);
 
     //建立卡背的旋轉光效
     var lightball = scene.add.image(centerX, centerY, 'lightball1')//.setBlendMode(Phaser.BlendModes.ADD);
+
     card.moveDepthBelow(lightball) //因為card是containerlite所以要用moveDepthBelow做群組移動
-    scene.children.moveBelow(lightball, card)
+    //scene.children.moveBelow(lightball, card)
+
     scene.tweens.timeline({
         targets: lightball,
         repeat: -1,
@@ -237,8 +236,14 @@ var CreateCard = async function(scene, config){
             slash.setVisible(true);
         });
 
+    //結合卡片與特效
+    var cardwithLight = scene.rexUI.add.container(centerX, centerY);
+    cardwithLight.addMultiple([lightball, card, slash]);
+    //加入layer與vpc控制
+    scene.layerManager.addToLayer('main', cardwithLight);
+    scene.vpc.add(cardwithLight, scene.scenario.director.viewport);
 
-    return card;
+    return cardwithLight;
 }
 
 export default CreateCard;

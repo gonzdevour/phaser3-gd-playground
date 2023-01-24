@@ -83,17 +83,25 @@ var TextPlayerPromise = function (qMaster, question) { //清理上一題，並�
 }
 
 var SetupTextPlayer = async function (qMaster, question, onSubmit) { //清理上一題，並將新題目與panel組合起來，以作答callback回傳給QuizPromise
-  qMaster.question = question;
-  var result = await CreateWaitingDialog(qMaster);
-  if (onSubmit) { //如果有傳入callback function
-      onSubmit(result); //呼叫callback，完成QuizPanelPromise，讓QuizPromise吐出next question循環
-  }
-  return qMaster;
+    qMaster.question = question;
+    var result = await CreateWaitingDialog(qMaster);
+
+    //   //測試用，不執行create dialog
+    //   var result = { 
+    //     buttonType: undefined, //button.type, //如果是clear則會清空choiceState
+    //     choicesState: true, //choicesState, //states : {name: boolean} 此Name是否被選中
+    //     singleSelectedName: 1, //singleSelectedName, //singleSelectedName從1開始，1234
+    //   }
+
+    if (onSubmit) { //如果有傳入callback function
+        onSubmit(result); //呼叫callback，完成QuizPanelPromise，讓QuizPromise吐出next question循環
+    }
+    return qMaster;
 }
 
 var result = async function(scene, qMaster, tbOut){
-    var textPlayer = qMaster.textPlayer;
-    textPlayer.backTween.play();
+    qMaster.quiet() //textPlayer收回
+
     var cardText = {
         name: tbOut.get(tbOut.curChampKey, 'name'),
         slogan: tbOut.get(tbOut.curChampKey, 'slogan'),
@@ -101,16 +109,19 @@ var result = async function(scene, qMaster, tbOut){
         description: tbOut.get(tbOut.curChampKey, 'description')
     }
     var imgUrl = 'https://playoneapps.com.tw/File/Stand/Hero/image0' + tbOut.get(tbOut.curChampKey, 'img') + '.png';
-    var card = await CreateCard(scene, {
+
+    //建立卡片
+    var cardwithLight = await CreateCard(scene, {
         x: scene.viewport.centerX,
         y: scene.viewport.centerY,
         text: cardText,
         imgKey: 'resultHero',
         url: DefaultAppConfig.cors + imgUrl
     })
+
     //textPlayer.height = 200;
     //textPlayer.y = textPlayer.y -200;//用了這兩條之後不知為何原本的padding top會跑掉
-    await textPlayer.playPromise('您的獸魂鑒定結果是：')
+    await qMaster.say('您的獸魂鑒定結果是：')
 }
 
 //執行quiz

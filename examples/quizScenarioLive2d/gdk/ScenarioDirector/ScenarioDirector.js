@@ -56,7 +56,9 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
   }
   async init(){
     this.background = await this.createBackground('park',0)
-    this.storyBox = await this.createStoryBox();
+    this.storyBox = await this.createStoryBox()
+    this.background.setVisible(false);
+    this.storyBox.setVisible(false);
   }
   createBackground(key, frame) {
     var tagPlayer = this.tagPlayer;
@@ -127,7 +129,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     }
   }
   onClick() { //接收在clickArea上的任何點擊(排除上方的buttons)
-    console.log('clickArea clicked')
+    console.log('scenario clickArea clicked')
     if (this.mode_hideUI){
       this.showUI();
     } else {
@@ -151,30 +153,6 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
   }
   onScenarioLog(msg) {
     console.log('sLog: ' + msg)
-  }
-  async onScenarioComplete() {
-    this.controllPanel.setVisible(false);
-    var content = ``;
-    content = content + `</bg>`;
-    content = content + `</text>`;
-    content = content + `</char>`;
-    this.tagPlayer.playPromise(content)
-      .then(function(){
-        //console.log('scenario tagPlayer complete')
-      })
-  }
-  async onTagPlayerComplete() {
-    //console.log('on tagPlayer complete')
-    if (this.storyBox != undefined){ //初始化的時候，tagPlayer.playPromise會用來建立預設物件，此時有可能storyBox和background都不存在
-      if (this.storyBox.visible && this.storyBox.alpha != 0){
-        this.storyBox.clickWaiter.setVisible(true);
-      }
-    }
-    if (this.mode_auto){
-      await Delay(this.getAutoDelayTime());
-      console.log('scenario auto continue click')
-      this.scenario.continue('click');
-    }
   }
   onWaitClick(waiterName, lastScenarioCmd) {
     console.log(waiterName + ' on wait click - ' + lastScenarioCmd)
@@ -295,14 +273,20 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     console.log('音效: ' + filename)
     this.scene.audio.play(filename);
   }
+  震動(sec, intensity) { //預設強度0.05
+    var ms = sec*1000;
+    intensity = intensity<1?intensity:0.05;
+    console.log(`震動${sec}秒 (強度：${intensity})`)
+    this.camera.shake(ms, intensity)
+  }
   選項(text, value) {
     var choice = {text: text, value: yaml.load(value)}
     this.choices.push(choice);
   }
   移動(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration, displayName) {
-    actorID = mustache.render(actorID, this.mtView);
+    actorID = mustache.render(String(actorID), this.mtView);
     if(displayName){
-      displayName = mustache.render(displayName, this.mtView);
+      displayName = mustache.render(String(displayName), this.mtView);
     } else {
       displayName = actorID
     }
@@ -366,7 +350,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
 
   }
   旁白(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration, displayName) {
-    actorID = mustache.render(actorID, this.mtView);
+    actorID = mustache.render(String(actorID), this.mtView);
     var logType = '';
     if(displayName){
       if(actorID == 'Host'){
@@ -374,12 +358,12 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       } else {
         logType = 'actor';
       }
-      displayName = mustache.render(displayName, this.mtView);
+      displayName = mustache.render(String(displayName), this.mtView);
     } else {
       logType = 'story';
       displayName = actorID
     }
-    serif = mustache.render(serif, this.mtView);
+    serif = mustache.render(String(serif), this.mtView);
     
     var actorData = this.tb_Char.table[actorID] //取得actorData不需要actor存在畫面上
     var actorColor = GetValue(actorData, 'nameColor', 333333)
@@ -422,14 +406,14 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     this.tagPlayer.playPromise(content);
 
   }
-  說話(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration, displayName) {
-    actorID = mustache.render(actorID, this.mtView);
+  說話(actorID, expressionAlias, serif, easeAlias, x, y, xFrom, yFrom, duration, displayName, sound) {
+    actorID = mustache.render(String(actorID), this.mtView);
     if(displayName){
-      displayName = mustache.render(displayName, this.mtView);
+      displayName = mustache.render(String(displayName), this.mtView);
     } else {
       displayName = actorID
     }
-    serif = mustache.render(serif, this.mtView);
+    serif = mustache.render(String(serif), this.mtView);
 
     var actor = GetActor(this.tagPlayer, actorID);
     var actorData = this.tb_Char.table[actorID]
@@ -470,6 +454,9 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     }
     if (!actor) {
       content = content + `<char.${actorID}=${actorID},${x},${y}>`
+    }
+    if (sound) {
+      content = content + `</bgm2><bgm2=${sound}>`
     }
     if (displayName) {
       content = content + `<char.${actorID}.setDisplayName=${displayName}>`
@@ -613,22 +600,48 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
   async start(label) { //啟動
     var director = this;
     var scenario = this.scenario;
-    return director.init()
-      .then(function(){
-          return scenario.playPromise({label:label})
-      })
+    this.controllPanel.setVisible(true);
+    this.background.setVisible(true);
+    //this.storyBox.setVisible(true); //storyBox class會自動處理visibility
+    return scenario.playPromise({label:label})
       .then(function(){
           return director.onScenarioComplete()
       })
   }
+  async onScenarioComplete() {
+    var background = this.background;
+    var storyBox = this.storyBox;
+    //this.controllPanel.setVisible(false);
+    var content = ``;
+    //content = content + `</bg>`;
+    //content = content + `</text>`;
+    content = content + `</char>`;
+    this.tagPlayer.playPromise(content)
+      .then(function(){
+        //background.setVisible(false);
+        //storyBox.setVisible(false);
+        //console.log('scenario tagPlayer complete')
+      })
+  }
+  async onTagPlayerComplete() {
+    //console.log('on tagPlayer complete')
+    if (this.storyBox != undefined){ //初始化的時候，tagPlayer.playPromise會用來建立預設物件，此時有可能storyBox和background都不存在
+      if (this.storyBox.visible && this.storyBox.alpha != 0){
+        this.storyBox.clickWaiter.setVisible(true);
+      }
+    }
+    if (this.mode_auto){
+      await Delay(this.getAutoDelayTime());
+      console.log('scenario auto continue click')
+      this.scenario.continue('click');
+    }
+  }
   async close() { //停止
-    var director = this;
     var scenario = this.scenario;
     var tagPlayer = this.tagPlayer;
     tagPlayer.pause();
     scenario.pause();
-    scenario.emit('complete');
-    return director.onScenarioComplete()
+    scenario.emit('complete'); //會觸發playPromise.then
   }
   next(nextLabel) { //前往下一章節
     this.controllPanel.setVisible(true);

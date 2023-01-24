@@ -5,7 +5,6 @@ import CreateScenario from '../gdk/ScenarioDirector/CreateScenario.js';
 import CreateParallelBackgrounds from '../scripts/CreateParallelBackgrounds.js';
 import CreateQMaster from '../scripts/CreateQMaster.js';
 import StartQuiz from '../scripts/StartQuiz.js';
-import eyeTracking from '../scripts/eyeTracking.js';
 //utils
 import zoomFrom from '../gdk/viewport/zoomFrom.js';
 import { Delay } from '../../../../phaser3-rex-notes/plugins/eventpromise.js';
@@ -26,59 +25,97 @@ class Home extends Base {
         scene.load.json('pkg', 'https://api.github.com/repos/Eikanya/Live2d-model/git/trees/master')
     }
     create() {
-
+        var scene = this;
         //console.log(JSON.stringify(this.cache.json.get('pkg')));
 
         //建立背景
         var bgSet = CreateParallelBackgrounds(this, this.viewport.centerX, this.viewport.centerY, 'bgSetForestZ', 6);
         this.layerManager.addToLayer('bg', bgSet);
 
-        //播放故事
+        //建立scenario
         this.scenario = CreateScenario(this) //x,y,maxWidth,maxHeight
         this.scenario.load(this.cache.text.get('story'), this.scenario.director, {timeUnit: 'sec'});
 
-
+        //安排流程
         var director = this.scenario.director;
-        director.start('範例')
+        director.init()
+            .then(function(){
+                console.log('game complete')
+                return director.start('範例')
+            })
             .then(function(){
                 console.log('scenario promise complete')
-                return gameInit();
+                return gameInit(scene);
             })
             .then(function(){
                 console.log('game complete')
+                return director.start('鑒定結果')
             })
-        
-        //啟動問答
-        var scene = this;
-        var gameInit = async function(){
-            //鏡頭控制
-            scene.rexScaleOuter.stop().scale();//停止scaleOuter plugin在進入scene時的那一次自動scale()，讓create時camera.scroll能正常運作
-            zoomFrom(scene, 0.9, 3000);//cam縮放
-            scene.cameras.main.stopFollow();
-            scene.center.setPosition(scene.center.x, scene.center.y+300)//cam從下方lerp+back上移
-            scene.cameras.main.setScroll(scene.center.x, scene.center.y);
-            scene.cameras.main.startFollow(scene.center, true, 0.5, 0.5);
-            scene.tweens.add({
-                targets: scene.center,
-                y: '-=300',
-                ease: 'back-easeOutIn',
-                duration: 2000,
-                //yoyo: true,
-                //repeat: -1,
-            })
+    }
+}
 
-            scene.qMaster = CreateQMaster(scene); //建立textplayer
-            scene.qMaster.char.setVisible(true);
-            await Delay(3000);
-            scene.qMaster.setVisible(true);
-            return StartQuiz(scene, scene.qMaster);
+var gameInit = async function(scene){
+    CameraGo(scene); //鏡頭控制
+    scene.qMaster = CreateQMaster(scene); //建立textplayer
+    var char = scene.qMaster.char;
+    var touchArea = scene.qMaster.touchArea;
+    char.setVisible(true);
+    EnableLive2DEyeTracking(scene, char, touchArea, true)
+    await Delay(3000);
+    scene.qMaster.setVisible(true);
+    return StartQuiz(scene, scene.qMaster); //啟動問答
+}
+
+var CameraGo = function(scene){
+    //scene.rexScaleOuter.stop().scale();//停止scaleOuter plugin在進入scene時的那一次自動scale()，讓create時camera.scroll能正常運作
+    zoomFrom(scene, 0.9, 3000);//cam縮放
+    scene.cameras.main.stopFollow();
+    scene.center.setPosition(scene.center.x, scene.center.y+300)//cam從下方lerp+back上移
+    scene.cameras.main.setScroll(scene.center.x, scene.center.y);
+    scene.cameras.main.startFollow(scene.center, true, 0.5, 0.5);
+    scene.tweens.add({
+        targets: scene.center,
+        y: '-=300',
+        ease: 'back-easeOutIn',
+        duration: 2000,
+        //yoyo: true,
+        //repeat: -1,
+    })
+}
+
+var EnableLive2DEyeTracking = function(scene, live2DCharacter, live2DTouchArea, isCamTracking){
+    var pointer = scene.input.activePointer;
+    var centerObject = scene.center; //CreateCameraCenter(scene)
+    var backX = scene.viewport.centerX;
+    var backY = scene.viewport.centerY;
+    if (isCamTracking == undefined){
+        isCamTracking = false;
+    }
+    var live2DEyeTracking = function(){
+        //console.log('is in touch')
+        if (isCamTracking){
+            centerObject.moveTo({x:pointer.worldX, y:pointer.worldY, ease: 'linear', speed: 300});
         }
-
+        live2DCharacter.lookAt( pointer.worldX, pointer.worldY, {
+            // camera: scene.cameras.main,
+            // eyeBallX: 1, eyeBallY: 1,
+            // angleX: 30, angleY: 30, angleZ: 30,
+            // bodyAngleX: 10
+        })
     }
-
-    update(){
-        //eyeTracking(this);
+    var live2DEyeTrackingEnd = function(){
+        //console.log('on touching end')
+        if (isCamTracking){
+            centerObject.moveTo({x:backX, y:backY, ease: 'linear', speed: 600});
+        }
+        live2DCharacter.lookForward();
     }
+    live2DTouchArea.onTouching(live2DEyeTracking)
+    live2DTouchArea.onTouchingEnd(live2DEyeTrackingEnd)
+    live2DTouchArea.on('destroy', function() {
+        live2DTouchArea.offTouching(live2DEyeTracking)
+        live2DTouchArea.offTouchingEnd(live2DEyeTrackingEnd)
+    })
 }
 
 export default Home;

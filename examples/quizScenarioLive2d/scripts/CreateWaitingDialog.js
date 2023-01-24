@@ -12,11 +12,8 @@ import actionsBeforeDialogClose from './actionsBeforeDialogClose';
 var CreateWaitingDialog = async function(qMaster){
     var scene = qMaster.scene;
     var question = qMaster.question;
-    var char = qMaster.char;
-    var textPlayer = qMaster.textPlayer;
-    char.timeScale = 1;
-    char.setExpression('F01').startMotion('Idle', 0, 'force')
-    await textPlayer.playPromise(question['Q']);
+    qMaster.setExpression('F01').setMotionSpeed(1).startMotion('Idle', 0, 'force');
+    await qMaster.say(question['Q']);
     //choicesData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
     var result = await DialogSelect(scene, {
         //title: 'test title', 

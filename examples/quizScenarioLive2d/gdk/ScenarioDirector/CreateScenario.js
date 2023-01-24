@@ -22,21 +22,33 @@ var CreateScenario = function(scene, x, y, maxWidth, maxHeight){
               delimiters: '<>',
               comment: '//'
           },
+          sounds: {
+            bgm: { 
+                initial: undefined,
+                loop: true,
+                fade: 500
+            },
+            bgm2: { //語音專用
+                initial: undefined,
+                loop: false,
+                fade: 0
+            }
+          },
       })
       .addGameObjectManager({
         name: 'char',
         createGameObject: CreateActor,
-        fade:300,
+        fade:500,
       })
       .addGameObjectManager({
           name: 'text',
           createGameObject: CreateStoryBox,
-          fade:0,
+          fade:500,
       })
       .addGameObjectManager({
         name: 'bg',
         createGameObject: CreateBackground,
-        fade:0,
+        fade:500,
     })
   });
 

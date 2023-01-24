@@ -1,6 +1,9 @@
 import ContainerLite from "../../../../phaser3-rex-notes/plugins/containerlite";
 import TextPlayer from "../../../../phaser3-rex-notes/plugins/textplayer";
 import CreateChar from './CreateChar';
+
+//utils
+import CreateTouchArea from "../../../plugins/utils/ui/touchArea/CreateTouchArea";
 import AutoRemoveTween from '../../../../phaser3-rex-notes/plugins/utils/tween/AutoRemoveTween';
 import AddEvent from "../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddEvent";
 
@@ -29,7 +32,8 @@ class qMaster extends ContainerLite {
         this.setVisible(false);
 
         //textPlayer事件與char、clickWaiter的互動
-        textPlayer
+        if (textPlayer){
+            textPlayer
             .on('wait.timeout', function(Callback){ //custom tag的範例
                 var waitTime = async function(ms){
                     await new Promise(resolve => setTimeout(resolve, ms));
@@ -57,6 +61,7 @@ class qMaster extends ContainerLite {
                 char.lipTween.stop();
                 char.lipSyncValue = 0;
             })
+        }
 
         var updateDisplay = function(){
             //取得resize後的viewport狀態
@@ -92,12 +97,58 @@ class qMaster extends ContainerLite {
 
         updateDisplay(); //必須放在vpc add之後才會正常運作
 
+        this.touchArea = CreateTouchArea(scene, {instID:'live2DTouchArea', layerName:'main'});
         this.scene = scene;
         this.textPlayer = textPlayer;
         this.clickWaiter = clickWaiter;
         this.char = char;
 
         this.question = ''; //question屬性會由quizPromise使用
+    }
+    //textPlayer
+    say(content) { 
+        var textPlayer = this.textPlayer;
+        if (textPlayer){
+            return textPlayer.playPromise(content);
+        } else {
+            return this.dummyPromise('qMaster.textPlayer does not exist');
+        }
+    }
+    quiet(){
+        var textPlayer = this.textPlayer;
+        if (textPlayer){
+            textPlayer.backTween.play();
+        }
+        return this;
+    }
+    //char
+    setExpression(expName) {
+        var char = this.char;
+        if (char){
+            char.setExpression(expName);
+        }
+        return this
+    }
+    setMotionSpeed(speed) { //倍數，初始為1
+        var char = this.char;
+        if (char){
+            char.timeScale = speed;
+        }
+        return this
+    }
+    startMotion(motionGroup, idx, priority) { //live2D專用函數。priority: 1|2|3 or 'idle'|'normal'|'force'，高優先權動作播放時執行低優先權動畫無效
+        var char = this.char;
+        if (char){
+            char.stopAllMotions().startMotion(motionGroup, idx, priority);
+        }
+        return this
+    }
+    dummyPromise(tag) { 
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve(tag);
+            }, 300);
+          });
     }
 }
 
@@ -176,18 +227,19 @@ var CreateTextplayer = function(scene){
     });
 
     //指定click target
-    textPlayer.setClickTarget(scene.toucharea);
-    textPlayer.clickTarget.onClick(function () {
-        if (!textPlayer.isPlaying) {
-            return;
-        }
+    // textPlayer.setClickTarget(scene.toucharea);
+    // textPlayer.clickTarget.onClick(function () {
+    //     console.log('qM textPlayer target onClick');
+    //     if (!textPlayer.isPlaying) {
+    //         return;
+    //     }
 
-        if (textPlayer.isPageTyping) {
-            textPlayer.setTypingSpeed(0);
-        } else {
-            textPlayer.typingNextPage();
-        }
-    })
+    //     if (textPlayer.isPageTyping) {
+    //         textPlayer.setTypingSpeed(0);
+    //     } else {
+    //         textPlayer.typingNextPage();
+    //     }
+    // })
 
     return textPlayer
 }

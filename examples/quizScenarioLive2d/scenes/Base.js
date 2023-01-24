@@ -1,8 +1,9 @@
 import SetupLayerManager from '../gdk/layer/SetupLayerManager';
 import SetupScaleOuter from '../gdk/viewport/SetupScaleOuter';
-import CreateTouchArea from '../gdk/viewport/CreateTouchArea';
 import CreateCameraCenter from '../gdk/viewport/CreateCameraCenter';
 import CreateToast from '../gdk/toast/CreateToast';
+
+import CreateTouchArea from '../../../plugins/utils/ui/touchArea/CreateTouchArea.js';
 
 class Base extends Phaser.Scene {
 
@@ -25,7 +26,7 @@ class Base extends Phaser.Scene {
         this.vpc = this.plugins.get('rexViewportCoordinate');
         this.layerManager = SetupLayerManager(this);
         this.viewport = SetupScaleOuter(this);    //this.viewport//setup時會順便做一次scale()
-        this.toucharea = CreateTouchArea(this);    //this.toucharea, 因為會用到viewport, 這條必須在SetupScaleOuter後
+        this.toucharea = CreateTouchArea(this, {instID:'sceneTouchArea', layerName: 'bg'});    //this.toucharea, 因為會用到viewport, 這條必須在SetupScaleOuter後
         this.center = CreateCameraCenter(this); //this.center, camera main follows easeMove-able center label
         this.toast = CreateToast(this);
 
