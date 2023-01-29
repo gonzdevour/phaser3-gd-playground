@@ -67,7 +67,7 @@ var gameInit = async function(scene){
 }
 
 var CameraGo = function(scene){
-    //scene.rexScaleOuter.stop().scale();//停止scaleOuter plugin在進入scene時的那一次自動scale()，讓create時camera.scroll能正常運作
+    //scene.rexScaleOuter.stop().scale(); //停止scaleOuter plugin在進入scene時的那一次自動scale()，讓create時camera.scroll能正常運作
     zoomFrom(scene, 0.9, 3000);//cam縮放
     scene.cameras.main.stopFollow();
     scene.center.setPosition(scene.center.x, scene.center.y+300)//cam從下方lerp+back上移

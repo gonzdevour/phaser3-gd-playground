@@ -58,7 +58,6 @@ class StoryBox extends ContainerLite {
             nameLabel.setPosition(pTextPlayer.x-0.5*pTextPlayer.width, pTextPlayer.y-1*pTextPlayer.height);
             clickWaiter.setPosition(pTextPlayer.x + 0.5*pTextPlayer.width - 35, pTextPlayer.y - 85)
             background.setDirty();
-            debugger
         });
 
         this.graphics = scene.add.graphics(); //debug用
