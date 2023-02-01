@@ -3,17 +3,21 @@ import TextPlayer from "../../../../phaser3-rex-notes/plugins/textplayer";
 import CreateChar from './CreateChar';
 
 //utils
+import OnWindowResize from "../../../plugins/utils/rwd/OnWindowResize";
 import CreateTouchArea from "../../../plugins/utils/ui/touchArea/CreateTouchArea";
 import AutoRemoveTween from '../../../../phaser3-rex-notes/plugins/utils/tween/AutoRemoveTween';
 import AddEvent from "../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddEvent";
+import Locate from "../gdk/layer/Locate";
 
 class qMaster extends ContainerLite {
     constructor(scene, masterID, vpx, vpy, width, height) {
 
+        var viewport = scene.viewport;
+
         if(vpx == undefined){vpx = 0.5};
         if(vpy == undefined){vpy = 1};
-        if(width == undefined){width = scene.scenario.director.viewport.width*0.95};
-        if(height == undefined){height = scene.scenario.director.viewport.height*0.3};
+        if(width == undefined){width = viewport.width*0.95};
+        if(height == undefined){height = viewport.height*0.3};
 
         var textPlayer = CreateTextplayer(scene);
         var clickWaiter = createClickWaiter(scene, textPlayer.x + 0.5*textPlayer.width - 40, textPlayer.y + 0.5*textPlayer.height - 95)
@@ -65,7 +69,7 @@ class qMaster extends ContainerLite {
 
         var updateDisplay = function(){
             //取得resize後的viewport狀態
-            var v = scene.viewport;
+            var v = viewport;
             var vw = v.width;
             var vh = v.height; 
             v.portrait = vh>vw?true:false;
@@ -79,21 +83,17 @@ class qMaster extends ContainerLite {
             v.displayBottom = v.centerY + 0.5*v.displayHeight;
     
             //重設live2D角色位置與大小
-            var modelSizeRatio = 0.85*scene.viewport.height/2688;
+            var modelSizeRatio = 0.85*viewport.height/2688;
             var xAdd = vh>vw?300:0; //如果是豎版，x要調整
             char
-                .setPosition(scene.viewport.displayLeft+xAdd, scene.viewport.displayBottom-250)
+                .setPosition(viewport.displayLeft+xAdd, viewport.displayBottom-250)
                 .setScale(modelSizeRatio)
         }
-    
-        var scale = scene.scale;
-        AddEvent(scene, scale, 'resize', function(pointer, localX, localY, event){
-            updateDisplay();
-        });
 
+        //rwd
+        OnWindowResize(scene, updateDisplay);
         //加入layer與vpc控制
-        scene.layerManager.addToLayer('main', this);
-        scene.vpc.add(this, scene.scenario.director.viewport, vpx, vpy);
+        Locate(scene, this, {instID: 'QMaster', layerName: 'main', viewport: viewport, vpx: vpx, vpy: vpy});
 
         updateDisplay(); //必須放在vpc add之後才會正常運作
 
@@ -153,12 +153,13 @@ class qMaster extends ContainerLite {
 }
 
 var CreateTextplayer = function(scene){
+    var viewport = scene.viewport;
     var Cubic = Phaser.Math.Easing.Cubic.Out;
     var Linear = Phaser.Math.Linear;
     var textPlayer = new TextPlayer(scene,
         {
-            x: scene.viewport.centerX+5, y: scene.viewport.top+200+25,
-            width: scene.viewport.displayWidth-50, height: 400,  // Fixed width and height
+            x: viewport.centerX+5, y: viewport.top+200+25,
+            width: viewport.displayWidth-50, height: 400,  // Fixed width and height
 
             background: { 
                 stroke: 'white', strokeThickness: 6, cornerRadius: 20, 

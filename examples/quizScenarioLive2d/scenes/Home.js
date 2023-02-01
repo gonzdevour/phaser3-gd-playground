@@ -1,4 +1,5 @@
 import Base from './Base.js';
+import initMasterScene from '../gdk/scene/InitMasterScene.js';
 import { DefaultAppConfig } from '../settings/DefaultData.js';
 //scripts
 import CreateScenario from '../gdk/ScenarioDirector/CreateScenario.js';
@@ -14,6 +15,9 @@ class Home extends Base {
         super({
             key: DefaultAppConfig.sceneKey.Home
         })
+    }
+    init(){
+        initMasterScene(this);
     }
     preload(){
         var scene = this;
@@ -32,19 +36,22 @@ class Home extends Base {
         var bgSet = CreateParallelBackgrounds(this, this.viewport.centerX, this.viewport.centerY, 'bgSetForestZ', 6);
         this.layerManager.addToLayer('bg', bgSet);
 
-        //建立scenario
-        this.scenario = CreateScenario(this) //x,y,maxWidth,maxHeight
-        this.scenario.load(this.cache.text.get('story'), this.scenario.director, {timeUnit: 'sec'});
-
         //安排流程
-        var director = this.scenario.director;
-        director.init()
+
+        //建立scenario
+        var director;
+        launchStoryScene(scene)
+            .then(function(storyScene){
+                console.log('story init')
+                director = storyScene.scenario.director;
+                return director.init()
+            })
             .then(function(){
-                console.log('game complete')
+                console.log('story start')
                 return director.start('範例')
             })
             .then(function(){
-                console.log('scenario promise complete')
+                console.log('game init')
                 return gameInit(scene);
             })
             .then(function(){
@@ -52,6 +59,18 @@ class Home extends Base {
                 return director.start('鑒定結果')
             })
     }
+}
+
+var launchStoryScene = async function(mainScene){
+    await Delay(2000);
+    mainScene.scene.launch(DefaultAppConfig.sceneKey.Story, 'data2Pass');
+    var storyScene = mainScene.scene.get(DefaultAppConfig.sceneKey.Story)
+    return new Promise(function(resolve, reject){
+        storyScene.events.once('scenarioCreated', function(){
+            console.log('story scene is launched')
+            resolve(storyScene);
+        });
+    })
 }
 
 var gameInit = async function(scene){
@@ -68,6 +87,7 @@ var gameInit = async function(scene){
 
 var CameraGo = function(scene){
     //scene.rexScaleOuter.stop().scale(); //停止scaleOuter plugin在進入scene時的那一次自動scale()，讓create時camera.scroll能正常運作
+    //scene.time.delayedCall(delay, callback, args, scope); //也可以create後等待0ms再執行
     zoomFrom(scene, 0.9, 3000);//cam縮放
     scene.cameras.main.stopFollow();
     scene.center.setPosition(scene.center.x, scene.center.y+300)//cam從下方lerp+back上移

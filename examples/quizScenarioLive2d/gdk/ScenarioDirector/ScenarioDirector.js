@@ -611,15 +611,15 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
   async onScenarioComplete() {
     var background = this.background;
     var storyBox = this.storyBox;
-    //this.controllPanel.setVisible(false);
+    this.controllPanel.setVisible(false);
     var content = ``;
     //content = content + `</bg>`;
     //content = content + `</text>`;
     content = content + `</char>`;
     this.tagPlayer.playPromise(content)
       .then(function(){
-        //background.setVisible(false);
-        //storyBox.setVisible(false);
+        background.setVisible(false);
+        storyBox.setVisible(false);
         //console.log('scenario tagPlayer complete')
       })
   }

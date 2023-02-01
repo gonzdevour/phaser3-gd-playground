@@ -10,6 +10,7 @@ import loadImageFromUrl from '../../../plugins/utils/image/loadImageFromUrl.js';
 import GetValue from '../../../plugins/utils/object/GetValue.js';
 import { Delay } from '../../../../phaser3-rex-notes/plugins/eventpromise.js';
 import DrawToTexture from '../../../plugins/utils/image/DrawToTexture.js';
+import Locate from '../gdk/layer/Locate.js';
 
 //測試外部讀取image(似乎必須透過cors-anywhere)
 var loadOnlineImagePromise = async function(scene, config){
@@ -142,7 +143,6 @@ var CreateCard = async function(scene, config){
         text: GetValue(config, 'text', {description: 'Unknown Runes'}),
         url: GetValue(config, 'url', undefined)
     })
-    //await Delay(4000);
 
     //建立卡背的旋轉光效
     var lightball = scene.add.image(centerX, centerY, 'lightball1')//.setBlendMode(Phaser.BlendModes.ADD);
@@ -240,8 +240,15 @@ var CreateCard = async function(scene, config){
     var cardwithLight = scene.rexUI.add.container(centerX, centerY);
     cardwithLight.addMultiple([lightball, card, slash]);
     //加入layer與vpc控制
-    scene.layerManager.addToLayer('main', cardwithLight);
-    scene.vpc.add(cardwithLight, scene.scenario.director.viewport);
+    var viewport = scene.viewport;
+    Locate(scene, cardwithLight, {instID: 'cardWithLight', layerName: 'main', viewport: viewport, vpx: 0.5, vpy: 0.5});
+
+    //先播放卡片落下動畫再啟動光效
+    lightball.setVisible(false);
+    slash.setVisible(false);
+    await Delay(4000);
+    lightball.setVisible(true);
+    slash.setVisible(true);
 
     return cardwithLight;
 }

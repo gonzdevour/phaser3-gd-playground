@@ -5,16 +5,19 @@ import CreateRoundRectangleBackground from "../../../gdk/templates/CreateRoundRe
 import CreatePortait from "./CreatePortrait";
 
 import AddEvent from "../../../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddEvent";
+import Locate from "../../layer/Locate";
 
 const color_displayNameBackground = 0x333333;
 
 class StoryBox extends ContainerLite {
     constructor(scene, storyBoxID, vpx, vpy, width, height) {
 
+        var viewport = scene.scenario.director.viewport;
+
         if(vpx == undefined){vpx = 0.5};
         if(vpy == undefined){vpy = 1};
-        if(width == undefined){width = scene.scenario.director.viewport.width*0.95};
-        if(height == undefined){height = scene.scenario.director.viewport.height*0.3};
+        if(width == undefined){width = viewport.width*0.95};
+        if(height == undefined){height = viewport.height*0.3};
 
         var textPlayer = CreateTextPlayer(scene, 0, 0, 100, 100);
         var portrait = CreatePortait(scene, 'Spring', 'normal0').setDisplaySize(height*0.8, height*0.8);
@@ -45,14 +48,12 @@ class StoryBox extends ContainerLite {
         background.setAlpha(0.5);
         this.moveDepthBelow(background);
 
-        scene.layerManager.addToLayer('scenario_story', this);
-        scene.vpc.add(this, scene.scenario.director.viewport, vpx, vpy);
-        this.vpyOffset = -30;
+        Locate(scene, this, {instID: 'storyBox', layerName: 'scenario_story', viewport: viewport, vpx: vpx, vpy: vpy, vpyOffset: -30})
 
         var scale = scene.scale;
         AddEvent(this, scale, 'resize', function(pointer, localX, localY, event){
             pTextPlayer
-                .setMinWidth(scene.scenario.director.viewport.width*0.95) //clickArea的expand預設為true，所以會跟著panel的大小，不用另外設定
+                .setMinWidth(viewport.width*0.95) //clickArea的expand預設為true，所以會跟著panel的大小，不用另外設定
                 .layout()
             textPlayer.play(textPlayer.text);
             nameLabel.setPosition(pTextPlayer.x-0.5*pTextPlayer.width, pTextPlayer.y-1*pTextPlayer.height);

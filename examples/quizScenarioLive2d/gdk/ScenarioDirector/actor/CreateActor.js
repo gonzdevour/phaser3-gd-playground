@@ -4,16 +4,23 @@ import FadeOutDestroy from '../../../../../../phaser3-rex-notes/plugins/fade-out
 import ContainerLite from '../../../../../../phaser3-rex-notes/plugins/containerlite.js';
 
 //methods
-import MethodsMove from './MethodsMove.js';
+import MethodsMove from './MethodsMove.js'; //移動相關的指令，如jumpTo
+
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
+import Locate from '../../layer/Locate.js';
 
 class Actor extends ContainerLite {
-  constructor(scene, actorID, x, y) {
+  constructor(scene, actorID, vpx, vpy) {
+      var viewport = scene.scenario.director.viewport;
       var sprite = CreateChar(scene, actorID, 'normal0');
       var bubble = CreateTextbubble(scene, sprite).setPosition(sprite.x, sprite.getTopRight().y+100).setVisible(true)
       //var center = scene.rexUI.add.roundRectangle(sprite.x,sprite.y,100,1000,undefined,0xff0000);
       //super(scene, 0, 0, [sprite, center]);
       super(scene, 0, 0, [sprite,bubble]); 
+      this.defaultVPX = 0.5;
+      this.defaultVPY = 1.2;
+      vpx = vpx?vpx:this.defaultVPX;
+      vpy = vpy?vpy:this.defaultVPY;
       this.sprite = sprite;
       this.bubble = bubble; //addToLayer和container.add都會加入displayList，兩個都用就會render成兩個。所以bubble如果要保證在sprite上方就不能綁進actor
       this.scenario = scene.scenario;
@@ -22,8 +29,6 @@ class Actor extends ContainerLite {
 
       this.displayName = '';
       this.expression = '';
-
-      scene.layerManager.addToLayer('scenario_stage', this);
 
       bubble.on('complete', function(){
         this.scenario.isPlayingText = false;
@@ -35,11 +40,9 @@ class Actor extends ContainerLite {
           this.scenario.isPlayingText = false;
         },this);
 
-      scene.vpc.add(bubble, scene.scenario.director.viewport);
-      scene.vpc.add(this, scene.scenario.director.viewport);
+      Locate(scene, this, {instID: actorID, layerName: 'scenario_stage', viewport: viewport, vpx: vpx, vpy: vpy})
 
       this.assignPrivateData(this.director.tb_Char.table[actorID]);
-      this.setVPosition(x,y);
       this.appear();
   }
 
@@ -50,10 +53,10 @@ class Actor extends ContainerLite {
 
   setVPosition(x, y) {
     if (x == undefined){
-      x = 0.5;
+      x = this.defaultVPX;
     }
     if (y == undefined){
-      y = 1.2;
+      y = this.defaultVPY;
     }
     this.vpx = x;
     this.vpy = y;

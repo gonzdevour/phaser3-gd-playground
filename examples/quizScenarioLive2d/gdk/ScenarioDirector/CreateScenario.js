@@ -73,6 +73,9 @@ var CreateScenario = function(scene, x, y, maxWidth, maxHeight){
     .on('log', function (msg) {
       scenario.scope.onScenarioLog(msg);
     })
+    .on('error', function(msg, scope, scenario){ 
+      console.log(`[scenario]${msg}`)
+    })
     .on('wait.click', function (scenario) {
       scenario.scope.onWaitClick('scenario', scenario.lastCustomCommandName);
     })

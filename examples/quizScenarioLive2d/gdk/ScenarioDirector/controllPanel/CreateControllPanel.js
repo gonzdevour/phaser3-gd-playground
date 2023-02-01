@@ -1,6 +1,7 @@
 import CreateControllButtons from "./CreateControllButtons.js";
 import CreateCloseButton from "./CreateCloseButton.js";
 import AddEvent from "../../../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddEvent.js";
+import Locate from "../../layer/Locate.js";
 
 var CreateControllPanel = function(scene, director, viewport){
 
@@ -27,8 +28,7 @@ var CreateControllPanel = function(scene, director, viewport){
             expand: false,
         })
 
-    scene.layerManager.addToLayer('scenario_ui', panel);
-    scene.vpc.add(panel, viewport, 0.5, 0.5);
+    Locate(scene, panel, {instID: 'scenario control panel', layerName: 'scenario_ui', viewport: viewport, vpx: 0.5, vpy: 0.5});
 
     panel.debugGraphics = scene.add.graphics()
 

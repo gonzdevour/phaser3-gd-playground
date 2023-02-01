@@ -1,5 +1,6 @@
 import Boot from "../scenes/Boot";
 import Home from "../scenes/Home";
+import Story from "../scenes/Story";
 //import Test from '../test.js';
 
 import AllPlugins from '../../../plugins/AllPlugins.js';
@@ -14,10 +15,11 @@ var DefaultAppConfig = {
     appID: 'demo',
     width: 768,
     height: 1334,
-    scenes: [Boot, Home],
+    scenes: [Boot, Home, Story],
     sceneKey: {
         Boot: 'Boot',
         Home: 'Home',
+        Story: 'Story',
     },
     layers: ['bg','main','scenario_stage','scenario_story','scenario_choices','scenario_ui','ui','dialog','system'],
     assets: {

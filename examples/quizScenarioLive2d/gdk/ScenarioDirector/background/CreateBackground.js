@@ -1,3 +1,5 @@
+import Locate from "../../layer/Locate";
+
 var CreateBackground = function (scene, backgroundID, key, frame, vpx, vpy) {
     vpx = vpx?vpx:0.5;
     vpy = vpy?vpy:0.5;
@@ -10,8 +12,7 @@ var CreateBackground = function (scene, backgroundID, key, frame, vpx, vpy) {
         background.setDisplaySize(bgWidth, viewport.height)
     }
 
-    scene.layerManager.addToLayer('scenario_stage', background);
-    scene.vpc.add(background, viewport, vpx, vpy);
+    Locate(scene, background, {instID: 'scenario background', layerName: 'scenario_stage', viewport: viewport, vpx: vpx, vpy: vpy})
 
     return background;
 }
