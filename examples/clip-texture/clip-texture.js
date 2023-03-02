@@ -1,0 +1,119 @@
+import 'phaser';
+import Canvas from '../../../phaser3-rex-notes/plugins/canvas.js';
+import PathDataBuilder from '../../../phaser3-rex-notes/plugins/geom/pathdata/PathDataBuilder/PathDataBuilder.js';
+import AddPolygonPath from '../../../phaser3-rex-notes/plugins/utils/canvas/AddPolygonPath.js';
+
+class Test extends Phaser.Scene {
+    constructor() {
+        super({
+            key: 'test'
+        })
+    }
+    preload() {
+        this.load.pack('pack', 'assets/pack.json');
+    }
+    create() {
+        var { width, height } = this.scale;
+
+        this.add.image(width / 2, height / 2, 'classroom');
+
+        var canvas = CreateCanvas(this, {
+            width: 100, height: 100, margin: 25,
+
+            key: 'classroom',
+            clipX: 100, clipY: 100,
+        })
+
+        var debugGraphics = this.add.graphics()
+
+        var DrawBound = function () {
+            debugGraphics
+                .clear()
+                .lineStyle(1, 0xffffff, 1)
+                .strokeRectShape(canvas.getBounds())
+        }
+        DrawBound();
+
+        canvas
+            .setInteractive({ draggable: true })
+            .on('drag', function (pointer, dragX, dragY) {
+                canvas.setPosition(dragX, dragY);
+
+                DrawBound()
+            });
+    }
+    update() { }
+}
+
+var CreateCanvas = function (scene, config) {
+    var width = config.width,
+        height = config.height,
+        margin = config.margin;
+
+    var canvasWidth = width + (margin * 2),
+        canvasHeight = height + (margin * 2);
+    var canvas = new Canvas(scene, 0, 0, canvasWidth, canvasHeight);
+    scene.add.existing(canvas);
+    canvas.setAlpha(0.5);
+
+    var centerX = canvasWidth / 2,
+        centerY = canvasHeight / 2;
+    var x0 = margin,
+        y0 = margin,
+        x1 = margin + width,
+        y1 = margin + height;
+    var lines = new PathDataBuilder();
+    lines
+        .setIterations(16)
+        .clear()
+        .startAt(x0, y0)
+        .arc(centerX, y0, margin, 180, 360, false)
+        .lineTo(x1, y0)
+        .arc(x1, centerY, margin, 270, 90, false)
+        .lineTo(x1, y1)
+        .arc(centerX, y1, margin, 0, 180, false)
+        .lineTo(x0, y1)
+        .arc(x0, centerY, margin, 90, 270, true)
+        .lineTo(x0, y0)
+        .close()
+
+    var ctx = canvas.getContext();
+    ctx.save();
+    ctx.beginPath();
+
+    AddPolygonPath(ctx, lines.toPoints());
+
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    ctx.clip();
+
+    var key = config.key,
+        frame = config.frame;
+    var clipX = config.clipX,
+        clipY = config.clipY;
+    canvas.drawFrame(
+        key, frame,
+        0, 0, canvasWidth, canvasHeight,
+        clipX - margin, clipY - margin, canvasWidth, canvasHeight,
+    );
+
+    ctx.restore();
+
+    return canvas;
+}
+
+var config = {
+    type: Phaser.AUTO,
+    parent: 'game',
+    width: 1024,
+    height: 768,
+    scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
+    scene: Test
+};
+
+var game = new Phaser.Game(config);

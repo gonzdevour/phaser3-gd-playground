@@ -1,0 +1,11 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "image",
+        "key": "classroom",
+        "url": "assets/image/classroom.png"
+      }
+    ]
+  }
+}
