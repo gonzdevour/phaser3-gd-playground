@@ -28,6 +28,7 @@ class Test extends Phaser.Scene {
                 left: -1, right: 1, top: 1, bottom: 0
             }
         })
+        canvas.setAlpha(0.5);
 
         var debugGraphics = this.add.graphics()
 
@@ -67,8 +68,7 @@ var CreateCanvas = function (scene, config) {
     var canvasWidth = width + (margin * 2),
         canvasHeight = height + (margin * 2);
     var canvas = new Canvas(scene, 0, 0, canvasWidth, canvasHeight);
-    scene.add.existing(canvas);
-    canvas.setAlpha(0.5);
+    scene.add.existing(canvas);   
 
     var centerX = canvasWidth / 2,
         centerY = canvasHeight / 2;
@@ -114,7 +114,6 @@ var CreateCanvas = function (scene, config) {
     ctx.beginPath();
 
     AddPolygonPath(ctx, lines.toPoints());
-
 
     if (strokeColor !== undefined) {
         ctx.strokeStyle = strokeColor;
