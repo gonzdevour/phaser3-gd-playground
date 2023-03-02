@@ -18,10 +18,12 @@ class Test extends Phaser.Scene {
         this.add.image(width / 2, height / 2, 'classroom');
 
         var canvas = CreateCanvas(this, {
-            width: 100, height: 100, margin: 25,
+            width: 100, height: 100, margin: 20,
 
             key: 'classroom',
             clipX: 100, clipY: 100,
+
+            strokeColor: 'red', strokeWidth: 5,
         })
 
         var debugGraphics = this.add.graphics()
@@ -50,6 +52,15 @@ var CreateCanvas = function (scene, config) {
         height = config.height,
         margin = config.margin;
 
+    var strokeColor = config.strokeColor,
+        strokeWidth = config.strokeWidth;
+
+    if (strokeColor === undefined) {
+        strokeWidth = 0;
+    }
+
+    margin += strokeWidth;
+
     var canvasWidth = width + (margin * 2),
         canvasHeight = height + (margin * 2);
     var canvas = new Canvas(scene, 0, 0, canvasWidth, canvasHeight);
@@ -61,19 +72,20 @@ var CreateCanvas = function (scene, config) {
     var x0 = margin,
         y0 = margin,
         x1 = margin + width,
-        y1 = margin + height;
+        y1 = margin + height,
+        r = margin - strokeWidth;
     var lines = new PathDataBuilder();
     lines
         .setIterations(16)
         .clear()
         .startAt(x0, y0)
-        .arc(centerX, y0, margin, 180, 360, false)
+        .arc(centerX, y0, r, 180, 360, false)
         .lineTo(x1, y0)
-        .arc(x1, centerY, margin, 270, 90, false)
+        .arc(x1, centerY, r, 270, 90, false)
         .lineTo(x1, y1)
-        .arc(centerX, y1, margin, 0, 180, false)
+        .arc(centerX, y1, r, 0, 180, false)
         .lineTo(x0, y1)
-        .arc(x0, centerY, margin, 90, 270, true)
+        .arc(x0, centerY, r, 90, 270, true)
         .lineTo(x0, y0)
         .close()
 
@@ -83,9 +95,12 @@ var CreateCanvas = function (scene, config) {
 
     AddPolygonPath(ctx, lines.toPoints());
 
-    ctx.strokeStyle = 'red';
-    ctx.lineWidth = 3;
-    ctx.stroke();
+
+    if (strokeColor !== undefined) {
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = strokeWidth;
+        ctx.stroke();
+    }
 
     ctx.clip();
 
