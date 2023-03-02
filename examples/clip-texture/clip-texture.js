@@ -24,6 +24,9 @@ class Test extends Phaser.Scene {
             clipX: 100, clipY: 100,
 
             strokeColor: 'red', strokeWidth: 5,
+            convexEdges: {
+                left: -1, right: 1, top: 1, bottom: 0
+            }
         })
 
         var debugGraphics = this.add.graphics()
@@ -73,21 +76,38 @@ var CreateCanvas = function (scene, config) {
         y0 = margin,
         x1 = margin + width,
         y1 = margin + height,
-        r = margin - strokeWidth;
+        r = margin - strokeWidth,
+        convexEdges = config.convexEdges;
     var lines = new PathDataBuilder();
     lines
         .setIterations(16)
         .clear()
         .startAt(x0, y0)
-        .arc(centerX, y0, r, 180, 360, false)
-        .lineTo(x1, y0)
-        .arc(x1, centerY, r, 270, 90, false)
-        .lineTo(x1, y1)
-        .arc(centerX, y1, r, 0, 180, false)
-        .lineTo(x0, y1)
-        .arc(x0, centerY, r, 90, 270, true)
-        .lineTo(x0, y0)
-        .close()
+
+    if (convexEdges.top != 0) {
+        lines.arc(centerX, y0, r, 180, 360, (convexEdges.top === -1));
+    }
+
+    lines.lineTo(x1, y0)
+
+    if (convexEdges.right != 0) {
+        lines.arc(x1, centerY, r, 270, 90, (convexEdges.right === -1));
+    }
+
+    lines.lineTo(x1, y1)
+
+    if (convexEdges.bottom != 0) {
+        lines.arc(centerX, y1, r, 0, 180, (convexEdges.bottom === -1));
+    }
+
+    lines.lineTo(x0, y1)
+
+    if (convexEdges.left != 0) {
+        lines.arc(x0, centerY, r, 90, 270, (convexEdges.left === -1));
+    }
+
+    lines.lineTo(x0, y0)
+    lines.close()
 
     var ctx = canvas.getContext();
     ctx.save();
