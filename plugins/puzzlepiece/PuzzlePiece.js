@@ -69,13 +69,15 @@ class PuzzlePiece extends Canvas {
     }
 
     setInteractive(shape, callback) {
-        if (shape === undefined) {
-            shape = this.pathBuilder.toPolygon();
-            callback = PolygonContains;
-        } else { // shape is a configuration object
-            if (shape.hitArea === undefined) {
-                shape.hitArea = this.pathBuilder.toPolygon();
-                shape.hitAreaCallback = PolygonContains;
+        if (!this.input) {
+            if (shape === undefined) {
+                shape = this.pathBuilder.toPolygon();
+                callback = PolygonContains;
+            } else { // shape is a configuration object
+                if (shape.hitArea === undefined) {
+                    shape.hitArea = this.pathBuilder.toPolygon();
+                    shape.hitAreaCallback = PolygonContains;
+                }
             }
         }
 
