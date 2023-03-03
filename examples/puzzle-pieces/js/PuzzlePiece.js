@@ -30,7 +30,7 @@ class PuzzlePiece extends PuzzlePieceBase {
                 centerX, y0,
                 rx, ry,
                 180, 360,
-                (convexTop === -1)
+                (convexTop === 1)
             );
         }
 
@@ -52,7 +52,7 @@ class PuzzlePiece extends PuzzlePieceBase {
                 centerX, y1,
                 rx, ry,
                 0, 180,
-                (convexBottom === 1)
+                (convexBottom === -1)
             );
         }
 

@@ -29,7 +29,11 @@ class Test extends Phaser.Scene {
             [0, -1, 1, -1, 1, 0],
         ];
 
-        var pieces = CreatePieces(this, 'classroom', undefined, verticalEdges, horizontalEdges);
+        var pieces = CreatePieces(this,
+            'classroom', undefined,
+            verticalEdges, horizontalEdges,
+            'white', 5
+        );
 
         var topLeft = bg.getTopLeft(),
             tlx = topLeft.x, tly = topLeft.y;
@@ -50,7 +54,12 @@ class Test extends Phaser.Scene {
     update() { }
 }
 
-var CreatePieces = function (scene, key, frame, verticalEdgesArray, horizontalEdgesArray) {
+var CreatePieces = function (scene,
+    key, frame,
+    verticalEdgesArray, horizontalEdgesArray,
+    strokeColor, strokeWidth
+) {
+
     var columnCount = verticalEdgesArray[0].length - 1;
     var rowCount = horizontalEdgesArray[0].length - 1;
     var image = scene.textures.getFrame(key, frame);
@@ -61,7 +70,7 @@ var CreatePieces = function (scene, key, frame, verticalEdgesArray, horizontalEd
         for (var i = 0; i < columnCount; i++) {
             var piece = new PuzzlePiece(scene, {
                 width: pieceWidth, height: pieceHeight,
-                strokeColor: 'white', strokeWidth: 5,
+                strokeColor: strokeColor, strokeWidth: strokeWidth,
             })
             scene.add.existing(piece);
 
