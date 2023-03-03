@@ -66,12 +66,13 @@ var CreatePieces = function (scene,
     var pieceWidth = image.cutWidth / columnCount,
         pieceHeight = image.cutHeight / rowCount;
     var pieces = [];
+    var puzzlePieceConfig = {
+        width: pieceWidth, height: pieceHeight,
+        strokeColor: strokeColor, strokeWidth: strokeWidth,
+    }
     for (var j = 0; j < rowCount; j++) {
         for (var i = 0; i < columnCount; i++) {
-            var piece = new PuzzlePiece(scene, {
-                width: pieceWidth, height: pieceHeight,
-                strokeColor: strokeColor, strokeWidth: strokeWidth,
-            })
+            var piece = new PuzzlePiece(scene, puzzlePieceConfig);
             scene.add.existing(piece);
 
             piece
