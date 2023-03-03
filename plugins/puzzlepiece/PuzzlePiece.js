@@ -2,66 +2,80 @@ import Canvas from '../../../phaser3-rex-notes/plugins/canvas.js';
 import PathDataBuilder from '../../../phaser3-rex-notes/plugins/geom/pathdata/PathDataBuilder/PathDataBuilder.js';
 import AddPolygonPath from '../../../phaser3-rex-notes/plugins/utils/canvas/AddPolygonPath.js';
 
+const GetValue = Phaser.Utils.Objects.GetValue;
 const PolygonContains = Phaser.Geom.Polygon.Contains;
 
 class PuzzlePiece extends Canvas {
     constructor(scene, config) {
-        var width = config.width,
-            height = config.height,
-            margin = config.margin;
+        var x = GetValue(config, 'x', 0);
+        var y = GetValue(config, 'y', 0);
+        var size = GetValue(config, 'size', 0);
+        var width = GetValue(config, 'width', size);
+        var height = GetValue(config, 'height', size);
+        var margin = GetValue(config, 'margin');
+        var marginX = GetValue(config, 'marginX', margin);
+        var marginY = GetValue(config, 'marginY', margin);
+        var strokeColor = GetValue(config, 'strokeColor');
+        var strokeWidth = GetValue(config, 'strokeWidth', 1);
 
-        var strokeColor = config.strokeColor,
-            strokeWidth = config.strokeWidth;
-
+        if (marginX === undefined) {
+            marginX = width / 5;
+        }
+        if (marginY === undefined) {
+            marginY = height / 5;
+        }
         if (strokeColor === undefined) {
             strokeWidth = 0;
         }
 
-        margin += strokeWidth;
+        var halfStrokeWidth = strokeWidth / 2;
+        var canvasWidth = width + ((marginX + halfStrokeWidth) * 2),
+            canvasHeight = height + ((marginY + halfStrokeWidth) * 2);
 
-        var canvasWidth = width + (margin * 2),
-            canvasHeight = height + (margin * 2);
-
-        super(scene, 0, 0, canvasWidth, canvasHeight);
+        super(scene, x, y, canvasWidth, canvasHeight);
 
         this.innerWidth = width;
         this.innerHeight = height;
-        this.margin = margin;
+        this.marginX = marginX;
+        this.marginY = marginY;
         this.strokeColor = strokeColor;
         this.strokeWidth = strokeWidth;
 
         this.pathBuilder = new PathDataBuilder();
-        this.createClipPathCallback = config.createClipPath;
     }
 
-    // Override this methos
-    // createClipPath(config) {
-    // }
-
     setTexture(config) {
+        var key = GetValue(config, 'key');
+        var frame = GetValue(config, 'frame');
+        var x = GetValue(config, 'x', 0);
+        var y = GetValue(config, 'y', 0);
+
+        var points = this.pathBuilder.toPoints();
+
         var ctx = this.getContext();
         ctx.save();
         ctx.beginPath();
 
-        AddPolygonPath(ctx, this.pathBuilder.toPoints());
+        AddPolygonPath(ctx, points);
+
+        ctx.clip();
+
+        this.drawFrame(
+            key, frame,
+            0, 0, this.width, this.height,
+            x - this.marginX, y - this.marginY, this.width, this.height,
+        );
+
+        ctx.restore();
+
+        // Stroke after pasting image
+        ctx.save();
 
         if (this.strokeColor !== undefined) {
             ctx.strokeStyle = this.strokeColor;
             ctx.lineWidth = this.strokeWidth;
             ctx.stroke();
         }
-
-        ctx.clip();
-
-        var key = config.key,
-            frame = config.frame;
-        var x = config.x,
-            y = config.y;
-        this.drawFrame(
-            key, frame,
-            0, 0, this.width, this.height,
-            x - this.margin, y - this.margin, this.width, this.height,
-        );
 
         ctx.restore();
 

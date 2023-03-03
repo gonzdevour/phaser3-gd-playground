@@ -1,5 +1,5 @@
 import 'phaser';
-import PuzzlePiece from '../../plugins/puzzlepiece/PuzzlePiece.js';
+import PuzzlePiece from './js/PuzzlePiece.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -15,7 +15,8 @@ class Test extends Phaser.Scene {
 
         this.add.image(width / 2, height / 2, 'classroom');
 
-        var canvas = new MyPuzzlePiece(this, {
+        var canvas = new PuzzlePiece(this, {
+            x: width / 2, y: height / 2,
             width: 100, height: 100, margin: 20,
             strokeColor: 'red', strokeWidth: 5,
         })
@@ -50,51 +51,6 @@ class Test extends Phaser.Scene {
             });
     }
     update() { }
-}
-
-class MyPuzzlePiece extends PuzzlePiece {
-    createClipPath(convexEdges) {
-        var x0 = this.margin,
-            y0 = this.margin,
-            x1 = this.margin + this.innerWidth,
-            y1 = this.margin + this.innerHeight,
-            centerX = this.width / 2,
-            centerY = this.height / 2,
-            r = this.margin - this.strokeWidth;
-        var lines = this.pathBuilder;
-
-        lines
-            .setIterations(16)
-            .clear()
-            .startAt(x0, y0)
-
-        if (convexEdges.top != 0) {
-            lines.arc(centerX, y0, r, 180, 360, (convexEdges.top === -1));
-        }
-
-        lines.lineTo(x1, y0)
-
-        if (convexEdges.right != 0) {
-            lines.arc(x1, centerY, r, 270, 90, (convexEdges.right === -1));
-        }
-
-        lines.lineTo(x1, y1)
-
-        if (convexEdges.bottom != 0) {
-            lines.arc(centerX, y1, r, 0, 180, (convexEdges.bottom === -1));
-        }
-
-        lines.lineTo(x0, y1)
-
-        if (convexEdges.left != 0) {
-            lines.arc(x0, centerY, r, 90, 270, (convexEdges.left === -1));
-        }
-
-        lines.lineTo(x0, y0)
-        lines.close();
-
-        return this;
-    }
 }
 
 var config = {

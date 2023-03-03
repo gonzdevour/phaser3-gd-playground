@@ -1,6 +1,6 @@
 @echo off
-set project=./examples/clip-texture
-set main=clip-texture.js
+set project=./examples/puzzle-pieces
+set main=puzzle-pieces.js
 set htmlTemplate=index.tmpl
 set assets=assets
 set packFolderOutput=assets/pack.json
