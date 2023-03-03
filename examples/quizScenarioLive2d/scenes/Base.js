@@ -1,6 +1,6 @@
 class Base extends Phaser.Scene {
     get debugMode() {
-        return false;
+        return true;
     }
     get loggerStyle(){
         var style = {

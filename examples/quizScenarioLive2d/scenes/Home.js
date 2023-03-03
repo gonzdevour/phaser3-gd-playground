@@ -2,7 +2,6 @@ import Base from './Base.js';
 import initMasterScene from '../gdk/scene/InitMasterScene.js';
 import { DefaultAppConfig } from '../settings/DefaultData.js';
 //scripts
-import CreateScenario from '../gdk/ScenarioDirector/CreateScenario.js';
 import CreateParallelBackgrounds from '../scripts/CreateParallelBackgrounds.js';
 import CreateQMaster from '../scripts/CreateQMaster.js';
 import StartQuiz from '../scripts/StartQuiz.js';

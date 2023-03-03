@@ -4,7 +4,7 @@ import AutoRemoveTween from '../../../../../../phaser3-rex-notes/plugins/utils/t
 import CreateRoundRectangleBackground from "../../../gdk/templates/CreateRoundRectangleBackground";
 import CreatePortait from "./CreatePortrait";
 
-import AddEvent from "../../../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddEvent";
+import OnWindowResize from "../../../../../plugins/utils/rwd/OnWindowResize";
 import Locate from "../../layer/Locate";
 
 const color_displayNameBackground = 0x333333;
@@ -50,8 +50,8 @@ class StoryBox extends ContainerLite {
 
         Locate(scene, this, {instID: 'storyBox', layerName: 'scenario_story', viewport: viewport, vpx: vpx, vpy: vpy, vpyOffset: -30})
 
-        var scale = scene.scale;
-        AddEvent(this, scale, 'resize', function(pointer, localX, localY, event){
+        //rwd
+        var response = function(){
             pTextPlayer
                 .setMinWidth(viewport.width*0.95) //clickArea的expand預設為true，所以會跟著panel的大小，不用另外設定
                 .layout()
@@ -59,7 +59,8 @@ class StoryBox extends ContainerLite {
             nameLabel.setPosition(pTextPlayer.x-0.5*pTextPlayer.width, pTextPlayer.y-1*pTextPlayer.height);
             clickWaiter.setPosition(pTextPlayer.x + 0.5*pTextPlayer.width - 35, pTextPlayer.y - 85)
             background.setDirty();
-        });
+        }
+        OnWindowResize(scene, response, this);
 
         this.graphics = scene.add.graphics(); //debug用
 

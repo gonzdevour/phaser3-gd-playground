@@ -1,4 +1,5 @@
 import Boot from "../scenes/Boot";
+import Title from "../scenes/Title";
 import Home from "../scenes/Home";
 import Story from "../scenes/Story";
 //import Test from '../test.js';
@@ -15,9 +16,10 @@ var DefaultAppConfig = {
     appID: 'demo',
     width: 768,
     height: 1334,
-    scenes: [Boot, Home, Story],
+    scenes: [Boot, Title, Home, Story],
     sceneKey: {
         Boot: 'Boot',
+        Title: 'Title',
         Home: 'Home',
         Story: 'Story',
     },

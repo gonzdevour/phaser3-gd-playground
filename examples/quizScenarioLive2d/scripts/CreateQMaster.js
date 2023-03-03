@@ -6,7 +6,6 @@ import CreateChar from './CreateChar';
 import OnWindowResize from "../../../plugins/utils/rwd/OnWindowResize";
 import CreateTouchArea from "../../../plugins/utils/ui/touchArea/CreateTouchArea";
 import AutoRemoveTween from '../../../../phaser3-rex-notes/plugins/utils/tween/AutoRemoveTween';
-import AddEvent from "../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddEvent";
 import Locate from "../gdk/layer/Locate";
 
 class qMaster extends ContainerLite {
@@ -67,7 +66,8 @@ class qMaster extends ContainerLite {
             })
         }
 
-        var updateDisplay = function(){
+        //rwd
+        var response = function(){
             //取得resize後的viewport狀態
             var v = viewport;
             var vw = v.width;
@@ -89,13 +89,11 @@ class qMaster extends ContainerLite {
                 .setPosition(viewport.displayLeft+xAdd, viewport.displayBottom-250)
                 .setScale(modelSizeRatio)
         }
-
-        //rwd
-        OnWindowResize(scene, updateDisplay);
+        OnWindowResize(scene, response);
         //加入layer與vpc控制
         Locate(scene, this, {instID: 'QMaster', layerName: 'main', viewport: viewport, vpx: vpx, vpy: vpy});
 
-        updateDisplay(); //必須放在vpc add之後才會正常運作
+        response(); //因為有setPosition，必須放在vpc add(Locate)之後才會正常運作
 
         this.touchArea = CreateTouchArea(scene, {instID:'live2DTouchArea', layerName:'main'});
         this.scene = scene;

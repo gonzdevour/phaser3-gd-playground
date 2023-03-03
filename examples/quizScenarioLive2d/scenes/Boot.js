@@ -64,7 +64,7 @@ var createTools = async function(scene){
     //啟動主頁
     if (!scene.ifLoadError){
         //scene.scene.start(DefaultAppConfig.sceneKey.Home);
-        scene.transitionTo(DefaultAppConfig.sceneKey.Home, 1000);
+        scene.transitionTo(DefaultAppConfig.sceneKey.Title, 1000);
     }
 }
 

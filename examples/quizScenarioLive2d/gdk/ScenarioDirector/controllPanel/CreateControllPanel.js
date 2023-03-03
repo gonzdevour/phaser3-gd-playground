@@ -1,6 +1,6 @@
 import CreateControllButtons from "./CreateControllButtons.js";
 import CreateCloseButton from "./CreateCloseButton.js";
-import AddEvent from "../../../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddEvent.js";
+import OnWindowResize from "../../../../../plugins/utils/rwd/OnWindowResize.js";
 import Locate from "../../layer/Locate.js";
 
 var CreateControllPanel = function(scene, director, viewport){
@@ -32,19 +32,16 @@ var CreateControllPanel = function(scene, director, viewport){
 
     panel.debugGraphics = scene.add.graphics()
 
-    var UpdatePanel = (function() {
+    //rwd
+    var response = function(){
         panel.debugGraphics.clear();
         panel
             .setMinSize(viewport.width, viewport.height) //clickArea的expand預設為true，所以會跟著panel的大小，不用另外設定
             .layout()
             //.drawBounds(panel.debugGraphics, 0x00ff00)
-    });
-    UpdatePanel();
-
-    var scale = scene.scale;
-    AddEvent(panel, scale, 'resize', function(pointer, localX, localY, event){
-        UpdatePanel();
-    });
+    }
+    OnWindowResize(scene, response, panel);
+    response();
 
     return panel;
 }

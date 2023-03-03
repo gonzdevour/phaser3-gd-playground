@@ -1,4 +1,4 @@
-import AddEvent from "../../../../../phaser3-rex-notes/plugins/utils/gameobject/addevent/AddEvent";
+import OnWindowResize from "../../../../plugins/utils/rwd/OnWindowResize";
 
 var SetupScaleOuter = function(scene, widthRatio){
   if (typeof(widthRatio) != 'number'){
@@ -10,7 +10,8 @@ var SetupScaleOuter = function(scene, widthRatio){
   scene.viewport.originalZoom = scene.cameras.main.zoom; //用來控制scaleOuter zoom
 
   var v = scene.viewport;
-  var updateDisplayParams = function(){
+  //rwd
+  var response = function(){
     var vw = v.width;
     var vh = v.height; 
     v.portrait = vh>vw?true:false;
@@ -22,12 +23,8 @@ var SetupScaleOuter = function(scene, widthRatio){
     v.displayTop = v.centerY - 0.5*v.displayHeight;
     v.displayBottom = v.centerY + 0.5*v.displayHeight;
   }
-  updateDisplayParams();
-
-  var scale = scene.scale;
-  AddEvent(scene, scale, 'resize', function(pointer, localX, localY, event){
-    updateDisplayParams();
-  });
+  OnWindowResize(scene, response, this);
+  response();
 
   return v; 
 }

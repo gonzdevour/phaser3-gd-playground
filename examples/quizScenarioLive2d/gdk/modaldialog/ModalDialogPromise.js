@@ -41,20 +41,13 @@ var ModalDialogPromise = function (scene, config) {
         scene.vpc.add(dialog, dialog.viewport);
     }
 
-    // var response = function(){
-    //     dialog
-    //         .setMinWidth(scene.viewport.width-50)
-    //         .layout()
-    // }
-    // //rwd
-    // OnWindowResize(scene, response);
-
     //rwd
-    OnWindowResize(scene, function(){
+    var response = function(){
         dialog
             .setMinWidth(scene.viewport.width-50)
             .layout()
-    });
+    }
+    OnWindowResize(scene, response);
 
     return scene.rexUI.modalPromise(dialog, config);
 }
