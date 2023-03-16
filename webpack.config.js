@@ -98,10 +98,11 @@ plugins.push(
     })
 )
 
+var port = process.env.PORT || Math.floor(Math.random() * 65535)
 plugins.push(
     new BrowserSyncPlugin({
         host: process.env.IP || 'localhost',
-        port: process.env.PORT || 3000,
+        port: port,
         server: {
             baseDir: './',
             routes: {
@@ -109,6 +110,10 @@ plugins.push(
                 '': rootAssetsFolder
             }
         },
+
+        ui: {
+            port: 65535 - port
+        }
     })
 )
 
