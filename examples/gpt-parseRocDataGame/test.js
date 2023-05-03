@@ -1,0 +1,4365 @@
+import 'phaser';
+
+class Test extends Phaser.Scene {
+    constructor() {
+        super({
+            key: 'test'
+        })
+    }
+    preload() {
+        this.load.pack('pack', 'assets/pack.json');
+    }
+    create() {
+        var pic = this.add.image(400, 300, 'right')
+        //pic.setScale(0.5);
+        pic.setDisplaySize(50,50);
+
+// 给定的数据
+const data_str = `
+[UNIT]0
+ Name=吳佩孚
+ Leader=吳佩孚
+ BattleTry=0
+ Country=直系
+ Strength=120
+ Stress=0
+ UnitClass=5
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]1
+ Name=孫傳芳
+ Leader=孫傳芳
+ BattleTry=0
+ Country=五省聯軍
+ Strength=103
+ Stress=0
+ UnitClass=14
+ ExtraUnit=0
+ Experience=50
+ Supplied=0
+ Lv=2
+[/UNIT]
+[UNIT]2
+ Name=張作霖
+ Leader=張作霖
+ BattleTry=0
+ Country=奉系
+ Strength=165
+ Stress=0
+ UnitClass=12
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]3
+ Name=斯利姆子爵
+ Leader=斯利姆子爵
+ BattleTry=0
+ Country=大英帝國
+ Strength=100
+ Stress=0
+ UnitClass=5
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]4
+ Name=韋維爾子爵
+ Leader=韋維爾子爵
+ BattleTry=0
+ Country=大英帝國
+ Strength=120
+ Stress=0
+ UnitClass=5
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]5
+ Name=奧金萊克
+ Leader=奧金萊克
+ BattleTry=0
+ Country=大英帝國
+ Strength=140
+ Stress=0
+ UnitClass=5
+ ExtraUnit=0
+ Experience=50
+ Supplied=0
+ Lv=2
+[/UNIT]
+[UNIT]6
+ Name=史普萊因
+ Leader=史普萊因
+ BattleTry=0
+ Country=大英帝國
+ Strength=120
+ Stress=0
+ UnitClass=5
+ ExtraUnit=0
+ Experience=100
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]7
+ Name=李宗仁
+ Leader=李宗仁
+ BattleTry=0
+ Country=桂系
+ Strength=100
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=50
+ Supplied=0
+ Lv=3
+[/UNIT]
+[UNIT]8
+ Name=麥克阿瑟
+ Leader=麥克阿瑟
+ BattleTry=0
+ Country=美國
+ Strength=110
+ Stress=0
+ UnitClass=17
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]9
+ Name=谷壽夫
+ Leader=谷壽夫
+ BattleTry=0
+ Country=大日本帝國
+ Strength=120
+ Stress=0
+ UnitClass=8
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]10
+ Name=梅津美治郎
+ Leader=梅津美治郎
+ BattleTry=0
+ Country=大日本帝國
+ Strength=100
+ Stress=0
+ UnitClass=13
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]11
+ Name=張學良
+ Leader=張學良
+ BattleTry=0
+ Country=奉系
+ Strength=100
+ Stress=0
+ UnitClass=8
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]12
+ Name=馮玉祥
+ Leader=馮玉祥
+ BattleTry=0
+ Country=國民軍
+ Strength=100
+ Stress=0
+ UnitClass=3
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]13
+ Name=閻錫山
+ Leader=閻錫山
+ BattleTry=0
+ Country=晉系
+ Strength=104
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]14
+ Name=馬步芳
+ Leader=馬步芳
+ BattleTry=0
+ Country=馬家軍
+ Strength=110
+ Stress=0
+ UnitClass=33
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]15
+ Name=馬步青
+ Leader=馬步青
+ BattleTry=0
+ Country=馬家軍
+ Strength=110
+ Stress=0
+ UnitClass=33
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]16
+ Name=鄭大章
+ Leader=鄭大章
+ BattleTry=0
+ Country=國民軍
+ Strength=52
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=21
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]17
+ Name=趙恆惕
+ Leader=趙恆惕
+ BattleTry=0
+ Country=湘系
+ Strength=95
+ Stress=0
+ UnitClass=4
+ ExtraUnit=0
+ Experience=24
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]18
+ Name=袁祖銘
+ Leader=袁祖銘
+ BattleTry=0
+ Country=黔系
+ Strength=140
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=2
+[/UNIT]
+[UNIT]19
+ Name=龍雲
+ Leader=龍雲
+ BattleTry=0
+ Country=滇系
+ Strength=100
+ Stress=0
+ UnitClass=32
+ ExtraUnit=0
+ Experience=33
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]20
+ Name=山下奉文
+ Leader=山下奉文
+ BattleTry=0
+ Country=大日本帝國
+ Strength=100
+ Stress=0
+ UnitClass=8
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]21
+ Name=朱德
+ Leader=朱德
+ BattleTry=0
+ Country=共產黨
+ Strength=130
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]22
+ Name=林彪
+ Leader=林彪
+ BattleTry=0
+ Country=共產黨
+ Strength=130
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]23
+ Name=毛澤東
+ Leader=毛澤東
+ BattleTry=0
+ Country=共產黨
+ Strength=130
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=50
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]24
+ Name=彭德懷
+ Leader=彭德懷
+ BattleTry=0
+ Country=共產黨
+ Strength=130
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]25
+ Name=馬占山
+ Leader=馬占山
+ BattleTry=0
+ Country=奉系
+ Strength=100
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=1
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]26
+ Name=田頌堯
+ Leader=田頌堯
+ BattleTry=0
+ Country=川康軍
+ Strength=100
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]27
+ Name=金文泰
+ Leader=金文泰
+ BattleTry=0
+ Country=大英帝國
+ Strength=135
+ Stress=0
+ UnitClass=29
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]28
+ Name=黃紹竑
+ Leader=黃紹竑
+ BattleTry=0
+ Country=桂系
+ Strength=90
+ Stress=0
+ UnitClass=1
+ ExtraUnit=0
+ Experience=50
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]29
+ Name=盛世才
+ Leader=盛世才
+ BattleTry=0
+ Country=新疆
+ Strength=100
+ Stress=0
+ UnitClass=41
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=2
+[/UNIT]
+[UNIT]30
+ Name=蔣中正
+ Leader=蔣中正
+ BattleTry=0
+ Country=國民政府
+ Strength=160
+ Stress=0
+ UnitClass=45
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=3
+[/UNIT]
+[UNIT]31
+ Name=張輝瓚
+ Leader=張輝瓚
+ BattleTry=0
+ Country=國民政府
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]32
+ Name=張發奎
+ Leader=張發奎
+ BattleTry=0
+ Country=桂系
+ Strength=160
+ Stress=0
+ UnitClass=1
+ ExtraUnit=0
+ Experience=58
+ Supplied=0
+ Lv=3
+[/UNIT]
+[UNIT]33
+ Name=白崇禧
+ Leader=白崇禧
+ BattleTry=0
+ Country=桂系
+ Strength=80
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=50
+ Supplied=0
+ Lv=3
+[/UNIT]
+[UNIT]34
+ Name=郭松齡
+ Leader=郭松齡
+ BattleTry=0
+ Country=奉系
+ Strength=126
+ Stress=0
+ UnitClass=8
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=2
+[/UNIT]
+[UNIT]35
+ Name=史迪威
+ Leader=史迪威
+ BattleTry=0
+ Country=美國
+ Strength=110
+ Stress=0
+ UnitClass=7
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]36
+ Name=何應欽
+ Leader=何應欽
+ BattleTry=0
+ Country=國民政府
+ Strength=140
+ Stress=0
+ UnitClass=45
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=2
+[/UNIT]
+[UNIT]37
+ Name=岡村寧次
+ Leader=岡村寧次
+ BattleTry=0
+ Country=大日本帝國
+ Strength=106
+ Stress=0
+ UnitClass=30
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]38
+ Name=賈德盧
+ Leader=賈德盧
+ BattleTry=0
+ Country=法國
+ Strength=120
+ Stress=0
+ UnitClass=15
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]39
+ Name=趙戴文
+ Leader=趙戴文
+ BattleTry=0
+ Country=晉系
+ Strength=100
+ Stress=0
+ UnitClass=-1
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=0
+[/UNIT]
+[UNIT]40
+ Name=施從濱
+ Leader=施從濱
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=12
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]41
+ Name=褚玉璞
+ Leader=褚玉璞
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]42
+ Name=牟田口廉也
+ Leader=牟田口廉也
+ BattleTry=0
+ Country=大日本帝國
+ Strength=100
+ Stress=0
+ UnitClass=23
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]43
+ Name=于學忠
+ Leader=于學忠
+ BattleTry=0
+ Country=直系
+ Strength=120
+ Stress=0
+ UnitClass=41
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]44
+ Name=張宗昌
+ Leader=張宗昌
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=3
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]45
+ Name=楊增新
+ Leader=楊增新
+ BattleTry=0
+ Country=新疆
+ Strength=100
+ Stress=0
+ UnitClass=3
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]46
+ Name=柴榮陞
+ Leader=柴榮陞
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]47
+ Name=辜仁發
+ Leader=辜仁發
+ BattleTry=0
+ Country=晉系
+ Strength=80
+ Stress=0
+ UnitClass=4
+ ExtraUnit=0
+ Experience=83
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]48
+ Name=商震
+ Leader=商震
+ BattleTry=0
+ Country=晉系
+ Strength=64
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]49
+ Name=王棟
+ Leader=王棟
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=41
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]50
+ Name=萬選才
+ Leader=萬選才
+ BattleTry=0
+ Country=直系
+ Strength=104
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=41
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]51
+ Name=武衍周
+ Leader=武衍周
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]52
+ Name=劉志陸
+ Leader=劉志陸
+ BattleTry=0
+ Country=粵系
+ Strength=102
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]53
+ Name=鄧錫侯
+ Leader=鄧錫侯
+ BattleTry=0
+ Country=川軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]54
+ Name=劉汝明
+ Leader=劉汝明
+ BattleTry=0
+ Country=國民軍
+ Strength=114
+ Stress=0
+ UnitClass=43
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]55
+ Name=王鴻恩
+ Leader=王鴻恩
+ BattleTry=0
+ Country=國民軍
+ Strength=110
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]56
+ Name=土登嘉措
+ Leader=土登嘉措
+ BattleTry=0
+ Country=西藏
+ Strength=110
+ Stress=0
+ UnitClass=24
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]57
+ Name=劉成勛
+ Leader=劉成勛
+ BattleTry=0
+ Country=川軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]58
+ Name=豐玉璽
+ Leader=豐玉璽
+ BattleTry=0
+ Country=晉系
+ Strength=130
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]59
+ Name=孫良誠
+ Leader=孫良誠
+ BattleTry=0
+ Country=國民軍
+ Strength=63
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=19
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]60
+ Name=劉文輝
+ Leader=劉文輝
+ BattleTry=0
+ Country=川康軍
+ Strength=80
+ Stress=0
+ UnitClass=4
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]61
+ Name=龐炳勛
+ Leader=龐炳勛
+ BattleTry=0
+ Country=直系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]62
+ Name=蘇運昌
+ Leader=蘇運昌
+ BattleTry=0
+ Country=直系
+ Strength=110
+ Stress=0
+ UnitClass=41
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]63
+ Name=王獻臣
+ Leader=王獻臣
+ BattleTry=0
+ Country=五省聯軍
+ Strength=46
+ Stress=0
+ UnitClass=1
+ ExtraUnit=0
+ Experience=24
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]64
+ Name=張蔭梧
+ Leader=張蔭梧
+ BattleTry=0
+ Country=晉系
+ Strength=95
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=15
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]65
+ Name=富雙英
+ Leader=富雙英
+ BattleTry=0
+ Country=奉系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]66
+ Name=胡毓坤
+ Leader=胡毓坤
+ BattleTry=0
+ Country=奉系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]67
+ Name=陳調元
+ Leader=陳調元
+ BattleTry=0
+ Country=五省聯軍
+ Strength=100
+ Stress=0
+ UnitClass=12
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]68
+ Name=王樹常
+ Leader=王樹常
+ BattleTry=0
+ Country=奉系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]69
+ Name=程國瑞
+ Leader=程國瑞
+ BattleTry=0
+ Country=奉系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]70
+ Name=賴心輝
+ Leader=賴心輝
+ BattleTry=0
+ Country=川軍
+ Strength=80
+ Stress=0
+ UnitClass=4
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]71
+ Name=孫連仲
+ Leader=孫連仲
+ BattleTry=0
+ Country=國民軍
+ Strength=100
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=14
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]72
+ Name=張國燾
+ Leader=張國燾
+ BattleTry=0
+ Country=共產黨
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]73
+ Name=呂秀文
+ Leader=呂秀文
+ BattleTry=0
+ Country=國民軍
+ Strength=110
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]74
+ Name=汲金純
+ Leader=汲金純
+ BattleTry=0
+ Country=奉系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=50
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]75
+ Name=劉玉春
+ Leader=劉玉春
+ BattleTry=0
+ Country=直系
+ Strength=94
+ Stress=0
+ UnitClass=14
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=2
+[/UNIT]
+[UNIT]76
+ Name=王天培
+ Leader=王天培
+ BattleTry=0
+ Country=黔系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=2
+[/UNIT]
+[UNIT]77
+ Name=孫長勝
+ Leader=孫長勝
+ BattleTry=0
+ Country=晉系
+ Strength=110
+ Stress=0
+ UnitClass=32
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]78
+ Name=姜登選
+ Leader=姜登選
+ BattleTry=0
+ Country=奉系
+ Strength=120
+ Stress=0
+ UnitClass=8
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]79
+ Name=戢翼翹
+ Leader=戢翼翹
+ BattleTry=0
+ Country=奉系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]80
+ Name=彭漢章
+ Leader=彭漢章
+ BattleTry=0
+ Country=黔系
+ Strength=130
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]81
+ Name=馬惇靖
+ Leader=馬惇靖
+ BattleTry=0
+ Country=馬家軍
+ Strength=110
+ Stress=0
+ UnitClass=33
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]82
+ Name=徐永昌
+ Leader=徐永昌
+ BattleTry=0
+ Country=晉系
+ Strength=114
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]83
+ Name=王振
+ Leader=王振
+ BattleTry=0
+ Country=直系
+ Strength=110
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]84
+ Name=徐源泉
+ Leader=徐源泉
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]85
+ Name=楊宇霆
+ Leader=楊宇霆
+ BattleTry=0
+ Country=奉系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]86
+ Name=石原莞爾
+ Leader=石原莞爾
+ BattleTry=0
+ Country=大日本帝國
+ Strength=120
+ Stress=0
+ UnitClass=8
+ ExtraUnit=0
+ Experience=16
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]87
+ Name=賀龍
+ Leader=賀龍
+ BattleTry=0
+ Country=黔系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]88
+ Name=李景林
+ Leader=李景林
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=41
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]89
+ Name=韓麟春
+ Leader=韓麟春
+ BattleTry=0
+ Country=奉系
+ Strength=80
+ Stress=0
+ UnitClass=4
+ ExtraUnit=0
+ Experience=1
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]90
+ Name=楊愛源
+ Leader=楊愛源
+ BattleTry=0
+ Country=晉系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]91
+ Name=何光烈
+ Leader=何光烈
+ BattleTry=0
+ Country=川康軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]92
+ Name=榮臻
+ Leader=榮臻
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=50
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]93
+ Name=于芷山
+ Leader=于芷山
+ BattleTry=0
+ Country=奉系
+ Strength=100
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=10
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]94
+ Name=宋哲元
+ Leader=宋哲元
+ BattleTry=0
+ Country=國民軍
+ Strength=110
+ Stress=0
+ UnitClass=43
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]95
+ Name=唐生智
+ Leader=唐生智
+ BattleTry=0
+ Country=湘系
+ Strength=91
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=30
+ Supplied=0
+ Lv=3
+[/UNIT]
+[UNIT]96
+ Name=韓復榘
+ Leader=韓復榘
+ BattleTry=0
+ Country=國民軍
+ Strength=100
+ Stress=0
+ UnitClass=43
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=3
+[/UNIT]
+[UNIT]97
+ Name=楊效歐
+ Leader=楊效歐
+ BattleTry=0
+ Country=晉系
+ Strength=102
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]98
+ Name=馬鴻逵
+ Leader=馬鴻逵
+ BattleTry=0
+ Country=馬家軍
+ Strength=120
+ Stress=0
+ UnitClass=33
+ ExtraUnit=0
+ Experience=50
+ Supplied=0
+ Lv=2
+[/UNIT]
+[UNIT]99
+ Name=劉自珍
+ Leader=劉自珍
+ BattleTry=0
+ Country=國民軍
+ Strength=80
+ Stress=0
+ UnitClass=12
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]100
+ Name=劉茂恩
+ Leader=劉茂恩
+ BattleTry=0
+ Country=直系
+ Strength=110
+ Stress=0
+ UnitClass=43
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]101
+ Name=李寶章
+ Leader=李寶章
+ BattleTry=0
+ Country=五省聯軍
+ Strength=100
+ Stress=0
+ UnitClass=41
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]102
+ Name=韋雲淞
+ Leader=韋雲淞
+ BattleTry=0
+ Country=桂系
+ Strength=115
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]103
+ Name=朱培德
+ Leader=朱培德
+ BattleTry=0
+ Country=國民政府
+ Strength=146
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=2
+[/UNIT]
+[UNIT]104
+ Name=周蔭人
+ Leader=周蔭人
+ BattleTry=0
+ Country=五省聯軍
+ Strength=103
+ Stress=0
+ UnitClass=4
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]105
+ Name=劉存厚
+ Leader=劉存厚
+ BattleTry=0
+ Country=川軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]106
+ Name=劉鎮華
+ Leader=劉鎮華
+ BattleTry=0
+ Country=直系
+ Strength=102
+ Stress=0
+ UnitClass=43
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=2
+[/UNIT]
+[UNIT]107
+ Name=鹿鐘麟
+ Leader=鹿鐘麟
+ BattleTry=0
+ Country=國民軍
+ Strength=110
+ Stress=0
+ UnitClass=43
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]108
+ Name=楊清臣
+ Leader=楊清臣
+ BattleTry=0
+ Country=直系
+ Strength=114
+ Stress=0
+ UnitClass=1
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]109
+ Name=馬德鳳
+ Leader=馬德鳳
+ BattleTry=0
+ Country=直系
+ Strength=100
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]110
+ Name=周西成
+ Leader=周西成
+ BattleTry=0
+ Country=黔系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]111
+ Name=王家烈
+ Leader=王家烈
+ BattleTry=0
+ Country=黔系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]112
+ Name=安錫嘏
+ Leader=安錫嘏
+ BattleTry=0
+ Country=奉系
+ Strength=112
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]113
+ Name=闞維雍
+ Leader=闞維雍
+ BattleTry=0
+ Country=桂系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]114
+ Name=李燊
+ Leader=李燊
+ BattleTry=0
+ Country=黔系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]115
+ Name=東條英機
+ Leader=東條英機
+ BattleTry=0
+ Country=大日本帝國
+ Strength=150
+ Stress=0
+ UnitClass=9
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]116
+ Name=陳文釗
+ Leader=陳文釗
+ BattleTry=0
+ Country=直系
+ Strength=119
+ Stress=0
+ UnitClass=1
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]117
+ Name=周恩來
+ Leader=周恩來
+ BattleTry=0
+ Country=共產黨
+ Strength=130
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=50
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]118
+ Name=梅發奎
+ Leader=梅發奎
+ BattleTry=0
+ Country=直系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]119
+ Name=毛思義
+ Leader=毛思義
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]120
+ Name=楊森
+ Leader=楊森
+ BattleTry=0
+ Country=川康軍
+ Strength=108
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]121
+ Name=傅作義
+ Leader=傅作義
+ BattleTry=0
+ Country=晉系
+ Strength=100
+ Stress=0
+ UnitClass=32
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=2
+[/UNIT]
+[UNIT]122
+ Name=唐繼堯
+ Leader=唐繼堯
+ BattleTry=0
+ Country=滇系
+ Strength=106
+ Stress=0
+ UnitClass=2
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]123
+ Name=劉湘
+ Leader=劉湘
+ BattleTry=0
+ Country=川軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]124
+ Name=張敬堯
+ Leader=張敬堯
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=1
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]125
+ Name=譚延闓
+ Leader=譚延闓
+ BattleTry=0
+ Country=國民政府
+ Strength=100
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]126
+ Name=李濟琛
+ Leader=李濟琛
+ BattleTry=0
+ Country=桂系
+ Strength=100
+ Stress=0
+ UnitClass=1
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]127
+ Name=程潛
+ Leader=程潛
+ BattleTry=0
+ Country=國民政府
+ Strength=80
+ Stress=0
+ UnitClass=4
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]128
+ Name=馬鴻賓
+ Leader=馬鴻賓
+ BattleTry=0
+ Country=馬家軍
+ Strength=110
+ Stress=0
+ UnitClass=33
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]129
+ Name=劉峙
+ Leader=劉峙
+ BattleTry=0
+ Country=國民政府
+ Strength=160
+ Stress=0
+ UnitClass=45
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=2
+[/UNIT]
+[UNIT]130
+ Name=鑾披汶
+ Leader=鑾披汶
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=9
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]131
+ Name=蒙巴頓勛爵
+ Leader=蒙巴頓勛爵
+ BattleTry=0
+ Country=大英帝國
+ Strength=140
+ Stress=0
+ UnitClass=16
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]132
+ Name=華西列夫斯基
+ Leader=華西列夫斯基
+ BattleTry=0
+ Country=蘇聯
+ Strength=122
+ Stress=0
+ UnitClass=3
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]133
+ Name=朱可夫
+ Leader=朱可夫
+ BattleTry=0
+ Country=蘇聯
+ Strength=110
+ Stress=0
+ UnitClass=18
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]134
+ Name=上官雲相
+ Leader=上官雲相
+ BattleTry=0
+ Country=五省聯軍
+ Strength=100
+ Stress=0
+ UnitClass=41
+ ExtraUnit=0
+ Experience=1
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]135
+ Name=寺內壽一
+ Leader=寺內壽一
+ BattleTry=0
+ Country=大日本帝國
+ Strength=100
+ Stress=0
+ UnitClass=8
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]136
+ Name=板垣征四郎
+ Leader=板垣征四郎
+ BattleTry=0
+ Country=大日本帝國
+ Strength=100
+ Stress=0
+ UnitClass=9
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]137
+ Name=孫楚
+ Leader=孫楚
+ BattleTry=0
+ Country=晉系
+ Strength=104
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]138
+ Name=土肥原賢二
+ Leader=土肥原賢二
+ BattleTry=0
+ Country=大日本帝國
+ Strength=120
+ Stress=0
+ UnitClass=13
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]139
+ Name=黃百韜
+ Leader=黃百韜
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]140
+ Name=黃旭初
+ Leader=黃旭初
+ BattleTry=0
+ Country=桂系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]141
+ Name=寇英傑
+ Leader=寇英傑
+ BattleTry=0
+ Country=直系
+ Strength=104
+ Stress=0
+ UnitClass=41
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]142
+ Name=靳雲鶚
+ Leader=靳雲鶚
+ BattleTry=0
+ Country=直系
+ Strength=104
+ Stress=0
+ UnitClass=41
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]143
+ Name=孫殿英
+ Leader=孫殿英
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=43
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]144
+ Name=王以哲
+ Leader=王以哲
+ BattleTry=0
+ Country=奉系
+ Strength=112
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]145
+ Name=吳俊陞
+ Leader=吳俊陞
+ BattleTry=0
+ Country=奉系
+ Strength=100
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]146
+ Name=何柱國
+ Leader=何柱國
+ BattleTry=0
+ Country=奉系
+ Strength=100
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]147
+ Name=湯玉麟
+ Leader=湯玉麟
+ BattleTry=0
+ Country=奉系
+ Strength=100
+ Stress=0
+ UnitClass=41
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]148
+ Name=陳儀
+ Leader=陳儀
+ BattleTry=0
+ Country=五省聯軍
+ Strength=90
+ Stress=0
+ UnitClass=4
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]149
+ Name=馬仲英
+ Leader=馬仲英
+ BattleTry=0
+ Country=馬家軍
+ Strength=110
+ Stress=0
+ UnitClass=33
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]150
+ Name=盧漢
+ Leader=盧漢
+ BattleTry=0
+ Country=滇系
+ Strength=100
+ Stress=0
+ UnitClass=2
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]151
+ Name=胡若愚
+ Leader=胡若愚
+ BattleTry=0
+ Country=滇系
+ Strength=114
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]152
+ Name=張沖
+ Leader=張沖
+ BattleTry=0
+ Country=滇系
+ Strength=114
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]153
+ Name=齊燮元
+ Leader=齊燮元
+ BattleTry=0
+ Country=直系
+ Strength=80
+ Stress=0
+ UnitClass=12
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]154
+ Name=金樹仁
+ Leader=金樹仁
+ BattleTry=0
+ Country=新疆
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]155
+ Name=趙承綬
+ Leader=趙承綬
+ BattleTry=0
+ Country=晉系
+ Strength=100
+ Stress=0
+ UnitClass=32
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]156
+ Name=王靖國
+ Leader=王靖國
+ BattleTry=0
+ Country=晉系
+ Strength=104
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]157
+ Name=達桑佔堆
+ Leader=達桑佔堆
+ BattleTry=0
+ Country=西藏
+ Strength=100
+ Stress=0
+ UnitClass=32
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]158
+ Name=讓德句
+ Leader=讓德句
+ BattleTry=0
+ Country=法國
+ Strength=120
+ Stress=0
+ UnitClass=2
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]159
+ Name=張治公
+ Leader=張治公
+ BattleTry=0
+ Country=直系
+ Strength=100
+ Stress=0
+ UnitClass=43
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]160
+ Name=謝慕韓
+ Leader=謝慕韓
+ BattleTry=0
+ Country=湘系
+ Strength=80
+ Stress=0
+ UnitClass=4
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]161
+ Name=何璧輝
+ Leader=何璧輝
+ BattleTry=0
+ Country=黔系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]162
+ Name=蔣先雲
+ Leader=蔣先雲
+ BattleTry=0
+ Country=共產黨
+ Strength=130
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]163
+ Name=吳傳心
+ Leader=吳傳心
+ BattleTry=0
+ Country=川康軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]164
+ Name=王柏齡
+ Leader=王柏齡
+ BattleTry=0
+ Country=國民政府
+ Strength=81
+ Stress=0
+ UnitClass=4
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]165
+ Name=鄧如琢
+ Leader=鄧如琢
+ BattleTry=0
+ Country=五省聯軍
+ Strength=100
+ Stress=0
+ UnitClass=41
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]166
+ Name=蔣鎮臣
+ Leader=蔣鎮臣
+ BattleTry=0
+ Country=五省聯軍
+ Strength=104
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]167
+ Name=唐福山
+ Leader=唐福山
+ BattleTry=0
+ Country=五省聯軍
+ Strength=104
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]168
+ Name=陳賡
+ Leader=陳賡
+ BattleTry=0
+ Country=共產黨
+ Strength=130
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]169
+ Name=薛岳
+ Leader=薛岳
+ BattleTry=0
+ Country=桂系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]170
+ Name=張自忠
+ Leader=張自忠
+ BattleTry=0
+ Country=國民軍
+ Strength=100
+ Stress=0
+ UnitClass=43
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]171
+ Name=顧祝同
+ Leader=顧祝同
+ BattleTry=0
+ Country=國民政府
+ Strength=120
+ Stress=0
+ UnitClass=1
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]172
+ Name=張治中
+ Leader=張治中
+ BattleTry=0
+ Country=國民政府
+ Strength=130
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]173
+ Name=葉挺
+ Leader=葉挺
+ BattleTry=0
+ Country=共產黨
+ Strength=130
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]174
+ Name=堯樂博士
+ Leader=堯樂博士
+ BattleTry=0
+ Country=新疆
+ Strength=100
+ Stress=0
+ UnitClass=33
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]175
+ Name=小松原道太郎
+ Leader=小松原道太郎
+ BattleTry=0
+ Country=大日本帝國
+ Strength=120
+ Stress=0
+ UnitClass=8
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]176
+ Name=植田謙吉
+ Leader=植田謙吉
+ BattleTry=0
+ Country=大日本帝國
+ Strength=100
+ Stress=0
+ UnitClass=30
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]177
+ Name=栗林忠道
+ Leader=栗林忠道
+ BattleTry=0
+ Country=大日本帝國
+ Strength=120
+ Stress=0
+ UnitClass=8
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]178
+ Name=百武晴吉
+ Leader=百武晴吉
+ BattleTry=0
+ Country=大日本帝國
+ Strength=120
+ Stress=0
+ UnitClass=8
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]179
+ Name=田俊六
+ Leader=田俊六
+ BattleTry=0
+ Country=大日本帝國
+ Strength=110
+ Stress=0
+ UnitClass=12
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]180
+ Name=今村均
+ Leader=今村均
+ BattleTry=0
+ Country=大日本帝國
+ Strength=120
+ Stress=0
+ UnitClass=12
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]181
+ Name=楊虎城
+ Leader=楊虎城
+ BattleTry=0
+ Country=國民軍
+ Strength=100
+ Stress=0
+ UnitClass=43
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]182
+ Name=夏超
+ Leader=夏超
+ BattleTry=0
+ Country=五省聯軍
+ Strength=104
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]183
+ Name=錢大鈞
+ Leader=錢大鈞
+ BattleTry=0
+ Country=國民政府
+ Strength=80
+ Stress=0
+ UnitClass=4
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]184
+ Name=盧香亭
+ Leader=盧香亭
+ BattleTry=0
+ Country=五省聯軍
+ Strength=100
+ Stress=0
+ UnitClass=14
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=2
+[/UNIT]
+[UNIT]185
+ Name=謝鴻勳
+ Leader=謝鴻勳
+ BattleTry=0
+ Country=五省聯軍
+ Strength=100
+ Stress=0
+ UnitClass=14
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=2
+[/UNIT]
+[UNIT]186
+ Name=阿南惟幾
+ Leader=阿南惟幾
+ BattleTry=0
+ Country=大日本帝國
+ Strength=120
+ Stress=0
+ UnitClass=8
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]187
+ Name=袁家驥
+ Leader=袁家驥
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]188
+ Name=張作相
+ Leader=張作相
+ BattleTry=0
+ Country=奉系
+ Strength=112
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]189
+ Name=萬福麟
+ Leader=萬福麟
+ BattleTry=0
+ Country=奉系
+ Strength=100
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]190
+ Name=呂超
+ Leader=呂超
+ BattleTry=0
+ Country=川軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]191
+ Name=馮軼裴
+ Leader=馮軼裴
+ BattleTry=0
+ Country=國民政府
+ Strength=126
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]192
+ Name=唐繼麟
+ Leader=唐繼麟
+ BattleTry=0
+ Country=滇系
+ Strength=114
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]193
+ Name=楊如軒
+ Leader=楊如軒
+ BattleTry=0
+ Country=滇系
+ Strength=100
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]194
+ Name=楊賡和
+ Leader=楊賡和
+ BattleTry=0
+ Country=五省聯軍
+ Strength=104
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]195
+ Name=顏景宗
+ Leader=顏景宗
+ BattleTry=0
+ Country=五省聯軍
+ Strength=104
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]196
+ Name=陳嘉謨
+ Leader=陳嘉謨
+ BattleTry=0
+ Country=直系
+ Strength=104
+ Stress=0
+ UnitClass=14
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]197
+ Name=張鳳歧
+ Leader=張鳳歧
+ BattleTry=0
+ Country=五省聯軍
+ Strength=104
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]198
+ Name=馬濟
+ Leader=馬濟
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=102
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]199
+ Name=許琨
+ Leader=許琨
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]200
+ Name=蔣啟鳳
+ Leader=蔣啟鳳
+ BattleTry=0
+ Country=五省聯軍
+ Strength=104
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]201
+ Name=張宗輔
+ Leader=張宗輔
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]202
+ Name=張毅
+ Leader=張毅
+ BattleTry=0
+ Country=五省聯軍
+ Strength=104
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]203
+ Name=李鳳翔
+ Leader=李鳳翔
+ BattleTry=0
+ Country=五省聯軍
+ Strength=104
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]204
+ Name=佟麟閣
+ Leader=佟麟閣
+ BattleTry=0
+ Country=國民軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]205
+ Name=趙登禹
+ Leader=趙登禹
+ BattleTry=0
+ Country=國民軍
+ Strength=100
+ Stress=0
+ UnitClass=43
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]206
+ Name=馮治安
+ Leader=馮治安
+ BattleTry=0
+ Country=國民軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]207
+ Name=孟昭月
+ Leader=孟昭月
+ BattleTry=0
+ Country=五省聯軍
+ Strength=100
+ Stress=0
+ UnitClass=1
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]208
+ Name=鄭俊彥
+ Leader=鄭俊彥
+ BattleTry=0
+ Country=五省聯軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]209
+ Name=飯田祥二郎
+ Leader=飯田祥二郎
+ BattleTry=0
+ Country=大日本帝國
+ Strength=120
+ Stress=0
+ UnitClass=13
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]210
+ Name=牛島滿
+ Leader=牛島滿
+ BattleTry=0
+ Country=大日本帝國
+ Strength=120
+ Stress=0
+ UnitClass=8
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]211
+ Name=安達二十三
+ Leader=安達二十三
+ BattleTry=0
+ Country=大日本帝國
+ Strength=120
+ Stress=0
+ UnitClass=8
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]212
+ Name=安藤利吉
+ Leader=安藤利吉
+ BattleTry=0
+ Country=大日本帝國
+ Strength=120
+ Stress=0
+ UnitClass=8
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]213
+ Name=藤江惠輔
+ Leader=藤江惠輔
+ BattleTry=0
+ Country=大日本帝國
+ Strength=110
+ Stress=0
+ UnitClass=12
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]214
+ Name=磯谷廉介
+ Leader=磯谷廉介
+ BattleTry=0
+ Country=大日本帝國
+ Strength=120
+ Stress=0
+ UnitClass=9
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]215
+ Name=本間雅晴
+ Leader=本間雅晴
+ BattleTry=0
+ Country=大日本帝國
+ Strength=120
+ Stress=0
+ UnitClass=8
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]216
+ Name=巴克納
+ Leader=巴克納
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=1
+ UnitClass=11
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]217
+ Name=吉鴻昌
+ Leader=吉鴻昌
+ BattleTry=0
+ Country=國民軍
+ Strength=100
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]218
+ Name=蔣鼎文
+ Leader=蔣鼎文
+ BattleTry=0
+ Country=國民政府
+ Strength=120
+ Stress=0
+ UnitClass=1
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]219
+ Name=馬田
+ Leader=馬田
+ BattleTry=0
+ Country=法國
+ Strength=120
+ Stress=0
+ UnitClass=2
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]220
+ Name=康披隆
+ Leader=康披隆
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]221
+ Name=納洛
+ Leader=納洛
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=34
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]222
+ Name=帕依蒙蒂
+ Leader=帕依蒙蒂
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]223
+ Name=希拉隆空
+ Leader=希拉隆空
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]224
+ Name=瓦猜楊南沙立
+ Leader=瓦猜楊南沙立
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=34
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]225
+ Name=丹巴絳央
+ Leader=丹巴絳央
+ BattleTry=0
+ Country=西藏
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]226
+ Name=索南旺堆
+ Leader=索南旺堆
+ BattleTry=0
+ Country=西藏
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]227
+ Name=史密斯
+ Leader=史密斯
+ BattleTry=0
+ Country=美國
+ Strength=120
+ Stress=0
+ UnitClass=25
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]228
+ Name=魏德邁
+ Leader=魏德邁
+ BattleTry=0
+ Country=美國
+ Strength=120
+ Stress=0
+ UnitClass=7
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]229
+ Name=加倫
+ Leader=加倫
+ BattleTry=0
+ Country=蘇聯
+ Strength=122
+ Stress=0
+ UnitClass=27
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]230
+ Name=崔可夫
+ Leader=崔可夫
+ BattleTry=0
+ Country=蘇聯
+ Strength=122
+ Stress=0
+ UnitClass=3
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]231
+ Name=馬利諾夫斯基
+ Leader=馬利諾夫斯基
+ BattleTry=0
+ Country=蘇聯
+ Strength=110
+ Stress=0
+ UnitClass=18
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]232
+ Name=弗拉索夫
+ Leader=弗拉索夫
+ BattleTry=0
+ Country=蘇聯
+ Strength=122
+ Stress=0
+ UnitClass=3
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]233
+ Name=段祺瑞
+ Leader=段祺瑞
+ BattleTry=0
+ Country=皖系
+ Strength=90
+ Stress=0
+ UnitClass=4
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]234
+ Name=徐樹錚
+ Leader=徐樹錚
+ BattleTry=0
+ Country=皖系
+ Strength=106
+ Stress=0
+ UnitClass=14
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]235
+ Name=吳光新
+ Leader=吳光新
+ BattleTry=0
+ Country=皖系
+ Strength=106
+ Stress=0
+ UnitClass=41
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]236
+ Name=喬巴山
+ Leader=喬巴山
+ BattleTry=0
+ Country=蒙古
+ Strength=100
+ Stress=0
+ UnitClass=32
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]237
+ Name=巴德拉克
+ Leader=巴德拉克
+ BattleTry=0
+ Country=蒙古
+ Strength=100
+ Stress=0
+ UnitClass=32
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]238
+ Name=奇米德
+ Leader=奇米德
+ BattleTry=0
+ Country=蒙古
+ Strength=100
+ Stress=0
+ UnitClass=32
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]239
+ Name=馬福祥
+ Leader=馬福祥
+ BattleTry=0
+ Country=馬家軍
+ Strength=110
+ Stress=0
+ UnitClass=33
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]240
+ Name=孫震
+ Leader=孫震
+ BattleTry=0
+ Country=川康軍
+ Strength=100
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]241
+ Name=王銘章
+ Leader=王銘章
+ BattleTry=0
+ Country=川軍
+ Strength=130
+ Stress=2
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]242
+ Name=王甲本
+ Leader=王甲本
+ BattleTry=0
+ Country=滇系
+ Strength=114
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]243
+ Name=葉戈羅夫
+ Leader=葉戈羅夫
+ BattleTry=0
+ Country=蘇聯
+ Strength=110
+ Stress=0
+ UnitClass=18
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]244
+ Name=石友三
+ Leader=石友三
+ BattleTry=0
+ Country=國民軍
+ Strength=100
+ Stress=0
+ UnitClass=43
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]245
+ Name=何鍵
+ Leader=何鍵
+ BattleTry=0
+ Country=湘系
+ Strength=108
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]246
+ Name=葉開鑫
+ Leader=葉開鑫
+ BattleTry=0
+ Country=湘系
+ Strength=108
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]247
+ Name=夏斗寅
+ Leader=夏斗寅
+ BattleTry=0
+ Country=湘系
+ Strength=108
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]248
+ Name=賀耀祖
+ Leader=賀耀祖
+ BattleTry=0
+ Country=湘系
+ Strength=108
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]249
+ Name=廖磊
+ Leader=廖磊
+ BattleTry=0
+ Country=湘系
+ Strength=108
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]250
+ Name=夏威
+ Leader=夏威
+ BattleTry=0
+ Country=桂系
+ Strength=100
+ Stress=0
+ UnitClass=-1
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]251
+ Name=李品仙
+ Leader=李品仙
+ BattleTry=0
+ Country=湘系
+ Strength=108
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]252
+ Name=葉琪
+ Leader=葉琪
+ BattleTry=0
+ Country=湘系
+ Strength=100
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]253
+ Name=楚溪春
+ Leader=楚溪春
+ BattleTry=0
+ Country=晉系
+ Strength=100
+ Stress=0
+ UnitClass=1
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]254
+ Name=和加尼牙孜
+ Leader=和加尼牙孜
+ BattleTry=0
+ Country=新疆
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]255
+ Name=劉鉶
+ Leader=劉鉶
+ BattleTry=0
+ Country=湘系
+ Strength=108
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]256
+ Name=魯道源
+ Leader=魯道源
+ BattleTry=0
+ Country=滇系
+ Strength=114
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]257
+ Name=胡宗鐸
+ Leader=胡宗鐸
+ BattleTry=0
+ Country=桂系
+ Strength=100
+ Stress=0
+ UnitClass=1
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]258
+ Name=陳炯明
+ Leader=陳炯明
+ BattleTry=0
+ Country=粵系
+ Strength=100
+ Stress=0
+ UnitClass=5
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]259
+ Name=林虎
+ Leader=林虎
+ BattleTry=0
+ Country=粵系
+ Strength=100
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]260
+ Name=洪兆麟
+ Leader=洪兆麟
+ BattleTry=0
+ Country=粵系
+ Strength=100
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]261
+ Name=楊坤如
+ Leader=楊坤如
+ BattleTry=0
+ Country=粵系
+ Strength=102
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]262
+ Name=楊希閔
+ Leader=楊希閔
+ BattleTry=0
+ Country=粵系
+ Strength=102
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]263
+ Name=劉震寰
+ Leader=劉震寰
+ BattleTry=0
+ Country=粵系
+ Strength=102
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]264
+ Name=譚曙卿
+ Leader=譚曙卿
+ BattleTry=0
+ Country=國民政府
+ Strength=126
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]265
+ Name=樊鍾秀
+ Leader=樊鍾秀
+ BattleTry=0
+ Country=國民軍
+ Strength=104
+ Stress=0
+ UnitClass=43
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]266
+ Name=克拉克
+ Leader=克拉克
+ BattleTry=0
+ Country=美國
+ Strength=120
+ Stress=0
+ UnitClass=7
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]267
+ Name=許崇智
+ Leader=許崇智
+ BattleTry=0
+ Country=國民政府
+ Strength=120
+ Stress=0
+ UnitClass=1
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]268
+ Name=鄒作華
+ Leader=鄒作華
+ BattleTry=0
+ Country=奉系
+ Strength=90
+ Stress=0
+ UnitClass=4
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]269
+ Name=許世友
+ Leader=許世友
+ BattleTry=0
+ Country=直系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=1
+[/UNIT]
+[UNIT]270
+ Name=聶卡耶夫
+ Leader=聶卡耶夫
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=3
+ ExtraUnit=0
+ Experience=0
+ Supplied=0
+ Lv=0
+[/UNIT]
+[UNIT]271
+ Name=陳長捷
+ Leader=陳長捷
+ BattleTry=0
+ Country=晉系
+ Strength=100
+ Stress=2
+ UnitClass=6
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]272
+ Name=馬玉仁
+ Leader=馬玉仁
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=2
+[/UNIT]
+[UNIT]273
+ Name=傑克邱吉爾
+ Leader=傑克邱吉爾
+ BattleTry=0
+ Country=大英帝國
+ Strength=100
+ Stress=0
+ UnitClass=19
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]274
+ Name=陳宧
+ Leader=陳宧
+ BattleTry=0
+ Country=皖系
+ Strength=100
+ Stress=1
+ UnitClass=1
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=0
+[/UNIT]
+[UNIT]275
+ Name=陳修爵
+ Leader=陳修爵
+ BattleTry=0
+ Country=粵系
+ Strength=100
+ Stress=0
+ UnitClass=42
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]276
+ Name=鐵木辛哥
+ Leader=鐵木辛哥
+ BattleTry=0
+ Country=蘇聯
+ Strength=100
+ Stress=0
+ UnitClass=31
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=3
+[/UNIT]
+[UNIT]277
+ Name=沃羅諾夫
+ Leader=沃羅諾夫
+ BattleTry=0
+ Country=蘇聯
+ Strength=100
+ Stress=0
+ UnitClass=18
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]278
+ Name=加伊
+ Leader=加伊
+ BattleTry=0
+ Country=蘇聯
+ Strength=100
+ Stress=0
+ UnitClass=27
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]279
+ Name=普特納
+ Leader=普特納
+ BattleTry=0
+ Country=蘇聯
+ Strength=100
+ Stress=0
+ UnitClass=27
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]280
+ Name=沃羅哲伊京
+ Leader=沃羅哲伊京
+ BattleTry=0
+ Country=蘇聯
+ Strength=100
+ Stress=0
+ UnitClass=3
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]281
+ Name=梅克利斯
+ Leader=梅克利斯
+ BattleTry=0
+ Country=蘇聯
+ Strength=100
+ Stress=0
+ UnitClass=3
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]282
+ Name=烏斯片斯基
+ Leader=烏斯片斯基
+ BattleTry=0
+ Country=蘇聯
+ Strength=100
+ Stress=0
+ UnitClass=3
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]283
+ Name=別爾札林
+ Leader=別爾札林
+ BattleTry=0
+ Country=蘇聯
+ Strength=100
+ Stress=0
+ UnitClass=18
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]284
+ Name=里亞貝舍夫
+ Leader=里亞貝舍夫
+ BattleTry=0
+ Country=蘇聯
+ Strength=100
+ Stress=0
+ UnitClass=27
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]285
+ Name=傑羅
+ Leader=傑羅
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=0
+ UnitClass=25
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]286
+ Name=卡奈恩
+ Leader=卡奈恩
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=0
+ UnitClass=25
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]287
+ Name=博林
+ Leader=博林
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=0
+ UnitClass=11
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]288
+ Name=范德格利夫特
+ Leader=范德格利夫特
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=0
+ UnitClass=25
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]289
+ Name=艾德蒙
+ Leader=艾德蒙
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=0
+ UnitClass=11
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]290
+ Name=柯林斯
+ Leader=柯林斯
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=0
+ UnitClass=17
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]291
+ Name=伯特
+ Leader=伯特
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=0
+ UnitClass=11
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]292
+ Name=霍奇
+ Leader=霍奇
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=0
+ UnitClass=11
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]293
+ Name=亞當斯
+ Leader=亞當斯
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=0
+ UnitClass=11
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]294
+ Name=德威爾
+ Leader=德威爾
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=0
+ UnitClass=17
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]295
+ Name=特拉斯科特
+ Leader=特拉斯科特
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=0
+ UnitClass=11
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]296
+ Name=阿派旺
+ Leader=阿派旺
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]297
+ Name=鑾巴立
+ Leader=鑾巴立
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=34
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]298
+ Name=汶耶吉
+ Leader=汶耶吉
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]299
+ Name=頌卡
+ Leader=頌卡
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]300
+ Name=杭特拉庫
+ Leader=杭特拉庫
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]301
+ Name=甘拉那
+ Leader=甘拉那
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]302
+ Name=馬加維胡拉雅
+ Leader=馬加維胡拉雅
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]303
+ Name=蒙西帕
+ Leader=蒙西帕
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]304
+ Name=帕依榮
+ Leader=帕依榮
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]305
+ Name=彭約蒂
+ Leader=彭約蒂
+ BattleTry=0
+ Country=泰國
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]306
+ Name=陳獨秀
+ Leader=陳獨秀
+ BattleTry=0
+ Country=共產黨
+ Strength=100
+ Stress=0
+ UnitClass=-1
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=0
+[/UNIT]
+[UNIT]307
+ Name=鄧本殷
+ Leader=鄧本殷
+ BattleTry=0
+ Country=粵系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]308
+ Name=帕西瓦爾
+ Leader=帕西瓦爾
+ BattleTry=0
+ Country=大英帝國
+ Strength=100
+ Stress=0
+ UnitClass=5
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]309
+ Name=沃威斯奇
+ Leader=沃威斯奇
+ BattleTry=0
+ Country=大英帝國
+ Strength=100
+ Stress=0
+ UnitClass=5
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]310
+ Name=帕里斯
+ Leader=帕里斯
+ BattleTry=0
+ Country=大英帝國
+ Strength=100
+ Stress=0
+ UnitClass=5
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]311
+ Name=墨菲里昂
+ Leader=墨菲里昂
+ BattleTry=0
+ Country=大英帝國
+ Strength=100
+ Stress=0
+ UnitClass=29
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]312
+ Name=蕭毅肅
+ Leader=蕭毅肅
+ BattleTry=0
+ Country=川康軍
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]313
+ Name=羅桑澤旺
+ Leader=羅桑澤旺
+ BattleTry=0
+ Country=西藏
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=0
+[/UNIT]
+[UNIT]314
+ Name=阿旺晉美
+ Leader=阿旺晉美
+ BattleTry=0
+ Country=西藏
+ Strength=100
+ Stress=0
+ UnitClass=32
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=0
+[/UNIT]
+[UNIT]315
+ Name=彭措饒杰
+ Leader=彭措饒杰
+ BattleTry=0
+ Country=西藏
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]316
+ Name=林忠
+ Leader=林忠
+ BattleTry=0
+ Country=五省聯軍
+ Strength=100
+ Stress=1
+ UnitClass=25
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]317
+ Name=蔣百里
+ Leader=蔣百里
+ BattleTry=0
+ Country=直系
+ Strength=100
+ Stress=0
+ UnitClass=-1
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=0
+[/UNIT]
+[UNIT]318
+ Name=裕仁
+ Leader=裕仁
+ BattleTry=0
+ Country=大日本帝國
+ Strength=100
+ Stress=0
+ UnitClass=-1
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=0
+[/UNIT]
+[UNIT]319
+ Name=丹增堅贊
+ Leader=丹增堅贊
+ BattleTry=0
+ Country=西藏
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]320
+ Name=尼米茲
+ Leader=尼米茲
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=0
+ UnitClass=-1
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=0
+[/UNIT]
+[UNIT]321
+ Name=金恩
+ Leader=金恩
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=0
+ UnitClass=-1
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=0
+[/UNIT]
+[UNIT]322
+ Name=海爾賽
+ Leader=海爾賽
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=0
+ UnitClass=-1
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=0
+[/UNIT]
+[UNIT]323
+ Name=張其鍠
+ Leader=張其鍠
+ BattleTry=0
+ Country=直系
+ Strength=100
+ Stress=0
+ UnitClass=-1
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=0
+[/UNIT]
+[UNIT]324
+ Name=毛光翔
+ Leader=毛光翔
+ BattleTry=0
+ Country=黔系
+ Strength=100
+ Stress=0
+ UnitClass=0
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]325
+ Name=張宗援
+ Leader=張宗援
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]326
+ Name=尚旭東
+ Leader=尚旭東
+ BattleTry=0
+ Country=直魯聯軍
+ Strength=100
+ Stress=0
+ UnitClass=6
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]327
+ Name=威洛比
+ Leader=威洛比
+ BattleTry=0
+ Country=美國
+ Strength=100
+ Stress=0
+ UnitClass=11
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]328
+ Name=卡斯特里
+ Leader=卡斯特里
+ BattleTry=0
+ Country=法國
+ Strength=100
+ Stress=0
+ UnitClass=2
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]329
+ Name=朗格萊
+ Leader=朗格萊
+ BattleTry=0
+ Country=法國
+ Strength=100
+ Stress=0
+ UnitClass=2
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+[UNIT]330
+ Name=比雅爾
+ Leader=比雅爾
+ BattleTry=0
+ Country=法國
+ Strength=100
+ Stress=0
+ UnitClass=25
+ ExtraUnit=0
+ Experience=0
+ Supplied=1
+ Lv=1
+[/UNIT]
+`;
+
+// 将数据分割成不同的块
+const blocks = data_str.trim().split('\n[/UNIT]\n');
+
+// 创建一个空数组来保存数据对象
+const data_arr = [];
+
+// 遍历每个数据块，将其添加到数组中
+blocks.forEach(block => {
+  // 将块分割成不同的行
+  const lines = block.trim().split('\n');
+  // 创建一个空对象来保存数据
+  const data_obj = { idx: lines[0].replace('[UNIT]', '').trim() };
+  // 遍历每一行数据，将其添加到对象中
+  lines.forEach((line, index) => {
+    if (index !== 0 && line.includes('=')) {
+      const [key, value] = line.split('=');
+      data_obj[key.trim()] = value.trim();
+    }
+  });
+  // 将数据对象添加到数组中
+  data_arr.push(data_obj);
+});
+
+// 将数组转换为 JSON 格式
+const json_data = JSON.stringify(data_arr);
+
+// 打印 JSON 格式的数据
+console.log(json_data);
+
+    }
+    update() { }
+}
+
+var config = {
+    type: Phaser.AUTO,
+    parent: 'game',
+    width: 800,
+    height: 600,
+    scene: Test
+};
+
+var game = new Phaser.Game(config);
