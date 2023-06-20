@@ -76,7 +76,7 @@ var CreateGridSavePanel = function (scene, itemsCnt) {
       cellContainer.popUp(600);
       cellContainer.moveFromPromise(500, xFrom, cellContainer.y) //儲存成功時的位移動畫
         .then(function(){
-          scene.toast.showMessage('save complete！')
+          scene.toast.bake('save complete！')
         })
     }
 

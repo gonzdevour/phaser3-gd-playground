@@ -1,19 +1,20 @@
 //gdk
 import { DialogSelect } from '../gdk/modaldialog/DialogType';
+import { DialogMultiSelect } from '../gdk/modaldialog/DialogType';
 import { TransitionChoicesUpScaleDown } from '../gdk/modaldialog/TransistionType.js';
-import { TransitionBT } from '../gdk/modaldialog/TransistionType.js';
+import { TransitionBTAlignBottom } from '../gdk/modaldialog/TransistionType.js';
 import dialogButtonClickCallback from '../gdk/modaldialog/dialogButtonClickCallback.js';
+//proj
+import actionsBeforeDialogClose from './actionsBeforeDialogClose';
 
-//action before dialog close
-import AutoRemoveTween from "../../../../phaser3-rex-notes/plugins/utils/tween/AutoRemoveTween";
-import { Delay } from "../../../../phaser3-rex-notes/plugins/eventpromise";
+//dialog與textplayer演出
 
-//dialog與tagPlayer演出
-
-var CreateWaitingDialog = async function(scene, choices, viewport){ //傳入viewport作為dialog加入vpc的目標viewport
-    if (viewport == undefined){
-        viewport = scene.viewport; //如果沒有viewport就以scaleOuter為viewport
-    }
+var CreateWaitingDialog = async function(qMaster){
+    var scene = qMaster.scene;
+    var question = qMaster.question;
+    qMaster.setExpression('F01').setMotionSpeed(1).startMotion('Idle', 0, 'force');
+    await qMaster.say(question['Q']);
+    //choicesData:{ifShuffle:1/0, list:[{imgKey:key, text:text, indexFixed:0/1},...]}
     var result = await DialogSelect(scene, {
         //title: 'test title', 
         //content: 'test content', 
@@ -23,52 +24,39 @@ var CreateWaitingDialog = async function(scene, choices, viewport){ //傳入view
         ],
         choicesData: {
             ifShuffle:0,
-            list: CreateChoiceDataList(choices),
+            list: CreateChoiceDataList(question),
         },
         extraConfig: { //客製調整參數
-            x: viewport.centerX,
-            y: viewport.bottom,
-            viewport: viewport,
+            x: scene.viewport.centerX,
+            y: scene.viewport.bottom,
             width: scene.game.config.width-50, 
-            cover: {color:0x0, alpha: 0.3, transitIn(cover, dur){}, transitOut(cover, dur) {},}, //#663030
-            transitIn: TransitionBT,
+            cover: {color:0x663030, alpha: 0.1}, //#663030
+            transitIn: TransitionBTAlignBottom,
             transitOut: TransitionChoicesUpScaleDown,
-            duration:{ in: 600, out: 600 },
+            duration:{ in: 600, out: 1400 },
             dialogButtonClickCallback: dialogButtonClickCallback, //通用流程處理後回傳result: buttonType, choicesState, singleSelectedName
             actionsBeforeDialogClose: actionsBeforeDialogClose, //點擊選項後面板收合前的客製反應；等待按鈕閃爍、角色表情動作、等待播放評語
         }
     })
+    //console.log('dialogResult:' + JSON.stringify(result))
+    //character.timeScale = 1.5;
+    //character.setExpression('F06').stopAllMotions().startMotion('TapBody', 0, 'force')
+    //await textPlayer.playPromise(question['Say' + GetValue(result, 'singleSelectedName', 1) ]+'[wait=click][wait=500]')
     return result;
-}
+  }
   
-var CreateChoiceDataList = function(choices){
+  var CreateChoiceDataList = function(question){
     var result = [];
-    for (let index = 0; index < choices.length; index++) {
+    for (let index = 0; index < question.Cnt; index++) {
         var data = {
             imageKey: undefined,
-            text: choices[index]['text'],
+            text: question['A'+(index+1)],
             indexFixed: 1,
         };
         result.push(data);
     }
     //console.log(JSON.stringify(result))
     return result;
-}
+  }
 
-//actionsBeforeDialogClose:
-//點擊選項後面板收合前的客製反應；等待按鈕閃爍、角色表情動作、等待播放評語
-//原本是獨立檔案，不拆出來是因為貼上比較簡單
-//必須是async fucntion或promise
-
-var actionsBeforeDialogClose = async function(scene, button, dialog, result){
-    flash(button);
-    await Delay(1000);
-}
-  
-var flash = function(button){
-    var bbg = button.getElement('background')
-    AutoRemoveTween(bbg, {ease: 'linear', alpha: 0, duration: 200, yoyo: true, repeat:2,});
-    AutoRemoveTween(button, {ease: 'cubic', y: '-=20', duration: 300, yoyo:true, completeDelay: 400});
-}
-
-export default CreateWaitingDialog;
+  export default CreateWaitingDialog;

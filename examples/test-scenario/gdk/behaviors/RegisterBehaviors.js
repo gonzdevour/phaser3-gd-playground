@@ -6,7 +6,7 @@ var bhvMethods = {
   ninja: ninja,
 }
 
-var RegisterBehaviors = function(gameObject, bhvs){
+var addBehaviorsToGameObject = function(gameObject, bhvs){
 
   if (Array.isArray(bhvs)){ //如果是array
 
@@ -27,6 +27,18 @@ var RegisterBehaviors = function(gameObject, bhvs){
           bhvMethods[bhvs](gameObject);
       }
   }
+  }
+}
+
+var RegisterBehaviors = function(target, bhvs){
+  if (Array.isArray(target)){ //如果targets是array(要註冊複數目標)
+
+    target.forEach(function(gameObject, idx, arr){
+      addBehaviorsToGameObject(gameObject, bhvs);
+    })
+
+  } else { //如果不是array
+    addBehaviorsToGameObject(target, bhvs);
   }
 }
 

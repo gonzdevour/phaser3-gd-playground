@@ -147,27 +147,44 @@ class p3_sound {
     se.destroy();
   }
   play(key, config) {
-    log("p3audio play " + key + ' vol' + this.volume);
-    config = !config?{}:config; //如果沒有config就建一個config
-    config.volume = config.volume?config.volume:this.volumeSE; //如果呼叫時沒給volume則取用lsData中的volume
-    var se = this.scene.sound.add(key, config);
-    se.soundKey = key;
-    ArrAdd(this.ArrSE, se)
-    se.play(); //on complete時p3會自動destroy se，所以不用特別處理刪除
-    return se;
+    //判斷音源是否存在
+    var scene = this.scene;
+    var audioExist = ifAudioExist(scene, key);
+
+    if (audioExist){
+      log("p3audio play " + key + ' vol' + this.volume);
+      config = !config?{}:config; //如果沒有config就建一個config
+      config.volume = config.volume?config.volume:this.volumeSE; //如果呼叫時沒給volume則取用lsData中的volume
+      var se = this.scene.sound.add(key, config);
+      se.soundKey = key;
+      ArrAdd(this.ArrSE, se)
+      se.play(); //on complete時p3會自動destroy se，所以不用特別處理刪除
+      return se;
+    } else {
+      log(`[sound]${key} is not exist`)
+    }
+
   }
   loop(key, config) {
-    log("p3audio loop " + key );
-    config = !config?{}:config; //如果沒有config就建一個config
-    config.volume = config.volume?config.volume:this.volumeBGM; //如果呼叫時沒給volume則取用lsData中的volume
-    config.loop = true;
-    var se = this.scene.sound.add(key, config);
-    se.soundKey = key;
-    ArrAdd(this.ArrBGM, se)
-    se.play();
-    return se;
+    //判斷音源是否存在
+    var scene = this.scene;
+    var audioExist = ifAudioExist(scene, key);
+
+    if (audioExist){
+      log("p3audio loop " + key );
+      config = !config?{}:config; //如果沒有config就建一個config
+      config.volume = config.volume?config.volume:this.volumeBGM; //如果呼叫時沒給volume則取用lsData中的volume
+      config.loop = true;
+      var se = this.scene.sound.add(key, config);
+      se.soundKey = key;
+      ArrAdd(this.ArrBGM, se)
+      se.play();
+      return se;
+    } else {
+      log(`[sound]${key} is not exist`)
+    }
   }
-  getSrc(key) {
+  getSrc(key) { //web audio不需要先getSrc，但是要保持method共通
     if (this.urls[key]){
       var url = this.urls[key]["mp3"];
       var root = window.location.pathname;
@@ -206,6 +223,10 @@ var pack2audioSrc = function(pack){
       })
   })
   return result;
+}
+
+var ifAudioExist = function(scene, key){
+  return scene.cache.audio.exists(key);
 }
 
 export { soundInit };

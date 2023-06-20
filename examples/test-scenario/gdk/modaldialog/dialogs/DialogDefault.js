@@ -66,6 +66,13 @@ var DialogDefault = function (scene, cfg) {
         content: false,
         choices: true, //隨dialog的排版延展
     },
+    align: {
+        title: 'center',
+        content: 'center',
+        description: 'center',
+        choices: 'center',
+        actions: 'center',
+    },
     manualClose: true, //modalClose的模式選擇，自動關閉/手動關閉
     transitIn:0, //0('popUp')|1('fadeIn')|false(null)|customCallback(obj,dur)
     transitOut:0, //0('scaleDown')|1('fadeOut')|false(null)|customCallback(obj,dur)
@@ -84,6 +91,9 @@ var DialogDefault = function (scene, cfg) {
   }
   if (extraConfig.expand){
     dialogConfig.expand = Object.assign({}, defaultValueConfig.expand, extraConfig.expand);
+  }
+  if (extraConfig.align){
+    dialogConfig.align = Object.assign({}, defaultValueConfig.align, extraConfig.align);
   }
   if (extraConfig.duration){
     dialogConfig.duration = Object.assign({}, defaultValueConfig.duration, extraConfig.duration);

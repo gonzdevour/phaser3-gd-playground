@@ -8,13 +8,13 @@ import CreateActor from "./actor/CreateActor.js";
 import CreateStoryBox from "./storybox/CreateStoryBox.js";
 import CreateBackground from "./background/CreateBackground.js";
 
-var CreateScenario = function(scene, x, y, width, height){
+var CreateScenario = function(scene, x, y, maxWidth, maxHeight){
   //scenario
   scene.scenario = new CSVScenario(scene)
   scene.scenario.isPlayingText = false;
   scene.scenario.director = new ScenarioDirector(scene, {
       scenario: scene.scenario,
-      viewport: CreateScenarioViewport(scene, x, y, width, height),
+      viewport: CreateScenarioViewport(scene, x, y, maxWidth, maxHeight),
       tagPlayer: new TagPlayer(scene ,{
           texts: false,  //關閉預設物件
           sprites: false,//關閉預設物件
@@ -22,21 +22,33 @@ var CreateScenario = function(scene, x, y, width, height){
               delimiters: '<>',
               comment: '//'
           },
+          sounds: {
+            bgm: { 
+                initial: undefined,
+                loop: true,
+                fade: 500
+            },
+            bgm2: { //語音專用
+                initial: undefined,
+                loop: false,
+                fade: 0
+            }
+          },
       })
       .addGameObjectManager({
         name: 'char',
         createGameObject: CreateActor,
-        fade:300,
+        fade:500,
       })
       .addGameObjectManager({
           name: 'text',
           createGameObject: CreateStoryBox,
-          fade:0,
+          fade:500,
       })
       .addGameObjectManager({
         name: 'bg',
         createGameObject: CreateBackground,
-        fade:0,
+        fade:500,
     })
   });
 
@@ -61,14 +73,14 @@ var CreateScenario = function(scene, x, y, width, height){
     .on('log', function (msg) {
       scenario.scope.onScenarioLog(msg);
     })
+    .on('error', function(msg, scope, scenario){ 
+      console.log(`[scenario]${msg}`)
+    })
     .on('wait.click', function (scenario) {
       scenario.scope.onWaitClick('scenario', scenario.lastCustomCommandName);
     })
     .on('wait.choose', function (scenario) {
       scenario.scope.choicePop();
-    })
-    .on('complete', function () {
-      scenario.scope.onScenarioComplete();
     })
   
   var controllPanel = CreateControllPanel(scene, director, viewport);

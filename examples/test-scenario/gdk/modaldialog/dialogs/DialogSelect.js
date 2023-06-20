@@ -12,7 +12,7 @@ var DialogSelect = function (scene, config) {
       name: 'DialogSelect',
       //title: CreateTitle(scene, GetValue(config, 'title', undefined)),
       //content: CreateContent(scene, GetValue(config, 'content', undefined)),
-      //choicesBackground: CreateRoundRectangleBackground(scene, 20, undefined, 0x9e9e9e, 3), //'#140c44''#4f5b62',
+      choicesBackground: CreateRoundRectangleBackground(scene, 20, undefined, 0x9e9e9e, 3), //'#140c44''#4f5b62',
       choices: CreateChoices(scene, GetValue(config, 'choicesData', [])),
       choicesType: 'y-radio',
       choicesSetValueCallback: function (button, value) {
@@ -85,13 +85,13 @@ var CreateChoices = function(scene, choicesData){
     var list = GetValue(choicesData, 'list', []);
     list.forEach(function(item, index, arr){ //建立選項按鈕群
         //button config
-        item.spaceSettings = { left: 20, right: 20, top: 20, bottom: 20, icon: 10 };
+        item.spaceSettings = { left: 30, right: 30, top: 30, bottom: 30, icon: 10 };
         item.textStyle = { 
             fontFamily: Style.fontFamilyName,
             fontSize: 48,
             wrap: {
                 mode: 'character', // 0|'none'|1|'word'|2|'char'|'character'
-                width: scene.viewport.width*0.7,
+                width: scene.viewport.width*0.8,
             }
         }
         item.background = CreateRoundRectangleBackground(scene, 20, 0x002f6c, 0xffffff, 4); //#002f6c

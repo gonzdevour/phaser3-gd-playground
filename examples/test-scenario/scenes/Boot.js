@@ -1,4 +1,5 @@
 import Base from './Base.js';
+import initBranchScene from '../gdk/scene/InitBranchScene.js';
 
 import { soundInit } from '../gdk/api/sound.js';
 import { speechInit } from '../gdk/api/speech.js';
@@ -73,8 +74,8 @@ class Boot extends Base {
             key: DefaultAppConfig.sceneKey.Boot
         })
     }
-    init() {
-        super.init(); //scaleOuter for loadingUI
+    init() { //如果Base也有init這裡也有init，要呼叫Base的init就要用super.init()
+        initBranchScene(this);
         initTools(this);
     }
     preload() {

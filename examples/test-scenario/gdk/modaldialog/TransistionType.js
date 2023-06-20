@@ -74,6 +74,19 @@ var TransitionBT = function(dialog, duration) {
   AutoRemoveTween(dialog, {ease: 'Cubic', vpy: { from: yFrom, to: yTo }, alpha: { from: 0, to: 1 }, duration: 600,})
 }
 
+var TransitionBTAlignBottom = function(dialog, duration) { //quiz專用
+  var scene = dialog.scene;
+  var choices = dialog.getElement('choices');
+  choices.forEach(function(choice, idx, arr){
+    var Ang = choice.angle-5+Math.random()*10;
+    //dialog.tweenChild({targets: choice, ease: 'Linear', angle:Ang, duration: 300+100*Math.random(),});
+  })
+  //dialog.tweenChild({targets: choices, ease: 'Linear', x:{from: '-=100', to:0}, duration: 1400,});
+  var yFrom = scene.viewport.bottom+0.5*dialog.height;
+  var yTo = scene.viewport.bottom-0.5*dialog.height;
+  AutoRemoveTween(dialog, {ease: 'Cubic', y: { from: yFrom, to: yTo }, alpha: { from: 0, to: 1 }, angle: { from: -45, to: 3 }, duration: 600,})
+}
+
 //title下滑到上
 var TransitionScaleUpTitleUP = function(dialog, duration) {
   var title = dialog.getElement('title');
@@ -115,5 +128,6 @@ export {
   TransitionLR,
   TransitionRL,
   TransitionBT,
+  TransitionBTAlignBottom,
   TransitionScaleUpTitleUP,
 };

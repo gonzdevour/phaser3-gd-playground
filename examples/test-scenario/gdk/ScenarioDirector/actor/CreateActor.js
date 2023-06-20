@@ -4,16 +4,23 @@ import FadeOutDestroy from '../../../../../../phaser3-rex-notes/plugins/fade-out
 import ContainerLite from '../../../../../../phaser3-rex-notes/plugins/containerlite.js';
 
 //methods
-import MethodsMove from './MethodsMove.js';
+import MethodsMove from './MethodsMove.js'; //移動相關的指令，如jumpTo
+
 import GetValue from '../../../../../plugins/utils/object/GetValue.js';
+import Locate from '../../layer/Locate.js';
 
 class Actor extends ContainerLite {
-  constructor(scene, actorID, x, y) {
+  constructor(scene, actorID, vpx, vpy) {
+      var viewport = scene.scenario.director.viewport;
       var sprite = CreateChar(scene, actorID, 'normal0');
       var bubble = CreateTextbubble(scene, sprite).setPosition(sprite.x, sprite.getTopRight().y+100).setVisible(true)
       //var center = scene.rexUI.add.roundRectangle(sprite.x,sprite.y,100,1000,undefined,0xff0000);
       //super(scene, 0, 0, [sprite, center]);
       super(scene, 0, 0, [sprite,bubble]); 
+      this.defaultVPX = 0.5;
+      this.defaultVPY = 1.2;
+      vpx = vpx?vpx:this.defaultVPX;
+      vpy = vpy?vpy:this.defaultVPY;
       this.sprite = sprite;
       this.bubble = bubble; //addToLayer和container.add都會加入displayList，兩個都用就會render成兩個。所以bubble如果要保證在sprite上方就不能綁進actor
       this.scenario = scene.scenario;
@@ -22,8 +29,6 @@ class Actor extends ContainerLite {
 
       this.displayName = '';
       this.expression = '';
-
-      scene.layerManager.addToLayer('scenario_stage', this);
 
       bubble.on('complete', function(){
         this.scenario.isPlayingText = false;
@@ -35,11 +40,9 @@ class Actor extends ContainerLite {
           this.scenario.isPlayingText = false;
         },this);
 
-      scene.vpc.add(bubble, scene.scenario.director.viewport);
-      scene.vpc.add(this, scene.scenario.director.viewport);
+      Locate(scene, this, {instID: actorID, layerName: 'scenario_stage', viewport: viewport, vpx: vpx, vpy: vpy})
 
       this.assignPrivateData(this.director.tb_Char.table[actorID]);
-      this.setVPosition(x,y);
       this.appear();
   }
 
@@ -50,10 +53,10 @@ class Actor extends ContainerLite {
 
   setVPosition(x, y) {
     if (x == undefined){
-      x = 0.5;
+      x = this.defaultVPX;
     }
     if (y == undefined){
-      y = 1.2;
+      y = this.defaultVPY;
     }
     this.vpx = x;
     this.vpy = y;
@@ -66,7 +69,8 @@ class Actor extends ContainerLite {
   }
 
   appear() {
-    this.sprite.frontImage.setTint(0x0);
+    var frontImage = this.sprite.frontImage;
+    frontImage.setTint(0x0);
     this.scene.tweens.addCounter({
       from: 0,
       to: 255,
@@ -75,8 +79,8 @@ class Actor extends ContainerLite {
       onUpdate: function (tween)
       {
           const value = Math.floor(tween.getValue());
-          if(this.sprite.frontImage){
-            this.sprite.frontImage.setTint(Phaser.Display.Color.GetColor(value, value, value));
+          if(frontImage){
+            frontImage.setTint(Phaser.Display.Color.GetColor(value, value, value));
           }
       }
     });
@@ -245,10 +249,14 @@ Object.assign(
 );
 
 var CreateActor = function (scene, actorID, x, y) {
+  var director = scene.scenario.director;
   var newActor = new Actor(scene, actorID, x, y);
   newActor.tagPlayer = this;
   //scene.add.existing(newActor); //因為layer.add會將物件放進displayList中並排序，scene.add.exsiting也會，同時使用會導致順序錯亂
   //newActor.changeOrigin(200,200);
+  if (director.defaultActorScale != undefined){
+    newActor.setScale(director.defaultActorScale);
+  }
   return newActor;
 }
 

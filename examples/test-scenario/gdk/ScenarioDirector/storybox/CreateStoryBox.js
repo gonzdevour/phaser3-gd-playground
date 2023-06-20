@@ -4,15 +4,20 @@ import AutoRemoveTween from '../../../../../../phaser3-rex-notes/plugins/utils/t
 import CreateRoundRectangleBackground from "../../../gdk/templates/CreateRoundRectangleBackground";
 import CreatePortait from "./CreatePortrait";
 
+import OnWindowResize from "../../../../../plugins/utils/rwd/OnWindowResize";
+import Locate from "../../layer/Locate";
+
 const color_displayNameBackground = 0x333333;
 
 class StoryBox extends ContainerLite {
     constructor(scene, storyBoxID, vpx, vpy, width, height) {
 
+        var viewport = scene.scenario.director.viewport;
+
         if(vpx == undefined){vpx = 0.5};
-        if(vpy == undefined){vpy = 0.8};
-        if(width == undefined){width = scene.scenario.director.viewport.width*0.95};
-        if(height == undefined){height = scene.scenario.director.viewport.height*0.3};
+        if(vpy == undefined){vpy = 1};
+        if(width == undefined){width = viewport.width*0.95};
+        if(height == undefined){height = viewport.height*0.3};
 
         var textPlayer = CreateTextPlayer(scene, 0, 0, 100, 100);
         var portrait = CreatePortait(scene, 'Spring', 'normal0').setDisplaySize(height*0.8, height*0.8);
@@ -24,10 +29,11 @@ class StoryBox extends ContainerLite {
         })
         .add(portrait,{key:'portrait'})
         .add(textPlayer,{key:'textPlayer', proportion:1, expand:true}) //proportion是根據orientation的區域分配, expand是orientation另一向度的展開
+        .setOrigin(0.5,1)
         .layout()
 
-        var nameLabel = createNameLabel(scene, pTextPlayer.x-0.5*pTextPlayer.width, pTextPlayer.y-0.5*pTextPlayer.height);
-        var clickWaiter = createClickWaiter(scene, pTextPlayer.x + 0.5*pTextPlayer.width - 35, pTextPlayer.y + 0.5*pTextPlayer.height - 85);
+        var nameLabel = createNameLabel(scene, pTextPlayer.x-0.5*pTextPlayer.width, pTextPlayer.y-1*pTextPlayer.height);
+        var clickWaiter = createClickWaiter(scene, pTextPlayer.x + 0.5*pTextPlayer.width - 35, pTextPlayer.y - 85);
         var background = CreateCustomShape(scene, pTextPlayer).setFillStyle(0x0, 0.7).setStrokeStyle(3, 0xffffff, 1)
         background.setPosition(0,0); //注意這裡的textPlayer.x/y只是layout後相對於0的值
         //background.setPosition(textPlayer.x, textPlayer.y); //注意這裡的textPlayer.x/y只是layout後相對於0的值
@@ -42,8 +48,19 @@ class StoryBox extends ContainerLite {
         background.setAlpha(0.5);
         this.moveDepthBelow(background);
 
-        scene.layerManager.addToLayer('scenario_story', this);
-        scene.vpc.add(this, scene.scenario.director.viewport, vpx, vpy);
+        Locate(scene, this, {instID: 'storyBox', layerName: 'scenario_story', viewport: viewport, vpx: vpx, vpy: vpy, vpyOffset: -30})
+
+        //rwd
+        var response = function(){
+            pTextPlayer
+                .setMinWidth(viewport.width*0.95) //clickArea的expand預設為true，所以會跟著panel的大小，不用另外設定
+                .layout()
+            textPlayer.play(textPlayer.text);
+            nameLabel.setPosition(pTextPlayer.x-0.5*pTextPlayer.width, pTextPlayer.y-1*pTextPlayer.height);
+            clickWaiter.setPosition(pTextPlayer.x + 0.5*pTextPlayer.width - 35, pTextPlayer.y - 85)
+            background.setDirty();
+        }
+        OnWindowResize(scene, response, this);
 
         this.graphics = scene.add.graphics(); //debug用
 
@@ -141,7 +158,7 @@ class StoryBox extends ContainerLite {
     }
     nameLabelBounce() {
         var t = this.pTextPlayer;
-        var yFrom = t.y-0.5*t.height
+        var yFrom = t.top;
         AutoRemoveTween(this.nameLabel, {
             y: {from: yFrom, to:yFrom-20},
             ease: 'Cubic',
@@ -222,7 +239,7 @@ var CreateTextPlayer = function(scene, x, y, width, height){
         {
             x: x, y: y, width: width, height: height,  // Fixed width and height
             //background: { stroke: 'white', strokeThickness: 3, cornerRadius: 5, }, //color: 'rgba(0, 0, 0, 0.7)', color2: 'rgba(8, 9, 107, 0.5)', horizontalGradient: true,
-            //innerBounds: { stroke: '#A52A2A' },
+            innerBounds: { stroke: '#A52A2A' },
             padding: {left: 10, right: 10, top: 10, bottom: 10},
             style: {
                 fontSize: '36px',
@@ -279,9 +296,9 @@ var CreateTextPlayer = function(scene, x, y, width, height){
                 }
             },
             clickTarget: null, //如果要自訂就填null再用setClickTarget設定
-            wrap: { charWrap: true, maxLines: 5, padding: { bottom: 10 }, lineHeight: 48, },
+            wrap: { charWrap: true, padding: { bottom: 10 }, lineHeight: 48, },
 
-            //nextPageInput: 'click|2000'
+            nextPageInput: 'click|2000'
             // nextPageInput: function(callback) {
             //     console.log('Custom next-page-input')
             //     callback();
@@ -327,7 +344,7 @@ var CreateCustomShape = function (scene, target) {
             var tailWidth = 40;
 
             var left = offsetX-0.5*width, right = offsetX+0.5*width,
-                top = -0.5*height, bottom = 0.5*height, 
+                top = -1*height, bottom = 0*height, 
 
                 //沒有actor的時候尾巴置中
                 indentRight = 0.5*tailWidth,
@@ -407,6 +424,6 @@ var CreateStoryBox = function (scene, storyBoxID, vpx, vpy, width, height) {
             //storyBox.textPlayerClose();
         })
     return storyBox;
-  }
+}
 
 export default CreateStoryBox;

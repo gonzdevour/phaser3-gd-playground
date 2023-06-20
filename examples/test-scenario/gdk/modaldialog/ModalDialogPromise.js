@@ -1,4 +1,5 @@
 import CreateModalDialog from './CreateModalDialog.js';
+import OnWindowResize from '../../../../plugins/utils/rwd/OnWindowResize.js';
 
 var ModalDialogPromise = function (scene, config) {
     var dialog = CreateModalDialog(scene, config)
@@ -31,8 +32,22 @@ var ModalDialogPromise = function (scene, config) {
 
     if(config.viewport){
         dialog.viewport = config.viewport;
+    } else {
+        if (scene.viewport){
+            dialog.viewport = scene.viewport;
+        }
+    } 
+    if (dialog.viewport){
         scene.vpc.add(dialog, dialog.viewport);
     }
+
+    //rwd
+    var response = function(){
+        dialog
+            .setMinWidth(scene.viewport.width-50)
+            .layout()
+    }
+    OnWindowResize(scene, response);
 
     return scene.rexUI.modalPromise(dialog, config);
 }
