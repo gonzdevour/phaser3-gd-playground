@@ -4,7 +4,7 @@ const webpack = require('webpack');
 // const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 const PackFolder = require('./plugins/packfolder/PackFolder.js');
 const GlobalPreprocessor = require('./plugins/exporter-preprocessor/Preprocessor.js');
 
@@ -92,7 +92,10 @@ plugins.push(
 // )
 
 plugins.push(
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+    new webpack.IgnorePlugin({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/,
+    })
 )
 
 plugins.push(
@@ -123,24 +126,32 @@ if (fs.existsSync(assetsFolder)) {
         ignore = [ignoreFile];
     }
     plugins.push(
-        new CopyWebpackPlugin([
-            {
-                from: assetsFolder,
-                to: distFolder + '/assets/',
-                ignore: ignore,  // Might change at latest version
-            }
-        ])
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: assetsFolder,
+                    to: distFolder + '/assets/',
+                    globOptions: {
+                        dot: true,
+                        gitignore: true,
+                        ignore: ignore,
+                    },
+                }
+            ],
+        }),
     )
 }
 
 if (fs.existsSync(rootAssetsFolder)) {
     plugins.push(
-        new CopyWebpackPlugin([
-            {
-                from: rootAssetsFolder,
-                to: distFolder
-            }
-        ])
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: rootAssetsFolder,
+                    to: distFolder
+                }
+            ],
+        }),
     )
 }
 
@@ -164,37 +175,33 @@ module.exports = {
     },
     optimization: {
         minimizer: [
-            new UglifyJSPlugin({
-                include: /.js$/,
+            new TerserPlugin({
                 parallel: true,
-                sourceMap: false,
-                uglifyOptions: {
-                    compress: true,
-                    ie8: false,
-                    ecma: 5,
-                    output: {
-                        comments: false
-                    },
-                    warnings: false
-                },
-                warningsFilter: () => false
-            })
-        ]
+            }),
+        ],
     },
     plugins: plugins,
     module: {
         rules: [
-            {
-                test: /\.ts$/,
-                loaders: ['babel-loader', 'awesome-typescript-loader'],
+           {
+                test: /\.ts$/i,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                options: {
+                    presets: [
+                        '@babel/preset-env',
+                        '@babel/preset-typescript'
+                    ]
+                }
             },
-            {
-                test: /\.js$/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
+              {
+                test: /\.js$/i,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                options: {
+                    presets: [
+                        '@babel/preset-env',
+                    ]
                 }
             },
             {
