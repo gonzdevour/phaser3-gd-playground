@@ -183,7 +183,7 @@ module.exports = {
     plugins: plugins,
     module: {
         rules: [
-           {
+            {
                 test: /\.ts$/i,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
@@ -194,7 +194,7 @@ module.exports = {
                     ]
                 }
             },
-              {
+            {
                 test: /\.js$/i,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
