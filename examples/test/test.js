@@ -1,5 +1,5 @@
 import 'phaser';
-import tfdb from '../../plugins/taffydb/taffy-min.js';
+import { taffy } from 'taffydb';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -12,6 +12,7 @@ class Test extends Phaser.Scene {
     }
 
     create() {
+        console.log(taffy)
     }
 
     update() { }
