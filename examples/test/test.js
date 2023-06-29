@@ -1,5 +1,5 @@
 import 'phaser';
-import Rotate from '../../plugins/tickbehaviors/Rotate.js';
+import tfdb from '../../plugins/taffydb/taffy-min.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -7,16 +7,13 @@ class Test extends Phaser.Scene {
             key: 'test'
         })
     }
-    preload() {
-        this.load.pack('pack', 'assets/pack.json');
-    }
-    create() {
-        var gameObject = this.add.rectangle(400, 300, 200, 50, 0x888888);
-        var rotationBehavior = new Rotate(gameObject, {
-            speed: 200,
-        })
 
+    preload() {
     }
+
+    create() {
+    }
+
     update() { }
 }
 
