@@ -45,7 +45,6 @@
         "file-saver": "2.0.5",
         "js-yaml": "^4.1.0",
         "lokijs": "^1.5.12",
-        "taffydb": "^2.7.3",
         "mustache": "^4.2.0",
         "papaparse": "^5.4.1",
         "phaser": "^3.60.0",
