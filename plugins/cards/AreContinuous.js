@@ -40,8 +40,9 @@ var AreContinuous = function (cards, config) {
     var targetValue = parseInt(cards[0][property]) + 1;
     for (var i = 1, cnt = cards.length; i < cnt; i++) {
         var card = cards[i];
+        var cardValue = parseInt(card[property]);
 
-        if (parseInt(card[property]) === targetValue) {
+        if (cardValue === targetValue) {
             targetValue++;
             continue;
         }
@@ -49,12 +50,15 @@ var AreContinuous = function (cards, config) {
         // Not continuous
         if (wildcardCards.length > 0) {
             // Use one wildcard card
-            wildcardCards.length --;
+            wildcardCards.length--;
             targetValue++;
-            continue;
+
+            if (cardValue === targetValue) {
+                targetValue++;
+                continue;
+            }
         }
 
-        // No wildcard card
         output.result = false;
         output.catch = [card];
         return (returnDetail) ? output : false;
