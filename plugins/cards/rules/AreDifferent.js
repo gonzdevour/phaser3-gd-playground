@@ -7,18 +7,21 @@ var AreDifferent = function (cards, config) {
         returnDetail = false
     } = config;
 
-    var output = {
-        property: property
-    };
-
     if (cards.length === 0) {
-        output.result = false;
-        output.catch = [];
-        return (returnDetail) ? output : false;
+        if (returnDetail) {
+            return {
+                property: property,
+                result: false,
+                catch: [],
+            }
+        } else {
+            return false;
+        }
     }
 
+    var cardCopy = [...cards];
     // Put wildcard at end of cards
-    cards.sort(function (cardA, cardB) {
+    cardCopy.sort(function (cardA, cardB) {
         var valueA = cardA[property];
         var valueB = cardB[property];
 
@@ -32,8 +35,8 @@ var AreDifferent = function (cards, config) {
     });
 
     var targetValues = {};
-    for (var i = 0, cnt = cards.length; i < cnt; i++) {
-        var card = cards[i];
+    for (var i = 0, cnt = cardCopy.length; i < cnt; i++) {
+        var card = cardCopy[i];
         var cardValue = card[property];
 
         // Skip wildcard
@@ -42,16 +45,28 @@ var AreDifferent = function (cards, config) {
         }
 
         if (targetValues[cardValue]) {
-            output.result = false;
-            output.catch = [card];
-            return (returnDetail) ? output : false;
+            if (returnDetail) {
+                return {
+                    property: property,
+                    result: false,
+                    catch: [card],
+                }
+            } else {
+                return false;
+            }
         }
         targetValues[cardValue] = true;
     }
 
-    output.result = true;
-    output.catch = null;
-    return (returnDetail) ? output : true;
+    if (returnDetail) {
+        return {
+            property: property,
+            result: true,
+            cards: [...cards],
+        }
+    } else {
+        return true;
+    }
 }
 
 export default AreDifferent;

@@ -11,6 +11,9 @@ console.log(cards)
 var result = Rules.AreContinuousNumber(cards);
 console.log('AreContinuousNumber', result);
 
+var result = Rules.AreContinuousNumber(cards, true);
+console.log('AreContinuousNumber', result);
+
 var result = Rules.AreTheSameSuit(cards);
 console.log('AreTheSameSuit', result);
 
@@ -66,6 +69,8 @@ console.log(cards)
 var result = Rules.AreContinuousNumber(cards);
 console.log('AreContinuousNumber', result);
 
+var result = Rules.AreContinuousNumber(cards, true);
+console.log('AreContinuousNumber', result);
 
 var cards = [
     { suit: 'A', number: 5 },

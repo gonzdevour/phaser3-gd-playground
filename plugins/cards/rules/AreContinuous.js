@@ -12,9 +12,15 @@ var AreContinuous = function (cards, config) {
     };
 
     if (cards.length === 0) {
-        output.result = false;
-        output.catch = [];
-        return (returnDetail) ? output : false;
+        if (returnDetail) {
+            return {
+                property: property,
+                result: false,
+                catch: [],
+            }
+        } else {
+            return false;
+        }
     }
 
     var wildcardCards = cards.filter(function (card) {
@@ -39,12 +45,14 @@ var AreContinuous = function (cards, config) {
         return 0;
     });
 
+    var referenceCards = [cards[0]];
     var targetValue = parseInt(cards[0][property]) + 1;
     for (var i = 1, cnt = cards.length; i < cnt; i++) {
         var card = cards[i];
         var cardValue = parseInt(card[property]);
 
         if (cardValue === targetValue) {
+            referenceCards.push(card);
             targetValue++;
             continue;
         }
@@ -52,23 +60,36 @@ var AreContinuous = function (cards, config) {
         // Not continuous
         if (wildcardCards.length > 0) {
             // Use one wildcard card
-            wildcardCards.length--;
+            referenceCards.push(wildcardCards.pop());
             targetValue++;
 
             if (cardValue === targetValue) {
+                referenceCards.push(card);
                 targetValue++;
                 continue;
             }
         }
 
-        output.result = false;
-        output.catch = [card];
-        return (returnDetail) ? output : false;
+        if (returnDetail) {
+            return {
+                property: property,
+                result: false,
+                catch: [card],
+            }
+        } else {
+            return false;
+        }
     }
 
-    output.result = true;
-    output.catch = null;
-    return (returnDetail) ? output : true;
+    if (returnDetail) {
+        return {
+            property: property,
+            result: true,
+            cards: referenceCards,
+        }
+    } else {
+        return true;
+    }
 }
 
 export default AreContinuous;
