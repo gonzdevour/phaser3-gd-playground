@@ -9,4 +9,4 @@ declare namespace AreContinuous {
 declare function AreContinuous(
     cards: Object[],
     config: Common.IConfig,
-): AreContinuous.IOutput;
+): boolean | AreContinuous.IOutput;

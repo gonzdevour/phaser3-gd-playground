@@ -10,4 +10,4 @@ declare namespace AreTheSame {
 declare function AreTheSame(
     cards: Object[],
     config: Common.IConfig,
-): AreTheSame.IOutput;
+): boolean | AreTheSame.IOutput;

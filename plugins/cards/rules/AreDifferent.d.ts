@@ -10,4 +10,4 @@ declare namespace AreDifferent {
 declare function AreDifferent(
     cards: Object[],
     config: Common.IConfig,
-): AreDifferent.IOutput;
+): boolean | AreDifferent.IOutput;

@@ -7,4 +7,4 @@ declare function AreTheSameSuit(
     cards: Card.ICard[],
     returnDetail?: boolean,
     wildcard?: string,
-): AreTheSame.IOutput;
+): boolean | AreTheSame.IOutput;
