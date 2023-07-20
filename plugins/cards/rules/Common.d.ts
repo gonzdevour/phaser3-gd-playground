@@ -1,5 +1,3 @@
-import Card from './card';
-
 export default Common;
 
 declare namespace Common {
@@ -12,6 +10,6 @@ declare namespace Common {
     interface IOutput {
         property: string,
         result: boolean,
-        catch: null | Card.ICardBase[]
+        catch: null | Object[]
     }
 }
