@@ -1,0 +1,7 @@
+import AreContinuous from './AreContinuous.js';
+
+var AreContinuousNumber = function (cards, returnDetail) {
+    return AreContinuous(cards, 'number', returnDetail);
+}
+
+export default AreContinuousNumber;
