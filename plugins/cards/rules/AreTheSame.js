@@ -1,7 +1,9 @@
-var AreDifferent = function (cards, config) {
+import { Wildcard } from '../Const.js';
+
+var AreTheSame = function (cards, config) {
     var {
         property,
-        wildcard = '*',
+        wildcard = Wildcard,
         returnDetail = false
     } = config;
 
@@ -29,22 +31,20 @@ var AreDifferent = function (cards, config) {
         return 0;
     });
 
-    var targetValues = {};
-    for (var i = 0, cnt = cards.length; i < cnt; i++) {
+    var targetValue = cards[0][property];
+    for (var i = 1, cnt = cards.length; i < cnt; i++) {
         var card = cards[i];
-        var targetValue = card[property];
 
         // Skip wildcard
-        if (targetValue === wildcard) {
+        if (card[property] === wildcard) {
             continue;
         }
 
-        if (targetValues[targetValue]) {
+        if (card[property] !== targetValue) {
             output.result = false;
             output.catch = [card];
             return (returnDetail) ? output : false;
         }
-        targetValues[targetValue] = true;
     }
 
     output.result = true;
@@ -52,4 +52,4 @@ var AreDifferent = function (cards, config) {
     return (returnDetail) ? output : true;
 }
 
-export default AreDifferent;
+export default AreTheSame;

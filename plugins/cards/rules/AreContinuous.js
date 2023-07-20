@@ -1,7 +1,9 @@
+import { Wildcard } from '../Const.js';
+
 var AreContinuous = function (cards, config) {
     var {
         property,
-        wildcard = '*',
+        wildcard = Wildcard,
         returnDetail = false
     } = config;
 

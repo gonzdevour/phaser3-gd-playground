@@ -1,5 +1,4 @@
 import Common from './Common';
-import Card from './card';
 
 export default AreDifferent;
 
@@ -9,6 +8,6 @@ declare namespace AreDifferent {
 }
 
 declare function AreDifferent(
-    cards: Card.ICardBase[],
+    cards: Object[],
     config: Common.IConfig,
 ): AreDifferent.IOutput;

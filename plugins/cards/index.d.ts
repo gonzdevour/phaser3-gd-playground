@@ -1,14 +1,22 @@
-import AreContinuous from './AreContinuous';
-import AreContinuousNumber from './AreContinuousNumber';
+import {
+    Wildcard
+} from './Const';
 
-import AreDifferent from './AreDifferent';
-import AreDifferentSuit from './AreDifferentSuit';
+import {
+    AreContinuous,
+    AreContinuousNumber,
 
-import AreTheSame from './AreTheSame';
-import AreTheSameSuit from './AreTheSameSuit';
-import AreTheSameNumber from './AreTheSameSuit.js';
+    AreDifferent,
+    AreDifferentSuit,
+
+    AreTheSame,
+    AreTheSameSuit,
+    AreTheSameNumber,
+} from './rules/index';
 
 export {
+    Wildcard,
+
     AreContinuous,
     AreContinuousNumber,
 

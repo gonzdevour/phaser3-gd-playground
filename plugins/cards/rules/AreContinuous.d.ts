@@ -1,5 +1,4 @@
 import Common from './Common';
-import Card from './card';
 
 export default AreContinuous;
 
@@ -8,6 +7,6 @@ declare namespace AreContinuous {
 }
 
 declare function AreContinuous(
-    cards: Card.ICardBase[],
+    cards: Object[],
     config: Common.IConfig,
 ): AreContinuous.IOutput;

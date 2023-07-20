@@ -1,5 +1,4 @@
 import Common from './Common';
-import Card from './card';
 
 export default AreTheSame;
 
@@ -9,6 +8,6 @@ declare namespace AreTheSame {
 }
 
 declare function AreTheSame(
-    cards: Card.ICardBase[],
+    cards: Object[],
     config: Common.IConfig,
 ): AreTheSame.IOutput;

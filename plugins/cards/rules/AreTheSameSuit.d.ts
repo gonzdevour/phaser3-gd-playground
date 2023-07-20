@@ -1,9 +1,9 @@
-import Card from './card';
+import Card from '../card';
 import AreTheSame from './AreTheSame';
 
-export default AreTheSameNumber;
+export default AreTheSameSuit;
 
-declare function AreTheSameNumber(
+declare function AreTheSameSuit(
     cards: Card.ICard[],
     returnDetail?: boolean,
     wildcard?: string,
