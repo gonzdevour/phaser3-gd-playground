@@ -34,13 +34,14 @@ var AreTheSame = function (cards, config) {
     var targetValue = cards[0][property];
     for (var i = 1, cnt = cards.length; i < cnt; i++) {
         var card = cards[i];
+        var cardValue = card[property];
 
         // Skip wildcard
-        if (card[property] === wildcard) {
+        if (cardValue === wildcard) {
             continue;
         }
 
-        if (card[property] !== targetValue) {
+        if (cardValue !== targetValue) {
             output.result = false;
             output.catch = [card];
             return (returnDetail) ? output : false;

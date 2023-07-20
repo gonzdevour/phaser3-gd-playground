@@ -34,19 +34,19 @@ var AreDifferent = function (cards, config) {
     var targetValues = {};
     for (var i = 0, cnt = cards.length; i < cnt; i++) {
         var card = cards[i];
-        var targetValue = card[property];
+        var cardValue = card[property];
 
         // Skip wildcard
-        if (targetValue === wildcard) {
+        if (cardValue === wildcard) {
             continue;
         }
 
-        if (targetValues[targetValue]) {
+        if (targetValues[cardValue]) {
             output.result = false;
             output.catch = [card];
             return (returnDetail) ? output : false;
         }
-        targetValues[targetValue] = true;
+        targetValues[cardValue] = true;
     }
 
     output.result = true;
