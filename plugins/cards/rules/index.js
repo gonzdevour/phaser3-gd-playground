@@ -8,6 +8,9 @@ import AreTheSameNumber from './AreTheSameSuit.js';
 import AreDifferent from './AreDifferent.js';
 import AreDifferentSuit from './AreDifferentSuit.js';
 
+import GetRepeatedPattern from './GetRepeatedPattern.js';
+import GetRepeatedNumberPattern from './GetRepeatedNumberPattern.js'
+
 export {
     AreContinuous,
     AreContinuousNumber,
@@ -19,4 +22,6 @@ export {
     AreDifferent,
     AreDifferentSuit,
 
+    GetRepeatedPattern,
+    GetRepeatedNumberPattern
 }

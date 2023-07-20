@@ -82,3 +82,46 @@ console.log(cards)
 
 var result = Rules.AreContinuousNumber(cards);
 console.log('AreContinuousNumber', result);
+
+
+// Repeated patterns
+var cards = [
+    { suit: 'A', number: 5 },
+    { suit: 'B', number: 8 },
+    { suit: 'C', number: 5 },
+    { suit: 'D', number: 5 },
+    { suit: 'B', number: 5 },
+]
+
+console.log(cards)
+
+var result = Rules.GetRepeatedNumberPattern(cards, true);
+console.log('GetRepeatedNumberPattern', result);
+
+
+var cards = [
+    { suit: 'A', number: 5 },
+    { suit: 'B', number: 8 },
+    { suit: 'C', number: 8 },
+    { suit: 'C', number: 5 },
+    { suit: 'B', number: 5 },
+]
+
+console.log(cards)
+
+var result = Rules.GetRepeatedNumberPattern(cards, true);
+console.log('GetRepeatedNumberPattern', result);
+
+
+var cards = [
+    { suit: 'A', number: 6 },
+    { suit: 'B', number: 8 },
+    { suit: 'C', number: 8 },
+    { suit: 'C', number: 5 },
+    { suit: 'B', number: 5 },
+]
+
+console.log(cards)
+
+var result = Rules.GetRepeatedNumberPattern(cards, true);
+console.log('GetRepeatedNumberPattern', result);

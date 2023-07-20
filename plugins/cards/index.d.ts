@@ -12,6 +12,9 @@ import {
     AreTheSame,
     AreTheSameSuit,
     AreTheSameNumber,
+
+    GetRepeatedPattern,
+    GetRepeatedNumberPattern
 } from './rules/index';
 
 export {
@@ -27,4 +30,6 @@ export {
     AreTheSameSuit,
     AreTheSameNumber,
 
+    GetRepeatedPattern,
+    GetRepeatedNumberPattern
 }

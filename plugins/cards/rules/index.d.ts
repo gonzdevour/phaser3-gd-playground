@@ -6,7 +6,10 @@ import AreDifferentSuit from './AreDifferentSuit';
 
 import AreTheSame from './AreTheSame';
 import AreTheSameSuit from './AreTheSameSuit';
-import AreTheSameNumber from './AreTheSameSuit.js';
+import AreTheSameNumber from './AreTheSameSuit';
+
+import GetRepeatedPattern from './GetRepeatedPattern';
+import GetRepeatedNumberPattern from './GetRepeatedNumberPattern.js'
 
 export {
     AreContinuous,
@@ -19,4 +22,6 @@ export {
     AreTheSameSuit,
     AreTheSameNumber,
 
+    GetRepeatedPattern,
+    GetRepeatedNumberPattern
 }
