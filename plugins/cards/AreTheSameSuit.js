@@ -1,7 +1,15 @@
 import AreTheSame from './AreTheSame.js';
 
-var AreTheSameNumber = function (cards, returnDetail) {
-    return AreTheSame(cards, 'number', returnDetail);
+var AreTheSameSuit = function (
+    cards,
+    returnDetail = false,
+    wildcard = '*') {
+
+    return AreTheSame(cards, {
+        property: 'suit',
+        wildcard,
+        returnDetail
+    });
 }
 
-export default AreTheSameNumber;
+export default AreTheSameSuit;

@@ -1,16 +1,14 @@
+import Common from './Common';
 import Card from './card';
 
 export default AreDifferent;
 
 declare namespace AreDifferent {
-    interface IOutput {
-        property: string,
-        result: boolean,
-        catch: null | Card.ICardBase[]
+    interface IOutput extends Common.IOutput {
     }
 }
 
 declare function AreDifferent(
     cards: Card.ICardBase[],
-    property: string,
+    config: Common.IConfig,
 ): AreDifferent.IOutput;

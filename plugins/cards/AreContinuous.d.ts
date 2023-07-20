@@ -1,17 +1,13 @@
+import Common from './Common';
 import Card from './card';
 
 export default AreContinuous;
 
 declare namespace AreContinuous {
-    interface IOutput {
-        property: string,
-        result: boolean,
-        catch: null | Card.ICardBase[]
-    }
+    interface IOutput extends Common.IOutput { }
 }
 
 declare function AreContinuous(
     cards: Card.ICardBase[],
-    property: string,
-    returnDetail?: boolean,
+    config: Common.IConfig,
 ): AreContinuous.IOutput;
