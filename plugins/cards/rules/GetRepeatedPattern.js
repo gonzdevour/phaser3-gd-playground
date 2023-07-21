@@ -1,6 +1,7 @@
 var GetRepeatedPattern = function (cards, config) {
     var {
         property,
+        secondProperty,
         returnDetail = false,
     } = config;
 
@@ -25,7 +26,6 @@ var GetRepeatedPattern = function (cards, config) {
         if (symbolCountValueA > symbolCountValueB) {
             return -1;
         }
-
         if (symbolCountValueA < symbolCountValueB) {
             return 1;
         }
@@ -36,6 +36,18 @@ var GetRepeatedPattern = function (cards, config) {
         }
         if (valueA < valueB) {
             return 1;
+        }
+
+        // The same value
+        if (secondProperty) {
+            var valueA = cardA[secondProperty];
+            var valueB = cardB[secondProperty];
+            if (valueA > valueB) {
+                return 1;
+            }
+            if (valueA < valueB) {
+                return -1;
+            }
         }
 
         return 0;

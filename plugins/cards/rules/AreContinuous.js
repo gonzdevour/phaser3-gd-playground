@@ -33,8 +33,8 @@ var AreContinuous = function (cards, config) {
     });
 
     cards.sort(function (cardA, cardB) {
-        var valueA = parseInt(cardA[property]);
-        var valueB = parseInt(cardB[property]);
+        var valueA = cardA[property];
+        var valueB = cardB[property];
 
         if (valueA > valueB) {
             return 1;
@@ -46,10 +46,10 @@ var AreContinuous = function (cards, config) {
     });
 
     var referenceCards = [cards[0]];
-    var targetValue = parseInt(cards[0][property]) + 1;
+    var targetValue = cards[0][property] + 1;
     for (var i = 1, cnt = cards.length; i < cnt; i++) {
         var card = cards[i];
-        var cardValue = parseInt(card[property]);
+        var cardValue = card[property];
 
         if (cardValue === targetValue) {
             referenceCards.push(card);

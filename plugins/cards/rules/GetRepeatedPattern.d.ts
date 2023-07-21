@@ -3,6 +3,7 @@ export default GetRepeatedPattern;
 declare namespace GetRepeatedPattern {
     interface IConfig {
         property: string,
+        secondProperty: string,
         returnDetail?: boolean,
     }
 }
