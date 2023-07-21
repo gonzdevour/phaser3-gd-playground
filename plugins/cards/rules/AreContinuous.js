@@ -7,10 +7,6 @@ var AreContinuous = function (cards, config) {
         returnDetail = false
     } = config;
 
-    var output = {
-        property: property
-    };
-
     if (cards.length === 0) {
         if (returnDetail) {
             return {
