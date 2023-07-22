@@ -1,5 +1,5 @@
 import Card from '../card';
-import AreTheSame from './AreTheSame';
+import Common from './Common';
 
 export default AreTheSameSuit;
 
@@ -7,4 +7,4 @@ declare function AreTheSameSuit(
     cards: Card.ICard[],
     returnDetail?: boolean,
     wildcard?: string,
-): boolean | AreTheSame.IOutput;
+): boolean | Common.IOutput;

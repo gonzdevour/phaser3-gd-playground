@@ -1,5 +1,5 @@
 import Card from '../card';
-import AreDifferent from './AreDifferent';
+import Common from './Common';
 
 export default AreDifferentSuits;
 
@@ -7,4 +7,4 @@ declare function AreDifferentSuits(
     cards: Card.ICard[],
     returnDetail?: boolean,
     wildcard?: string,
-): boolean | AreDifferent.IOutput;
+): boolean | Common.IOutput;

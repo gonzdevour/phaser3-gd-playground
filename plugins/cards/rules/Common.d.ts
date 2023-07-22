@@ -10,6 +10,7 @@ declare namespace Common {
     interface IOutput {
         property: string,
         result: boolean,
-        catch: null | Object[]
+        resultArray?: Object[],
+        catch?: null | Object[]
     }
 }
