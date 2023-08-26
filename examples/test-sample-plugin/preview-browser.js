@@ -1,3 +1,3 @@
-import avg from '../../dist/gdavg.js';
+// Add <script src="gdavg.js"></script> in html
 
-console.log(avg(2, 3, 4));
+console.log(window.GD.Average(2, 3, 4));
