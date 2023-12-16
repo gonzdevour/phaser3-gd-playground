@@ -6,13 +6,14 @@ class Test extends Phaser.Scene {
             key: 'test'
         })
     }
-
     preload() {
+        this.load.pack('pack', 'assets/pack.json');
     }
-
     create() {
+        var pic = this.add.image(400, 300, 'right')
+        //pic.setScale(0.5);
+        pic.setDisplaySize(50,50);
     }
-
     update() { }
 }
 
