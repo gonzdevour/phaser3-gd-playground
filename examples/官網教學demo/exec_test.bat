@@ -1,18 +1,19 @@
-#!/bin/bash
+@echo off
 
-# 獲取當前目錄的名稱
-CurrDirName="$PWD"
+:: 獲取當前目錄的名稱
+for %%I in (.) do set CurrDirName=%%~nxI
 
-# 獲取當前目錄的上一層目錄的名稱
-ParentDirName=$(dirname "$PWD")
+:: 獲取當前目錄的上一層目錄的名稱
+for %%I in (..) do set ParentDirName=%%~nxI
 
-# 設置環境變數
-export project="./$ParentDirName/$CurrDirName"
-export main="main.js"
-export htmlTemplate="settings/index.tmpl"
-export assets="assets"
-export packFolderOutput="assets/pack.json"
-export root="root"
+:: 組合這兩個名稱
+set project=./%ParentDirName%/%CurrDirName%
 
-cd ../..
+set main=main.js
+set htmlTemplate=settings/index.tmpl
+set assets=assets
+set packFolderOutput=assets/pack.json
+set root=root
+cd ..
+cd ..
 npm run dev
