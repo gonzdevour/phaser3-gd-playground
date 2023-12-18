@@ -3,10 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 var PackFolder = function (root, outFile, config) {
-    console.log("run PackFolder")
-    console.log(root)
-    console.log(outFile)
-    console.log(config)
+
     if (outFile === undefined) {
         outFile = 'pack.json';
     }

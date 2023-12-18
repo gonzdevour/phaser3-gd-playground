@@ -2,9 +2,7 @@ const PackAssetFolder = require('./PackAssetFolder.js');
 const LoaderTypes = require('./LoaderTypes.js');
 
 var PackSubFolders = function (tree, config) {
-    console.log("PackSubFolders")
-    console.log(tree)
-    console.log(config)
+    
     var subFolders = tree.children.filter(function (child) {
         return child.type === 'directory';
     });

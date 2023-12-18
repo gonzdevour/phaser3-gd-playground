@@ -8,9 +8,6 @@ const DefaultConfig = {
     customLoaderTypes: []
 }
 var FolderToJSON = function (root, config) {
-    console.log("FolderToJSON")
-    console.log(root)
-    console.log(config)
     if (config === undefined) {
         config = {};
     }
@@ -19,7 +16,6 @@ var FolderToJSON = function (root, config) {
     LoaderTypes.push(...config.customLoaderTypes);
 
     var tree = dirTree(root, { attributes: ['type'] });
-    console.log(tree)
     var result = PackSubFolders(tree, config);
     if (result.files) {
         result = { packKey: result };
