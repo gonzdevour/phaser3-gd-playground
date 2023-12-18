@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # 獲取當前目錄的名稱
-CurrDirName="$PWD"
+CurrDirName=$(basename "$PWD")
 
 # 獲取當前目錄的上一層目錄的名稱
-ParentDirName=$(dirname "$PWD")
+ParentDirName=$(basename "$(dirname "$PWD")")
 
 # 設置環境變數
 export project="./$ParentDirName/$CurrDirName"
