@@ -36,6 +36,9 @@ const config = {
     width: 800,
     height: 600,
     scene: Example,
+    scale: {
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
     physics: {
         default: 'arcade',
         arcade: {

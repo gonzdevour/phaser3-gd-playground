@@ -1,0 +1,11 @@
+{
+  "appId": "com.playone.hellocapacitor",
+  "appName": "helloCapacitor",
+  "bundledWebRuntime": false,
+  "webDir": "src",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}
