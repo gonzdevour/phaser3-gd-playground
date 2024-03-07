@@ -5,6 +5,8 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const PackFolder = require('./plugins/packfolder/PackFolder.js');
 const GlobalPreprocessor = require('./plugins/exporter-preprocessor/Preprocessor.js');
 
+var pathToAllRexPlugins = 'C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/plugins/AllPlugins.js'
+
 var projectRoot = process.env.project || false;
 var projectMain = process.env.main || 'main.js'; // Entery js
 var htmlTemplate = process.env.htmlTemplate || 'index.tmpl'; // Template of index.html
@@ -137,6 +139,12 @@ module.exports = {
     },
     watch: true,
     plugins: plugins,
+    resolve: {
+        alias: {
+            // 其他別名配置...
+            allRexPlugins: path.resolve(__dirname, pathToAllRexPlugins),
+        }
+    },
     module: {
         rules: [
             {

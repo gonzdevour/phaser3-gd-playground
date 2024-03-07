@@ -53,7 +53,7 @@ var DefaultAppConfig = {
     msgQueueToJSONKey: 'msgQ',
 }
 
-//之後會變動的預設值(可能因環境或玩家操作而覆蓋的預設值)
+//之後會變動的預設值(可能因環境或玩家操作而覆蓋並存入lsData的預設值)
 
 var DefaultSettings = {
     appLang: AppLang(),
