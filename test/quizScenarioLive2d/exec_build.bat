@@ -1,8 +1,10 @@
 @echo off
+
+:: 獲取當前目錄的名稱
 for %%I in (.) do set CurrDirName=%%~nxI
+
 set dist=./app/%CurrDirName%
-rem set postfix=timestamp
-set project=./examples/%CurrDirName%
+set project=%CD%
 set main=gdk/main.js
 set htmlTemplate=settings/index.tmpl
 set assets=assets

@@ -1,7 +1,7 @@
 @echo off
-for %%I in (.) do set CurrDirName=%%~nxI
-set project=./examples/%CurrDirName%
-set main=gdk/main.js
+
+set project=%CD%
+set main=main.js
 set htmlTemplate=settings/index.tmpl
 set assets=assets
 set packFolderOutput=assets/pack.json
