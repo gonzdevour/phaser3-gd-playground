@@ -181,6 +181,23 @@ module.exports = {
         ],
     },
     plugins: plugins,
+    resolve: {
+        alias: {
+            // 其他別名配置...
+            allRexPlugins: path.resolve(__dirname, pathToAllRexPlugins),
+        },
+        extensions: ['.ts', '.js'],
+        fallback: {
+            "fs": false,
+            "tls": false,
+            "net": false,
+            "path": false,
+            "zlib": false,
+            "http": false,
+            "https": false,
+            "stream": false,
+        }
+    },
     module: {
         rules: [
             {
