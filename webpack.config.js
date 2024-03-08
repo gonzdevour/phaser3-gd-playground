@@ -142,23 +142,8 @@ module.exports = {
     resolve: {
         alias: {
             // 其他別名配置...
-<<<<<<< Updated upstream
-            allRexPlugins: path.resolve(__dirname, pathToAllRexPlugins),
-        },
-        extensions: ['.ts', '.js'],
-        fallback: {
-            "fs": false,
-            "tls": false,
-            "net": false,
-            "path": false,
-            "zlib": false,
-            "http": false,
-            "https": false,
-            "stream": false,
-=======
             gdkPlugins: path.resolve(__dirname, pathToGdkPlugins),
             rexnotePlugins: path.resolve(__dirname, pathToRexPlugins),
->>>>>>> Stashed changes
         }
     },
     module: {
@@ -194,4 +179,19 @@ module.exports = {
             }
         ]
     },
+    node: {
+    },
+    resolve: {
+        extensions: ['.ts', '.js'],
+        fallback: {
+            "fs": false,
+            "tls": false,
+            "net": false,
+            "path": false,
+            "zlib": false,
+            "http": false,
+            "https": false,
+            "stream": false,
+        }
+    }
 }
