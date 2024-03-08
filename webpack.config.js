@@ -5,7 +5,8 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const PackFolder = require('./plugins/packfolder/PackFolder.js');
 const GlobalPreprocessor = require('./plugins/exporter-preprocessor/Preprocessor.js');
 
-var pathToAllRexPlugins = 'C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/plugins/AllPlugins.js'
+var pathToRexPlugins = 'C:/Users/JyunRu/Documents/GitHub/phaser3-rex-notes/plugins';
+var pathToGdkPlugins = 'C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/plugins';
 
 var projectRoot = process.env.project || false;
 var projectMain = process.env.main || 'main.js'; // Entery js
@@ -141,6 +142,7 @@ module.exports = {
     resolve: {
         alias: {
             // 其他別名配置...
+<<<<<<< Updated upstream
             allRexPlugins: path.resolve(__dirname, pathToAllRexPlugins),
         },
         extensions: ['.ts', '.js'],
@@ -153,6 +155,10 @@ module.exports = {
             "http": false,
             "https": false,
             "stream": false,
+=======
+            gdkPlugins: path.resolve(__dirname, pathToGdkPlugins),
+            rexnotePlugins: path.resolve(__dirname, pathToRexPlugins),
+>>>>>>> Stashed changes
         }
     },
     module: {

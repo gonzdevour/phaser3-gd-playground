@@ -1,5 +1,5 @@
 import 'phaser';
-import AllPlugins from 'allRexPlugins';
+import AllPlugins from 'gdkPlugins/AllPlugins.js';
 
 class Test extends Phaser.Scene
 {

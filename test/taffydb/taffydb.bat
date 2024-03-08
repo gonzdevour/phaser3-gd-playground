@@ -1,7 +1,7 @@
 @echo off
-set project=./examples/taffydb
+set project=./test/taffydb
 set main=taffydb.js
-set htmlTemplate=../example.tmpl
+set htmlTemplate=../index.tmpl
 set root=root
 cd ..
 cd ..

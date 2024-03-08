@@ -1,4 +1,4 @@
-import phaser from 'phaser/src/phaser.js';
+import phaser from 'phaser';
 import tfdb from '../../plugins/taffydb/taffy-min.js';
 import Papa from 'papaparse';
 
