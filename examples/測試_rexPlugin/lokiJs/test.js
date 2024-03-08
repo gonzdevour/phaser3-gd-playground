@@ -12,10 +12,10 @@ class Demo extends Phaser.Scene {
     preload() {}
 
     create() {
-        var csvString = `name,hp,mp
-Rex,100,20
-Alice,300,40
-gd,100,40`;
+        var csvString = `name,hp,mp,friends
+Rex,100,20,[gd,Alice]
+Alice,300,40,[gd]
+gd,150,40,[Rex]`;
 
         var csvTable = Papa.parse(csvString, {
             dynamicTyping: true,
@@ -53,7 +53,56 @@ gd,100,40`;
         console.log(`--hp abstract equal "100"--`)
         console.log(qAbstractEqual)
 
-        
+        var qNotEqual = collection.find({hp: {'$ne': 100}});
+        console.log(`--hp not equal 100--`)
+        console.log(qNotEqual)
+
+        var qGreaterThan = collection.find({hp: {'$gt': 100}});
+        console.log(`--hp greater than 100--`)
+        console.log(qGreaterThan)
+
+        var qGreaterThanOrEqualTo = collection.find({hp: {'$gte': 100}});
+        console.log(`--hp greater than or equal to 100--`)
+        console.log(qGreaterThanOrEqualTo)
+
+        var qLessThan = collection.find({hp: {'$lt': 200}});
+        console.log(`--hp less than 200--`)
+        console.log(qLessThan)
+
+        var qLessThanOrEqualTo = collection.find({hp: {'$lte': 100}});
+        console.log(`--hp less than or equal to 100--`)
+        console.log(qLessThanOrEqualTo)   
+
+        var qBetween = collection.find({hp: {'$between': [100,300]}});//會包含100和300
+        console.log(`--hp between 100 & 300--`)
+        console.log(qBetween)
+
+        var qIn = collection.find({name: {'$in': ["Rex", "gd"]}});
+        console.log(`--name in the list: "Rex" & "gd"--`)
+        console.log(qIn)
+
+        var qNotIn = collection.find({name: {'$nin': ["Rex", "gd"]}});
+        console.log(`--name not in the list: "Rex" & "gd"--`)
+        console.log(qNotIn)
+
+        var qContains = collection.find({friends: {'$contains': "gd"}});
+        console.log(`--friends array contains "gd"--`)
+        console.log(qContains)
+
+        var qContainsAny = collection.find({friends: {'$containsAny': ["Alice", "Rex"]}});
+        console.log(`--friends array contains any ["Alice", "Rex"]--`)
+        console.log(qContainsAny)
+
+        var qContainsNone = collection.find({friends: {'$containsNone': ["Alice", "Rex"]}});
+        console.log(`--friends array contains none ["Alice", "Rex"]--`)
+        console.log(qContainsNone)
+
+
+
+
+
+
+
     }
 
     update() {}
