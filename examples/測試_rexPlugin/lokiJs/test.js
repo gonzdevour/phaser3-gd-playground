@@ -13,9 +13,9 @@ class Demo extends Phaser.Scene {
 
     create() {
         var csvString = `name,hp,mp,friends
-Rex,100,20,[gd,Alice]
-Alice,300,40,[gd]
-gd,150,40,[Rex]`;
+Rex,100,20,"gd,Alice"]
+Alice,300,40,"gd"
+gd,150,40,"Rex"`;
 
         var csvTable = Papa.parse(csvString, {
             dynamicTyping: true,
