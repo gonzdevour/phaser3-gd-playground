@@ -144,6 +144,17 @@ module.exports = {
             // 其他別名配置...
             gdkPlugins: path.resolve(__dirname, pathToGdkPlugins),
             rexnotePlugins: path.resolve(__dirname, pathToRexPlugins),
+        },
+        extensions: ['.ts', '.js'],
+        fallback: {
+            "fs": false,
+            "tls": false,
+            "net": false,
+            "path": false,
+            "zlib": false,
+            "http": false,
+            "https": false,
+            "stream": false,
         }
     },
     module: {
@@ -181,17 +192,4 @@ module.exports = {
     },
     node: {
     },
-    resolve: {
-        extensions: ['.ts', '.js'],
-        fallback: {
-            "fs": false,
-            "tls": false,
-            "net": false,
-            "path": false,
-            "zlib": false,
-            "http": false,
-            "https": false,
-            "stream": false,
-        }
-    }
 }
