@@ -157,6 +157,8 @@ module.exports = {
             "stream": false,
         }
     },
+    node: {
+    },
     module: {
         rules: [
             {
@@ -189,7 +191,5 @@ module.exports = {
                 use: 'raw-loader'
             }
         ]
-    },
-    node: {
     },
 }
