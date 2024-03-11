@@ -133,7 +133,7 @@ var StartQuiz = async function(scene, qMaster){
 
   //建立題庫
   var csvstring = scene.cache.text.get('questions');
-  var quizArr = CreateQuiz(csvstring,1); //將csv轉taffydb並從中取出10題
+  var quizArr = CreateQuiz(csvstring,1); //將csv轉db並從中取出10題
   quizArr.forEach(function(item, index, arr){
       console.log(JSON.stringify(item['A1']));
   })

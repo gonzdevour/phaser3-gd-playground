@@ -1,6 +1,7 @@
 import yaml from 'js-yaml';
 import mustache from 'mustache';
 import tfdb from 'gdkPlugins/taffydb/taffy-min.js';
+import loki from 'lokijs';
 import GetValue from 'gdkPlugins/utils/object/GetValue.js';
 import { Delay } from 'rexnotePlugins/eventpromise.js';
 
@@ -40,7 +41,8 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       this.nextLabel = '';
       this.mtView = {玩家名稱: 'GD'};
       this.tb_Char = scene.plugins.get('rexCsvToHashTable').add().loadCSV(scene.cache.text.get('dataChar'));
-      this.decisionRecord = {};
+      this.db = new loki();
+      this.decisionRecord = this.db.addCollection("decisionRecord");
       this.questionIdx = 0; //by label的問題編號(每次彈出選項時+1，start label時重設為0)，用於儲存每一題的選擇結果/提供update的索引
       this.choices = []; 
       this.logData = [];
@@ -102,7 +104,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     var dateString = date.toLocaleString();
     var saveState = {
       label: curLabel,
-      decisionRecord: this.decisionRecord().stringify(),
+      decisionRecord: this.decisionRecord.chain().data(),
       coin: this.coin,
       extraData: extraData?extraData:undefined,
       savingDate: dateString,
@@ -115,9 +117,9 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     if (saveState){
       //讀取檔案
       this.coin = saveState.coin;
-      this.decisionRecord().remove();
+      this.decisionRecord.chain.find().remove();
       this.decisionRecord.insert(saveState.decisionRecord);
-      //console.log(this.decisionRecord().stringify())
+      //console.log(this.decisionRecord.chain().data())
       //初始化設定
       this.mode_auto = false;
       this.mode_skip = false;
@@ -430,16 +432,16 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       y = this.initVPY;
     }
 
-    this.lastActorID = actorID;
+    var lastTalkerID = this.lastTalkerID;
+    var curTalkerID = actorID;
 
-    var ifDifferentTalker = this.lastTalkerID == actorID ? false : true;
+    var ifDifferentTalker = lastTalkerID == curTalkerID ? false : true;
     if (ifDifferentTalker){
       this.logSerifRowIdx = 0;
     } else {
       this.logSerifRowIdx++
     }
     var logSerifRowIdx = this.logSerifRowIdx
-    this.lastTalkerID = actorID;
 
     this.隱藏對話();
 
@@ -448,11 +450,17 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     }
 
     var content = ``;
-    if (this.mode_singleChar && ifDifferentTalker){ //單角色畫面模式
-      //this.隱藏對話();
-      content = content + `</char>`
+    if (ifDifferentTalker){
+      if (this.mode_singleChar){ //單角色畫面模式
+        //this.隱藏對話();
+        content = content + `</char>`
+      } else { //多角色畫面模式下，如果換人說話，前個說話者會變黑
+        content = content + `<char.${lastTalkerID}.shadow>`
+      }
     }
-    if (!actor) {
+    if (actor) {
+      content = content + `<char.${curTalkerID}.unshadow>`
+    } else {
       content = content + `<char.${actorID}=${actorID},${x},${y}>`
     }
     if (sound) {
@@ -502,6 +510,8 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       actorID: actorID, displayName: displayName, expression: expression, serif: serif
     })
 
+    this.lastTalkerID = actorID;
+
     this.tagPlayer.setTimeScale(this.getTagPlayerTimeScale());
     this.tagPlayer.playPromise(content);
   }
@@ -537,12 +547,35 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     header.label = curLabel; //存入章節名稱作為資料索引
     header.qID = curLabel + curQIdx; //以<章節名稱+題目序號>為資料ID
     var data = Object.assign({},out,header); //組合header與資料
-    this.decisionRecord.merge(data, 'qID'); //篩出qID相同的指定資料(如果存在)，把選擇結果的變數內容整筆更新
-    console.log('選擇紀錄：' + '\n' + this.decisionRecord().stringify());
+
+    //篩出qID相同的指定資料(如果存在)，把選擇結果的變數內容整筆更新
+    // 在 LokiJS 中，我们需要手动检查是否存在相同 qID 的记录
+    var existing = this.decisionRecord.findOne({ 'qID': header.qID });
+    if (existing) {
+      // 如果找到了，更新这条记录
+      Object.assign(existing, data);
+      this.decisionRecord.update(existing);
+    } else {
+      // 如果没找到，插入新记录
+      this.decisionRecord.insert(data);
+    }
+
+    console.log('選擇紀錄：');
+    console.log(this.decisionRecord.chain().data())
     console.log('Spring好感度總計：' + this.sumRecord('Spring','好感')) //統計功能測試
+    console.log('Jade好感度總計：' + this.sumRecord('Jade','好感')) //統計功能測試
   }
   sumRecord(name, dataType) { //ex: sumRecord('Jade', '好感')
-    return this.decisionRecord().sum(name + dataType); //從taffy中找出某欄並加總，例如'Jade好感'這一欄
+    //return this.decisionRecord().sum(name + dataType); //從taffy中找出某欄並加總，例如'Jade好感'這一欄
+    var sum = 0;
+    var qKey = name+dataType
+    var data2sum = this.decisionRecord.chain().find({ [qKey]: { '$gt': 0 } }).data()
+    console.log(qKey)
+    data2sum.forEach(doc => {
+      sum += doc[qKey];
+    });
+    console.log(data2sum)
+    return sum;
   }
   finishTyping() { //立即完成text typing
     console.log('try to finish typing')
@@ -720,14 +753,14 @@ var GetBackground = function(tagPlayer, backgroundID){
   return tagPlayer.getGameObject('bg', backgroundID);
 }
 
-var buildCharsData = function(director, decisionRecord){
-  decisionRecord().each(function (record,recordnumber) { //"好感":[{"Jade":-1},{"Spring":2}]
-    record["好感"].forEach(function(value,idx,arr){
-      for (key in value) {
-      }
-    });
-  })
-}
+// var buildCharsData = function(director, decisionRecord){
+//   decisionRecord().each(function (record,recordnumber) { //"好感":[{"Jade":-1},{"Spring":2}]
+//     record["好感"].forEach(function(value,idx,arr){
+//       for (key in value) {
+//       }
+//     });
+//   })
+// }
 
 var AliasToExpression = function(expressionAlias){
   var list = {

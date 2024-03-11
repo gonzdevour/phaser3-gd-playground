@@ -87,6 +87,18 @@ class Actor extends ContainerLite {
     return this;
   }
 
+  shadow() {
+    var actor = this;
+    actor.sprite.frontImage.setTint(Phaser.Display.Color.GetColor(50, 50, 50));
+    return this;
+  }
+
+  unshadow() {
+    var actor = this;
+    actor.sprite.frontImage.setTint(Phaser.Display.Color.GetColor(255, 255, 255));
+    return this;
+  }
+
   leave() {
     this.stopTalk();
     this.scene.tweens.addCounter({
