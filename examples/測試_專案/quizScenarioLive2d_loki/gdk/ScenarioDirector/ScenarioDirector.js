@@ -1,6 +1,5 @@
 import yaml from 'js-yaml';
 import mustache from 'mustache';
-import tfdb from 'gdkPlugins/taffydb/taffy-min.js';
 import loki from 'lokijs';
 import GetValue from 'gdkPlugins/utils/object/GetValue.js';
 import { Delay } from 'rexnotePlugins/eventpromise.js';
@@ -41,7 +40,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       this.nextLabel = '';
       this.mtView = {玩家名稱: 'GD'};
       this.tb_Char = scene.plugins.get('rexCsvToHashTable').add().loadCSV(scene.cache.text.get('dataChar'));
-      this.db = new loki();
+      this.db = new loki("ScenarioDirector");
       this.decisionRecord = this.db.addCollection("decisionRecord");
       this.questionIdx = 0; //by label的問題編號(每次彈出選項時+1，start label時重設為0)，用於儲存每一題的選擇結果/提供update的索引
       this.choices = []; 

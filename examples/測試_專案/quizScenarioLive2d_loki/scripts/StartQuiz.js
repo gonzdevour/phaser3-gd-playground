@@ -116,7 +116,7 @@ var result = async function(scene, qMaster, tbOut){
         y: scene.viewport.centerY,
         text: cardText,
         imgKey: 'resultHero',
-        url: DefaultAppConfig.cors + imgUrl
+        url: imgUrl, //DefaultAppConfig.cors + imgUrl
     })
 
     //textPlayer.height = 200;

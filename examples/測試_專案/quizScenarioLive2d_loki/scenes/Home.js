@@ -40,16 +40,17 @@ class Home extends Base {
         //建立scenario
         var director;
         launchStoryScene(scene)
-            .then(function(storyScene){
-                console.log('story init')
-                director = storyScene.scenario.director;
-                return director.init()
-            })
+            // .then(function(storyScene){
+            //     console.log('story init')
+            //     director = storyScene.scenario.director;
+            //     return director.init()
+            // })
+            // .then(function(){
+            //     console.log('story start')
+            //     return director.start('範例')
+            // })
             .then(function(){
-                console.log('story start')
-                return director.start('範例')
-            })
-            .then(function(){
+                scene.scene.stop('Story'); //刪除scenario專用scene，這樣clickArea才不會蓋住問答UI
                 console.log('game init')
                 return gameInit(scene);
             })

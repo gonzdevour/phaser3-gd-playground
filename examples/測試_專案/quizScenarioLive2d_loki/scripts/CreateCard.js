@@ -41,19 +41,33 @@ var loadOnlineImagePromise = async function(scene, config){
 
     card.flip.flipRight(4000, 2);
 
-    scene.tweens.timeline({
+    scene.tweens.add({
         targets: card,
-        tweens:[
-        {props:{
-            y:{value: {from: card.y-800, to: card.y}, ease: 'back'},
-            angle:{value: {from: 0, to: 362}, ease: 'cubic'},
-            scale:{value: {from:0, to:1}, ease: 'linear'},
-        }, duration: 4000},
-        {props:{
-            y: {value: {from: card.y, to: card.y-30}, ease: 'cubic-easeIn', duration: 1000},
-        }, yoyo: true, repeat: -1},
-        ]   
+        y: {from: card.y-800, to: card.y},
+        ease: 'back',
+        duration: 4000, 
     })
+    scene.tweens.add({
+        targets: card,
+        angle: {from: 0, to: 362},
+        ease: 'cubic',
+        duration: 4000, 
+    })
+    scene.tweens.add({
+        targets: card,
+        scale: {from:0, to:1},
+        ease: 'linear',
+        duration: 4000, 
+    })
+    scene.tweens.add({
+        targets: card,
+        y: {from: card.y, to: card.y-30},
+        ease: 'cubic-easeIn',
+        duration: 1000, 
+        yoyo: true, 
+        repeat: -1
+    })
+
     return card;
 }
 
@@ -118,10 +132,12 @@ var CreateCardFront = function(scene, bgKey, iconKey, text){
 }
 
 var CreateCardBack = function(scene, bgKey, iconKey, text){
+    var tempX = 100;
+    var tempY = 100;
     var cardBuilder = scene.rexUI.add.label({
-        background: bgKey?scene.add.image(0,0,bgKey):undefined,
-        icon: iconKey?scene.add.image(0, 0, iconKey):undefined,
-        text: text?scene.rexUI.add.BBCodeText(0, 0, text, { 
+        background: bgKey?scene.add.image(tempX,tempY,bgKey):undefined,
+        icon: iconKey?scene.add.image(tempX, tempY, iconKey):undefined,
+        text: text?scene.rexUI.add.BBCodeText(tempX, tempY, text, { 
             fontSize: 36, 
             color:'red',
         }):undefined
@@ -150,18 +166,26 @@ var CreateCard = async function(scene, config){
     card.moveDepthBelow(lightball) //因為card是containerlite所以要用moveDepthBelow做群組移動
     //scene.children.moveBelow(lightball, card)
 
-    scene.tweens.timeline({
+    scene.tweens.add({
         targets: lightball,
+        scale: {from: 0.8, to: 1.2},
+        duration: 4000, 
+        yoyo: true,
         repeat: -1,
-        tweens:[
-            {
-                props:{
-                    scale:{value: {from: 0.8, to: 1.2}, duration: 2000, yoyo: true},
-                    alpha:{value: {from:0.5, to:1}, duration: 1000, yoyo: true},
-                    angle:{value: '+=360', duration:5000, yoyo: false},
-                }, 
-            },
-        ],
+    })
+    scene.tweens.add({
+        targets: lightball,
+        alpha: {from:0.5, to:1},
+        duration: 1000, 
+        yoyo: true,
+        repeat: -1,
+    })
+    scene.tweens.add({
+        targets: lightball,
+        angle: '+=360',
+        duration: 5000, 
+        yoyo: false,
+        repeat: -1,
     })
 
     //在卡面card.frontFace上建立mask內的閃光
@@ -202,17 +226,21 @@ var CreateCard = async function(scene, config){
     //     ease: 'linear',
     //     repeatDelay:5000,
     // })
-    scene.tweens.timeline({
+
+    scene.tweens.add({
         targets: slash,
+        value: 1,
+        duration: 1000, 
+        yoyo: false,
         repeat: -1,
-        tweens:[
-            {
-                props:{
-                    value:{value: 1, duration: 1000, repeatDelay: 4000},
-                    alpha:{value: {from: 0.1, to: 0.3}, duration: 500, yoyo: true},
-                }, 
-            },
-        ],
+        repeatDelay: 4000,
+    })
+    scene.tweens.add({
+        targets: slash,
+        alpha: {from: 0.1, to: 0.3},
+        duration: 500, 
+        yoyo: true,
+        repeat: -1,
     })
 
     // var graphics = scene.add.graphics()

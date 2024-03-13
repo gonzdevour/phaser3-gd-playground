@@ -28,7 +28,9 @@ class qMaster extends ContainerLite {
             //duration: textPlayer.typingSpeed,
             duration: 150,
             yoyo: true,
+            repeat: -1,
             paused: true,
+            persist: true, //stop, complete都會無視persist直接刪除，所以停下tween的方法為seek(0)+pause
         });
         super(scene, 0, 0, [textPlayer, clickWaiter, char]);
         scene.add.existing(this);
@@ -54,14 +56,19 @@ class qMaster extends ContainerLite {
                 console.log('wait click')
                 clickWaiter.setVisible(true);
             })
+            // .on('typing', function(child) {
+            //     if (child.type === 'text') {
+            //         char.lipTween.play();
+            //     }
+            // })
             .on('typing', function(child) {
-                if (child.type === 'text') {
+                if (!char.lipTween.isPlaying()) {
                     char.lipTween.play();
                 }
             })
             .on('complete', function() {
-                textPlayer.popTween.stop();
-                char.lipTween.stop();
+                char.lipTween.seek(0);
+                char.lipTween.pause();
                 char.lipSyncValue = 0;
             })
         }
@@ -213,6 +220,7 @@ var CreateTextplayer = function(scene){
         //duration: textPlayer.typingSpeed,
         duration: 500,
         paused: true,
+        persist: true,
     });
 
     textPlayer.backTween = scene.tweens.add({
@@ -223,6 +231,7 @@ var CreateTextplayer = function(scene){
         ease: 'cubic',
         duration: 500,
         paused: true,
+        persist: true,
     });
 
     //指定click target

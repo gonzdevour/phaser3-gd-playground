@@ -1,4 +1,4 @@
-import tfdb from 'gdkPlugins/taffydb/taffy-min.js';
+import loki from 'lokijs';
 //utils
 import Papa from 'papaparse';
 import Shuffle from 'gdkPlugins/utils/array/Shuffle.js';
@@ -6,8 +6,10 @@ import Shuffle from 'gdkPlugins/utils/array/Shuffle.js';
 var CreateQuiz = function(csvstring, qCnt){
     //csv轉json array
     var data = csvToJSONArr(csvstring);
-    //taffy建立db(注意db是一個函數，要用db()才會回傳db物件)
-    var db = tfdb.taffy(data);
+    //loki建立db
+    var dbManager = new loki("quiz")
+    var db = dbManager.addCollection('q');
+    db.insert(data);
     //回傳quizArr
     return makeQuiz(db,qCnt);
 }
@@ -16,25 +18,31 @@ var csvToJSONArr = function(csvstring){
     return Papa.parse(csvstring, { header: true, dynamicTyping: true }).data //.data取出json array
 }
 
-var makeQuiz = function(db, qCnt){
-    var randomQArr = Shuffle(db({FixIndex:'R'}).get()); //FixIndex欄位為R者是隨機題
-    var fixedQDB = db({FixIndex:{'!is':'R'}}) //FixIndex欄位為Fixed者是固定題
-    var fixedQArr = fixedQDB.get(); //取得固定題號的題目
-    var fixedQArrIdxs = fixedQDB.select('Index'); //取得固定題號array
+function makeQuiz(db, qCnt) {
+    // 获取FixIndex为'R'的随机题，并打乱顺序
+    var randomQArr = Shuffle(db.find({ 'FixIndex': 'R' }));
+
+    // 获取FixIndex不为'R'的固定题
+    var fixedQArr = db.find({ 'FixIndex': { '$ne': 'R' } });
+
+    // 获取固定题的Index数组
+    var fixedQArrIdxs = fixedQArr.map(function(fixedQ) {
+        return fixedQ.Index;
+    });
+
     var quizArr = [];
     for (let i = 0; i < qCnt; i++) {
-        //此題號如果不是固定題號則隨機出題
-        if (fixedQArrIdxs.indexOf(i) == -1){ 
+        // 如果当前题号不在固定题号中，则从随机题中抽取
+        if (!fixedQArrIdxs.includes(i)) {
             var quiz = randomQArr.pop();
             quizArr.push(quiz);
-        }else{
-            //此題號如果是固定題號則出固定題號的題目
-            fixedQArr.forEach(function(fixedQ, index, arr){
-                if(fixedQ['Index'] == i){
-                    var quiz = fixedQ;
-                    quizArr.push(quiz);
+        } else {
+            // 如果当前题号是固定题号，则添加固定题目
+            fixedQArr.forEach(function(fixedQ) {
+                if (fixedQ.Index === i) {
+                    quizArr.push(fixedQ);
                 }
-            })
+            });
         }
     }
     return quizArr;
