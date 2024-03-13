@@ -60,6 +60,12 @@ class Test extends Phaser.Scene
           fade:500,
       })
       .playPromise(content)
+
+    this.input.on('wheel', function (pointer, gameObjects, deltaX, deltaY, deltaZ) {
+        var character = tagPlayer.getGameObject('char', 'Spring');
+        console.log(`滾輪: deltaX=${deltaX}, deltaY=${deltaY}, deltaZ=${deltaZ}`);
+    });
+
     }
 }
 
