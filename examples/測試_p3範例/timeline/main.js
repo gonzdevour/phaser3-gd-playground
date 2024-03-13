@@ -12,26 +12,28 @@ class Test extends Phaser.Scene
     {
         var sprite = this.add.image(512,400,'right').setScale(0.2,0.2)
         const timeline = this.add.timeline(
-            {
-                at: 0,
-                tween: {
-                    targets: sprite,
-                    x: sprite.x + 200,
-                    ease: 'Cubic',
-                    duration: 4000,
-                }
-            },
-            {
-                at: 100,
-                tween: {
-                    targets: sprite,
-                    y: sprite.y - 100,
-                    ease: 'Cubic',
-                    duration: 300,
-                    yoyo: true,
-                    repeat: 3
-                }
-            },
+            [ //注意這裡是array
+                {
+                    at: 0,
+                    tween: {
+                        targets: sprite,
+                        x: sprite.x + 200,
+                        ease: 'Cubic',
+                        duration: 4000,
+                    }
+                },
+                {
+                    at: 100,
+                    tween: {
+                        targets: sprite,
+                        y: sprite.y - 100,
+                        ease: 'Cubic',
+                        duration: 300,
+                        yoyo: true,
+                        repeat: 3
+                    }
+                },
+            ]
         );
         timeline.play();
 

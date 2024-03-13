@@ -10,7 +10,10 @@ class Test extends Phaser.Scene
 
     create ()
     {
-        var card = CreateCardBack(this, 'cardBg','cardFront', 'love & peace').setScale(0.2)
+        var card = CreateCardBack(this, 'cardBg','cardFront')
+        .setScale(0.3)
+        .layout()
+        .setPosition(500,400)
 
         // this.tweens.add({
         //     targets: card,
@@ -31,7 +34,7 @@ class Test extends Phaser.Scene
 
 var CreateCardBack = function(scene, bgKey, iconKey, text){
     var tempX = 500;
-    var tempY = 500;
+    var tempY = 400;
     var cardBuilder = scene.rexUI.add.label({
         background: bgKey?scene.add.image(tempX,tempY,bgKey):undefined,
         icon: iconKey?scene.add.image(tempX, tempY, iconKey):undefined,
