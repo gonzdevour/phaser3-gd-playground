@@ -5,8 +5,10 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const PackFolder = require('./plugins/packfolder/PackFolder.js');
 const GlobalPreprocessor = require('./plugins/exporter-preprocessor/Preprocessor.js');
 
-var pathToRexPlugins = 'C:/Users/JyunRu/Documents/GitHub/phaser3-rex-notes/plugins';
-var pathToGdkPlugins = 'C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/plugins';
+//var pathToRexPlugins = 'C:/Users/JyunRu/Documents/GitHub/phaser3-rex-notes/plugins';
+//var pathToGdkPlugins = 'C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/plugins';
+var pathToRexPlugins = '../phaser3-rex-notes/plugins';
+var pathToGdkPlugins = './plugins';
 
 var projectRoot = process.env.project || false;
 var projectMain = process.env.main || 'main.js'; // Entery js
@@ -38,6 +40,8 @@ console.log(projectMain);
 console.log(htmlTemplate);
 console.log(assetsFolder);
 console.log(rootAssetsFolder);
+console.log(pathToRexPlugins)
+console.log(pathToGdkPlugins)
 
 
 var plugins = [];
