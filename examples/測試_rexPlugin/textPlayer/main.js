@@ -1,6 +1,12 @@
 import 'phaser';
+import DisplayListMethods from 'rexnotePlugins/utils/gameobject/displaylist/DisplayListMethods';
 import AllPlugins from 'gdkPlugins/AllPlugins.js';
 import TagPlayer from "rexnotePlugins/tagplayer.js";
+
+Object.assign(
+    Phaser.GameObjects.GameObject.prototype,
+    DisplayListMethods
+);//讓所有gameObject都有bringToTop這個method
 
 class Test extends Phaser.Scene
 {
