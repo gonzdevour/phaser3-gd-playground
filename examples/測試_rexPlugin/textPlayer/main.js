@@ -8,15 +8,12 @@ Object.assign(
     DisplayListMethods
 );//讓所有gameObject都有bringToTop這個method
 
-class Test extends Phaser.Scene
-{
-    preload ()
-    {
+class Test extends Phaser.Scene {
+    preload() {
         this.load.pack('pack', 'assets/pack.json');
     }
 
-    create ()
-    {
+    create() {
         var scene = this;
         var content = `<char.Spring=Spring,300,300>
 <wait=click>
@@ -24,7 +21,7 @@ class Test extends Phaser.Scene
 <wait=click>
 <char.Spring.bringToTop>`
 
-        var tagPlayer = new TagPlayer(scene ,{
+        var tagPlayer = new TagPlayer(scene, {
             texts: false,  //關閉預設物件
             sprites: false,//關閉預設物件
             parser: {
@@ -32,39 +29,41 @@ class Test extends Phaser.Scene
                 comment: '//'
             },
             sounds: {
-              bgm: { 
-                  initial: undefined,
-                  loop: true,
-                  fade: 500
-              },
-              bgm2: { //語音專用
-                  initial: undefined,
-                  loop: false,
-                  fade: 0
-              }
+                bgm: {
+                    initial: undefined,
+                    loop: true,
+                    fade: 500
+                },
+                bgm2: { //語音專用
+                    initial: undefined,
+                    loop: false,
+                    fade: 0
+                }
             },
         })
-        .addGameObjectManager({
-          name: 'char',
-          createGameObject: CreateActor,
-          fade:500,
-        })
-        .addGameObjectManager({
-            name: 'text',
-            createGameObject: CreateText,
-            fade:500,
-        })
-        .addGameObjectManager({
-          name: 'bg',
-          createGameObject: scene.add.rexTransitionImage(0, 0, '家'),
-          fade:500,
-      })
-      .playPromise(content)
+            .addGameObjectManager({
+                name: 'char',
+                createGameObject: CreateActor,
+                fade: 500,
+            })
+            .addGameObjectManager({
+                name: 'text',
+                createGameObject: CreateText,
+                fade: 500,
+            })
+            .addGameObjectManager({
+                name: 'bg',
+                createGameObject: scene.add.rexTransitionImage(0, 0, '家'),
+                fade: 500,
+            })
 
-    this.input.on('wheel', function (pointer, gameObjects, deltaX, deltaY, deltaZ) {
-        var character = tagPlayer.getGameObject('char', 'Spring');
-        console.log(`滾輪: deltaX=${deltaX}, deltaY=${deltaY}, deltaZ=${deltaZ}`);
-    });
+        tagPlayer
+            .playPromise(content)
+
+        this.input.on('wheel', function (pointer, gameObjects, deltaX, deltaY, deltaZ) {
+            var character = tagPlayer.getGameObject('char', 'Spring');
+            console.log(`滾輪: deltaX=${deltaX}, deltaY=${deltaY}, deltaZ=${deltaZ}`);
+        });
 
     }
 }
