@@ -1,0 +1,131 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "image",
+        "key": "park",
+        "url": "assets/image/scenario/bg/park.jpg"
+      },
+      {
+        "type": "image",
+        "key": "家",
+        "url": "assets/image/scenario/bg/家.jpg"
+      },
+      {
+        "type": "image",
+        "key": "char-Jade-fear0",
+        "url": "assets/image/scenario/char/char-Jade-fear0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Jade-normal0",
+        "url": "assets/image/scenario/char/char-Jade-normal0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Jade-shock0",
+        "url": "assets/image/scenario/char/char-Jade-shock0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Jade-shock1",
+        "url": "assets/image/scenario/char/char-Jade-shock1.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-angry0",
+        "url": "assets/image/scenario/char/char-Spring-angry0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-angry1",
+        "url": "assets/image/scenario/char/char-Spring-angry1.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-fear0",
+        "url": "assets/image/scenario/char/char-Spring-fear0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-fear1",
+        "url": "assets/image/scenario/char/char-Spring-fear1.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-normal0",
+        "url": "assets/image/scenario/char/char-Spring-normal0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-shock0",
+        "url": "assets/image/scenario/char/char-Spring-shock0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-shock1",
+        "url": "assets/image/scenario/char/char-Spring-shock1.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Host",
+        "url": "assets/image/scenario/char/por-Host.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Jade-fear0",
+        "url": "assets/image/scenario/char/por-Jade-fear0.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Jade-normal0",
+        "url": "assets/image/scenario/char/por-Jade-normal0.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Jade-shock0",
+        "url": "assets/image/scenario/char/por-Jade-shock0.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Jade-shock1",
+        "url": "assets/image/scenario/char/por-Jade-shock1.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Spring-angry0",
+        "url": "assets/image/scenario/char/por-Spring-angry0.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Spring-angry1",
+        "url": "assets/image/scenario/char/por-Spring-angry1.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Spring-fear0",
+        "url": "assets/image/scenario/char/por-Spring-fear0.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Spring-fear1",
+        "url": "assets/image/scenario/char/por-Spring-fear1.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Spring-normal0",
+        "url": "assets/image/scenario/char/por-Spring-normal0.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Spring-shock0",
+        "url": "assets/image/scenario/char/por-Spring-shock0.png"
+      },
+      {
+        "type": "image",
+        "key": "por-Spring-shock1",
+        "url": "assets/image/scenario/char/por-Spring-shock1.png"
+      }
+    ]
+  }
+}

@@ -22,7 +22,7 @@ class Test extends Phaser.Scene
 <wait=click>
 <char.Jade=Jade,400,400>
 <wait=click>
-<char.Spring.bringToTop>`
+<char.Spring.bringMeToTop>`
 
         var tagPlayer = new TagPlayer(scene ,{
             texts: false,  //關閉預設物件
@@ -44,22 +44,24 @@ class Test extends Phaser.Scene
               }
             },
         })
-        .addGameObjectManager({
-          name: 'char',
-          createGameObject: CreateActor,
-          fade:500,
-        })
-        .addGameObjectManager({
-            name: 'text',
-            createGameObject: CreateText,
+
+        tagPlayer
+            .addGameObjectManager({
+            name: 'char',
+            createGameObject: CreateActor,
             fade:500,
-        })
-        .addGameObjectManager({
-          name: 'bg',
-          createGameObject: scene.add.rexTransitionImage(0, 0, '家'),
-          fade:500,
-      })
-      .playPromise(content)
+            })
+            .addGameObjectManager({
+                name: 'text',
+                createGameObject: CreateText,
+                fade:500,
+            })
+            .addGameObjectManager({
+            name: 'bg',
+            createGameObject: scene.add.rexTransitionImage(0, 0, '家'),
+            fade:500,
+            })
+            .playPromise(content);
 
     this.input.on('wheel', function (pointer, gameObjects, deltaX, deltaY, deltaZ) {
         var character = tagPlayer.getGameObject('char', 'Spring');

@@ -1,0 +1,16 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "image",
+        "key": "right",
+        "url": "assets/image/right.png"
+      },
+      {
+        "type": "image",
+        "key": "wrong",
+        "url": "assets/image/wrong.png"
+      }
+    ]
+  }
+}

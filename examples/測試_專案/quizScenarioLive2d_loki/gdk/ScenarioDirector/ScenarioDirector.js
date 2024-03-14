@@ -495,7 +495,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     }
     if (serif){
       content = content + `<wait=100>`
-      content = content + `<char.${actorID}.bringToTop>`
+      content = content + `<char.${actorID}.bringMeToTop>`
       if (this.scenario.director.mode_speechBubble){ //bubble模式 or storyBox模式
         content = content + `<char.${actorID}.talk>${serif}`
       } else {

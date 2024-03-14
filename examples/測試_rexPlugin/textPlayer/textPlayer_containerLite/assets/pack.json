@@ -1,0 +1,26 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "image",
+        "key": "park",
+        "url": "assets/image/scenario/bg/park.jpg"
+      },
+      {
+        "type": "image",
+        "key": "家",
+        "url": "assets/image/scenario/bg/家.jpg"
+      },
+      {
+        "type": "image",
+        "key": "char-Jade-normal0",
+        "url": "assets/image/scenario/char/char-Jade-normal0.png"
+      },
+      {
+        "type": "image",
+        "key": "char-Spring-normal0",
+        "url": "assets/image/scenario/char/char-Spring-normal0.png"
+      }
+    ]
+  }
+}
