@@ -102,9 +102,9 @@ var CreateText = function (scene, txtID,x,y) {
 }
 
 var CreateActor = function (scene, actorID, x, y) {
-    //var newActor = new Actor(scene, x, y, `char-${actorID}-normal0`);
-    var newActor = scene.add.rexTransitionImage(0, 0, `char-${actorID}-normal0`, 0, {})
-    Locate(scene, newActor, {instID: actorID, layerName: 'scenario_stage', viewport: scene.viewport, vpx: x, vpy: y})
+    var newActor = new Actor(scene, actorID, x, y);
+    //var newActor = scene.add.rexTransitionImage(0, 0, `char-${actorID}-normal0`, 0, {})
+    //Locate(scene, newActor, {instID: actorID, layerName: 'scenario_stage', viewport: scene.viewport, vpx: x, vpy: y})
     
     newActor.tagPlayer = this;
     scene.add.existing(newActor); //因為layer.add會將物件放進displayList中並排序，scene.add.exsiting也會，同時使用會導致順序錯亂

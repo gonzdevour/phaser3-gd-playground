@@ -81,7 +81,7 @@ var CreateText = function (scene, spriteName) {
 }
 
 var CreateActor = function (scene, actorID, x, y) {
-    var newActor = scene.add.image(x, y, `char-${actorID}-normal0`);
+    var newActor = scene.add.rexTransitionImage(x, y, `char-${actorID}-normal0`);
     newActor.tagPlayer = this;
     scene.add.existing(newActor); //因為layer.add會將物件放進displayList中並排序，scene.add.exsiting也會，同時使用會導致順序錯亂
     //newActor.changeOrigin(200,200);
