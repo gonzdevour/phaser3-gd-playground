@@ -29,6 +29,10 @@ class Test extends Phaser.Scene
     create ()
     {
         var scene = this;
+        var layerList = ['scenario_stage']
+        scene.layerManager = scene.plugins.get('rexLayerManager').add(scene, layerList);
+        scene.vpc = scene.plugins.get('rexViewportCoordinate');
+
         scene.rexScaleOuter.scale(); //scaleOuter在進入scene時不會自動執行
         scene.viewport = scene.rexScaleOuter.outerViewport; //on resize時scene.viewport不隨之變動
 
@@ -120,6 +124,9 @@ var Locate = function(scene, target, config){
       target.instID = instID;
     }
   
+    var layerManager = scene.layerManager;
+    var vpc = scene.vpc;
+
     var layerName = GetValue(config, 'layerName', 'main');
     var viewport = GetValue(config, 'viewport', scene.viewport);
     var vpx = GetValue(config, 'vpx', 0.5);
@@ -127,9 +134,6 @@ var Locate = function(scene, target, config){
     var vpxOffset = GetValue(config, 'vpxOffset', 0);
     var vpyOffset = GetValue(config, 'vpyOffset', 0);
   
-    var layerManager = scene.plugins.get('rexLayerManager').add(scene, [layerName]);
-    var vpc = scene.plugins.get('rexViewportCoordinate');
-
     layerManager.addToLayer(layerName, target);
     vpc.add(target, viewport, vpx, vpy);
     target.vpxOffset = vpxOffset;

@@ -63,7 +63,7 @@ class Home extends Base {
 }
 
 var launchStoryScene = async function(mainScene){
-    await Delay(2000);
+    await Delay(0);//等待淡入?
     mainScene.scene.launch(DefaultAppConfig.sceneKey.Story, 'data2Pass');
     var storyScene = mainScene.scene.get(DefaultAppConfig.sceneKey.Story)
     return new Promise(function(resolve, reject){

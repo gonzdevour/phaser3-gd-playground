@@ -1,3 +1,5 @@
+import PixelationEffect from '../effects/PixelationEffect.js';
+
 class Base extends Phaser.Scene {
     get debugMode() {
         return true;
@@ -35,6 +37,11 @@ class Base extends Phaser.Scene {
         this.scene.transition({
             target: sceneKey,
             duration: duration,
+
+            onStart(fromScene, toScene, duration) {
+                console.log(`${fromScene.sys.settings.key} to ${toScene.sys.settings.key}`)
+                PixelationEffect(toScene, duration);
+            },
         });
     }
 }
