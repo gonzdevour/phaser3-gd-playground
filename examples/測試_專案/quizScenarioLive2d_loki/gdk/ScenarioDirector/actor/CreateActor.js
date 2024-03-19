@@ -70,6 +70,7 @@ class Actor extends ContainerLite {
 
   appear() {
     var actor = this;
+    console.log(`${actor.instID} appear`)
     actor.sprite.frontImage.setTint(0x0);
     actor.scene.tweens.addCounter({
       from: 0,
@@ -262,9 +263,8 @@ Object.assign(
 
 var CreateActor = function (scene, actorID, x, y) {
   var director = scene.scenario.director;
-  var newActor = new Actor(scene, actorID, x, y);
+  var newActor = new Actor(scene, actorID, x, y); //actor會自動放進layer中，不用再scene.add.existing(newActor)
   newActor.tagPlayer = this;
-  scene.add.existing(newActor); //因為layer.add會將物件放進displayList中並排序，scene.add.exsiting也會，同時使用會導致順序錯亂
   //newActor.changeOrigin(200,200);
   if (director.defaultActorScale != undefined){
     newActor.setScale(director.defaultActorScale);

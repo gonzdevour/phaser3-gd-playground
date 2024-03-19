@@ -50,7 +50,7 @@ class Home extends Base {
                 return director.start('範例')
             })
             .then(function(){
-                scene.scene.pause('Story'); //刪除scenario專用scene，這樣clickArea才不會蓋住問答UI
+                //scene.scene.pause('Story'); //刪除scenario專用scene，這樣clickArea才不會蓋住問答UI
                 console.log('game init')
                 return gameInit(scene);
             })
@@ -63,7 +63,7 @@ class Home extends Base {
 }
 
 var launchStoryScene = async function(mainScene){
-    await Delay(0);//等待淡入?
+    await Delay(0);//等待測試?
     mainScene.scene.launch(DefaultAppConfig.sceneKey.Story, 'data2Pass');
     var storyScene = mainScene.scene.get(DefaultAppConfig.sceneKey.Story)
     return new Promise(function(resolve, reject){

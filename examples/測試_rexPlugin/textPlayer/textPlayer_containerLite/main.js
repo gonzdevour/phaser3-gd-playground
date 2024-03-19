@@ -106,13 +106,13 @@ var CreateText = function (scene, txtID,x,y) {
 }
 
 var CreateActor = function (scene, actorID, x, y) {
-    //var newActor = new Actor(scene, actorID, x, y); //用containerLite包過，不影響結果
-    var newActor = scene.add.rexTransitionImage(0, 0, `char-${actorID}-normal0`, 0, {}) //Locate後無法bringMeToTop
+    var newActor = new Actor(scene, actorID, x, y); //用containerLite包過，不影響結果
+    //var newActor = scene.add.rexTransitionImage(0, 0, `char-${actorID}-normal0`, 0, {}) //Locate後無法bringMeToTop
     //var newActor = scene.add.image(0, 0, `char-${actorID}-normal0`) //純的image，Locate後可以正常bringMeToTop
+    scene.add.existing(newActor); //因為layer.add會將物件放進displayList中並排序，scene.add.exsiting也會，同時使用會導致順序錯亂
     Locate(scene, newActor, {instID: actorID, layerName: 'scenario_stage', viewport: scene.viewport, vpx: x, vpy: y})
     
     newActor.tagPlayer = this;
-    scene.add.existing(newActor); //因為layer.add會將物件放進displayList中並排序，scene.add.exsiting也會，同時使用會導致順序錯亂
     //newActor.changeOrigin(200,200);
     return newActor;
 }

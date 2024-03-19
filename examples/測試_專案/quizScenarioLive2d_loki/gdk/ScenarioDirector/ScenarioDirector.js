@@ -312,11 +312,18 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
     this.storyBox.setVisible(false);
 
     var content = ``;
-    if (this.mode_singleChar && ifDifferentTalker){
-      //this.隱藏對話();
-      content = content + `</char>`
+    if (ifDifferentTalker){
+      if (this.mode_singleChar){ //單角色畫面模式
+        //this.隱藏對話();
+        content = content + `</char>`
+      } else { //多角色畫面模式下，如果換人行動，前個行動者會變黑
+        console.log(`${this.lastTalkerID}從tp變黑`)
+        content = content + `<char.${this.lastTalkerID}.shadow>`
+      }
     }
-    if (!actor) {
+    if (actor) {
+      content = content + `<char.${actorID}.unshadow>`//角色存在的話會亮起來
+    } else {
       content = content + `<char.${actorID}=${actorID},${x},${y}>`
     }
     if (displayName) {
@@ -388,7 +395,6 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       this.logSerifRowIdx++
     }
     var logSerifRowIdx = this.logSerifRowIdx
-    this.lastTalkerID = actorID;
 
     this.隱藏對話();
 
@@ -396,12 +402,17 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       this.storyBox.setVisible(false);
     }
 
+    var content = ``;
+    //前個說話者會變黑
+    content = content + `<char.${this.lastTalkerID}.shadow>`
+    content = content + `<text.story.tell=${actorID},${actorColor},${displayName},${expression}>${serif}`;
+
     this.log({
       logType: logType,logColor: actorColor, logIsHeader: ifDifferentTalker, logSerifRowIdx: logSerifRowIdx,
       actorID: actorID, displayName: displayName, expression: expression, serif: serif
     })
 
-    var content = `<text.story.tell=${actorID},${actorColor},${displayName},${expression}>${serif}`;
+    this.lastTalkerID = actorID;
 
     this.tagPlayer.setTimeScale(this.getTagPlayerTimeScale());
     this.tagPlayer.playPromise(content);
@@ -454,6 +465,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
         //this.隱藏對話();
         content = content + `</char>`
       } else { //多角色畫面模式下，如果換人說話，前個說話者會變黑
+        console.log(`${lastTalkerID}從tp變黑`)
         content = content + `<char.${lastTalkerID}.shadow>`
       }
     }
@@ -652,7 +664,7 @@ class ScenarioDirector extends Phaser.Events.EventEmitter {
       .then(function(){
         background.setVisible(false);
         storyBox.setVisible(false);
-        //console.log('scenario tagPlayer complete')
+        console.log('scenario tagPlayer complete')
       })
   }
   async onTagPlayerComplete() {
