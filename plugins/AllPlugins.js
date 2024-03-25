@@ -27,6 +27,8 @@ import CustomProgressPlugin from '../../phaser3-rex-notes/plugins/customprogress
 import WebFontLoaderPlugin from '../../phaser3-rex-notes/plugins/webfontloader-plugin.js';
 //fx
 import WarpPipelinePlugin from '../../phaser3-rex-notes/plugins/warppipeline-plugin';
+//worksheet
+import MarkedEventSheetsPlugin from '../../phaser3-rex-notes/plugins/markedeventsheets-plugin.js';
 
 export default {
     scene: [
@@ -126,6 +128,11 @@ export default {
         {
             key: 'rexViewportCoordinate',
             plugin: ViewportCoordinatePlugin,
+            start: true
+        },
+        {
+            key: 'rexMarkedEventSheets',
+            plugin: MarkedEventSheetsPlugin,
             start: true
         }
     ]
