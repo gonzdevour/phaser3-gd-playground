@@ -7,6 +7,7 @@ const GlobalPreprocessor = require('./plugins/exporter-preprocessor/Preprocessor
 
 //var pathToRexPlugins = 'C:/Users/JyunRu/Documents/GitHub/phaser3-rex-notes/plugins';
 //var pathToGdkPlugins = 'C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/plugins';
+var pathToRexnote = '../phaser3-rex-notes';
 var pathToRexPlugins = '../phaser3-rex-notes/plugins';
 var pathToGdkPlugins = './plugins';
 
@@ -148,6 +149,7 @@ module.exports = {
             // 其他別名配置...
             gdkPlugins: path.resolve(__dirname, pathToGdkPlugins),
             rexnotePlugins: path.resolve(__dirname, pathToRexPlugins),
+            rexnote: path.resolve(__dirname, pathToRexnote),
         },
         extensions: ['.ts', '.js'],
         fallback: {

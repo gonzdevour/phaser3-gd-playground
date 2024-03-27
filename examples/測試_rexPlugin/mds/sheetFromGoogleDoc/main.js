@@ -13,8 +13,7 @@ class Test extends Phaser.Scene
     create ()
     {
         var scene = this;
-        var print = this.add.text(0, 570, '', { fontSize: 20, backgroundColor: 'grey' }).setDepth(100);
-        print.text = 'Any click to start';
+        scene.rexScaleOuter.scale();
 
         var mds = initMds(scene); //建立mds
 
@@ -47,6 +46,9 @@ var initMds = function(scene){
         commandExecutor: CreateCommandExecutor(scene)
     })
 
+    var print = scene.add.text(0, 570, '', { fontSize: 20, backgroundColor: 'grey' }).setDepth(100);
+    print.text = 'Any click to start';
+
     eventSheetManager
         .on('pause.input', function () {
             print.text = 'Wait any click to continue';
@@ -68,7 +70,7 @@ var config = {
     width: 1024,
     height: 800,
     scale: {
-        mode: Phaser.Scale.FIT,
+        mode: Phaser.Scale.RESIZE,
         autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     plugins: AllPlugins,
