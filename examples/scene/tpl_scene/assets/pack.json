@@ -1,0 +1,110 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "audio",
+        "key": "right",
+        "url": [
+          "assets/audio/right.m4a",
+          "assets/audio/right.mp3",
+          "assets/audio/right.ogg"
+        ]
+      },
+      {
+        "type": "image",
+        "key": "cover",
+        "url": "assets/image/bg/cover.jpg"
+      },
+      {
+        "type": "image",
+        "key": "ico_arrowL",
+        "url": "assets/image/ico/ico_arrowL.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_confirm",
+        "url": "assets/image/ico/ico_confirm.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_delete",
+        "url": "assets/image/ico/ico_delete.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_eraser",
+        "url": "assets/image/ico/ico_eraser.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_gear",
+        "url": "assets/image/ico/ico_gear.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_info",
+        "url": "assets/image/ico/ico_info.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_lang",
+        "url": "assets/image/ico/ico_lang.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_mail",
+        "url": "assets/image/ico/ico_mail.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_music",
+        "url": "assets/image/ico/ico_music.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_no",
+        "url": "assets/image/ico/ico_no.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_qcnt",
+        "url": "assets/image/ico/ico_qcnt.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_search",
+        "url": "assets/image/ico/ico_search.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_sound",
+        "url": "assets/image/ico/ico_sound.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_speak",
+        "url": "assets/image/ico/ico_speak.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_user",
+        "url": "assets/image/ico/ico_user.png"
+      },
+      {
+        "type": "image",
+        "key": "ico_yes",
+        "url": "assets/image/ico/ico_yes.png"
+      },
+      {
+        "type": "image",
+        "key": "title",
+        "url": "assets/image/title/title.png"
+      },
+      {
+        "type": "text",
+        "key": "version",
+        "url": "assets/text/version.txt"
+      }
+    ]
+  }
+}
