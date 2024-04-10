@@ -39,7 +39,7 @@ class Title extends Base {
                 .setMinSize(viewport.width, viewport.height)
                 .layout()
         }
-        OnWindowResize(scene, response);
+        OnWindowResize(scene, response, mainMenu);
 
         mainMenu
             .setMinSize(viewport.width, viewport.height) //displayWidth, displayHeight則不受scaleOuter影響

@@ -5,8 +5,6 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const PackFolder = require('./plugins/packfolder/PackFolder.js');
 const GlobalPreprocessor = require('./plugins/exporter-preprocessor/Preprocessor.js');
 
-//var pathToRexPlugins = 'C:/Users/JyunRu/Documents/GitHub/phaser3-rex-notes/plugins';
-//var pathToGdkPlugins = 'C:/Users/JyunRu/Documents/GitHub/phaser3-gd-playground/plugins';
 var pathToRexnote = '../phaser3-rex-notes';
 var pathToRexPlugins = '../phaser3-rex-notes/plugins';
 var pathToGdkPlugins = './plugins';
