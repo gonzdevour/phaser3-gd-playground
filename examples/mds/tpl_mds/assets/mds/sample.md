@@ -10,8 +10,8 @@ BG
 
 TEXTBOX
   id=Dialog
-  width=500
-  height=120
+  width=#(vpw*0.8)
+  height=300
 
 SPRITE
   id=CharacterA
@@ -33,7 +33,7 @@ SPRITE
 
 CHOICE
   id=Choice
-  width=500
+  width=#(choiceWidth)
 
 
 ## Section A
@@ -50,49 +50,31 @@ log.enable
 log
   text=Start...
 
+BG.set
+  scale=2
 
 Dialog.set
-  vpy=0.99
+  vpy=0.95
   alpha=0.8
 
 CharacterA.set
   vpx=-0.2
+  vpy=1
+  scale=2
 
 CharacterB.set
   vpx=-0.4
+  vpy=1
 
 CharacterC.set
   vpx=-0.3
+  vpy=1
 
 bgm.play
   key=theme0
 
-camera.set
-  x=0
-  y=200
-  rotate=-90
-  zoom=2
-
-camera.rotateTo
-  rotate=0
-  duration=2000
-  ease=Cubic
-
-camera.zoomTo
-  zoom=1
-  duration=2000
-  ease=Cubic
-  wait
-
 wait
   time=300
-
-camera.scrollTo
-  x=0
-  y=0
-  duration=2000
-  ease=Cubic
-  wait
 
 camera.shake
   duration=500
@@ -126,7 +108,7 @@ CharacterC.to
 
 CharacterA.focus
 
-```Dialog.typing, name=Me Me Me, speed=100
+```Dialog.typing, name=野口 沙夜香, speed=50
 Line0...
 Line1...
 Line2...
@@ -142,17 +124,16 @@ setData
   hp=5
   coin=100
 
-
 log.memory
   text=Befor choice
 
 
 Choice.choice
-  title=Would you like some...
+  title=居然攸關全世界的命運...我應該如何抉擇？
   resultKey=choiceIndex
-  option1=Ice cream
-  option2=Burger
-  option3=Cola
+  option1=當然是冰淇淋。
+  option2=是漢堡呦~(裝可愛~)
+  option3=總之來一杯肥宅快樂水，換我一夜不傷悲。
 // Wait until clicking any chioce button
 
 log

@@ -32,9 +32,11 @@ class Home extends Base {
                 CHOICE: ChoiceStyle,
             }
         });
-        
+
         mds
         .addEventSheet(content)
+        .setData('vpw',viewport.width)
+        .setData('choiceWidth',viewport.portrait?viewport.width*0.8:viewport.width*0.5)
         .setData('name', 'rex')
         .setData('coin', 1)
         .setData('hp', 4)
@@ -53,11 +55,12 @@ class Home extends Base {
                     ],
                     buttonMode: 1, //是否手動manualClose      
                     extraConfig: { //客製調整參數
+                      //layerName: "ui",
                       viewport: viewport,
                       width: 600,
                       duration:{ in: 200, out: 100 },
-                      contentStyle:{ fontFamily: Style.fontFamilyName, fontSize: 40 },
-                      space: {left:60, right:60, top:60, bottom:40},
+                      titleStyle:{ fontFamily: Style.fontFamilyName, fontSize: 36 },
+                      space: {left:20, right:20, top:60, bottom:40},
                   }
                 })
                 break;

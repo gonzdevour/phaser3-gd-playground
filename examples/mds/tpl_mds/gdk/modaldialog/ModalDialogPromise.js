@@ -29,7 +29,9 @@ var ModalDialogPromise = function (scene, config) {
         .on('modal.close', function(closeEventData, modalBehavior){
             dialog.broadcastEvent('dialog.close', scene);
         })
-
+    if (config.layerName && scene.layerManager){
+        scene.layerManager.addToLayer(config.layerName, dialog);
+    }
     if(config.viewport){
         dialog.viewport = config.viewport;
     } else {
