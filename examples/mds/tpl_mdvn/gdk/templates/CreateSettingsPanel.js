@@ -93,7 +93,7 @@ var CreateActionLabel = function (scene, text, img, radius, pos) {
   return scene.rexUI.add.label({
     background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
     icon: !img ? undefined : scene.add.image(0, 0, img).setDisplaySize(60, 60),
-    text: !text ? undefined : scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 48 }),
+    text: !text ? undefined : scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 48, align: 'right' }),
     space: { left: 10, right: 10, top: 10, bottom: 10, icon: 0 },
     align: 'center'
   });
