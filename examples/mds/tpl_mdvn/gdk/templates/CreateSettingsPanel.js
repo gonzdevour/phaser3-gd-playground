@@ -64,7 +64,7 @@ var CreateSettingsPanel = function (scene, viewport) {
   //建立語系控制
   var langCtrl = scene.rexUI.add.sizer({
     orientation: 'x',
-    space: { left: 10, right: 10, top: 10, bottom: 10, item: 30 },
+    space: { left: 10, right: 12, top: 10, bottom: 10, item: 30 },
   })
   .addBackground(scene.rexUI.add.roundRectangle(0, 0, 0, 0, 10, COLOR_DARK))
   .add(CreateActionLabel(scene, '語系', 'ico_lang'),{})
@@ -93,9 +93,18 @@ var CreateActionLabel = function (scene, text, img, radius, pos) {
   return scene.rexUI.add.label({
     background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
     icon: !img ? undefined : scene.add.image(0, 0, img).setDisplaySize(60, 60),
-    text: !text ? undefined : scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 48, align: 'right' }),
+    text: !text ? undefined : scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 48 }),
     space: { left: 10, right: 10, top: 10, bottom: 10, icon: 0 },
     align: 'center'
+  });
+}
+
+var CreateDisplayLabel = function (scene, text, img, radius, pos) {
+  return scene.rexUI.add.label({
+    background: CreateRoundRectangleBackground(scene, radius, undefined, 0xffffff, 2),
+    icon: !img ? undefined : scene.add.image(0, 0, img).setDisplaySize(60, 60),
+    text: !text ? undefined : scene.rexUI.add.BBCodeText(0, 0, text, { fontFamily: Style.fontFamilyName, fontSize: 48, fixedWidth: 120, align:'right' }),
+    space: { left: 10, right: 10, top: 10, bottom: 10, icon: 0 },
   });
 }
 
@@ -115,8 +124,8 @@ var CreateNumberBar = function (scene, config) {
         input: 'click',
     },
     value: config.value,
-    text: CreateActionLabel(scene, Math.round(config.value*100)+'%').layout().setMinWidth(50*3),
-    space: { left: 10, right: 10, top: 10, bottom: 10, icon: 10, slider: 10 },
+    text: CreateDisplayLabel(scene, Math.round(config.value*100)+'%'),
+    space: { left: 10, right: 10, top: 10, bottom: 10, icon: 20, slider: 20 },
     valuechangeCallback: config.callback,
 })
 }
