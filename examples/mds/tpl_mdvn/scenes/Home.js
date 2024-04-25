@@ -32,7 +32,7 @@ class Home extends Base {
                 TEXTBOX: TextBoxStyle,
                 CHOICE: ChoiceStyle,
             },
-            mvdnLayer, //指定mdvn使用的root layer
+            rootLayer: mvdnLayer, //指定mdvn使用的root layer
             viewport, //指定viewport讓vpx,vpy,vpw,vph起作用
         });
 
