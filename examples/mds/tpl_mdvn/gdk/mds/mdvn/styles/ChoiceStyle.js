@@ -15,7 +15,7 @@ export default {
         space: { left: 5, right: 5, top: 20, bottom: 5 },
         text: {
             $type:'bbcodetext',
-            fontSize: 48, testString: '回龍',
+            fontSize: 48, testString: '|MÉqgy回',
         },
         wrapText: 'char',
         background: {
@@ -30,7 +30,7 @@ export default {
         text: {
             $type:'bbcodetext',
             fontSize: 48,
-            testString: '回龍',
+            testString: '|MÉqgy回',
         },
         wrapText: 'char',
     },
@@ -51,7 +51,7 @@ export default {
         text: {
             $type:'bbcodetext',
             fontSize: 48,
-            testString: '回龍',
+            testString: '|MÉqgy回',
         },
         wrapText: 'char',
     },

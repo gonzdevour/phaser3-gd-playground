@@ -15,7 +15,7 @@ export default {
 
     action: {key: 'nextPage', tint: COLOR_LIGHT, alpha: 0 },
 
-    text: { fontSize: 64, maxLines: 4, testString: '回龍', },
+    text: { fontSize: 64, maxLines: 4, testString: '|MÉqgy回', },
 
     title: {
         $type: 'label',
@@ -33,7 +33,7 @@ export default {
             strokeColor: COLOR_LIGHT, strokeWidth: 0,
             alpha:0.6,
         },
-        text: { fontStyle: 'bold', fontSize: 48, testString: '回龍', },
+        text: { fontStyle: 'bold', fontSize: 48, testString: '|MÉqgy回', },
 
         icon: null,
         action: null,

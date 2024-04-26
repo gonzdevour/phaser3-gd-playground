@@ -73,7 +73,7 @@ var CreateIndexLabel = function (scene, viewport, index, item) {
     text: scene.rexUI.add.BBCodeText(0, 0, String(index+1).padStart(2, '0'), { 
       fontFamily: Style.fontFamilyName, 
       fontSize: 36,
-      testString: '回龍',
+      testString: '|MÉqgy回',
       color: '#bdbdbd',
       padding: 10,
     }),
@@ -102,7 +102,7 @@ var CreateScenarioLabel = function (scene, viewport, index, item) {
     text: scene.rexUI.add.BBCodeText(0, 0, GetValue(item, 'label', 'EMPTY'), { 
       fontFamily: Style.fontFamilyName, 
       fontSize: 36,
-      testString: '回龍',
+      testString: '|MÉqgy回',
       padding: 10,
     }),
     align: 'center',
@@ -118,7 +118,7 @@ var CreateDateLabel = function (scene, viewport, index, item) {
     text: scene.rexUI.add.BBCodeText(0, 0, GetValue(item, 'savingDate', ''), { 
       fontFamily: Style.fontFamilyName, 
       fontSize: 24,
-      testString: '回龍',
+      testString: '|MÉqgy回',
       padding: 10,
     }),
     align: 'center',

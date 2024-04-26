@@ -61,7 +61,7 @@ var CreateTextLabel = function (scene, viewport, msgAlign, logData) {
     text: scene.rexUI.add.BBCodeText(0, 0, GetValue(logData, 'serif', ''), { 
       fontFamily: Style.fontFamilyName, 
       fontSize: 24,
-      testString: '回龍',
+      testString: '|MÉqgy回',
       wrap: {
         mode: 'character',  // 0|'none'|1|'word'|2|'char'|'character'
         width: wrapWidth,
@@ -92,7 +92,7 @@ var CreateNameLabel = function (scene, logData) {
       fontFamily: Style.fontFamilyName, 
       fontSize: 24,
       color: 0xffffff,
-      testString: '回龍',
+      testString: '|MÉqgy回',
     }),
     align: 'left',
     space: { left:10, right: 10, top: 10, bottom: 10 } //text在label中的天地

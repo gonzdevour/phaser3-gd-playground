@@ -136,9 +136,9 @@ var CreateBtnData = function(){ //這裡的this都是onClick時傳過來的scope
 
 var CreateTitleLabel = function (scene, title, text) {
   //var tLabel_background = scene.rexUI.add.roundRectangle(0, 0, 100, 100, 10, 0x1565c0);
-  var tLabel_title = scene.rexUI.add.BBCodeText(0, 0, title, {fontFamily: Style.fontFamilyName, fontSize:48, testString:'回龍', padding: 10});
+  var tLabel_title = scene.rexUI.add.BBCodeText(0, 0, title, {fontFamily: Style.fontFamilyName, fontSize:48, testString:'|MÉqgy回', padding: 10});
   var tLabel_separator = scene.rexUI.add.roundRectangle(0, 0, 50, 4, 0, 0xffffff).setOrigin(0,0.5);
-  var tLabel_text = scene.rexUI.add.BBCodeText(0, 0, text, {fontFamily: Style.fontFamilyName, fontSize:32, testString:'回龍', padding: 10});
+  var tLabel_text = scene.rexUI.add.BBCodeText(0, 0, text, {fontFamily: Style.fontFamilyName, fontSize:32, testString:'|MÉqgy回', padding: 10});
   //var tLabel_icon = scene.add.rectangle(0, 0, 40, 40, 0xff00ff);
   var tLabel = scene.rexUI.add.titleLabel({
     //background: tLabel_background,

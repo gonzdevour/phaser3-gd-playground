@@ -59,24 +59,27 @@ log
 BG.set
   scale=2
 
-Dialog.set
-  vpy=0.95
-  alpha=0.8
-
 Jaina.set
-  vpx=-0.2
+  vpx=-1
   vpy=1
   scale=2
 
 momo.set
-  vpx=-0.4
+  vpx=-1
   vpy=1
   scale=2
 
 May.set
-  vpx=-0.3
+  vpx=-1
   vpy=1
   scale=2
+
+Dialog.set
+  vpy=0.95
+  alpha=0
+
+Dialog.to
+  alpha=0.8
 
 // 音樂播放
 
@@ -300,17 +303,9 @@ SPRITE.to
 // Wait until tween complete
 
 // 控制對話框所在的layer
-uiLayer.to
+TEXTBOX.to
   alpha=0
 // Wait until ui layer fade-out
 
 bgm.stop
-
-SPRITE.destroy
-
-BG.destroy
-
-TEXTBOX.destroy
-
-CHOICE.destroy
 

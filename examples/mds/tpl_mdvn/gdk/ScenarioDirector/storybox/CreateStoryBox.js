@@ -221,7 +221,7 @@ var createNameLabel = function (scene, x, y) {
     return scene.rexUI.add.label({
         x: x, y: y,
         background: CreateRoundRectangleBackground(scene, 20, 0x999933, 0xffffff, 3),//scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, 0x999933),
-        text: scene.add.text(0, 0, 'Leonardo Dicapio', {fontSize: 48, testString: '回龍',}),
+        text: scene.add.text(0, 0, 'Leonardo Dicapio', {fontSize: 48, testString: '|MÉqgy回',}),
         //icon: scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10, 0x0),
         align: 'left',
         space: { left: 15, right: 15, top: 10, bottom: 20, icon: 10},

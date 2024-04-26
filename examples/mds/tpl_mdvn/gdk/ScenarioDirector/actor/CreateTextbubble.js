@@ -23,7 +23,7 @@ var CreateTextbubble = function (scene, speaker, width, height) {
       //icon: !img ? undefined : scene.add.image(0, 0, img).setDisplaySize(72, 72),
       text: scene.rexUI.add.BBCodeText(textBox.x+80, textBox.y-30, undefined, { 
             fontSize: 36,
-            testString: '回龍',
+            testString: '|MÉqgy回',
             color: '#ffffff',
             align: 'center',
         }),

@@ -9,7 +9,7 @@ var CreateToast = function(scene){
     orientation: 'x',
 
     background: CreateRoundRectangleBackground(scene, 20, 0x555555, 0x333333, 3),
-    text: scene.rexUI.add.BBCodeText(0, 0, 'test-toast-message', {fontFamily: Style.fontFamilyName, fontSize:32, testString:'回龍', padding: 20}),
+    text: scene.rexUI.add.BBCodeText(0, 0, 'test-toast-message', {fontFamily: Style.fontFamilyName, fontSize:32, testString:'|MÉqgy回', padding: 20}),
 
     //icon: iconGameObject,
     //iconMask: false,

@@ -113,7 +113,7 @@ var labelStyle = {
     text: {
         $type: 'text',
         fontSize: 32,
-        testString: '回龍',
+        testString: '|MÉqgy回',
 
         'active.fontStyle': 'bold',
         'active.color': 'black',

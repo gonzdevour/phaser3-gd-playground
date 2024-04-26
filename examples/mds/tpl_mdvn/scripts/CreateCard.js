@@ -77,12 +77,12 @@ var CreateCardFront = function(scene, bgKey, iconKey, text){
     var char = scene.add.image(0, 0, iconKey).setScale(2).setOrigin(0.5,0.7);
 
     var txtName = scene.rexUI.add.BBCodeText(0, 0, '[stroke][b][i]' + text.name + '[/i][/b][/stroke]', { 
-        fontFamily: 'arial', fontSize: 64, testString: '回龍', padding: {left:40, right:40, top:20, bottom:20}, 
+        fontFamily: 'arial', fontSize: 64, testString: '|MÉqgy回', padding: {left:40, right:40, top:20, bottom:20}, 
         color:'#ffd900', stroke:'#666666', strokeThickness: 3,
     }).setOrigin(1)
 
     var txtSay = scene.rexUI.add.BBCodeText(0, 0, '[stroke][b][i]' + text.say + '[/i][/b][/stroke]', { 
-        fontFamily: 'arial', fontSize: 40, testString: '回龍', padding: {left:70, right:70, top:20, bottom:20}, 
+        fontFamily: 'arial', fontSize: 40, testString: '|MÉqgy回', padding: {left:70, right:70, top:20, bottom:20}, 
         color:'white', stroke:'#242424', strokeThickness: 3, fixedWidth: 600, wrap: { mode: 'character' },
         backgroundColor: 'rgba(0,0,0,0.4)',  // #111111
         backgroundColor2: 'rgba(100,100,100,0.4)',  // #333333
@@ -92,7 +92,7 @@ var CreateCardFront = function(scene, bgKey, iconKey, text){
         fontFamily: 'arial',
         fontSize: 40, 
         lineSpacing: 8,
-        testString: '回龍',
+        testString: '|MÉqgy回',
         padding: 20,
         color:'white', 
         fixedWidth: 500-2*20, 
