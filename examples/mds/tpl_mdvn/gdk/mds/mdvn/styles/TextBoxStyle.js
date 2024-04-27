@@ -10,10 +10,9 @@ export default {
 
     innerBackground: { color: COLOR_MAIN, strokeColor: COLOR_LIGHT, strokeWidth: 4, radius: 20, },
 
-    icon: { key: '__DEFAULT' },
-    iconWidth: 300, iconHeight: 300,
+    icon: { width: 300, height: 300 },
 
-    action: {key: 'nextPage', tint: COLOR_LIGHT, alpha: 0 },
+    action: { key: 'nextPage', tint: COLOR_LIGHT, alpha: 0 },
 
     text: { fontSize: 64, maxLines: 4, testString: '|MÉqgy回', },
 
@@ -31,7 +30,7 @@ export default {
             radius: { tl: 10, tr: 10 },
             color: COLOR_DARK,
             strokeColor: COLOR_LIGHT, strokeWidth: 0,
-            alpha:0.6,
+            alpha: 0.6,
         },
         text: { fontStyle: 'bold', fontSize: 48, testString: '|MÉqgy回', },
 
