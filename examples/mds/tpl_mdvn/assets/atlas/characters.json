@@ -1,1 +1,460 @@
-{"frames":{"B-none":{"frame":{"x":876,"y":0,"w":437,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":437,"h":600},"sourceSize":{"w":437,"h":600}},"B-smile":{"frame":{"x":1752,"y":601,"w":437,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":437,"h":600},"sourceSize":{"w":437,"h":600}},"C-anger":{"frame":{"x":876,"y":601,"w":401,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":401,"h":600},"sourceSize":{"w":401,"h":600}},"C-confuse":{"frame":{"x":402,"y":1202,"w":401,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":401,"h":600},"sourceSize":{"w":401,"h":600}},"B-shock":{"frame":{"x":0,"y":0,"w":437,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":437,"h":600},"sourceSize":{"w":437,"h":600}},"A-confuse":{"frame":{"x":728,"y":1803,"w":363,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":363,"h":600},"sourceSize":{"w":363,"h":600}},"A-none":{"frame":{"x":1092,"y":1803,"w":363,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":363,"h":600},"sourceSize":{"w":363,"h":600}},"C-none":{"frame":{"x":1314,"y":601,"w":401,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":401,"h":600},"sourceSize":{"w":401,"h":600}},"A-happy":{"frame":{"x":1752,"y":1202,"w":363,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":363,"h":600},"sourceSize":{"w":363,"h":600}},"C-smile":{"frame":{"x":0,"y":601,"w":401,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":401,"h":600},"sourceSize":{"w":401,"h":600}},"A-dizzy":{"frame":{"x":0,"y":1803,"w":363,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":363,"h":600},"sourceSize":{"w":363,"h":600}},"B-anger":{"frame":{"x":1314,"y":0,"w":437,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":437,"h":600},"sourceSize":{"w":437,"h":600}},"B-confuse":{"frame":{"x":1752,"y":0,"w":437,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":437,"h":600},"sourceSize":{"w":437,"h":600}},"B-dizzy":{"frame":{"x":1206,"y":1202,"w":437,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":437,"h":600},"sourceSize":{"w":437,"h":600}},"A-smile":{"frame":{"x":1456,"y":1803,"w":363,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":363,"h":600},"sourceSize":{"w":363,"h":600}},"A-shock":{"frame":{"x":364,"y":1803,"w":363,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":363,"h":600},"sourceSize":{"w":363,"h":600}},"B-happy":{"frame":{"x":438,"y":0,"w":437,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":437,"h":600},"sourceSize":{"w":437,"h":600}},"A-anger":{"frame":{"x":1820,"y":1803,"w":363,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":363,"h":600},"sourceSize":{"w":363,"h":600}},"C-shock":{"frame":{"x":0,"y":1202,"w":401,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":401,"h":600},"sourceSize":{"w":401,"h":600}},"C-happy":{"frame":{"x":804,"y":1202,"w":401,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":401,"h":600},"sourceSize":{"w":401,"h":600}},"C-dizzy":{"frame":{"x":402,"y":601,"w":401,"h":600},"rotated":false,"trimmed":false,"spriteSourceSize":{"x":0,"y":0,"w":401,"h":600},"sourceSize":{"w":401,"h":600}}},"meta":{"app":"https://www.leshylabs.com/apps/sstool/","version":"Leshy SpriteSheet Tool v0.8.4","image":"characters.png","size":{"w":2189,"h":2403},"scale":1}}
+{
+	"textures": [
+		{
+			"image": "chars",
+			"format": "RGBA8888",
+			"size": {
+				"w": 2322,
+				"h": 1779
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "A-shock",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 363,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 23,
+						"y": 7,
+						"w": 285,
+						"h": 593
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 285,
+						"h": 593
+					}
+				},
+				{
+					"filename": "C-anger",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 401,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 36,
+						"y": 7,
+						"w": 338,
+						"h": 593
+					},
+					"frame": {
+						"x": 0,
+						"y": 593,
+						"w": 338,
+						"h": 593
+					}
+				},
+				{
+					"filename": "C-confuse",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 401,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 36,
+						"y": 7,
+						"w": 338,
+						"h": 593
+					},
+					"frame": {
+						"x": 0,
+						"y": 1186,
+						"w": 338,
+						"h": 593
+					}
+				},
+				{
+					"filename": "C-dizzy",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 401,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 36,
+						"y": 7,
+						"w": 338,
+						"h": 593
+					},
+					"frame": {
+						"x": 285,
+						"y": 0,
+						"w": 338,
+						"h": 593
+					}
+				},
+				{
+					"filename": "C-happy",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 401,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 36,
+						"y": 7,
+						"w": 338,
+						"h": 593
+					},
+					"frame": {
+						"x": 338,
+						"y": 593,
+						"w": 338,
+						"h": 593
+					}
+				},
+				{
+					"filename": "C-none",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 401,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 36,
+						"y": 7,
+						"w": 338,
+						"h": 593
+					},
+					"frame": {
+						"x": 338,
+						"y": 1186,
+						"w": 338,
+						"h": 593
+					}
+				},
+				{
+					"filename": "C-shock",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 401,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 36,
+						"y": 7,
+						"w": 338,
+						"h": 593
+					},
+					"frame": {
+						"x": 623,
+						"y": 0,
+						"w": 338,
+						"h": 593
+					}
+				},
+				{
+					"filename": "C-smile",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 401,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 36,
+						"y": 7,
+						"w": 338,
+						"h": 593
+					},
+					"frame": {
+						"x": 676,
+						"y": 593,
+						"w": 338,
+						"h": 593
+					}
+				},
+				{
+					"filename": "A-dizzy",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 363,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 23,
+						"y": 10,
+						"w": 310,
+						"h": 590
+					},
+					"frame": {
+						"x": 676,
+						"y": 1186,
+						"w": 310,
+						"h": 590
+					}
+				},
+				{
+					"filename": "A-anger",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 363,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 23,
+						"y": 13,
+						"w": 285,
+						"h": 587
+					},
+					"frame": {
+						"x": 961,
+						"y": 0,
+						"w": 285,
+						"h": 587
+					}
+				},
+				{
+					"filename": "A-confuse",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 363,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 23,
+						"y": 13,
+						"w": 285,
+						"h": 587
+					},
+					"frame": {
+						"x": 986,
+						"y": 1186,
+						"w": 285,
+						"h": 587
+					}
+				},
+				{
+					"filename": "A-happy",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 363,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 23,
+						"y": 13,
+						"w": 285,
+						"h": 587
+					},
+					"frame": {
+						"x": 1014,
+						"y": 587,
+						"w": 285,
+						"h": 587
+					}
+				},
+				{
+					"filename": "A-none",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 363,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 23,
+						"y": 13,
+						"w": 285,
+						"h": 587
+					},
+					"frame": {
+						"x": 1246,
+						"y": 0,
+						"w": 285,
+						"h": 587
+					}
+				},
+				{
+					"filename": "A-smile",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 363,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 23,
+						"y": 13,
+						"w": 285,
+						"h": 587
+					},
+					"frame": {
+						"x": 1271,
+						"y": 1174,
+						"w": 285,
+						"h": 587
+					}
+				},
+				{
+					"filename": "B-dizzy",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 437,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 76,
+						"y": 14,
+						"w": 341,
+						"h": 586
+					},
+					"frame": {
+						"x": 1299,
+						"y": 587,
+						"w": 341,
+						"h": 586
+					}
+				},
+				{
+					"filename": "B-anger",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 437,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 76,
+						"y": 37,
+						"w": 341,
+						"h": 563
+					},
+					"frame": {
+						"x": 1531,
+						"y": 0,
+						"w": 341,
+						"h": 563
+					}
+				},
+				{
+					"filename": "B-confuse",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 437,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 76,
+						"y": 37,
+						"w": 341,
+						"h": 563
+					},
+					"frame": {
+						"x": 1556,
+						"y": 1173,
+						"w": 341,
+						"h": 563
+					}
+				},
+				{
+					"filename": "B-happy",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 437,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 76,
+						"y": 37,
+						"w": 341,
+						"h": 563
+					},
+					"frame": {
+						"x": 1640,
+						"y": 563,
+						"w": 341,
+						"h": 563
+					}
+				},
+				{
+					"filename": "B-none",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 437,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 76,
+						"y": 37,
+						"w": 341,
+						"h": 563
+					},
+					"frame": {
+						"x": 1872,
+						"y": 0,
+						"w": 341,
+						"h": 563
+					}
+				},
+				{
+					"filename": "B-shock",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 437,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 76,
+						"y": 37,
+						"w": 341,
+						"h": 563
+					},
+					"frame": {
+						"x": 1897,
+						"y": 1126,
+						"w": 341,
+						"h": 563
+					}
+				},
+				{
+					"filename": "B-smile",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 437,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 76,
+						"y": 37,
+						"w": 341,
+						"h": 563
+					},
+					"frame": {
+						"x": 1981,
+						"y": 563,
+						"w": 341,
+						"h": 563
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "http://free-tex-packer.com",
+		"version": "0.6.7"
+	}
+}
