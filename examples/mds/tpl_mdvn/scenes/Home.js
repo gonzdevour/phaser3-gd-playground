@@ -8,6 +8,8 @@ import { DialogY } from '../gdk/modaldialog/DialogType.js';
 import MarkdownVisualNovel from 'rexnote/templates/markdownvisualnovel/MarkdownVisualNovel.js';
 import TextBoxStyle from '../gdk/mds/mdvn/styles/TextBoxStyle.js';
 import ChoiceStyle from '../gdk/mds/mdvn/styles/ChoiceStyle.js';
+//GAS
+import GetDocsFromGoogleDriveFolder from 'gdkPlugins/utils/gas/GetDocsFromGoogleDriveFolder.js';
 
 class Home extends Base {
     constructor() {
@@ -25,7 +27,8 @@ class Home extends Base {
         var scene = this;
         var viewport = scene.viewport
 
-        var sheet0 = scene.cache.text.get('sheet0');
+        //var sheet0 = scene.cache.text.get('sheet0');
+        var sheet = {};
         var mvdnLayer = scene.layerManager.getLayer('scenario_story');
         var mds = new MarkdownVisualNovel(scene, {
             styles: {
@@ -34,30 +37,43 @@ class Home extends Base {
             },
             rootLayer: mvdnLayer, //指定mdvn使用的root layer
             viewport, //指定viewport讓vpx,vpy,vpw,vph起作用
-        });
-
-        mds
-            .on('pause.input', function () {
-                console.log('pause.input //Wait any click to continue');
-            })
-            .on('resume.input', function () {
-                console.log('resume.input');
-            })
-            .on('complete', function () {
-                console.log('complete //以下印出memory');
-                console.log(mds.memory)
-            })
-
-        mds
-        .addEventSheet(sheet0)
+        })
+        .on('pause.input', function () {
+            console.log('pause.input //Wait any click to continue');
+        })
+        .on('resume.input', function () {
+            console.log('resume.input');
+        })
+        .on('complete', function () {
+            console.log('complete //以下印出memory');
+            console.log(mds.memory)
+        })
+        .setData('$typingSpeed',50)
+        .setData('$transitionDuration',0) //BG.cross, SPRITE.cross
+        .setData('$tintOthers',0x333333) //SPRITE.focus
         .setData('vpw',viewport.width)
         .setData('choiceWidth',viewport.portrait?viewport.width*0.8:viewport.width*0.5)
         .setData('name', 'rex')
         .setData('coin', 1)
         .setData('hp', 4)
-        .start()
 
-        var buttons = createButtons(scene);
+        GetDocsFromGoogleDriveFolder({
+            folderId: "1Lnj1LAug-aZCGiOvjhwZ-JABuqa-XYgg",
+            url: "https://script.google.com/macros/s/AKfycbzWebO96vZCKbVUL0dMemnZm852WgyzYtT8zzlMKFzik5IT7rsFKBA8_sUf51NiMoyoHA/exec",
+        }).then(data => {
+            console.log('Received data:\n', data);
+            var arr = JSON.parse(data);
+            arr.forEach(element => {
+                sheet[element.scriptName] = element.content;
+                mds.addEventSheet(sheet[element.scriptName], element.groupName)
+            });
+            mds.startGroup('歷史事件');
+            buttons.setAlpha(1);
+        }).catch(error => {
+            console.error('Error during gasReq call:\n', error);
+        });  
+
+        var buttons = createButtons(scene).setAlpha(0);
         buttons.on('button.click', function (button, index, pointer, event) {
             switch (index) {
                 case 0: //返回
@@ -80,10 +96,10 @@ class Home extends Base {
                 })
                 break;
                 case 1: //播放
-                mds.start();
+                mds.startGroup('歷史事件');
                 break;
-                case 2: //讀取進度
-                console.log(`2 clicked`)
+                case 2: //停止
+                mds.stopGroup('歷史事件');
                 break;
             }
         },scene)
@@ -141,7 +157,7 @@ var createButtons = function (scene) {
         buttons: [
             createButton(scene, labelStyle, '返回'),
             createButton(scene, labelStyle, '播放'),
-            createButton(scene, labelStyle, 'CCC'),
+            createButton(scene, labelStyle, '停止'),
             createButton(scene, labelStyle, 'DDD'),
         ],
         space: { left:16, top:16, item: 16 },
@@ -159,6 +175,15 @@ var createButtons = function (scene) {
         })
         .changeOrigin(0,0)
         ._LocateVPC(0,0)
+}
+
+var createStatPanel = function (scene, style, text) {
+    return scene.rexUI.add.simpleLabel(style)
+        .resetDisplayContent({
+            text: text,
+            icon: true,
+        })
+        .setName(text);
 }
 
 var goToScene = function(scene, key, duration){

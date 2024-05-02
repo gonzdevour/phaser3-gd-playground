@@ -13,7 +13,7 @@ BG
 
 TEXTBOX
   id=Dialog
-  vpw=0.8
+  vpw=0.9
   height=300
 
 SPRITE
@@ -23,7 +23,7 @@ SPRITE
   expression=smile
 
 SPRITE
-  id=momo
+  id=Momo
   key=characters
   name=B
   expression=smile
@@ -64,7 +64,7 @@ Jaina.set
   vpy=1
   scale=2
 
-momo.set
+Momo.set
   vpx=-1
   vpy=1
   scale=2
@@ -106,7 +106,7 @@ Jaina.to
   duration=2000
   wait=false
 
-momo.to
+Momo.to
   vpx=0.2
   ease=Back
   duration=2000
@@ -124,15 +124,10 @@ May.to
 //   duration=300
 // Wait until tween complete
 
-// 物件設為焦點(其他SPRITE變暗)
-
-Jaina.focus
-  tintOthers=0x333333
-
 // 在markdown語法中，一行內由3個`包起來的會被parse為字串。但如果換行才包起來就不會。
 // 因此以下指令第一行可以被解析為函數，第二行之後才會被plugin設定為text變數
 
-```Dialog.typing, displayName=神秘女子, name=A, expression=smile, icon=portraits, speed=50
+```Jaina.say, displayName=神秘女子, name=A, expression=smile, icon=portraits
 page test
 Line1...
 Line2...
@@ -143,34 +138,45 @@ Line6...
 Line7...
 ```
 
-wait
-  click
-
 SPRITE.set
   tint=0x333333
 
-```Dialog.typing, displayName=ME, icon=ico_user, speed=50
+```Dialog.typing, displayName=ME, icon=ico_user, speed=500
 narration test~
 ```
 
-wait
-  click
-
 // 測試角色切換
 
-momo.focus
-  tintOthers=0x333333
-
-momo.cross
-  expression=dizzy
-  duration=0
-
-```Dialog.typing, displayName=momo, name=B, expression=dizzy, icon=portraits, speed=50
+```Momo.say, displayName=Momo, name=B, expression=dizzy, icon=portraits
 character transition(B-dizzy)
 ```
 
-wait
-  click
+// 測試隨機表達式
+
+setData
+  randomNum=#( randomInt(1, 10) )
+
+```Momo.say, displayName=Momo, name=B, expression=dizzy, icon=portraits
+randomNum = {{randomNum}}
+```
+
+### [IF randomNum >= 3 && randomNum < 7]
+
+```Momo.say, displayName=Momo, name=B, expression=dizzy, icon=portraits
+{{randomNum}} (IF randomNum >= 3 && randomNum < 7)
+```
+
+### [ELSE IF randomNum < 3 || randomNum > 9]
+
+```Momo.say, displayName=Momo, name=B, expression=dizzy, icon=portraits
+{{randomNum}} (IF randomNum < 3 || randomNum > 9)
+```
+
+### [ELSE]
+
+```Momo.say, displayName=Momo, name=B, expression=dizzy, icon=portraits
+{{randomNum}} (7 or 8 or 9)
+```
 
 ## Section B
 
@@ -198,19 +204,9 @@ log
 
 ### [IF choiceIndex == 1]
 
-Jaina.focus
-  tintOthers=0x333333
-
-Jaina.cross
-  expression=smile
-  duration=0
-
-```Dialog.typing, displayName=wonder girl, name=A, expression=smile, icon=portraits, speed=50
+```Jaina.say, displayName=wonder girl, name=A, expression=smile, icon=portraits, typingSpeed=5000
 今天……今天不方便……。
 ```
-
-wait
-  click
 
 setData
   hp=#(hp+3)
@@ -218,19 +214,9 @@ setData
 
 ### [IF choiceIndex == 2]
 
-momo.focus
-  tintOthers=0x333333
-
-momo.cross
-  expression=confuse
-  duration=0
-
-```Dialog.typing, displayName=queen spider, name=B, expression=confuse, icon=portraits, speed=50
+```Momo.say, displayName=queen spider, name=B, expression=confuse, icon=portraits, typingSpeed=500
 這個熱量……太高了……不好意思。
 ```
-
-wait
-  click
 
 incData
   hp=5
@@ -238,19 +224,9 @@ incData
 
 ### [IF choiceIndex == 3]
 
-May.focus
-  tintOthers=0x333333
-
-May.cross
-  expression=shock
-  duration=0
-
-```Dialog.typing, displayName=Janet van Dyne, name=C, expression=shock, icon=portraits, speed=50
+```May.say, displayName=Janet van Dyne, name=C, expression=shock, icon=portraits, typingSpeed=500
 沒想到……你竟然是這種人！ ……再見了。
 ```
-
-wait
-  click
 
 incData
   hp=10
@@ -261,20 +237,17 @@ incData
 log.memory
   text=After choice
 
-Jaina.focus
-  tintOthers=0x333333
-
-```Dialog.typing, displayName=wonder girl, name=A, expression=smile, icon=portraits, speed=50
-wait click or wait 3 sec
+```Jaina.say, displayName=wonder girl, name=A, expression=smile, icon=portraits
+wait click or wait 5 sec
 ```
-
-wait
-  time=3000
-  click
-// Wait until 3s or any touch
 
 SPRITE.set
   tint=0xffffff
+
+wait
+  time=5000
+  click
+// Wait until 3s or any touch
 
 se.play
   key=explosion
