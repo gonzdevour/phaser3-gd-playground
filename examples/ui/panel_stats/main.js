@@ -26,20 +26,38 @@ class Test extends Phaser.Scene
         var gridSizer = createGridSizer(scene);
 
         var tuners = gridSizer.getElement('items');
-        tuners.forEach(tuner => {
-            
+        dataList.forEach((data, index) => {
+            var tuner = tuners[index];
+            tuner.setName('tuner_'+ data.name);
+
+            var nvLabel = tuner.getByName('nvLabel');
+            nvLabel.setName('nvLabel_'+ data.name);
+            nvLabel.setNameText(data.name);
+            nvLabel.setValue(data.valueCur, data.valueMin, data.valueMax);
+
+            var buttons = tuner.getByName('buttons');
+            buttons.on('button.click', function (button, index, pointer, event) {
+                switch (index) {
+                    case 0: //減
+                    setStat(dataList, data.name, -5)
+                    break;
+                    case 1: //加
+                    setStat(dataList, data.name, 5)
+                    break;
+                }
+            },scene)
         });
         
 
+        var setStat = function(dataList, name, value){
+            var data = dataList.find(obj => obj.name === name);
+            data.valueCur += value
 
-        scene.input.on('pointerdown', function () {
-            var data = dataList.find(obj => obj.name === 'mp');
-            data.valueCur += 5
+            var nvLabel = gridSizer.getByName('nvLabel_'+ name, true);
+            nvLabel.setValue(data.valueCur, data.valueMin, data.valueMax);
+            //nvLabel.setEaseValueDuration(200).easeValueTo(data.valueCur);
+        }
 
-            var label_mp = gridSizer.getByName('mp');
-            //label_mp.setValue(data.valueCur, data.valueMin, data.valueMax);
-            label_mp.setEaseValueDuration(200).easeValueTo(data.valueCur);
-        })
     }
     update ()
     {
@@ -60,7 +78,7 @@ var createGridSizer = function(scene){
             //config.align = 'center';
             //config.padding = {left: 0, right: 0, top: 0, bottom: 0};
             //config.key = undefined; //Add this child into childMap, which could be read back by sizer.getElement(key)
-            config.expand = false;
+            //config.expand = false;
             return CreateTuner(scene)
         }
     })
@@ -75,7 +93,6 @@ var CreateTuner = function(scene){
     var buttons = createButtons(scene);
     var sizer = scene.rexUI.add.sizer(0, 0, {
         orientation: 'x',
-        //name: data.name,
         // rtl: false, startChildIndex: 0, anchor: undefined,
         // width: undefined, height: undefined, 
         // draggable: false, sizerEvents: false, enableLayer: false,
@@ -84,7 +101,6 @@ var CreateTuner = function(scene){
     .add(nameValueLabel, {
         align: 'center',
         expand: false,
-        key: 'nameValueLabel',
         //proportion: 0,
         //padding: {left: 0, right: 0, top: 0, bottom: 0},
         //key: undefined, index: undefined, 
@@ -93,8 +109,7 @@ var CreateTuner = function(scene){
     .add(buttons, {
         align: 'center',
         expand: true,
-        key: 'buttons',
-        proportion: 1,
+        //proportion: 1,
         //padding: {left: 0, right: 0, top: 0, bottom: 0},
         //key: undefined, index: undefined, 
         //minWidth: undefined, minHeight: undefined, fitRatio: 0,  // true
@@ -120,7 +135,7 @@ var simpleLabelStyle = {
     //iconSize:32,          
     text: {
         $type: 'text',
-        fontSize: 32,
+        fontSize: 64,
         testString: '|MÉqgy回',
 
         'active.fontStyle': 'bold',
@@ -140,7 +155,7 @@ var createSimpleLabel = function (scene, style, text) {
             text: text,
             //icon: true,
         })
-        .setName(text);
+        .setName('sLabel_' + text);
 }
 
 var createButtons = function (scene) {
@@ -148,13 +163,14 @@ var createButtons = function (scene) {
         width: 200,
         orientation: 'x',
         buttons: [
-            createSimpleLabel(scene, simpleLabelStyle, '+'),
             createSimpleLabel(scene, simpleLabelStyle, '-'),
+            createSimpleLabel(scene, simpleLabelStyle, '+'),
         ],
         expand: true,
-        space: { left:16, top:16, item: 16 },
+        space: { left: 16, item: 16 },
         buttonsType: undefined, //'radio', 'checkboxes'
     })
+        .setName('buttons')
         .on('button.statechange', function (button, index, value, previousValue) {
             button.setActiveState(value);
         })
@@ -201,6 +217,7 @@ var CreateNameValueLabel = function (scene) {
         }
 
     })
+    .setName('nvLabel')
 }
 
 var config = {
