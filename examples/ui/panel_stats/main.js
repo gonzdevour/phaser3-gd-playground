@@ -32,7 +32,7 @@ class Test extends Phaser.Scene
 
             var nvLabel = tuner.getByName('nvLabel');
             nvLabel.setName('nvLabel_'+ data.name);
-            nvLabel.setNameText(data.name);
+            nvLabel.setNameText(data.text);
             nvLabel.setValue(data.valueCur, data.valueMin, data.valueMax);
 
             var buttons = tuner.getByName('buttons');
