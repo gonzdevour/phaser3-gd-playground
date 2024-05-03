@@ -3,7 +3,7 @@ import AllPlugins from 'gdkPlugins/AllPlugins.js';
 
 const COLOR_PRIMARY = 0xffffff; // #4e342e
 const COLOR_LIGHT = 0xffffff; // #7b5e57
-const COLOR_DARK = 0x333333; // #260e04
+const COLOR_DARK = 0x333333; // #333333
 
 class Test extends Phaser.Scene
 {
@@ -18,7 +18,7 @@ class Test extends Phaser.Scene
 
         var dataList = [
             { name: 'hp', text: '體力', valueCur: 90, valueMin: 0, valueMax: 100, },
-            { name: 'mp', text: '魔力', valueCur: 50, valueMin: 0, valueMax: 100, },
+            { name: 'mp', text: '魔力', valueCur: 0, valueMin: 0, valueMax: 100, },
             { name: 'lv', text: '等級', valueCur: 80, valueMin: 0, valueMax: 100, },
             { name: 'exp', text: '經驗', valueCur: 100, valueMin: 0, valueMax: 100, },
         ]
@@ -36,31 +36,53 @@ class Test extends Phaser.Scene
             nvLabel.setValue(data.valueCur, data.valueMin, data.valueMax);
 
             var buttons = tuner.getByName('buttons');
+            buttons.setName('buttons_'+ data.name);
             buttons.on('button.click', function (button, index, pointer, event) {
                 switch (index) {
                     case 0: //減
-                    setStat(dataList, data.name, -5)
+                    statAdd(dataList, data.name, -5)
+                    statUIUpdate(gridSizer, data);
                     break;
                     case 1: //加
-                    setStat(dataList, data.name, 5)
+                    statAdd(dataList, data.name, 5)
+                    statUIUpdate(gridSizer, data);
                     break;
                 }
             },scene)
+
+            //name都設定完成後，更新UI
+            statUIUpdate(gridSizer, data);
         });
-        
-
-        var setStat = function(dataList, name, value){
-            var data = dataList.find(obj => obj.name === name);
-            data.valueCur += value
-
-            var nvLabel = gridSizer.getByName('nvLabel_'+ name, true);
-            nvLabel.setValue(data.valueCur, data.valueMin, data.valueMax);
-            //nvLabel.setEaseValueDuration(200).easeValueTo(data.valueCur);
-        }
-
     }
     update ()
     {
+    }
+}
+
+var statAdd = function(dataList, name, value2add){
+    var data = dataList.find(obj => obj.name === name);
+    data.valueCur = Phaser.Math.Clamp(data.valueCur+value2add, data.valueMin, data.valueMax);
+}
+
+var statUIUpdate = function(gridSizer, data){
+    var name = data.name;
+
+    var nvLabel = gridSizer.getByName('nvLabel_'+ name, true);
+    //nvLabel.setValue(data.valueCur, data.valueMin, data.valueMax);
+    nvLabel.setEaseValueDuration(200).easeValueTo(data.valueCur);
+
+    var buttons = gridSizer.getByName('buttons_'+ name, true);
+    var button0 = buttons.getButton(0);
+    var button1 = buttons.getButton(1);
+    if (data.valueCur == data.valueMin){
+        button0.setDisableState(true);
+        button1.setDisableState(false);
+    } else if (data.valueCur == data.valueMax){
+        button0.setDisableState(false);
+        button1.setDisableState(true); 
+    } else {
+        button0.setDisableState(false);
+        button1.setDisableState(false);        
     }
 }
 
@@ -122,6 +144,7 @@ var simpleLabelStyle = {
     background: {
         radius: 10,
         color: COLOR_DARK,
+        'disable.color': 0x111111,
         'active.color': COLOR_PRIMARY,
         strokeWidth: 0,
         'hover.strokeColor': 0xffffff,
