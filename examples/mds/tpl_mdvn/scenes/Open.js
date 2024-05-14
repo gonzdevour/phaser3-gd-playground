@@ -51,12 +51,12 @@ class Open extends Base {
 
         //loadingProgress
         var progressUI = CreateBar(this).layout();
-        this.onProgress = function (progress) {
+        this.onProgress = function (progress) { //建立onProgress函數，由animationScene plugin執行
             progressUI.setValue(progress);
         }
 
         //loadingComplete
-        this.onClose = function (onComplete) {
+        this.onClose = function (onComplete) { //建立onClose函數，由animationScene plugin執行，帶入plugin的successCallback
             if (bootScene.ifLoadError){
                 console.log('open error-disable scene close')
 
@@ -71,7 +71,7 @@ class Open extends Base {
                 })
 
             } else {
-                scene.tweens.add({targets: mouse, x: '+=2000', duration: 1000, onComplete: onComplete })
+                scene.tweens.add({targets: mouse, x: '+=2000', duration: 1000, onComplete: onComplete }) //tween完執行animationScene plugin的successCallback
                 scene.tweens.add({targets: mouse, alpha: 0, duration: 1000, })
             }
         }

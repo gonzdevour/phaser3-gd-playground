@@ -86,15 +86,15 @@ class Boot extends Base {
 
         var scene = this;
 
-        //open
+        //啟動open scene(animationScene)執行讀取動畫
         this.plugins.get('rexLoadingAnimationScene').startScene(this, DefaultAppConfig.sceneKey.Open,
             function (successCallback, animationScene) {
-                if (animationScene.onClose) {
+                if (animationScene.onClose) { //如果animationScene有onClose這個函數物件，執行並帶入plugin提供的successCallback為參數
                     animationScene.onClose(successCallback);
                 }
             },
             function (progress, animationScene) {
-                if (animationScene.onProgress) {
+                if (animationScene.onProgress) { //如果animationScene有onProgress這個函數物件，執行並帶入plugin提供的progress為參數
                     //console.log(progress)
                     animationScene.onProgress(progress);
                 }

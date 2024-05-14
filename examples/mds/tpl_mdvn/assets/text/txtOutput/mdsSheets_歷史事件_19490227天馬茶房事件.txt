@@ -1,0 +1,46 @@
+# 19490227天馬茶房事件
+
+## [Condition]
+
+date == 19490227
+
+## 產生物件
+
+<<{建立UI}>>
+
+背景.cross
+  key=classroom
+  mode=irisOut
+
+SPRITE
+  id=Jaina
+  key=A-none
+  name=A
+  vpx=-1
+  vpy=1
+  scale=2
+
+## 故事開始
+
+log
+  text=發生了天馬茶房事件
+
+Jaina.to
+  vpx=0.8
+  ease=Back
+  duration=2000
+  wait=true
+
+```Jaina.say, displayName=神秘女子, key=A-shock, icon=portrait-A-shock
+page test
+Line1...
+Line2...
+Line3...
+Line4...
+Line5...
+Line6...
+Line7...
+```
+
+wait
+  time=3000

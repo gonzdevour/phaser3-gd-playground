@@ -1,5 +1,6 @@
 //basic
 import RexUI from '../../phaser3-rex-notes/templates/ui/ui-plugin.js';
+import SpinnerPlugin from '../../phaser3-rex-notes/templates/spinner/spinner-plugin.js';
 import rexscaleouterplugin from '../../phaser3-rex-notes/plugins/scaleouter-plugin.js';
 import LoadingProgressPlugin from '../../phaser3-rex-notes/plugins/loadingprogress-plugin.js';
 import LayerManagerPlugin from '../../phaser3-rex-notes/plugins/layermanager-plugin.js';
@@ -41,6 +42,11 @@ export default {
             key: 'rexScaleOuter',
             plugin: rexscaleouterplugin,
             mapping: 'rexScaleOuter'
+        },
+        {
+            key: "rexSpinner",
+            plugin: SpinnerPlugin,
+            mapping: "rexSpinner",
         },
     ],
     global: [

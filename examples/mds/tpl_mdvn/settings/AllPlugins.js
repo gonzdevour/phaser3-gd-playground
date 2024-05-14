@@ -32,6 +32,8 @@ import WebFontLoaderPlugin from 'rexnote/plugins/webfontloader-plugin.js';
 import WarpPipelinePlugin from 'rexnote/plugins/warppipeline-plugin';
 //worksheet
 import MarkedEventSheetsPlugin from 'rexnote/plugins/markedeventsheets-plugin.js';
+//mouse
+import MouseWheelScrollerPlugin from 'rexnote/plugins/mousewheelscroller-plugin.js';
 
 export default {
     scene: [
@@ -146,6 +148,11 @@ export default {
         {
             key: 'rexLoadingAnimationScene',
             plugin: LoadingAnimationScenePlugin,
+            start: true
+        },
+        {
+            key: 'rexMouseWheelScroller',
+            plugin: MouseWheelScrollerPlugin,
             start: true
         },
     ]

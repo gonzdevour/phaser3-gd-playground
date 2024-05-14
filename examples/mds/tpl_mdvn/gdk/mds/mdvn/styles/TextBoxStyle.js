@@ -8,7 +8,7 @@ export default {
         icon: 10, text: 10,
     },
 
-    innerBackground: { color: COLOR_MAIN, strokeColor: COLOR_LIGHT, strokeWidth: 4, radius: 20, },
+    innerBackground: { color: COLOR_MAIN, strokeColor: COLOR_LIGHT, strokeWidth: 4, radius: 20, alpha:0.8},
 
     icon: { width: 300, height: 300 },
 

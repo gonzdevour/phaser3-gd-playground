@@ -2,18 +2,6 @@
   "packKey": {
     "files": [
       {
-        "type": "atlas",
-        "key": "characters",
-        "atlasURL": "assets/atlas/characters.json",
-        "textureURL": "assets/atlas/characters.png"
-      },
-      {
-        "type": "atlas",
-        "key": "portraits",
-        "atlasURL": "assets/atlas/portraits.json",
-        "textureURL": "assets/atlas/portraits.png"
-      },
-      {
         "type": "audio",
         "key": "explosion",
         "url": [
@@ -62,6 +50,111 @@
         "type": "image",
         "key": "road",
         "url": "assets/image/bg/road.png"
+      },
+      {
+        "type": "image",
+        "key": "A-anger",
+        "url": "assets/image/characters/A-anger.png"
+      },
+      {
+        "type": "image",
+        "key": "A-confuse",
+        "url": "assets/image/characters/A-confuse.png"
+      },
+      {
+        "type": "image",
+        "key": "A-dizzy",
+        "url": "assets/image/characters/A-dizzy.png"
+      },
+      {
+        "type": "image",
+        "key": "A-happy",
+        "url": "assets/image/characters/A-happy.png"
+      },
+      {
+        "type": "image",
+        "key": "A-none",
+        "url": "assets/image/characters/A-none.png"
+      },
+      {
+        "type": "image",
+        "key": "A-shock",
+        "url": "assets/image/characters/A-shock.png"
+      },
+      {
+        "type": "image",
+        "key": "A-smile",
+        "url": "assets/image/characters/A-smile.png"
+      },
+      {
+        "type": "image",
+        "key": "B-anger",
+        "url": "assets/image/characters/B-anger.png"
+      },
+      {
+        "type": "image",
+        "key": "B-confuse",
+        "url": "assets/image/characters/B-confuse.png"
+      },
+      {
+        "type": "image",
+        "key": "B-dizzy",
+        "url": "assets/image/characters/B-dizzy.png"
+      },
+      {
+        "type": "image",
+        "key": "B-happy",
+        "url": "assets/image/characters/B-happy.png"
+      },
+      {
+        "type": "image",
+        "key": "B-none",
+        "url": "assets/image/characters/B-none.png"
+      },
+      {
+        "type": "image",
+        "key": "B-shock",
+        "url": "assets/image/characters/B-shock.png"
+      },
+      {
+        "type": "image",
+        "key": "B-smile",
+        "url": "assets/image/characters/B-smile.png"
+      },
+      {
+        "type": "image",
+        "key": "C-anger",
+        "url": "assets/image/characters/C-anger.png"
+      },
+      {
+        "type": "image",
+        "key": "C-confuse",
+        "url": "assets/image/characters/C-confuse.png"
+      },
+      {
+        "type": "image",
+        "key": "C-dizzy",
+        "url": "assets/image/characters/C-dizzy.png"
+      },
+      {
+        "type": "image",
+        "key": "C-happy",
+        "url": "assets/image/characters/C-happy.png"
+      },
+      {
+        "type": "image",
+        "key": "C-none",
+        "url": "assets/image/characters/C-none.png"
+      },
+      {
+        "type": "image",
+        "key": "C-shock",
+        "url": "assets/image/characters/C-shock.png"
+      },
+      {
+        "type": "image",
+        "key": "C-smile",
+        "url": "assets/image/characters/C-smile.png"
       },
       {
         "type": "image",
@@ -149,9 +242,149 @@
         "url": "assets/image/title/title.png"
       },
       {
+        "type": "image",
+        "key": "portrait-A-confuse",
+        "url": "assets/image/characters/portraits/portrait-A-confuse.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-A-dizzy",
+        "url": "assets/image/characters/portraits/portrait-A-dizzy.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-A-happy",
+        "url": "assets/image/characters/portraits/portrait-A-happy.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-A-none",
+        "url": "assets/image/characters/portraits/portrait-A-none.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-A-shock",
+        "url": "assets/image/characters/portraits/portrait-A-shock.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-A-smile",
+        "url": "assets/image/characters/portraits/portrait-A-smile.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-B-anger",
+        "url": "assets/image/characters/portraits/portrait-B-anger.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-B-confuse",
+        "url": "assets/image/characters/portraits/portrait-B-confuse.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-B-dizzy",
+        "url": "assets/image/characters/portraits/portrait-B-dizzy.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-B-happy",
+        "url": "assets/image/characters/portraits/portrait-B-happy.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-B-none",
+        "url": "assets/image/characters/portraits/portrait-B-none.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-B-shock",
+        "url": "assets/image/characters/portraits/portrait-B-shock.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-B-smile",
+        "url": "assets/image/characters/portraits/portrait-B-smile.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-C-anger",
+        "url": "assets/image/characters/portraits/portrait-C-anger.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-C-confuse",
+        "url": "assets/image/characters/portraits/portrait-C-confuse.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-C-dizzy",
+        "url": "assets/image/characters/portraits/portrait-C-dizzy.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-C-happy",
+        "url": "assets/image/characters/portraits/portrait-C-happy.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-C-none",
+        "url": "assets/image/characters/portraits/portrait-C-none.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-C-shock",
+        "url": "assets/image/characters/portraits/portrait-C-shock.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-C-smile",
+        "url": "assets/image/characters/portraits/portrait-C-smile.png"
+      },
+      {
+        "type": "image",
+        "key": "portrait-portrait-A-anger",
+        "url": "assets/image/characters/portraits/portrait-portrait-A-anger.png"
+      },
+      {
         "type": "text",
         "key": "version",
         "url": "assets/text/version.txt"
+      },
+      {
+        "type": "text",
+        "key": "mdsSheets_歷史事件_19490227天馬茶房事件",
+        "url": "assets/text/txtOutput/mdsSheets_歷史事件_19490227天馬茶房事件.txt"
+      },
+      {
+        "type": "text",
+        "key": "mdsSheets_歷史事件_19490228台北市戒嚴",
+        "url": "assets/text/txtOutput/mdsSheets_歷史事件_19490228台北市戒嚴.txt"
+      },
+      {
+        "type": "text",
+        "key": "mdsSheets_歷史事件_19490301基隆市戒嚴",
+        "url": "assets/text/txtOutput/mdsSheets_歷史事件_19490301基隆市戒嚴.txt"
+      },
+      {
+        "type": "text",
+        "key": "mdsSheets_歷史事件_19490302二二八事件處理委員會成立",
+        "url": "assets/text/txtOutput/mdsSheets_歷史事件_19490302二二八事件處理委員會成立.txt"
+      },
+      {
+        "type": "text",
+        "key": "mdsSheets_歷史事件_19490303憲兵一營抵達基隆",
+        "url": "assets/text/txtOutput/mdsSheets_歷史事件_19490303憲兵一營抵達基隆.txt"
+      },
+      {
+        "type": "text",
+        "key": "mdsSheets_歷史事件_testMds",
+        "url": "assets/text/txtOutput/mdsSheets_歷史事件_testMds.txt"
+      },
+      {
+        "type": "text",
+        "key": "mdsSheets_隨機事件_隨機事件",
+        "url": "assets/text/txtOutput/mdsSheets_隨機事件_隨機事件.txt"
       }
     ]
   }

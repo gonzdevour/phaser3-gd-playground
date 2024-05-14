@@ -28,6 +28,7 @@ class Title extends Base {
     create() {
         var scene = this;
         var viewport = this.viewport;
+
         console.log('title init')
         scene.log(`appLang: ${DefaultData.appLang} (${DefaultData.appLangAlias})`);
 
