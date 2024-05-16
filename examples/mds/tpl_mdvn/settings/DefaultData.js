@@ -43,7 +43,7 @@ var DefaultAppConfig = {
             },
         ],
     },
-    scaleMode: Phaser.Scale.RESIZE,
+    scaleMode: Phaser.Scale.FIT,
     scaleAutoCenter: Phaser.Scale.CENTER_BOTH,
     plugins: AllPlugins,
     style: style,

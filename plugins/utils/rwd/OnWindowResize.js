@@ -5,8 +5,8 @@ var OnWindowResize = function(scene, callback, target){
     target = scene;
   }
   var scale = scene.scale;
-  AddEvent(target, scale, 'resize', function(pointer, localX, localY, event){
-      callback();
+  AddEvent(target, scale, 'resize', function(gameSize, baseSize, displaySize, previousWidth, previousHeight){
+      callback(gameSize, baseSize, displaySize, previousWidth, previousHeight);
   });
 }
 

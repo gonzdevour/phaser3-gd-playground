@@ -3,6 +3,7 @@ var shortcuts = {
   建立UI: 
 `BG
 id=背景
+  key=bg_transparent
   vpw=0.5
   vpy=0.5
   scaleMode=ENVELOP

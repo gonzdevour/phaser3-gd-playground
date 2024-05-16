@@ -2,6 +2,9 @@ import Base from "./Base.js";
 import initMasterScene from "../gdk/scene/InitMasterScene.js";
 import { DefaultAppConfig } from "../settings/DefaultData.js";
 
+//map
+import map from "../scripts/map.js";
+
 //mds
 import CreateMds from "../scripts/CreateMds.js";
 import CreateMdsControlButtons from "../scripts/CreateMdsControlButtons.js";
@@ -32,6 +35,27 @@ class Home extends Base {
   }
   create() {
     var scene = this;
+    var camera = this.cameras.main;
+    camera.scrollX = 500
+
+    var dragScale = scene.rexGestures.add.pinch(this);
+    dragScale
+        .on('drag1', function (dragScale) {
+            var drag1Vector = dragScale.drag1Vector;
+            camera.scrollX -= drag1Vector.x / camera.zoom;
+            camera.scrollY -= drag1Vector.y / camera.zoom;
+        })
+        .on('pinch', function (dragScale) {
+            var scaleFactor = dragScale.scaleFactor;
+            camera.zoom *= scaleFactor;
+        }, this)
+
+    camera.setBackgroundColor('#66ccff');
+    map.forEach(place => {
+      scene.add.image(place.x, place.y, place.key)
+      console.log(place.key)
+    });
+
     var mds = CreateMds(scene, memory, scene.cache.text.get("mdsSheets"));
     var mdsControlButtons = CreateMdsControlButtons(scene, mds);
     mds.startGroup("歷史事件");

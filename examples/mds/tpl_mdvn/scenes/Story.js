@@ -1,5 +1,5 @@
 import Base from './Base.js';
-import initBranchScene from '../gdk/scene/InitBranchScene.js';
+import initMasterScene from '../gdk/scene/InitMasterScene.js';
 import { DefaultAppConfig } from '../settings/DefaultData.js';
 import CreateScenario from '../gdk/ScenarioDirector/CreateScenario.js';
 
@@ -10,7 +10,7 @@ class Story extends Base {
         })
     }
     init(){
-        initBranchScene(this);
+        initMasterScene(this);
     }
     create() {
         //建立scenario

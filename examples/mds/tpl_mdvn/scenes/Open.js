@@ -1,5 +1,5 @@
 import Base from './Base.js';
-import initBranchScene from '../gdk/scene/InitBranchScene.js';
+import initMasterScene from '../gdk/scene/InitMasterScene.js';
 import { DefaultData, DefaultAppConfig } from '../settings/DefaultData.js';
 
 //loadingUI
@@ -13,7 +13,7 @@ class Open extends Base {
         })
     }
     init(){
-        initBranchScene(this);
+        initMasterScene(this);
     }
     preload(){
         this.load.atlas('mouse', 'assets/open/mouse/mouse.png', 'assets/open/mouse/mouse.json');

@@ -32,8 +32,9 @@ import WebFontLoaderPlugin from 'rexnote/plugins/webfontloader-plugin.js';
 import WarpPipelinePlugin from 'rexnote/plugins/warppipeline-plugin';
 //worksheet
 import MarkedEventSheetsPlugin from 'rexnote/plugins/markedeventsheets-plugin.js';
-//mouse
+//input
 import MouseWheelScrollerPlugin from 'rexnote/plugins/mousewheelscroller-plugin.js';
+import GesturesPlugin from 'rexnote/plugins/gestures-plugin.js';
 
 export default {
     scene: [
@@ -42,15 +43,20 @@ export default {
             plugin: RexUI,
             mapping: 'rexUI'
         },
-        {
-            key: 'rexScaleOuter',
-            plugin: rexscaleouterplugin,
-            mapping: 'rexScaleOuter'
-        },
+        // {
+        //     key: 'rexScaleOuter',
+        //     plugin: rexscaleouterplugin,
+        //     mapping: 'rexScaleOuter'
+        // },
         {
             key: "rexSpinner",
             plugin: SpinnerPlugin,
             mapping: "rexSpinner",
+        },
+        {
+            key: 'rexGestures',
+            plugin: GesturesPlugin,
+            mapping: 'rexGestures'
         },
     ],
     global: [

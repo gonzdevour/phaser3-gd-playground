@@ -36,11 +36,23 @@ class Title extends Base {
 
         //rwd
         var response = function(){
+            scene.add.image(viewport.centerX, viewport.centerY, "__MISSING")
+            console.log("vpcenterX:" + viewport.centerX)
             mainMenu
+                .setPosition(viewport.centerX, viewport.centerY)
                 .setMinSize(viewport.width, viewport.height)
                 .layout()
         }
         OnWindowResize(scene, response,mainMenu);
+
+        scene.input.on("pointerdown", function(){
+            console.log("relayout")
+            viewport = scene.scale.getViewPort();
+            mainMenu
+                .setPosition(viewport.centerX, viewport.centerY)
+                .setMinSize(viewport.width, viewport.height)
+                .layout()
+        },scene)
 
         mainMenu
             .setMinSize(viewport.width, viewport.height) //displayWidth, displayHeight則不受scaleOuter影響

@@ -1,35 +1,40 @@
 //basic
-import RexUI from '../../phaser3-rex-notes/templates/ui/ui-plugin.js';
-import SpinnerPlugin from '../../phaser3-rex-notes/templates/spinner/spinner-plugin.js';
-import rexscaleouterplugin from '../../phaser3-rex-notes/plugins/scaleouter-plugin.js';
-import LoadingProgressPlugin from '../../phaser3-rex-notes/plugins/loadingprogress-plugin.js';
-import LayerManagerPlugin from '../../phaser3-rex-notes/plugins/layermanager-plugin.js';
+import RexUI from 'rexnote/templates/ui/ui-plugin.js';
+import rexscaleouterplugin from 'rexnote/plugins/scaleouter-plugin.js';
+import LoadingProgressPlugin from 'rexnote/plugins/loadingprogress-plugin.js';
+import LayerManagerPlugin from 'rexnote/plugins/layermanager-plugin.js';
 //image
-import TransitionImagePlugin from '../../phaser3-rex-notes/plugins/transitionimage-plugin.js';
+import TransitionImagePlugin from 'rexnote/plugins/transitionimage-plugin.js';
 //db
-import CSVToHashTablePlugin from '../../phaser3-rex-notes/plugins/csvtohashtable-plugin.js';
+import CSVToHashTablePlugin from 'rexnote/plugins/csvtohashtable-plugin.js';
 //ui
-import AnchorPlugin from '../../phaser3-rex-notes/plugins/anchor-plugin.js';
-import ButtonPlugin from '../../phaser3-rex-notes/plugins/button-plugin.js';
+import AnchorPlugin from 'rexnote/plugins/anchor-plugin.js';
+import ButtonPlugin from 'rexnote/plugins/button-plugin.js';
 //viewport
-import ViewportCoordinatePlugin from '../../phaser3-rex-notes/plugins/viewportcoordinate-plugin.js';
+import ViewportCoordinatePlugin from 'rexnote/plugins/viewportcoordinate-plugin.js';
 //event
-import AwaitLoaderPlugin from '../../phaser3-rex-notes/plugins/awaitloader-plugin.js';
-import EventPromisePlugin from '../../phaser3-rex-notes/plugins/eventpromise-plugin.js';
+import AwaitLoaderPlugin from 'rexnote/plugins/awaitloader-plugin.js';
+import EventPromisePlugin from 'rexnote/plugins/eventpromise-plugin.js';
 //timer
-import ClockPlugin from '../../phaser3-rex-notes/plugins/clock-plugin.js';
-import AwayTimePlugin from '../../phaser3-rex-notes/plugins/awaytime-plugin.js';
-import RealTimeTimersPlugin from '../../phaser3-rex-notes/plugins/realtimetimers-plugin.js';
-//misc
-import Live2dPlugin from '../../phaser3-rex-notes/dist/rexlive2dplugin.min.js';
-import PerspectiveImagePlugin from '../../phaser3-rex-notes/plugins/perspectiveimage-plugin.js';
-import CustomProgressPlugin from '../../phaser3-rex-notes/plugins/customprogress-plugin';
+import ClockPlugin from 'rexnote/plugins/clock-plugin.js';
+import AwayTimePlugin from 'rexnote/plugins/awaytime-plugin.js';
+import RealTimeTimersPlugin from 'rexnote/plugins/realtimetimers-plugin.js';
+//special appearence
+import Live2dPlugin from 'rexnote/dist/rexlive2dplugin.min.js';
+import PerspectiveImagePlugin from 'rexnote/plugins/perspectiveimage-plugin.js';
+import SpinnerPlugin from 'rexnote/templates/spinner/spinner-plugin.js';
+//loading
+import CustomProgressPlugin from 'rexnote/plugins/customprogress-plugin';
+import LoadingAnimationScenePlugin from 'rexnote/plugins/loadinganimationscene-plugin';
 //text
-import WebFontLoaderPlugin from '../../phaser3-rex-notes/plugins/webfontloader-plugin.js';
+import WebFontLoaderPlugin from 'rexnote/plugins/webfontloader-plugin.js';
 //fx
-import WarpPipelinePlugin from '../../phaser3-rex-notes/plugins/warppipeline-plugin';
+import WarpPipelinePlugin from 'rexnote/plugins/warppipeline-plugin';
 //worksheet
-import MarkedEventSheetsPlugin from '../../phaser3-rex-notes/plugins/markedeventsheets-plugin.js';
+import MarkedEventSheetsPlugin from 'rexnote/plugins/markedeventsheets-plugin.js';
+//input
+import MouseWheelScrollerPlugin from 'rexnote/plugins/mousewheelscroller-plugin.js';
+import GesturesPlugin from 'rexnote/plugins/gestures-plugin.js';
 
 export default {
     scene: [
@@ -47,6 +52,11 @@ export default {
             key: "rexSpinner",
             plugin: SpinnerPlugin,
             mapping: "rexSpinner",
+        },
+        {
+            key: 'rexGestures',
+            plugin: GesturesPlugin,
+            mapping: 'rexGestures'
         },
     ],
     global: [
@@ -140,6 +150,16 @@ export default {
             key: 'rexMarkedEventSheets',
             plugin: MarkedEventSheetsPlugin,
             start: true
-        }
+        },
+        {
+            key: 'rexLoadingAnimationScene',
+            plugin: LoadingAnimationScenePlugin,
+            start: true
+        },
+        {
+            key: 'rexMouseWheelScroller',
+            plugin: MouseWheelScrollerPlugin,
+            start: true
+        },
     ]
 };
