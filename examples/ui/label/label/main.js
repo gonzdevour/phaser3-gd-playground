@@ -25,9 +25,13 @@ class Test extends Phaser.Scene
         .onClick(function(button, gameObject, pointer, event) {
             console.log(`label onClick`)
         },scene)
+
+        this.pointer = this.add.circle(0,0,20, 0xff0000)
     }
     update ()
     {
+        var pointer = this.input.activePointer;
+        this.pointer.setPosition(pointer.x, pointer.y)
     }
 }
 
