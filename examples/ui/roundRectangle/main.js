@@ -10,7 +10,8 @@ class Test extends Phaser.Scene
 
     create ()
     {
-        this.rexUI.add.roundRectangle(100, 80, 100, 100, 0, 0x008888);
+        var big = this.rexUI.add.roundRectangle(300, 300, 200, 200, 0, 0x008888);
+        var sml = this.rexUI.add.roundRectangle(big.centerX, big.centerY, 20, 20, 0, 0xff0000);
     }
     update ()
     {

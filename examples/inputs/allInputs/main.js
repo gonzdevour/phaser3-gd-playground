@@ -11,11 +11,29 @@ class Test extends Phaser.Scene
     create ()
     {
         var scene = this;
-        var viewport = scene.scale.getViewPort();
+
+        var vpRect = scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(10, 0xff0000).setOrigin(0,0);
+        var viewport = new Phaser.Geom.Rectangle(0, 0, 0, 0);
+        var UpdateViewport = (function() {
+            var newviewport = scene.scale.getViewPort();
+            viewport.setTo(0,0,newviewport.width, newviewport.height);
+            vpRect.setSize(viewport.width, viewport.height)
+            //vpRect.setSize(scene.cameras.main.worldView.width, scene.cameras.main.worldView.height)
+        }).bind(scene);
+        scene.scale.on('resize', UpdateViewport);
+        UpdateViewport();
+
+        // Will add new camera if target camera is not existing
+        scene.layers = scene.plugins.get('rexLayerManager').add(scene, [
+            { name: 'main' },
+            { name: 'ui', cameraName: 'ui' },
+        ]);
+
         var camMain = this.cameras.main;
             camMain.setBackgroundColor('#66ccff');
-        var camUI = scene.cameras.add();
-        //camMain.scrollX = 500
+            camMain.setScroll(100, 100);
+
+        var camUI = scene.cameras.getCamera("ui")
 
         //enable/disable input
         scene.input.enabled = true; // enabled: true/false
@@ -65,18 +83,39 @@ class Test extends Phaser.Scene
             space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10}
         })
         .setMinSize(100,50)
-        .setOrigin(0,0)
+        .setOrigin(0.5,0.5)
         .layout()
-        .setPosition(100,200)
+        .setPosition(viewport.centerX,viewport.centerY)
         .onClick(function(button, gameObject, pointer, event) {
             console.log(`label onClick`)
         },scene)
 
-        camUI.ignore([imgs, label]);
+        var btn = scene.rexUI.add.label({ //模擬UI
+            background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 10, 0x339933).setStrokeStyle(2, 0xffffff),
+            text: scene.rexUI.add.BBCodeText(0, 0, "UI", { fontSize: 36 }),
+            //icon: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 10, COLOR_LIGHT),
+            align: "left",
+            space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10}
+        })
+        .setMinSize(50,50)
+        .setOrigin(0,0)
+        .layout()
+        .setPosition(10,10)
+        .onClick(function(button, gameObject, pointer, event) {
+            console.log(`label onClick`)
+        },scene)
 
-        //自訂UI(配合camera)
-        var btn = scene.rexUI.add.roundRectangle(100, 80, 100, 100, 0, 0x008888).setScrollFactor(0,0).setInteractive({ draggable: true }); //模擬UI
-        camMain.ignore([btn]);
+        //layer控制
+
+        // //1.使用cameras做layer控制
+        // camUI.ignore([imgs, label]);
+        // camMain.ignore([btn]);
+
+        //2. 使用layerManager
+        scene.layers.addToLayer('main', label);
+        scene.layers.addToLayer('main', imgs);
+        scene.layers.addToLayer('ui', btn);
+        scene.layers.addToLayer('ui', vpRect);
 
         //-------------------
 
@@ -84,6 +123,8 @@ class Test extends Phaser.Scene
         scene.input
             .on('pointerdown', function(pointer){
                 console.log(`pointerdown:(${pointer.x},${pointer.y}) downTime:${pointer.downTime}`)
+                //scene.rexUI.add.BBCodeText(camMain.worldView.centerX, camMain.worldView.centerY, "centerXY", { fontSize: 36 }).setOrigin(0.5,0.5)
+                scene.rexUI.add.BBCodeText(viewport.centerX, viewport.centerY, "centerXY", { fontSize: 36 }).setOrigin(0.5,0.5) //這個目前不正常，要等EXPAND更新
             }, scene)
             .on('pointerdownoutside', function(pointer){ //在dom/game canvas的組合環境下才有作用
                 console.log(`pointerdownoutside:(${pointer.x},${pointer.y})`)
