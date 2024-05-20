@@ -1,4 +1,5 @@
 import 'phaser';
+import RexUI from 'rexnote/templates/ui/ui-plugin.js';
 import GDSystemPlugin from '../../plugins/gdsystem/gdsystem-plugin.js';
 
 class Test extends Phaser.Scene {
@@ -28,6 +29,11 @@ var config = {
     scene: Test,
     plugins: {
         scene: [
+            {
+                key: 'rexUI',
+                plugin: RexUI,
+                mapping: 'rexUI'
+            },
             {
                 key: 'gd',
                 plugin: GDSystemPlugin,
