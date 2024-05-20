@@ -5,12 +5,18 @@ class GDSystemPlugin extends Phaser.Plugins.ScenePlugin {
     constructor(scene, pluginManager) {
         super(scene, pluginManager);
 
-        this.add = new ObjectFactory(scene);
+        this.add = new ObjectFactory(this);
     }
 
-    start() {
+    boot() {
         var eventEmitter = this.scene.events;
-        eventEmitter.on('destroy', this.destroy, this);
+        eventEmitter.on('shutdown', this.destroy, this);
+
+        this.layers = this.scene.rexUI.add.layerManager({
+            layers: [
+                { name: 'ui', cameraName: 'ui' }
+            ]
+        })
     }
 }
 export default GDSystemPlugin;

@@ -15,7 +15,7 @@ class Test extends Phaser.Scene {
     }
 
     create() {
-        this.gd.add.textLabel(400, 300, 'AABB').layout()
+        this.gd.add.textLabel(400, 200, 'ui', 'AABB').layout()
     }
 
     update() { }
