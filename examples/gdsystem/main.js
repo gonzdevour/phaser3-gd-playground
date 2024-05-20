@@ -16,6 +16,13 @@ class Test extends Phaser.Scene {
 
     create() {
         this.gd.add.textLabel(400, 200, 'ui', 'AABB').layout()
+
+        this.add.text(600, 200, 'Restart')
+            .setInteractive()
+            .once('pointerup', function () {
+                console.log('Test gd plugin restart')
+                this.scene.restart()
+            }, this)
     }
 
     update() { }
