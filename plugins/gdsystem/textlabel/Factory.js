@@ -1,5 +1,4 @@
 import ObjectFactory from '../ObjectFactory.js';
-import { Label } from '../../../../phaser3-rex-notes/templates/ui/ui-components.js';
 
 ObjectFactory.register('textLabel', function (x, y, text) {
     var gameObject = this.scene.rexUI.add.label({
