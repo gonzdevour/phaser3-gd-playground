@@ -33,13 +33,13 @@ class Test extends Phaser.Scene
         //make some things
 
         //var bg = createBg(scene, "bg", 0.5, 0.5, "classroom");
-        var bg = createImg(scene, "bg", undefined, undefined, "classroom", viewport.centerX, viewport.centerY);
-        var obj = createTextLabel(scene, "go", undefined, undefined, "OBJ", 100, 100);
-        var center = createTextLabel(scene, "ui", 0.5, 0.5, "center");
-        var anchorLT = createTextLabel(scene, "ui", 0, 0, "anchorLT", 100, 50);
-        var anchorRT = createTextLabel(scene, "ui", 1, 0, "anchorRT", -100, 50);
-        var anchorLB = createTextLabel(scene, "ui", 0, 1, "anchorLB", 100, -50);
-        var anchorRB = createTextLabel(scene, "ui", 1, 1, "anchorRB", -100, -50);
+        var bg = createImg(scene, "bg", viewport.centerX, viewport.centerY, "classroom");
+        var obj = createTextLabel(scene, "go", 100, 100, "OBJ");
+        var center = createTextLabel(scene, "ui", 0, 0, "center", 0.5, 0.5);
+        var anchorLT = createTextLabel(scene, "ui", 100, 50, "anchorLT", 0, 0);
+        var anchorRT = createTextLabel(scene, "ui", -100, 50, "anchorRT", 1, 0);
+        var anchorLB = createTextLabel(scene, "ui", 100, -50, "anchorLB", 0, 1);
+        var anchorRB = createTextLabel(scene, "ui", -100, -50, "anchorRB", 1, 1);
 
         //以下操作camMain
 
@@ -50,8 +50,6 @@ class Test extends Phaser.Scene
                 var drag1Vector = dragScale.drag1Vector;
                 camMain.scrollX -= drag1Vector.x / camMain.zoom;
                 camMain.scrollY -= drag1Vector.y / camMain.zoom;
-                camMain.centerXprev = camMain.worldView.centerX;
-                camMain.centerYprev = camMain.worldView.centerY;
             })
             .on('pinch', function (dragScale) {
                 var scaleFactor = dragScale.scaleFactor;

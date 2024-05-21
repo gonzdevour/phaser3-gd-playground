@@ -1,4 +1,4 @@
-var createTextLabel = function(scene, layerName, vpx, vpy, text, vpxOffset, vpyOffset){
+var createTextLabel = function(scene, layerName, vpxOffset, vpyOffset, text, vpx, vpy){
       return scene.rexUI.add.label({
         background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, 0xaa9933).setStrokeStyle(2, 0xffffff),
         text: scene.rexUI.add.BBCodeText(0, 0, text, { fontSize: 24 }),

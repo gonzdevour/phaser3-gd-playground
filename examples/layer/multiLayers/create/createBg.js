@@ -1,6 +1,6 @@
 import OnWindowResize from "gdkPlugins/utils/rwd/OnWindowResize";
 
-var createBg = function(scene, layerName, vpx, vpy, key, vpxOffset, vpyOffset){
+var createBg = function(scene, layerName, vpxOffset, vpyOffset, key, vpx, vpy){
     var bg = scene.add.image(0, 0, key)
     ._locate({
       layerName: layerName,

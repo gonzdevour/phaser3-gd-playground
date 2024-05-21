@@ -1,4 +1,4 @@
-var createImg = function(scene, layerName, vpx, vpy, key, vpxOffset, vpyOffset){
+var createImg = function(scene, layerName, vpxOffset, vpyOffset, key, vpx, vpy){
     var img = scene.add.image(0, 0, key)
     ._locate({
       layerName: layerName,
