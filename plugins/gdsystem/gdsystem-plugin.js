@@ -15,6 +15,11 @@ class GDSystemPlugin extends Phaser.Plugins.ScenePlugin {
         this.bootLayerManager();
     }
 
+    destroy() {
+        this.add.destroy();
+        super.destroy();
+    }
+
     bootLayerManager() {
         this.layers;
 
