@@ -1,6 +1,5 @@
-import 'phaser';
-import RexUI from 'rexnote/templates/ui/ui-plugin.js';
-import GDSystemPlugin from '../../plugins/gdsystem/gdsystem-plugin.js';
+import 'phaser/src/phaser';
+import AllPlugins from "./settings/AllPlugins.js";
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -34,20 +33,7 @@ var config = {
     width: 800,
     height: 600,
     scene: Test,
-    plugins: {
-        scene: [
-            {
-                key: 'rexUI',
-                plugin: RexUI,
-                mapping: 'rexUI'
-            },
-            {
-                key: 'gd',
-                plugin: GDSystemPlugin,
-                mapping: 'gd'
-            },
-        ]
-    }
+    plugins: AllPlugins,
 };
 
 var game = new Phaser.Game(config);

@@ -1,57 +1,39 @@
 import OnWindowResize from "gdkPlugins/utils/rwd/OnWindowResize";
 
-var SetupViewport = function(scene, widthRatio){
-  if (typeof(widthRatio) != 'number'){
-    widthRatio = 1.6 //如果無值或非數值則給予預設值
-  }
-  scene.viewport = scene.scale.getViewPort();
-  scene.viewport.originalZoom = scene.cameras.main.zoom; //用來控制scaleOuter zoom
+var SetupViewport = function(scene, testMode){
+  var viewport = new Phaser.Geom.Rectangle(0, 0, 0, 0);
 
-  var v = scene.viewport;
-  var rect = scene.add.rectangle(0, 0, 0, 0).setOrigin(0).setStrokeStyle(10, 0xff0000);
+  if (testMode){
+    scene.vpRect = scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(10, 0xff0000).setOrigin(0,0); //顯示方框(測試用)
+    if (scene.layerManager.has("ui")){
+      scene.layerManager.addToLayer('ui', scene.vpRect); //如果有ui layer的話，將vpRect加入ui layer
+    }
+  }
 
   //rwd
-  var response = function(gameSize, baseSize, displaySize, previousWidth, previousHeight){
+  var camToCenterOn = scene.cameras.main//scene.cameras.getCamera(camToCenterOn_name)
+  var UpdateViewport = (function(gameSize, baseSize, displaySize, previousWidth, previousHeight) {
+      var newviewport = scene.scale.getViewPort();
+      viewport.setTo(0,0,newviewport.width, newviewport.height);
+      scene.vpRect.setSize(viewport.width, viewport.height)
 
-    console.log(`window has resized -
-gameSize:${gameSize}
-baseSize:${baseSize}
-displaySize:${displaySize}
-previousWidth:${previousWidth}
-previousHeight:${previousHeight}
-`)
+      var vw = viewport.width;
+      var vh = viewport.height; 
+      viewport.portrait = vh>vw?true:false;
+      viewport.landscape = vh>vw?false:true;   
 
-    var parentSize = scene.scale.parentSize;
-    var isParentSizeLandscape = parentSize.width > parentSize.height;
-    var isGameSizeLandscape = gameSize.width > gameSize.height;
-    if (isParentSizeLandscape != isGameSizeLandscape) { //如果domSize跟gameSize的直橫不一樣
-      scene.scale.setGameSize(gameSize.height, gameSize.width); //轉換portrait/landscape
-      scene.scale.refresh();
-        return;
-    }
-    scene.viewport = scene.scale.getViewPort(); //更新viewport
-    v = scene.viewport;
-    rect
-        .setPosition(v.x, v.y)
-        .setSize(v.width, v.height)
-    
-    console.log("rect.width = " + rect.width)
+      if (camToCenterOn){
+        var prevCenterX = camToCenterOn.scrollX + (previousWidth / 2)
+        var prevCenterY = camToCenterOn.scrollY + (previousHeight / 2)
+        camToCenterOn.centerOn(prevCenterX,prevCenterY)
+      }
+      
+  }).bind(scene);
 
-    var vw = v.width;
-    var vh = v.height; 
-    v.portrait = vh>vw?true:false;
-    v.landscape = vh>vw?false:true;      
-    v.displayWidth = vw>vh?(vh/widthRatio):vw;
-    v.displayHeight = vh;
-    v.displayLeft = v.centerX - 0.5*v.displayWidth;
-    v.displayRight = v.centerX + 0.5*v.displayWidth;
-    v.displayTop = v.centerY - 0.5*v.displayHeight;
-    v.displayBottom = v.centerY + 0.5*v.displayHeight;
-  }
-  OnWindowResize(scene, response, this);
-  scene.scale.refresh();
+  OnWindowResize(scene, UpdateViewport, this);
+  UpdateViewport(undefined, undefined, undefined, scene.scale.getViewPort().width, scene.scale.getViewPort().height);
 
-  return v; 
+  return viewport; 
 }
 
 export default SetupViewport;

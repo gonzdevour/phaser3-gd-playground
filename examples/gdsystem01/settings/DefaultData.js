@@ -25,13 +25,7 @@ var DefaultAppConfig = {
         Home: 'Home',
         Story: 'Story',
     },
-    layers: [
-        { name: 'bg', scrollFactor:1 }, //沒給cameraName的layer都由scene.cameras.main控制畫面，支援zoom
-        { name: 'main', scrollFactor:1 },
-        { name: 'ui', cameraName:'ui' }, //scrollFactor:0時依然會受到zoom的影響，所以ui需要dedicated cam而不能跟main放在一起
-        { name: 'dialog', cameraName:'ui' },
-        { name: 'system', cameraName:'ui' },
-    ],
+    layers: ['bg','main','scenario_stage','scenario_story','scenario_choices','scenario_ui','ui','dialog','system'],
     assets: {
         pack:{ key:'pack', url:'assets/pack.json' },
         text:[
