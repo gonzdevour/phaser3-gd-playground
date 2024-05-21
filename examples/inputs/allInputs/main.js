@@ -1,4 +1,4 @@
-import 'phaser';
+import 'phaser/src/phaser';
 import AllPlugins from 'gdkPlugins/AllPlugins.js';
 
 class Test extends Phaser.Scene
@@ -12,6 +12,32 @@ class Test extends Phaser.Scene
     {
         var scene = this;
 
+        // 鏡頭與layer設定
+        scene.layers = scene.plugins.get('rexLayerManager').add(scene, [
+            { name: 'main' },
+            { name: 'ui', cameraName: 'ui' },
+        ]);
+        var camMain = this.cameras.main;
+            camMain.setBackgroundColor('#66ccff');
+            camMain.setOrigin(0.5, 0.5);
+            camMain.setScroll(100, 100);
+            camMain.centerXprev = camMain.worldView.centerX; //(centerXprev, centerYprev)是scale.onResize前的畫面中心點
+            camMain.centerYprev = camMain.worldView.centerY;
+        var camUI = scene.cameras.getCamera("ui")
+
+        // 中心點設定
+        var center = scene.rexUI.add.label({
+            background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 20, 0xaa9933).setStrokeStyle(2, 0xffffff),
+            text: scene.rexUI.add.BBCodeText(0, 0, "center", { fontSize: 24 }),
+            //icon: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 10, COLOR_LIGHT),
+            align: "center",
+            space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10}
+        })
+        .setMinSize(50,50)
+        .layout()
+        .setPosition(scene.scale.getViewPort().centerX,scene.scale.getViewPort().centerY)
+
+        // viewport設定
         var vpRect = scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(10, 0xff0000).setOrigin(0,0);
         var viewport = new Phaser.Geom.Rectangle(0, 0, 0, 0);
         var UpdateViewport = (function() {
@@ -19,21 +45,11 @@ class Test extends Phaser.Scene
             viewport.setTo(0,0,newviewport.width, newviewport.height);
             vpRect.setSize(viewport.width, viewport.height)
             //vpRect.setSize(scene.cameras.main.worldView.width, scene.cameras.main.worldView.height)
+            //camMain.setScroll(center.x,center.y)
+            camMain.centerOn(camMain.centerXprev,camMain.centerYprev)
         }).bind(scene);
         scene.scale.on('resize', UpdateViewport);
         UpdateViewport();
-
-        // Will add new camera if target camera is not existing
-        scene.layers = scene.plugins.get('rexLayerManager').add(scene, [
-            { name: 'main' },
-            { name: 'ui', cameraName: 'ui' },
-        ]);
-
-        var camMain = this.cameras.main;
-            camMain.setBackgroundColor('#66ccff');
-            camMain.setScroll(100, 100);
-
-        var camUI = scene.cameras.getCamera("ui")
 
         //enable/disable input
         scene.input.enabled = true; // enabled: true/false
@@ -47,6 +63,8 @@ class Test extends Phaser.Scene
         }
 
         //make some things
+
+        var bg = scene.add.image(viewport.centerX, viewport.centerY, 'classroom');
 
         //官方版本的物件拖曳
         var imgs = [];
@@ -102,7 +120,7 @@ class Test extends Phaser.Scene
         .layout()
         .setPosition(10,10)
         .onClick(function(button, gameObject, pointer, event) {
-            console.log(`label onClick`)
+            console.log(`UI onClick`)
         },scene)
 
         //layer控制
@@ -114,8 +132,7 @@ class Test extends Phaser.Scene
         //2. 使用layerManager
         scene.layers.addToLayer('main', label);
         scene.layers.addToLayer('main', imgs);
-        scene.layers.addToLayer('ui', btn);
-        scene.layers.addToLayer('ui', vpRect);
+        scene.layers.addToLayer('ui', [bg, center, btn, vpRect]);
 
         //-------------------
 
@@ -123,8 +140,13 @@ class Test extends Phaser.Scene
         scene.input
             .on('pointerdown', function(pointer){
                 console.log(`pointerdown:(${pointer.x},${pointer.y}) downTime:${pointer.downTime}`)
-                //scene.rexUI.add.BBCodeText(camMain.worldView.centerX, camMain.worldView.centerY, "centerXY", { fontSize: 36 }).setOrigin(0.5,0.5)
-                scene.rexUI.add.BBCodeText(viewport.centerX, viewport.centerY, "centerXY", { fontSize: 36 }).setOrigin(0.5,0.5) //這個目前不正常，要等EXPAND更新
+                ////建立物件在main layer的畫面中央(使用worldView.center)
+                //var txt = scene.rexUI.add.BBCodeText(camMain.worldView.centerX, camMain.worldView.centerY, "centerXY", { fontSize: 36 }).setOrigin(0.5,0.5)
+                //scene.layers.addToLayer('main', txt);
+
+                ////建立物件在ui layer的畫面中央(因為ui layer的scroll固定為0，所以可以使用viewport)
+                //var txt = scene.rexUI.add.BBCodeText(viewport.centerX, viewport.centerY, "centerXY", { fontSize: 36 }).setOrigin(0.5,0.5)
+                //scene.layers.addToLayer('ui', txt);
             }, scene)
             .on('pointerdownoutside', function(pointer){ //在dom/game canvas的組合環境下才有作用
                 console.log(`pointerdownoutside:(${pointer.x},${pointer.y})`)
@@ -158,6 +180,9 @@ class Test extends Phaser.Scene
                     var drag1Vector = dragScale.drag1Vector;
                     camMain.scrollX -= drag1Vector.x / camMain.zoom;
                     camMain.scrollY -= drag1Vector.y / camMain.zoom;
+                    camMain.centerXprev = camMain.worldView.centerX;
+                    camMain.centerYprev = camMain.worldView.centerY;
+                    console.log(`center(${camMain.centerXprev}, ${camMain.centerYprev})`)
                 }
             })
             .on('pinch', function (dragScale) {
