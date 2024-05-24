@@ -43,6 +43,11 @@
       },
       {
         "type": "image",
+        "key": "bg_white",
+        "url": "assets/image/bg/bg_white.png"
+      },
+      {
+        "type": "image",
         "key": "classroom",
         "url": "assets/image/bg/classroom.png"
       },

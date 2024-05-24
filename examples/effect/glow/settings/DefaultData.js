@@ -30,8 +30,8 @@ var DefaultAppConfig = {
         { name: 'main', scrollFactor:1 },
         { name: 'ui', cameraName:'ui' }, //scrollFactor:0時依然會受到zoom的影響，所以ui需要dedicated cam而不能跟main放在一起
         { name: 'story', cameraName:'story' },
-        { name: 'dialog', cameraName:'dialog' },
-        { name: 'system', cameraName:'system' },
+        { name: 'dialog', cameraName:'ui' },
+        { name: 'system', cameraName:'ui' },
     ],
     assets: {
         pack:{ key:'pack', url:'assets/pack.json' },

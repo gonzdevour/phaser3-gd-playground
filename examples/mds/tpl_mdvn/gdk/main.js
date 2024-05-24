@@ -1,4 +1,4 @@
-import 'phaser';
+import 'phaser/src/phaser';
 import { DefaultAppConfig } from '../settings/DefaultData.js';
 
 var config = {

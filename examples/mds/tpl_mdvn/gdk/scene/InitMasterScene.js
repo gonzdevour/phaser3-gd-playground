@@ -9,7 +9,7 @@ var initMasterScene = function(scene) { //在master scene的init執行
     //scene kits
     scene.vpc = scene.plugins.get('rexViewportCoordinate');
     scene.layerManager = SetupLayerManager(scene);
-    scene.viewport = SetupViewport(scene);
+    scene.viewport = SetupViewport(scene, true);
     //scene.viewport = SetupScaleOuter(scene);    //scene.viewport//setup時會順便做一次scale()
     //scene.center = CreateCameraCenter(scene); //scene.center, camera main follows easeMove-able center label
     scene.toast = CreateToast(scene);

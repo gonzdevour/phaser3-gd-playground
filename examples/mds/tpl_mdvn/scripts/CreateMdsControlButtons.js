@@ -48,7 +48,7 @@ var createButton = function (scene, style, text) {
         .setName(text);
 }
 
-var createButtons = function (scene) {
+var createButtons = function(scene){
     return scene.rexUI.add.buttons({
         width: 200,
         orientation: 'y',
@@ -72,7 +72,11 @@ var createButtons = function (scene) {
             button.setHoverState(false);
         })
         .changeOrigin(0,1)
-        ._LocateVPC(0,1)
+        ._locate({
+            layerName: "ui",
+            vpx: 0,
+            vpy: 1,
+        })
 }
 
 var goToScene = function(scene, key, duration){

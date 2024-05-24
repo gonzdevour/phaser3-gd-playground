@@ -40,7 +40,12 @@ var ModalDialogPromise = function (scene, config) {
         }
     } 
     if (dialog.viewport){
-        scene.vpc.add(dialog, dialog.viewport);
+        dialog
+        ._locate({
+            layerName: "dialog",
+            vpx: 0.5,
+            vpy: 0.5,
+        })
     }
 
     //rwd

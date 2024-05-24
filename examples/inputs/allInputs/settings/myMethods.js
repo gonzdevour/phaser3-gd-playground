@@ -1,7 +1,5 @@
 import GetValue from 'gdkPlugins/utils/object/GetValue.js';
 import OnWindowResize from 'gdkPlugins/utils/rwd/OnWindowResize.js';
-import RegisterBehavior from './behaviors/RegisterBehaviors';
-import RegisterClickEmitter from './behaviors/RegisterClickEmitter';
 
 export default {
   _locate(config) {
@@ -27,7 +25,6 @@ export default {
       this.vpxOffset = vpxOffset;
       this.vpyOffset = vpyOffset;
     }
-    scene.plugins.get('rexEffectProperties').add(this);
 
     return this;
   },
@@ -48,14 +45,6 @@ export default {
   _resizeByHeight(newHeight) {
     var newScale = (newHeight/this.height);
     this.setScale(newScale,newScale)
-    return this;
-  },
-  _addBehavior(bhv) {
-    RegisterBehavior(this, bhv)
-    return this;
-  },
-  _setEE(eventName, eventEmitter, bhvs) {
-    RegisterClickEmitter(this, eventName, eventEmitter, bhvs)
     return this;
   },
   _setRWD(callback){

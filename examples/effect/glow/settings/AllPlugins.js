@@ -1,6 +1,5 @@
 //basic
 import RexUI from 'rexnote/templates/ui/ui-plugin.js';
-import GDSystemPlugin from '../gdk/gdsystem/gdsystem-plugin.js';
 //loading
 import LoadingProgressPlugin from 'rexnote/plugins/loadingprogress-plugin.js';
 import CustomProgressPlugin from 'rexnote/plugins/customprogress-plugin';
@@ -47,16 +46,6 @@ export default {
             plugin: RexUI,
             mapping: 'rexUI'
         },
-        {
-            key: 'gd',
-            plugin: GDSystemPlugin,
-            mapping: 'gd'
-        },
-        // {
-        //     key: 'rexScaleOuter',
-        //     plugin: rexscaleouterplugin,
-        //     mapping: 'rexScaleOuter'
-        // },
         {
             key: "rexSpinner",
             plugin: SpinnerPlugin,

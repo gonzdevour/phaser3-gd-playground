@@ -17,7 +17,11 @@ var GetMdsSheetsFromGoogleDriveFolder = async function(scene, ifShowThrobber){
             spinnerName: 'los',
             text:'資料傳輸中',
         })
-        ._LocateVPC(0.5,0.5)
+        ._locate({
+            layerName: "system",
+            vpx: 0.5,
+            vpy: 0.5,
+        })
     }
 
     try {

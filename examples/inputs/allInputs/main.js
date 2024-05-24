@@ -1,5 +1,16 @@
 import 'phaser/src/phaser';
 import AllPlugins from 'gdkPlugins/AllPlugins.js';
+import myMethods from './settings/myMethods.js';
+import SetupLayerManager from './settings/SetupLayerManager.js';
+import SetupViewport from './settings/SetupViewport.js';
+//camera
+import CameraDragScroll from "./gdk/camera/CameraDragScroll.js";
+import CameraWheelZoom from "./gdk/camera/CameraWheelZoom.js";
+
+Object.assign(
+    Phaser.GameObjects.GameObject.prototype,
+    myMethods,
+);
 
 class Test extends Phaser.Scene
 {
@@ -11,19 +22,14 @@ class Test extends Phaser.Scene
     create ()
     {
         var scene = this;
-
         // 鏡頭與layer設定
-        scene.layers = scene.plugins.get('rexLayerManager').add(scene, [
-            { name: 'main' },
-            { name: 'ui', cameraName: 'ui' },
-        ]);
-        var camMain = this.cameras.main;
+        var camMain = scene.cameras.main
             camMain.setBackgroundColor('#66ccff');
-            camMain.setOrigin(0.5, 0.5);
-            camMain.setScroll(100, 100);
-            camMain.centerXprev = camMain.worldView.centerX; //(centerXprev, centerYprev)是scale.onResize前的畫面中心點
-            camMain.centerYprev = camMain.worldView.centerY;
-        var camUI = scene.cameras.getCamera("ui")
+        //scene kits
+        scene.vpc = scene.plugins.get('rexViewportCoordinate');
+        scene.layerManager = SetupLayerManager(scene); //建立layers以及各layer專屬的camera
+        scene.viewport = SetupViewport(scene, true); //scene, testMode(測試範圍框)
+        var viewport = scene.viewport;
 
         // 中心點設定
         var center = scene.rexUI.add.label({
@@ -37,20 +43,6 @@ class Test extends Phaser.Scene
         .layout()
         .setPosition(scene.scale.getViewPort().centerX,scene.scale.getViewPort().centerY)
 
-        // viewport設定
-        var vpRect = scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(10, 0xff0000).setOrigin(0,0);
-        var viewport = new Phaser.Geom.Rectangle(0, 0, 0, 0);
-        var UpdateViewport = (function() {
-            var newviewport = scene.scale.getViewPort();
-            viewport.setTo(0,0,newviewport.width, newviewport.height);
-            vpRect.setSize(viewport.width, viewport.height)
-            //vpRect.setSize(scene.cameras.main.worldView.width, scene.cameras.main.worldView.height)
-            //camMain.setScroll(center.x,center.y)
-            camMain.centerOn(camMain.centerXprev,camMain.centerYprev)
-        }).bind(scene);
-        scene.scale.on('resize', UpdateViewport);
-        UpdateViewport();
-
         //enable/disable input
         scene.input.enabled = true; // enabled: true/false
         scene.input.setTopOnly(true);
@@ -58,9 +50,9 @@ class Test extends Phaser.Scene
         //scene.input.dragDistanceThreshold = 16; //至少要拖多少距離才會dragStart, 這會使拖曳產生延遲
         //scene.input.dragTimeThreshold = 500; //至少要拖多少時間才會dragStart, 這會使拖曳產生延遲
 
-        var inputManager = {
-            isDraggingGameObject: false,
-        }
+        //dragVector, pinch
+        CameraDragScroll(scene);//camMain.enableDragScroll = true/false
+        CameraWheelZoom(scene); //camMain.enableWheelZoom = true/false
 
         //make some things
 
@@ -76,7 +68,9 @@ class Test extends Phaser.Scene
                 img
                 .on('dragstart', function(pointer, dragX, dragY){
                     console.log(`img_dragstart:(${pointer.x},${pointer.y})(${dragX},${dragY})`)
-                    inputManager.isDraggingGameObject = true;
+                    //禁止cam操作
+                    camMain.enableDragScroll = false;
+                    camMain.enableWheelZoom = false;
                 }, scene)
                 .on('drag', function(pointer, dragX, dragY){
                     img.setPosition(dragX, dragY);
@@ -87,7 +81,9 @@ class Test extends Phaser.Scene
                 }, scene)
                 .on('dragend', function(pointer, dragX, dragY, dropped){
                     console.log(`img_dragend:(${pointer.x},${pointer.y})(${dragX},${dragY})`)
-                    inputManager.isDraggingGameObject = false;
+                    //重啟cam操作
+                    camMain.enableDragScroll = true
+                    camMain.enableWheelZoom = true
                     img.setTint(0x333333)
                     //img.disableInteractive(); //有bug
                 }, scene)
@@ -121,18 +117,81 @@ class Test extends Phaser.Scene
         .setPosition(10,10)
         .onClick(function(button, gameObject, pointer, event) {
             console.log(`UI onClick`)
-        },scene)
+        })
+        .on('over', function(gameObject, pointer, event) {
+            console.log('label over')
+            debugger
+        })
+        .setChildrenInteractive() //讓label(sizer)中的子物件發射互動事件(注意background不算child)
+        .on('child.over', function(child, pointer, event) {
+            console.log('child over')
+        })
+
+        var imgUploadLabel = scene.rexUI.add.imageInputLabel({
+            // x: 0,y: 0,anchor: undefined,width: undefined,height: undefined,origin: 0.5,originX:0,originY:0,rtl: false,
+            orientation: 1,
+            background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 10, 0x663399).setStrokeStyle(2, 0xffffff),
+            canvas: {
+                // width: 128, 
+                // height: 128,
+                fill: 'gray',
+                // key: undefined, 
+                // frame: undefined,        
+            },
+            // scaleUpIcon: false,
+            iconBackground: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 10, 0x993333).setStrokeStyle(2, 0xffffff),   
+            // squareFitIcon: false,
+            // iconSize: undefined, 
+            iconWidth: 150, iconHeight: 150,
+            text: scene.rexUI.add.BBCodeText(0, 0, "UPLOAD", { fontSize: 36 }),
+            expandTextWidth: false,
+            expandTextHeight: false,
+            action: scene.rexUI.add.BBCodeText(0, 0, "SAVE", { fontSize: 24 }),
+            // actionMask: false,
+            // squareFitAction: false,
+            // actionSize: undefined, actionWidth: undefined, actionHeight: undefined,
+            align: 'center',
+            space: {
+                left: 20, right: 20, top: 20, bottom: 20,
+                icon: 10, iconTop: 0, iconBottom: 0, iconLeft: 0, iconRight: 0,
+                text: 20,
+                actionTop: 0, actionBottom: 0, actionLeft: 0, actionRight: 0,
+            },
+            // name: '',
+            // draggable: false,
+            // sizerEvents: false,
+            // enableLayer: false,
+            clickTarget: 'icon',
+            // domButton: true,
+        })
+        .setMinSize(100,100)
+        .setOrigin(0,0)
+        .layout()
+        .setPosition(150,150)
+
+        imgUploadLabel
+        .on('select', function (file, label) {
+            console.log(file);
+            label.setText(label.getFileName(file));
+        })
+        .onClick(imgUploadLabel.getElement('action'), function () {
+            var key = imgUploadLabel.text;
+            imgUploadLabel.saveTexture(key);
+            console.log(`Save texture ${key}`)
+
+            // Display new texture
+            if (!gameObject) {
+                gameObject = this.add.image(0, 0, '').setOrigin(0);
+            }
+            gameObject.setTexture(key);
+        }, this)
 
         //layer控制
 
-        // //1.使用cameras做layer控制
-        // camUI.ignore([imgs, label]);
-        // camMain.ignore([btn]);
-
-        //2. 使用layerManager
-        scene.layers.addToLayer('main', label);
-        scene.layers.addToLayer('main', imgs);
-        scene.layers.addToLayer('ui', [bg, center, btn, vpRect]);
+        scene.layerManager.addToLayer('bg', bg);
+        scene.layerManager.addToLayer('main', label);
+        scene.layerManager.addToLayer('main', imgs);
+        scene.layerManager.addToLayer('ui', [center, btn, imgUploadLabel]);
 
         //-------------------
 
@@ -170,24 +229,6 @@ class Test extends Phaser.Scene
             }, scene)
             .on('pointerout', function(pointer, localX, localY, event){ //pc上不用按住就會觸發
                 console.log(`btn_pointerout:(${pointer.x},${pointer.y})(${localX},${localY})`)
-            }, scene)
-
-        //dragVector, pinch
-        var dragScale = scene.rexGestures.add.pinch(scene);
-        dragScale
-            .on('drag1', function (dragScale) {
-                if (inputManager.isDraggingGameObject == false){ //要先註冊 物件 drag 才能讓 inputManager.isDraggingGameObject=true 先被執行到
-                    var drag1Vector = dragScale.drag1Vector;
-                    camMain.scrollX -= drag1Vector.x / camMain.zoom;
-                    camMain.scrollY -= drag1Vector.y / camMain.zoom;
-                    camMain.centerXprev = camMain.worldView.centerX;
-                    camMain.centerYprev = camMain.worldView.centerY;
-                    console.log(`center(${camMain.centerXprev}, ${camMain.centerYprev})`)
-                }
-            })
-            .on('pinch', function (dragScale) {
-                var scaleFactor = dragScale.scaleFactor;
-                camMain.zoom *= scaleFactor;
             }, scene)
         
         //tap

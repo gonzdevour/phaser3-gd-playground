@@ -1,0 +1,126 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "image",
+        "key": "right",
+        "url": "assets/image/right.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_南投縣",
+        "url": "assets/image/map/行政區_南投縣.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_台中市",
+        "url": "assets/image/map/行政區_台中市.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_台北市",
+        "url": "assets/image/map/行政區_台北市.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_台南市",
+        "url": "assets/image/map/行政區_台南市.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_台東縣",
+        "url": "assets/image/map/行政區_台東縣.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_嘉義市",
+        "url": "assets/image/map/行政區_嘉義市.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_嘉義縣",
+        "url": "assets/image/map/行政區_嘉義縣.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_基隆市",
+        "url": "assets/image/map/行政區_基隆市.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_宜蘭縣",
+        "url": "assets/image/map/行政區_宜蘭縣.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_屏東縣",
+        "url": "assets/image/map/行政區_屏東縣.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_彰化縣",
+        "url": "assets/image/map/行政區_彰化縣.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_新北市",
+        "url": "assets/image/map/行政區_新北市.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_新竹市",
+        "url": "assets/image/map/行政區_新竹市.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_新竹縣",
+        "url": "assets/image/map/行政區_新竹縣.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_桃園縣",
+        "url": "assets/image/map/行政區_桃園縣.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_澎湖縣",
+        "url": "assets/image/map/行政區_澎湖縣.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_綠島",
+        "url": "assets/image/map/行政區_綠島.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_花蓮縣",
+        "url": "assets/image/map/行政區_花蓮縣.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_苗栗縣",
+        "url": "assets/image/map/行政區_苗栗縣.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_蘭嶼",
+        "url": "assets/image/map/行政區_蘭嶼.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_金門連江",
+        "url": "assets/image/map/行政區_金門連江.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_雲林縣",
+        "url": "assets/image/map/行政區_雲林縣.png"
+      },
+      {
+        "type": "image",
+        "key": "行政區_高雄市",
+        "url": "assets/image/map/行政區_高雄市.png"
+      }
+    ]
+  }
+}

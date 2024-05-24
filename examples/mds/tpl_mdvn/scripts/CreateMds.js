@@ -7,9 +7,9 @@ import { monitorProps } from '../scripts/memory.js'
 //memory & monitor
 import CreateMonitor from '../scripts/CreateMonitor.js';
 
-var CreateMds = function(scene, memory, sheetsData){
+var CreateMds = function(scene, layerName, memory, sheetsData){
     var viewport = scene.viewport;
-    var mvdnLayer = scene.layerManager.getLayer('scenario_story');
+    var mvdnLayer = scene.layerManager.getLayer(layerName);
 
     var mds = new MarkdownVisualNovel(scene, {
         styles: {
@@ -79,7 +79,11 @@ var CreateMds = function(scene, memory, sheetsData){
 
     mds.monitor = CreateMonitor(scene, 0, 0, mds.memory, monitorProps)
         .changeOrigin(1,0)
-        ._LocateVPC(1,0)
+        ._locate({
+            layerName: "system",
+            vpx: 1,
+            vpy: 0,
+        })
 
     return mds;
 }

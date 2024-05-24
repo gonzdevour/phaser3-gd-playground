@@ -2,18 +2,31 @@ var shortcuts = {
 
   建立UI: 
 `BG
+id=底圖
+  key=bg_white
+  vpw=1
+  vph=1
+  vpy=0.5
+  scaleMode=ENVELOP
+
+BG
 id=背景
   key=bg_transparent
-  vpw=0.5
+  vpw=1
+  vph=1
   vpy=0.5
   scaleMode=ENVELOP
 
 TEXTBOX
-id=對話框
-vpw=0.9
-height=300
-vpy=0.95
-alpha=0
+  id=對話框
+  vpw=0.9
+  height=300
+  vpy=0.95
+  alpha=0
+
+底圖.to
+  alpha=0.5
+  tint=0x000000
 
 對話框.to
   alpha=1

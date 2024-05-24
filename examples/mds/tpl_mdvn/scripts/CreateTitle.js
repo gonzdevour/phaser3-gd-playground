@@ -26,8 +26,8 @@ var CreateTitle = function (scene, config) {
     //var logo = scene.rexUI.add.BBCodeText(0, 0, 'Logo', { fontFamily: Style.fontFamilyName, fontSize: 60 });
     //scene.rexUI.easeMoveFrom(logo, 1000, undefined, '-=200', 'Cubic'); //排好版之後再開始tween
     
-    var cover = scene.rexUI.add.transitionImagePack(0,0,'cover')._LocateVPC(0.5,0.4).setAlpha(0.5);
-    var title = scene.rexUI.add.transitionImagePack(0,0,'title')._LocateVPC(0.5,0.5,0,-450)._resizeByWidth(700);
+    var cover = scene.rexUI.add.transitionImagePack(0,0,'cover')._locateVPC(0.5,0.4).setAlpha(0.5);
+    var title = scene.rexUI.add.transitionImagePack(0,0,'title')._locateVPC(0.5,0.5,0,-450)._resizeByWidth(700);
 
     scene.tweens.add({ targets:title, displayWidth: {from:1024, to:700}, duration:3000, ease: 'linear',})
     scene.tweens.add({ targets:title, alpha: {from:0, to:1}, duration:3000, ease: 'linear',})
