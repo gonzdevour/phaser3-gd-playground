@@ -42,7 +42,7 @@ var OnSceneStart = function () {
 
     // ClickArea <-- layerManager
     if (layerManager.has("clickArea")) {
-        var clickArea = this.clickArea = this.scene.clickArea = scene.rexUI.add.fullWindowRectangle(0x00ff00, 0.5)
+        var clickArea = this.clickArea = this.scene.clickArea = scene.rexUI.add.fullWindowRectangle(0xffffff, 0)
             .setInteractive()
             .on("pointerup", function (pointer, localX, localY, event) {
                 console.log("clickArea pointer up")
