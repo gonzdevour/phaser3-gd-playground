@@ -16,7 +16,7 @@ var OnSceneStart = function () {
     });
 
     // Viewport
-    var viewport = this.viewport = new Phaser.Geom.Rectangle(0, 0, 0, 0);
+    var viewport = this.viewport = this.scene.viewport = new Phaser.Geom.Rectangle(0, 0, 0, 0);
     var UpdateViewport = function () {
         var newviewport = scene.scale.getViewPort();
         viewport.setTo(0, 0, newviewport.width, newviewport.height);
@@ -28,8 +28,8 @@ var OnSceneStart = function () {
     var layerManager = this.layerManager = scene.rexUI.add.layerManager(DefaultLayers);
 
     // vpRect <-- LayerManager, viewport
-    var vpRect = this.vpRect = scene.rexUI.add.roundRectangle({
-        strokeColor: 0xff0000, strokeWidth: 10, radius: 10
+    var vpRect = this.vpRect = this.scene.vpRect = scene.rexUI.add.roundRectangle({
+        //strokeColor: 0xff0000, strokeWidth: 10, radius: 10
     }).setOrigin(0);
     if (layerManager.has("ui")) {
         layerManager.addToLayer('ui', this.vpRect); //如果有ui layer的話，將vpRect加入ui layer
@@ -42,7 +42,7 @@ var OnSceneStart = function () {
 
     // ClickArea <-- layerManager
     if (layerManager.has("clickArea")) {
-        var clickArea = this.clickArea = scene.rexUI.add.fullWindowRectangle(0x00ff00, 0.5)
+        var clickArea = this.clickArea = this.scene.clickArea = scene.rexUI.add.fullWindowRectangle(0x00ff00, 0.5)
             .setInteractive()
             .on("pointerup", function (pointer, localX, localY, event) {
                 console.log("clickArea pointer up")

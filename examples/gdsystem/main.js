@@ -14,6 +14,10 @@ class Test extends Phaser.Scene {
     }
 
     create() {
+        this.clickArea.tint = 0xff8899;
+        this.clickArea.alpha = 0.2;
+        this.vpRect.setStrokeStyle(10, 0x0000ff, 1)
+        
         this.gd.add.textLabel(400, 200, 'ui', 'AABB').layout()
 
         this.add.text(600, 200, 'Restart')
