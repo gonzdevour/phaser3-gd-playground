@@ -1,6 +1,6 @@
 //basic
 import RexUI from 'rexnote/templates/ui/ui-plugin.js';
-import GDSystemPlugin from '../gdk/gdsystem/gdsystem-plugin.js';
+import GDSystemPlugin from 'gdkPlugins/gdsystem/gdsystem-plugin.js';
 //loading
 import LoadingProgressPlugin from 'rexnote/plugins/loadingprogress-plugin.js';
 import CustomProgressPlugin from 'rexnote/plugins/customprogress-plugin';
@@ -39,6 +39,7 @@ import MarkedEventSheetsPlugin from 'rexnote/plugins/markedeventsheets-plugin.js
 //input
 import MouseWheelScrollerPlugin from 'rexnote/plugins/mousewheelscroller-plugin.js';
 import GesturesPlugin from 'rexnote/plugins/gestures-plugin.js';
+import CanvasInputPlugin from 'rexnote/plugins/canvasinput-plugin.js';
 
 export default {
     scene: [
@@ -178,6 +179,11 @@ export default {
         {
             key: 'rexMouseWheelScroller',
             plugin: MouseWheelScrollerPlugin,
+            start: true
+        },
+        {
+            key: 'rexCanvasInputPlugin',
+            plugin: CanvasInputPlugin,
             start: true
         },
     ]

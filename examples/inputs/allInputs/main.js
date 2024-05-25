@@ -1,11 +1,13 @@
 import 'phaser/src/phaser';
-import AllPlugins from 'gdkPlugins/AllPlugins.js';
+import AllPlugins from './settings/AllPlugins.js';
 import myMethods from './settings/myMethods.js';
 import SetupLayerManager from './settings/SetupLayerManager.js';
 import SetupViewport from './settings/SetupViewport.js';
 //camera
 import CameraDragScroll from "./gdk/camera/CameraDragScroll.js";
 import CameraWheelZoom from "./gdk/camera/CameraWheelZoom.js";
+//create
+import createCanvasInput from "./create/createCanvasInput.js"
 
 Object.assign(
     Phaser.GameObjects.GameObject.prototype,
@@ -41,7 +43,7 @@ class Test extends Phaser.Scene
         })
         .setMinSize(50,50)
         .layout()
-        .setPosition(scene.scale.getViewPort().centerX,scene.scale.getViewPort().centerY)
+        ._locate({layerName:"ui", vpx: 0.5, vpy: 0.5,})
 
         //enable/disable input
         scene.input.enabled = true; // enabled: true/false
@@ -56,7 +58,10 @@ class Test extends Phaser.Scene
 
         //make some things
 
-        var bg = scene.add.image(viewport.centerX, viewport.centerY, 'classroom');
+        var bg = scene.add.image(0, 0, 'classroom')
+            ._locate({layerName:"bg", vpxOffset: viewport.centerX, vpyOffset: viewport.centerY,})
+
+        var canvasTxtInput = createCanvasInput(scene, "ui", 150, 500, "say something here")
 
         //官方版本的物件拖曳
         var imgs = [];
@@ -64,7 +69,10 @@ class Test extends Phaser.Scene
             let randomSize = 0.2
             let randomX = Math.random() * viewport.width;
             let randomY = Math.random() * viewport.height;
-            let img = scene.add.image(randomX, randomY, 'right').setScale(randomSize).setInteractive({ draggable: true }) //模擬物件 
+            let img = scene.add.image(0, 0, 'right')
+                    .setScale(randomSize)
+                    .setInteractive({ draggable: true }) //模擬物件 
+                    ._locate({layerName:"main", vpxOffset: randomX, vpyOffset: randomY,})
                 img
                 .on('dragstart', function(pointer, dragX, dragY){
                     console.log(`img_dragstart:(${pointer.x},${pointer.y})(${dragX},${dragY})`)
@@ -87,6 +95,7 @@ class Test extends Phaser.Scene
                     img.setTint(0x333333)
                     //img.disableInteractive(); //有bug
                 }, scene)
+
             imgs.push(img);
         }
         var label = scene.rexUI.add.label({ //測試sizer內建的所有輸入操作
@@ -97,9 +106,9 @@ class Test extends Phaser.Scene
             space: { left: 20, right: 20, top: 20, bottom: 20, icon: 10}
         })
         .setMinSize(100,50)
-        .setOrigin(0.5,0.5)
+        .setOrigin(1,1)
         .layout()
-        .setPosition(viewport.centerX,viewport.centerY)
+        ._locate({layerName:"ui", vpx:1, vpy: 1, vpxOffset:-50, vpyOffset:-50})
         .onClick(function(button, gameObject, pointer, event) {
             console.log(`label onClick`)
         },scene)
@@ -114,20 +123,22 @@ class Test extends Phaser.Scene
         .setMinSize(50,50)
         .setOrigin(0,0)
         .layout()
-        .setPosition(10,10)
+        ._locate({layerName:"ui", vpx:0, vpy: 0, vpxOffset:10, vpyOffset:10})
         .onClick(function(button, gameObject, pointer, event) {
             console.log(`UI onClick`)
         })
-        .on('over', function(gameObject, pointer, event) {
-            console.log('label over')
-            debugger
+        .onOver(function(button, gameObject, pointer, event) {
+            console.log(`UI onOver`)
+        })
+        .onOut(function(button, gameObject, pointer, event) {
+            console.log(`UI onOut`)
         })
         .setChildrenInteractive() //讓label(sizer)中的子物件發射互動事件(注意background不算child)
         .on('child.over', function(child, pointer, event) {
             console.log('child over')
         })
 
-        var imgUploadLabel = scene.rexUI.add.imageInputLabel({
+        var imgUploadLabel = scene.rexUI.add.imageInputLabel({ //使用dom系列的plugin時要記得在game config中加上 dom: {createContainer: true}
             // x: 0,y: 0,anchor: undefined,width: undefined,height: undefined,origin: 0.5,originX:0,originY:0,rtl: false,
             orientation: 1,
             background: scene.rexUI.add.roundRectangle(0, 0, 2, 2, 10, 0x663399).setStrokeStyle(2, 0xffffff),
@@ -161,13 +172,14 @@ class Test extends Phaser.Scene
             // draggable: false,
             // sizerEvents: false,
             // enableLayer: false,
-            clickTarget: 'icon',
+            clickTarget: 'background',
             // domButton: true,
         })
         .setMinSize(100,100)
         .setOrigin(0,0)
         .layout()
-        .setPosition(150,150)
+        ._locate({layerName:"ui", vpxOffset:150, vpyOffset:150})
+        .setInteractive() //只為了讓整個label都能攔住pointer
 
         imgUploadLabel
         .on('select', function (file, label) {
@@ -178,20 +190,11 @@ class Test extends Phaser.Scene
             var key = imgUploadLabel.text;
             imgUploadLabel.saveTexture(key);
             console.log(`Save texture ${key}`)
-
             // Display new texture
-            if (!gameObject) {
-                gameObject = this.add.image(0, 0, '').setOrigin(0);
-            }
-            gameObject.setTexture(key);
-        }, this)
+            var pic = this.add.image(400+200*Math.random(), 400*Math.random(), '').setOrigin(0).setTexture(key);
+            this.layerManager.addToLayer('bg', pic);
+        })
 
-        //layer控制
-
-        scene.layerManager.addToLayer('bg', bg);
-        scene.layerManager.addToLayer('main', label);
-        scene.layerManager.addToLayer('main', imgs);
-        scene.layerManager.addToLayer('ui', [center, btn, imgUploadLabel]);
 
         //-------------------
 
@@ -317,6 +320,9 @@ var config = {
     },
     input: {
         smoothFactor: 0.1 //數字愈小時drag愈圓滑，不會瞬移到指定位置而是慢慢滑到
+    },
+    dom: {
+        createContainer: true
     },
     plugins: AllPlugins,
     scene: Test

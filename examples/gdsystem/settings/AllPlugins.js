@@ -1,6 +1,6 @@
 //basic
 import RexUI from 'rexnote/templates/ui/ui-plugin.js';
-import GDSystemPlugin from '../gdk/gdsystem/gdsystem-plugin.js';
+import GDSystemPlugin from 'gdkPlugins/gdsystem/gdsystem-plugin.js';
 //loading
 import LoadingProgressPlugin from 'rexnote/plugins/loadingprogress-plugin.js';
 import CustomProgressPlugin from 'rexnote/plugins/customprogress-plugin';

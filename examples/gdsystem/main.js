@@ -34,6 +34,13 @@ var config = {
     height: 600,
     scene: Test,
     plugins: AllPlugins,
+    scale: {
+        mode: Phaser.Scale.EXPAND,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
+    dom: {
+        createContainer: true
+    },
 };
 
 var game = new Phaser.Game(config);

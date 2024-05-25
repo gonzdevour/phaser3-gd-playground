@@ -3,6 +3,15 @@ import OnWindowResize from "gdkPlugins/utils/rwd/OnWindowResize";
 var SetupViewport = function(scene, testMode){
   var viewport = new Phaser.Geom.Rectangle(0, 0, 0, 0);
 
+  viewport.clickArea = scene.rexUI.add.fullWindowRectangle(0x00ff00,0.5)
+    .setInteractive()
+    .on("pointerup",function(pointer, localX, localY, event){
+      console.log("clickArea pointer up")
+    })
+  if (scene.layerManager.has("ui")){
+    scene.layerManager.addToLayer('ui', scene.vpRect); //如果有ui layer的話，將vpRect加入ui layer
+  }
+
   if (testMode){
     scene.vpRect = scene.rexUI.add.roundRectangle(0, 0, 20, 20, 10).setStrokeStyle(10, 0xff0000).setOrigin(0,0); //顯示方框(測試用)
     if (scene.layerManager.has("ui")){

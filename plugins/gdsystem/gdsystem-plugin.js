@@ -1,4 +1,6 @@
 import ObjectFactory from './ObjectFactory.js';
+import DefaultLayers from './layer/DefaultLayers.js';
+import SetupViewport from './viewport/SetupViewport.js';
 import TextLabelFactory from './textlabel/Factory.js';
 
 class GDSystemPlugin extends Phaser.Plugins.ScenePlugin {
@@ -20,21 +22,22 @@ class GDSystemPlugin extends Phaser.Plugins.ScenePlugin {
         super.destroy();
     }
 
+    bootViewport() {
+        SetupViewport(this.scene, true)
+    }
+
     bootLayerManager() {
-        this.layers;
+        this.scene.layerManager;
 
         var eventEmitter = this.scene.events;
         eventEmitter
             .on('start', function () {
-                this.layers = this.scene.rexUI.add.layerManager({
-                    layers: [
-                        { name: 'ui', cameraName: 'ui' }
-                    ]
-                })
+                this.scene.layerManager = this.scene.rexUI.add.layerManager(DefaultLayers)
+                this.bootViewport();//viewport的測試框與clickArea依於layer，所以要先做完BootLayerManager
             }, this)
             .on('shutdown', function () {
-                this.layers.destroy();
-                this.layers = undefined;
+                this.scene.layerManager.destroy();
+                this.scene.layerManager = undefined;
             }, this)
     }
 }
