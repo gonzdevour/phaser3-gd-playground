@@ -22,6 +22,10 @@ class Test extends Phaser.Scene {
                 console.log('Test gd plugin restart')
                 this.scene.restart()
             }, this)
+
+        this.input.on('pointerup.none', function(){
+            console.log('pointerup on nothing')
+        })
     }
 
     update() { }

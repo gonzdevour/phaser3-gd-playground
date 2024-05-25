@@ -5,7 +5,7 @@ ObjectFactory.register('textLabel', function (x, y, layer, text) {
         x: x, y: y,
         text: this.scene.add.text(0, 0, text)
     });
-    this.scene.layerManager.addToLayer(layer, gameObject);
+    this.system.layerManager.addToLayer(layer, gameObject);
 
     return gameObject;
 });
