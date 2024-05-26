@@ -12,6 +12,7 @@ class GDSystemPlugin extends Phaser.Plugins.ScenePlugin {
 
         // Private objects of this GD system
         this.viewport; // Phaser.Geom.Rectangle;
+        this.vpc; //viewport coordinate
         this.layerManager;  // scene.rexUI.add.layerManager
         this.vpRect; // scene.rexUI.add.roundRectangle
 
@@ -21,6 +22,11 @@ class GDSystemPlugin extends Phaser.Plugins.ScenePlugin {
     boot() {
         Object.assign(
             Phaser.GameObjects.GameObject.prototype,
+            DisplayListMethods,
+            myMethods,
+        );
+        Object.assign(
+            Phaser.GameObjects.Shape.prototype,
             DisplayListMethods,
             myMethods,
         );

@@ -16,6 +16,10 @@ if (postfix) {
     dist = `${dist}-${postfix}`;
 }
 
+var pathToRexnote = '../phaser3-rex-notes';
+var pathToRexPlugins = '../phaser3-rex-notes/plugins';
+var pathToGdkPlugins = './plugins';
+
 var projectRoot = process.env.project || false;
 var projectMain = process.env.main || 'main.js'; // Entery js
 var htmlTemplate = process.env.htmlTemplate || 'index.tmpl'; // Template of index.html
@@ -40,6 +44,15 @@ if (projectRoot) {
         localPreprocessorMain = path.resolve(projectRoot, localPreprocessorMain);
     }
 }
+
+console.log('check path:');
+console.log(projectRoot);
+console.log(projectMain);
+console.log(htmlTemplate);
+console.log(assetsFolder);
+console.log(rootAssetsFolder);
+console.log(pathToRexPlugins)
+console.log(pathToGdkPlugins)
 
 const distFolder = path.resolve(__dirname, dist);
 console.log(`Export to ${distFolder}`)
@@ -184,7 +197,9 @@ module.exports = {
     resolve: {
         alias: {
             // 其他別名配置...
-            allRexPlugins: path.resolve(__dirname, pathToAllRexPlugins),
+            gdkPlugins: path.resolve(__dirname, pathToGdkPlugins),
+            rexnotePlugins: path.resolve(__dirname, pathToRexPlugins),
+            rexnote: path.resolve(__dirname, pathToRexnote),
         },
         extensions: ['.ts', '.js'],
         fallback: {
