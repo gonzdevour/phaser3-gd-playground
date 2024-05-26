@@ -1,6 +1,7 @@
 import ObjectFactory from './ObjectFactory.js';
 import { OnSceneStart, OnSceneStop } from './OnSceneStartStop.js';
 import TextLabelFactory from './textlabel/Factory.js';
+import FullWindowRectangleFactory from './fullwindowrectangle/Factory.js';
 
 class GDSystemPlugin extends Phaser.Plugins.ScenePlugin {
     constructor(scene, pluginManager) {
