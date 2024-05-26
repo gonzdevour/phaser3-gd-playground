@@ -30,6 +30,8 @@ import SpinnerPlugin from 'rexnote/templates/spinner/spinner-plugin.js';
 import WebFontLoaderPlugin from 'rexnote/plugins/webfontloader-plugin.js';
 //fx
 import WarpPipelinePlugin from 'rexnote/plugins/warppipeline-plugin';
+import GlowFilterPipelinePlugin from 'rexnote/plugins/glowfilter2pipeline-plugin.js';
+import EffectPropertiesPlugin from 'rexnote/plugins/effectproperties-plugin.js';
 //db
 import CSVToHashTablePlugin from 'rexnote/plugins/csvtohashtable-plugin.js';
 //worksheet
@@ -37,6 +39,7 @@ import MarkedEventSheetsPlugin from 'rexnote/plugins/markedeventsheets-plugin.js
 //input
 import MouseWheelScrollerPlugin from 'rexnote/plugins/mousewheelscroller-plugin.js';
 import GesturesPlugin from 'rexnote/plugins/gestures-plugin.js';
+import CanvasInputPlugin from 'rexnote/plugins/canvasinput-plugin.js';
 
 export default {
     scene: [
@@ -144,6 +147,16 @@ export default {
             start: true
         },
         {
+            key: 'rexGlowFilterPipeline',
+            plugin: GlowFilterPipelinePlugin,
+            start: true
+        },
+        {
+            key: 'rexEffectProperties',
+            plugin: EffectPropertiesPlugin,
+            start: true
+        },
+        {
             key: 'rexTransitionImagePlugin',
             plugin: TransitionImagePlugin,
             start: true
@@ -166,6 +179,11 @@ export default {
         {
             key: 'rexMouseWheelScroller',
             plugin: MouseWheelScrollerPlugin,
+            start: true
+        },
+        {
+            key: 'rexCanvasInputPlugin',
+            plugin: CanvasInputPlugin,
             start: true
         },
     ]

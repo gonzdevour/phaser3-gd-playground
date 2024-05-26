@@ -25,7 +25,7 @@ var OnSceneStart = function () {
     UpdateViewport();
 
     // LayerManager
-    var layerManager = this.layerManager = scene.rexUI.add.layerManager(DefaultLayers);
+    var layerManager = this.layerManager = this.scene.layerManager = scene.rexUI.add.layerManager(DefaultLayers);
 
     // vpRect <-- LayerManager, viewport
     var vpRect = this.vpRect = this.scene.vpRect = scene.rexUI.add.roundRectangle({

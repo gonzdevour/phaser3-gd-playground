@@ -2,6 +2,9 @@ import ObjectFactory from './ObjectFactory.js';
 import { OnSceneStart, OnSceneStop } from './OnSceneStartStop.js';
 import TextLabelFactory from './textlabel/Factory.js';
 import FullWindowRectangleFactory from './fullwindowrectangle/Factory.js';
+//utils
+import DisplayListMethods from 'rexnotePlugins/utils/gameObject/displaylist/DisplayListMethods.js';
+import myMethods from './myMethods.js';
 
 class GDSystemPlugin extends Phaser.Plugins.ScenePlugin {
     constructor(scene, pluginManager) {
@@ -16,6 +19,11 @@ class GDSystemPlugin extends Phaser.Plugins.ScenePlugin {
     }
 
     boot() {
+        Object.assign(
+            Phaser.GameObjects.GameObject.prototype,
+            DisplayListMethods,
+            myMethods,
+        );
         var eventEmitter = this.scene.events;
         eventEmitter
             .on('destroy', this.destroy, this)

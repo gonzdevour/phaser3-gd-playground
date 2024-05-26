@@ -1,5 +1,5 @@
 import 'phaser/src/phaser';
-import AllPlugins from "./settings/AllPlugins.js";
+import AllPlugins from "gdkPlugins/AllPlugins.js";
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -9,27 +9,32 @@ class Test extends Phaser.Scene {
     }
 
     preload() {
-
-
+        this.load.pack('pack', 'assets/pack.json');
     }
 
     create() {
-        //this.clickArea.tint = 0xff0000;
-        //this.clickArea.alpha = 0.2;
-        this.vpRect.setStrokeStyle(10, 0x0000ff, 1)
+        var scene = this;
+        var viewport = scene.viewport;
 
-        this.gd.add.textLabel(400, 200, 'ui', 'AABB').layout()
+        //scene.clickArea.tint = 0xff0000;
+        //scene.clickArea.alpha = 0.2;
+        scene.vpRect.setStrokeStyle(10, 0x0000ff, 1)
 
-        this.add.text(600, 200, 'Restart')
+        scene.gd.add.textLabel(400, 200, 'ui', 'AABB').layout()
+
+        scene.add.text(600, 200, 'Restart')
             .setInteractive()
             .once('pointerup', function () {
                 console.log('Test gd plugin restart')
-                this.scene.restart()
-            }, this)
+                scene.scene.restart()
+            })
 
-        this.input.on('pointerup.none', function(){
+        scene.input.on('pointerup.none', function(){
             console.log('pointerup on nothing')
         })
+
+        var bg = scene.add.image(0, 0, 'classroom')
+        ._locate({layerName:"bg", vpxOffset: viewport.centerX, vpyOffset: viewport.centerY,})
     }
 
     update() { }
