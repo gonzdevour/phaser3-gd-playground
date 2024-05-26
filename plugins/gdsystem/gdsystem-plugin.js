@@ -3,7 +3,7 @@ import { OnSceneStart, OnSceneStop } from './OnSceneStartStop.js';
 import TextLabelFactory from './textlabel/Factory.js';
 import FullWindowRectangleFactory from './fullwindowrectangle/Factory.js';
 //utils
-import DisplayListMethods from 'rexnotePlugins/utils/gameObject/displaylist/DisplayListMethods.js';
+import DisplayListMethods from 'rexnotePlugins/utils/gameobject/displaylist/DisplayListMethods.js';
 import myMethods from './myMethods.js';
 
 class GDSystemPlugin extends Phaser.Plugins.ScenePlugin {

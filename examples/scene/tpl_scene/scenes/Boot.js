@@ -17,7 +17,7 @@ import loccsv from 'raw-loader!../assets/localization.csv';
 import { DefaultAppConfig } from '../settings/DefaultData';
 import CordovaDeviceReady from '../gdk/api/CordovaDeviceReady.js';
 
-import DisplayListMethods from 'rexnotePlugins/utils/gameObject/displaylist/DisplayListMethods.js';
+import DisplayListMethods from 'rexnotePlugins/utils/gameobject/displaylist/DisplayListMethods.js';
 import myMethods from '../gdk/myMethods.js';
 Object.assign(
     Phaser.GameObjects.GameObject.prototype,
