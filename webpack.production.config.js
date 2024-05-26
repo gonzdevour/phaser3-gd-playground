@@ -132,23 +132,12 @@ plugins.push(
 )
 
 if (fs.existsSync(assetsFolder)) {
-    var ignore;
-    if (packFolderOutput) {
-        var ignoreFile = `**/*${packFolderConfigExtension}`;
-        console.log(`Ignore pack-config-file '${ignoreFile}'`)
-        ignore = [ignoreFile];
-    }
     plugins.push(
         new CopyWebpackPlugin({
             patterns: [
                 {
                     from: assetsFolder,
                     to: distFolder + '/assets/',
-                    globOptions: {
-                        dot: true,
-                        gitignore: true,
-                        ignore: ignore,
-                    },
                 }
             ],
         }),
