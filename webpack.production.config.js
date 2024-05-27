@@ -96,6 +96,7 @@ plugins.push(
         WEBGL_RENDERER: JSON.stringify(true), // I did this to make webpack work, but I'm not really sure it should always be true
         CANVAS_RENDERER: JSON.stringify(true), // I did this to make webpack work, but I'm not really sure it should always be true        
         "typeof WEBGL_DEBUG": JSON.stringify(false),
+        WEBGL_DEBUG: JSON.stringify(false),
     })
 )
 
