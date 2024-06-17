@@ -25,6 +25,22 @@ class Test extends Phaser.Scene {
 
         //input
 
+        // //取出方向鍵的狀態值
+        // this.cursorKeys = this.input.keyboard.createCursorKeys();
+
+        // //取出SPACE key的狀態值
+        // this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        // //使用addKeys取出各key的狀態組，並且重新訂定keycode(例如以this.keys.up.keyCode代替this.keys.W.keyCode)
+        // this.keys = this.input.keyboard.addKeys({
+        //     up: Phaser.Input.Keyboard.KeyCodes.W,
+        //     down: Phaser.Input.Keyboard.KeyCodes.S,
+        //     left: Phaser.Input.Keyboard.KeyCodes.A,
+        //     right: Phaser.Input.Keyboard.KeyCodes.D,
+        //     space: Phaser.Input.Keyboard.KeyCodes.SPACE
+        // });
+
+        // 直接使用key string取出各key的狀態組，不重新訂定keycode(最簡單)
         this.Keyboardkeys = this.input.keyboard.addKeys('W,S,A,D,SPACE');
 
         // 監聽鍵盤按下事件
@@ -64,10 +80,20 @@ class Test extends Phaser.Scene {
                 analog:true
             })
             .on("goTo", function(angle, dir, dist, polarX, polarY){
-                player.moveforce = Math.abs(polarX*5)
+                let force = Math.abs(polarX*5)
+                //txtAngle.setText(angle + JSON.stringify(dir));
+                // if (dir.left){
+                //     player.body.setVelocityX(-1*force);
+                // } else if (dir.right){
+                //     player.body.setVelocityX(1*force);
+                // } else {
+                //     player.body.setVelocityX(0);
+                // }
             })
             .on("stop", function(){
                 txtAngle.setText("stop");
+                // player.body.setVelocityX(0);
+
             })
 
         //input
@@ -78,16 +104,6 @@ class Test extends Phaser.Scene {
 
         this.cursorkeys = keysHub.createCursorKeys(); //統合方向鍵值
 
-        var eightDirection = scene.plugins.get('rexEightDirection').add(player, {
-            speed: 200,
-            dir: '8dir',     // 0|'up&down'|1|'left&right'|2|'4dir'|3|'8dir'
-            // rotateToDirection: false,
-            // wrap: false,
-            // padding: 0,
-            // enable: true,
-            cursorKeys: scene.cursorkeys
-        });
-
         this.player = player;
         this.ground = ground;
         this.joystick = joystick;
@@ -96,31 +112,41 @@ class Test extends Phaser.Scene {
     }
 
     update() { 
-        // var keyboard = this.Keyboardkeys;
+        var keyboard = this.Keyboardkeys;
+        // var cursor = this.cursorKeys;
+        // var joystick = this.joystick.stickDirection;
 
-        // if (Phaser.Input.Keyboard.JustDown(keyboard.SPACE)) {
-        //     if (this.player.body.touching.down){
-        //         this.player.body.setVelocityY(-500);
-        //         //this.sound.play("jump");
-        //     }
-        // }
-
-        // var cursorKeys = this.cursorkeys;
-        // var s = 'Key down: ';
-        // for (var name in cursorKeys) {
-        //     if (cursorKeys[name].isDown) {
-        //         s += `${name} `;
-        //     }
-        // }
-        // this.text.setText(s);
-
-        // if (cursorKeys.left.isDown){
+        // if (cursor.left.isDown || keyboard.A.isDown || joystick.left) {
         //     this.player.body.setVelocityX(-160);
-        // } else if (cursorKeys.right.isDown){
+        // } else if (cursor.right.isDown || keyboard.D.isDown || joystick.right) {
         //     this.player.body.setVelocityX(160);
         // } else {
         //     this.player.body.setVelocityX(0);
         // }
+
+        if (Phaser.Input.Keyboard.JustDown(keyboard.SPACE)) {
+            if (this.player.body.touching.down){
+                this.player.body.setVelocityY(-500);
+                //this.sound.play("jump");
+            }
+        }
+
+        var cursorKeys = this.cursorkeys;
+        var s = 'Key down: ';
+        for (var name in cursorKeys) {
+            if (cursorKeys[name].isDown) {
+                s += `${name} `;
+            }
+        }
+        this.text.setText(s);
+
+        if (cursorKeys.left.isDown){
+            this.player.body.setVelocityX(-160);
+        } else if (cursorKeys.right.isDown){
+            this.player.body.setVelocityX(160);
+        } else {
+            this.player.body.setVelocityX(0);
+        }
 
     }
 }
@@ -142,7 +168,7 @@ var config = {
     physics: {
         default: "arcade",
         arcade: {
-            gravity: { y: 0 },
+            gravity: { y: 1200 },
             debug: true,
         },
     },

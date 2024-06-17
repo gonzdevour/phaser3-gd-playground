@@ -4,7 +4,7 @@ var SetupViewport = function(scene, testMode){
   var viewport = new Phaser.Geom.Rectangle(0, 0, 0, 0);
 
   if (scene.layerManager.has("clickArea")){
-    viewport.clickArea = scene.rexUI.add.fullWindowRectangle(0x00ff00,0.5)
+    viewport.clickArea = scene.rexUI.add.fullWindowRectangle(0x0,0.01)
       .setInteractive()
       .on("pointerup",function(pointer, localX, localY, event){
         console.log("clickArea pointer up")

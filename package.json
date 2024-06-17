@@ -5,7 +5,8 @@
     "scripts": {
         "dev": "webpack --config webpack.config.js",
         "production": "webpack --config webpack.production.config.js",
-        "build-plugins": "rollup -c rollup.config.mjs"
+        "build-plugins": "rollup -c rollup.config.mjs",
+        "editor": "start node_modules\\PhaserEditor\\PhaserEditor.exe"
     },
     "keywords": [
         "phaser3"

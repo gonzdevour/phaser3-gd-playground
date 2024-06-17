@@ -40,14 +40,16 @@ import MarkedEventSheetsPlugin from 'rexnote/plugins/markedeventsheets-plugin.js
 import MouseWheelScrollerPlugin from 'rexnote/plugins/mousewheelscroller-plugin.js';
 import GesturesPlugin from 'rexnote/plugins/gestures-plugin.js';
 import CanvasInputPlugin from 'rexnote/plugins/canvasinput-plugin.js';
+import KeysHubPlugin from 'rexnote/plugins/keyshub-plugin.js';
+import EightDirectionPlugin from 'rexnote/plugins/eightdirection-plugin.js';
 
 export default {
     scene: [
-        { key: 'rexUI', plugin: RexUI, mapping: 'rexUI' },
-        { key: 'gd', plugin: GDSystemPlugin, mapping: 'gd' },
         //{ key: 'rexScaleOuter', plugin: rexscaleouterplugin, mapping: 'rexScaleOuter' },
         { key: "rexSpinner", plugin: SpinnerPlugin, mapping: "rexSpinner", },
         { key: 'rexGestures', plugin: GesturesPlugin, mapping: 'rexGestures' },
+        { key: 'rexUI', plugin: RexUI, mapping: 'rexUI' },
+        { key: 'gd', plugin: GDSystemPlugin, mapping: 'gd' },//這個plugin要放最後才抓得到前面的
     ],
     global: [
         { key: 'rexLayerManager', plugin: LayerManagerPlugin, start: true },
@@ -73,5 +75,7 @@ export default {
         { key: 'rexLoadingAnimationScene', plugin: LoadingAnimationScenePlugin, start: true },
         { key: 'rexMouseWheelScroller', plugin: MouseWheelScrollerPlugin, start: true },
         { key: 'rexCanvasInputPlugin', plugin: CanvasInputPlugin, start: true },
-    ]
+        { key: 'rexKeysHub', plugin: KeysHubPlugin, start: true },
+        { key: 'rexEightDirection', plugin: EightDirectionPlugin, start: true },
+    ],
 };

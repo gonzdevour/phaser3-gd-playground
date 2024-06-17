@@ -27,6 +27,9 @@ var OnSceneStart = function () {
     // LayerManager
     var layerManager = this.layerManager = this.scene.layerManager = scene.rexUI.add.layerManager(DefaultLayers);
 
+    // vpc
+    var vpc = this.vpc = this.scene.vpc = scene.plugins.get('rexViewportCoordinate');
+
     // vpRect <-- LayerManager, viewport
     var vpRect = this.vpRect = this.scene.vpRect = scene.rexUI.add.roundRectangle({
         //strokeColor: 0xff0000, strokeWidth: 10, radius: 10

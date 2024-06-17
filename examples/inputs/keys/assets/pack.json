@@ -1,0 +1,21 @@
+{
+  "packKey": {
+    "files": [
+      {
+        "type": "image",
+        "key": "classroom",
+        "url": "assets/image/classroom.png"
+      },
+      {
+        "type": "image",
+        "key": "finger",
+        "url": "assets/image/finger.png"
+      },
+      {
+        "type": "image",
+        "key": "right",
+        "url": "assets/image/right.png"
+      }
+    ]
+  }
+}

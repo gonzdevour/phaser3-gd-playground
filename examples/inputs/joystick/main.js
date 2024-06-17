@@ -1,5 +1,6 @@
 import 'phaser/src/phaser';
 import AllPlugins from "gdkPlugins/AllPlugins.js";
+import createJoystick from './create/createJoystick.js';
 
 class Test extends Phaser.Scene {
     constructor() {
@@ -15,27 +16,22 @@ class Test extends Phaser.Scene {
     create() {
         var scene = this;
         var viewport = scene.viewport;
-
-        //scene.clickArea.tint = 0xff0000;
-        //scene.clickArea.alpha = 0.2;
         scene.vpRect.setStrokeStyle(10, 0x0000ff, 1)
 
-        scene.gd.add.textLabel(400, 200, 'ui', 'AABB').layout()
-
-        scene.add.text(600, 200, 'Restart')
-            .setInteractive()
-            .once('pointerup', function () {
-                console.log('Test gd plugin restart')
-                scene.scene.restart()
-            })
-
-        scene.input.on('pointerup.none', function(){
-            console.log('pointerup on nothing')
-        })
-
         var bg = scene.add.image(0, 0, 'classroom')
-        ._locate({layerName:"bg", vpx:0.5, vpy:0.5})
-        //._locate({layerName:"bg", vpxOffset: viewport.centerX, vpyOffset: viewport.centerY,})
+            .setAlpha(0.2)
+            ._locate({layerName:"bg", vpxOffset: viewport.centerX, vpyOffset: viewport.centerY,})
+
+        var txtAngle = scene.rexUI.add.BBCodeText(0,0,"touchAngle", {fontSize:32})
+            .setOrigin(0,0)
+            ._locate({layerName:"ui", vpx:0, vpy:0, vpxOffset: 50, vpyOffset: 50})
+
+        var joystick = createJoystick(scene, 'ui', 150, -150, 0, 1, {
+                analog:true
+            })
+            .on("angleChange", function(angle){
+                txtAngle.setText(angle);
+            })
     }
 
     update() { }
