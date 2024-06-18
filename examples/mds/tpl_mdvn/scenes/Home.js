@@ -1,9 +1,6 @@
 import Base from "./Base.js";
 import initMasterScene from "../gdk/scene/InitMasterScene.js";
 import { DefaultAppConfig } from "../settings/DefaultData.js";
-//camera
-import CameraDragScroll from "../gdk/camera/CameraDragScroll.js";
-import CameraWheelZoom from "../gdk/camera/CameraWheelZoom.js";
 //map
 import CreateMap from "../scripts/CreateMap.js";
 //mds
@@ -37,8 +34,16 @@ class Home extends Base {
     var scene = this;
     var camMain = scene.cameras.main;
         camMain.setBackgroundColor('#66ccff');
-    CameraDragScroll(scene);//camMain.enableDragScroll = true/false
-    CameraWheelZoom(scene); //camMain.enableWheelZoom = true/false
+
+    var cameraController = scene.plugins.get('rexCameraController').add(scene, {
+      // camera: scene.cameras.main,
+      // panScrollEnable: true,
+      // pinchZoomEnable: true,
+      // inputTarget: undefined,
+      // boundsScrollEnable: true,
+      // mouseWheelZoomEnable: true,
+      // enable: true
+    });
 
     var map = CreateMap(scene);
 

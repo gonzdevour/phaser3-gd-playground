@@ -12,7 +12,7 @@ export default {
 
     icon: { width: 300, height: 300 },
 
-    action: { key: 'nextPage', tint: COLOR_LIGHT, alpha: 0 },
+    action: { width: 80, height: 80, animationMode: 'downArrow' },
 
     text: { fontSize: 64, maxLines: 4, testString: '|MÉqgy回', },
 

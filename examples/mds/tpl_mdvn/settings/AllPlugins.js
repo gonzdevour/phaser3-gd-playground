@@ -38,153 +38,46 @@ import CSVToHashTablePlugin from 'rexnote/plugins/csvtohashtable-plugin.js';
 import MarkedEventSheetsPlugin from 'rexnote/plugins/markedeventsheets-plugin.js';
 //input
 import MouseWheelScrollerPlugin from 'rexnote/plugins/mousewheelscroller-plugin.js';
+import CameraControllerPlugin from 'rexnote/plugins/cameracontroller-plugin.js';
 import GesturesPlugin from 'rexnote/plugins/gestures-plugin.js';
 import CanvasInputPlugin from 'rexnote/plugins/canvasinput-plugin.js';
+import KeysHubPlugin from 'rexnote/plugins/keyshub-plugin.js';
+import EightDirectionPlugin from 'rexnote/plugins/eightdirection-plugin.js';
 
 export default {
     scene: [
-        {
-            key: 'rexUI',
-            plugin: RexUI,
-            mapping: 'rexUI'
-        },
-        {
-            key: 'gd',
-            plugin: GDSystemPlugin,
-            mapping: 'gd'
-        },
-        // {
-        //     key: 'rexScaleOuter',
-        //     plugin: rexscaleouterplugin,
-        //     mapping: 'rexScaleOuter'
-        // },
-        {
-            key: "rexSpinner",
-            plugin: SpinnerPlugin,
-            mapping: "rexSpinner",
-        },
-        {
-            key: 'rexGestures',
-            plugin: GesturesPlugin,
-            mapping: 'rexGestures'
-        },
+        //{ key: 'rexScaleOuter', plugin: rexscaleouterplugin, mapping: 'rexScaleOuter' },
+        { key: "rexSpinner", plugin: SpinnerPlugin, mapping: "rexSpinner", },
+        { key: 'rexGestures', plugin: GesturesPlugin, mapping: 'rexGestures' },
+        { key: 'rexUI', plugin: RexUI, mapping: 'rexUI' },
+        { key: 'gd', plugin: GDSystemPlugin, mapping: 'gd' },//這個plugin要放最後才抓得到前面的
     ],
     global: [
-        {
-            key: 'rexLayerManager',
-            plugin: LayerManagerPlugin,
-            start: true
-        },
-        {
-            key: 'rexCsvToHashTable',
-            plugin: CSVToHashTablePlugin,
-            mapping: 'rexCsvToHashTable',
-            start: true
-        },
-        {
-            key: 'rexAwaitLoader',
-            plugin: AwaitLoaderPlugin,
-            start: true
-        },
-        {
-            key: 'rexEventPromise',
-            plugin: EventPromisePlugin,
-            start: true
-        },
-        {
-            key: 'rexLoadingProgress',
-            plugin: LoadingProgressPlugin,
-            start: true
-        },
-        {
-            key: 'rexClock',
-            plugin: ClockPlugin,
-            start: true
-        },
-        {
-            key: 'rexAwayTime',
-            plugin: AwayTimePlugin,
-            start: true
-        },
-        {
-            key: 'rexRealTimeTimers',
-            plugin: RealTimeTimersPlugin,
-            start: true
-        },
-        {
-            key: 'rexWebFontLoader',
-            plugin: WebFontLoaderPlugin,
-            start: true
-        },
-        {
-            key: 'rexLive2dPlugin',
-            plugin: Live2dPlugin,
-            start: true
-        },
-        {
-            key: 'rexAnchor',
-            plugin: AnchorPlugin,
-            start: true
-        },
-        {
-            key: 'rexButton',
-            plugin: ButtonPlugin,
-            start: true
-        },
-        {
-            key: 'rexPerspectiveImagePlugin',
-            plugin: PerspectiveImagePlugin,
-            start: true
-        },
-        {
-            key: 'rexCustomProgressPlugin',
-            plugin: CustomProgressPlugin,
-            start: true
-        },
-        {
-            key: 'rexWarppipelinePlugin',
-            plugin: WarpPipelinePlugin,
-            start: true
-        },
-        {
-            key: 'rexGlowFilterPipeline',
-            plugin: GlowFilterPipelinePlugin,
-            start: true
-        },
-        {
-            key: 'rexEffectProperties',
-            plugin: EffectPropertiesPlugin,
-            start: true
-        },
-        {
-            key: 'rexTransitionImagePlugin',
-            plugin: TransitionImagePlugin,
-            start: true
-        },
-        {
-            key: 'rexViewportCoordinate',
-            plugin: ViewportCoordinatePlugin,
-            start: true
-        },
-        {
-            key: 'rexMarkedEventSheets',
-            plugin: MarkedEventSheetsPlugin,
-            start: true
-        },
-        {
-            key: 'rexLoadingAnimationScene',
-            plugin: LoadingAnimationScenePlugin,
-            start: true
-        },
-        {
-            key: 'rexMouseWheelScroller',
-            plugin: MouseWheelScrollerPlugin,
-            start: true
-        },
-        {
-            key: 'rexCanvasInputPlugin',
-            plugin: CanvasInputPlugin,
-            start: true
-        },
-    ]
+        { key: 'rexLayerManager', plugin: LayerManagerPlugin, start: true },
+        { key: 'rexCsvToHashTable', plugin: CSVToHashTablePlugin, mapping: 'rexCsvToHashTable', start: true },
+        { key: 'rexAwaitLoader', plugin: AwaitLoaderPlugin, start: true },
+        { key: 'rexEventPromise', plugin: EventPromisePlugin, start: true },
+        { key: 'rexLoadingProgress', plugin: LoadingProgressPlugin, start: true },
+        { key: 'rexClock', plugin: ClockPlugin, start: true },
+        { key: 'rexAwayTime', plugin: AwayTimePlugin, start: true },
+        { key: 'rexRealTimeTimers', plugin: RealTimeTimersPlugin, start: true },
+        { key: 'rexWebFontLoader', plugin: WebFontLoaderPlugin, start: true },
+        { key: 'rexLive2dPlugin', plugin: Live2dPlugin, start: true },
+        { key: 'rexAnchor', plugin: AnchorPlugin, start: true },
+        { key: 'rexButton', plugin: ButtonPlugin, start: true },
+        { key: 'rexPerspectiveImagePlugin', plugin: PerspectiveImagePlugin, start: true },
+        { key: 'rexCustomProgressPlugin', plugin: CustomProgressPlugin, start: true },
+        { key: 'rexWarppipelinePlugin', plugin: WarpPipelinePlugin, start: true },
+        { key: 'rexGlowFilterPipeline', plugin: GlowFilterPipelinePlugin, start: true },
+        { key: 'rexEffectProperties', plugin: EffectPropertiesPlugin, start: true },
+        { key: 'rexTransitionImagePlugin', plugin: TransitionImagePlugin, start: true },
+        { key: 'rexViewportCoordinate', plugin: ViewportCoordinatePlugin, start: true },
+        { key: 'rexMarkedEventSheets', plugin: MarkedEventSheetsPlugin, start: true },
+        { key: 'rexLoadingAnimationScene', plugin: LoadingAnimationScenePlugin, start: true },
+        { key: 'rexMouseWheelScroller', plugin: MouseWheelScrollerPlugin, start: true },
+        { key: 'rexCanvasInputPlugin', plugin: CanvasInputPlugin, start: true },
+        { key: 'rexKeysHub', plugin: KeysHubPlugin, start: true },
+        { key: 'rexEightDirection', plugin: EightDirectionPlugin, start: true },
+        { key: 'rexCameraController', plugin: CameraControllerPlugin, start: true },
+    ],
 };
