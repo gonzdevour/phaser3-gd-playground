@@ -22,7 +22,7 @@ class Test extends Phaser.Scene
         })
 
         this.input.on("wheel", function(){
-            se.setVolume(1);
+            se.play().setVolume(1);
             soundFade.fadeOut(se, 100, false);
         })
     }
