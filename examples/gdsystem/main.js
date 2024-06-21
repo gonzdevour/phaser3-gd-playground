@@ -13,6 +13,21 @@ class Test extends Phaser.Scene {
     }
 
     create() {
+
+        //gdsystem的功能包含：
+        //
+        //@onSceneStartStop
+        //- camToCenterOn：RWD時將cam移到正確的位置
+        //- layerManager
+        //- viewport：RWD相容的viewport和顯示viewport用的vpRect
+        //- clickArea：一個可點擊的fullWindowRectangle，用來取得pointerup.none事件，撈"沒點到其他物件的狀況"
+        //
+        //@plugin
+        //- gd.add.自訂物件
+        //
+        //@myMethods
+        //- 注入MyMethods
+
         var scene = this;
         var viewport = scene.viewport;
 

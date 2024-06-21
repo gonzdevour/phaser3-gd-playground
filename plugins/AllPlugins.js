@@ -12,6 +12,8 @@ import AnchorPlugin from 'rexnote/plugins/anchor-plugin.js';
 import ButtonPlugin from 'rexnote/plugins/button-plugin.js';
 //image
 import TransitionImagePlugin from 'rexnote/plugins/transitionimage-plugin.js';
+//audio
+import SoundFadePlugin from 'rexnote/plugins/soundfade-plugin.js';
 //viewport
 import rexscaleouterplugin from 'rexnote/plugins/scaleouter-plugin.js';
 import ViewportCoordinatePlugin from 'rexnote/plugins/viewportcoordinate-plugin.js';
@@ -77,5 +79,6 @@ export default {
         { key: 'rexCanvasInputPlugin', plugin: CanvasInputPlugin, start: true },
         { key: 'rexKeysHub', plugin: KeysHubPlugin, start: true },
         { key: 'rexEightDirection', plugin: EightDirectionPlugin, start: true },
+        { key: 'rexSoundFade', plugin: SoundFadePlugin, start: true },
     ],
 };
