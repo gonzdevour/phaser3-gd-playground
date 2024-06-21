@@ -11,18 +11,19 @@ class Test extends Phaser.Scene
     create ()
     {
         var scene = this;
-        var text = this.rexUI.add.BBCodeText(0,0,'click to play sound')
+        var text = this.rexUI.add.BBCodeText(0,0,'click to play sound')._locate({layerName:"ui", vpx:0, vpy:0})
         var soundFade = scene.plugins.get('rexSoundFade');
 
         var se = scene.sound.add("right");
 
         this.input.on("pointerup", function(){
+            se.setVolume(1);
             se.play();
         })
 
         this.input.on("wheel", function(){
             se.setVolume(1);
-            soundFade.fadeOut(se, 100);
+            soundFade.fadeOut(se, 100, false);
         })
     }
     update ()
