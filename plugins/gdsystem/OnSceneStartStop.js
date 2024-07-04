@@ -3,6 +3,9 @@ import OnWindowResize from "gdkPlugins/utils/rwd/OnWindowResize";
 import DefaultLayers from "./layer/DefaultLayers.js";
 
 var OnSceneStart = function () {
+    //在onSceneStart時進行，確保scene.rexUI可以調用
+    //這裡的this是GDSystemPlugin，我試圖讓屬於gd的物件也屬於scene，通用物件避免以gd.xxx呈現
+
     var scene = this.scene;
 
     // Camera, centerOn

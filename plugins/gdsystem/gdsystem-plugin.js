@@ -21,19 +21,19 @@ class GDSystemPlugin extends Phaser.Plugins.ScenePlugin {
 
     boot() {
         Object.assign(
-            Phaser.GameObjects.GameObject.prototype,
+            Phaser.GameObjects.GameObject.prototype, //對所有gameObject賦予自訂屬性
             DisplayListMethods,
             myMethods,
         );
         Object.assign(
-            Phaser.GameObjects.Shape.prototype,
+            Phaser.GameObjects.Shape.prototype, //對所有shape賦予自訂屬性
             DisplayListMethods,
             myMethods,
         );
         var eventEmitter = this.scene.events;
         eventEmitter
             .on('destroy', this.destroy, this)
-            .on('start', OnSceneStart, this)
+            .on('start', OnSceneStart, this) //scene啟動時執行
             .on('shutdown', OnSceneStop, this)
     }
 
