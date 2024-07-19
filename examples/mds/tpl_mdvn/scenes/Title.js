@@ -29,40 +29,13 @@ class Title extends Base {
         var scene = this;
         var viewport = this.viewport;
 
-        console.log('title init')
+        scene.log('title init')
         scene.log(`appLang: ${DefaultData.appLang} (${DefaultData.appLangAlias})`);
 
-        var mainMenu = CreateTitle(this);
-
-        //rwd
-        var response = function(){
-            scene.add.image(viewport.centerX, viewport.centerY, "__MISSING")
-            console.log("vpcenterX:" + viewport.centerX)
-            mainMenu
-                .setPosition(viewport.centerX, viewport.centerY)
-                .setMinSize(viewport.width, viewport.height)
-                .layout()
-        }
-        OnWindowResize(scene, response,mainMenu);
-
-        scene.input.on("pointerdown", function(){
-            console.log("relayout")
-            viewport = scene.scale.getViewPort();
-            mainMenu
-                .setPosition(viewport.centerX, viewport.centerY)
-                .setMinSize(viewport.width, viewport.height)
-                .layout()
-        },scene)
+        var mainMenu = CreateTitle(scene)
+            ._locate({layerName:"ui", vpx:0.5, vpy:0.5, vpxOffset:0, vpyOffset:0})
 
         mainMenu
-            .setMinSize(viewport.width, viewport.height) //displayWidth, displayHeight則不受scaleOuter影響
-            .layout()
-            // .on('button.mode-select', function () { //模式選擇
-            //     this.transitionTo( QuizConfigSceneKey,500 );
-            // }, this)
-            // .on('button.continue', function () { //繼續遊戲
-            //     this.transitionTo( QuizSceneKey,500 );
-            // }, this)
             .on('buttonsMain.click', function(button, index, pointer, event){
                 switch (index) {
                     case 0: //繼續遊戲

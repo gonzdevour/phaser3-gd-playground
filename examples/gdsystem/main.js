@@ -35,7 +35,7 @@ class Test extends Phaser.Scene {
         //scene.clickArea.alpha = 0.2;
         scene.vpRect.setStrokeStyle(10, 0x0000ff, 1)
 
-        scene.gd.add.textLabel(400, 200, 'ui', 'AABB').layout()
+        var txtLabel = scene.gd.add.textLabel('AABB', {layerName:"ui", vpxOffset:20, vpyOffset:20, originX:0, originY:0})
 
         scene.add.text(600, 200, 'Restart')
             .setInteractive()

@@ -23,7 +23,8 @@ class Test extends Phaser.Scene
 
         var style_txa = {
             background: { color: COLOR_MAIN, strokeColor: COLOR_LIGHT, radius: 10, },
-            icon: { key: 'ico_user', iconSize: 64, },
+            icon: { key: 'ico_user', },
+            iconSize: 64,
             text: {
                 $type: 'textarea',
                 space: { left: 5, right: 5, top: 5, bottom: 5, text: 10 },
