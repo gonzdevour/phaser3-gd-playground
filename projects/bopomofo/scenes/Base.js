@@ -39,7 +39,6 @@ class Base extends Phaser.Scene {
     }
 
     create() {
-        this.rexScaleOuter.scale();
     }
 }
 

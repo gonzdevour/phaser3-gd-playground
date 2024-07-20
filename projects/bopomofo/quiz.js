@@ -38,7 +38,6 @@ class Test extends Phaser.Scene {
             ]
         })
 
-        this.rexScaleOuter.scale();
         var quizPanel = CreateQuizPanel(this).layout();
 
         console.log(`${quizPanel.width}x${quizPanel.height}`)

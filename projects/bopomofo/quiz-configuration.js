@@ -16,7 +16,6 @@ class Test extends Phaser.Scene {
     }
 
     create() {
-        this.rexScaleOuter.scale();
         var quizConfigPanel = CreateQuizConfigPanel(this, {
             radio: { database: '常用詞庫', enhancement: '結合韻', mode: '測驗' }
         })

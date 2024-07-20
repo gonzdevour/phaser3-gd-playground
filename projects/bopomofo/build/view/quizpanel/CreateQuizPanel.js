@@ -9,7 +9,7 @@ import { Style } from "../style/style.js";
 const GetValue = Phaser.Utils.Objects.GetValue;
 
 var CreateQuizPanel = function (scene, config) {
-    var viewport = scene.rexScaleOuter.outerViewport;
+    var viewport = scene.scale.getViewPort();
     var x = GetValue(config, 'x', viewport.centerX);
     var y = GetValue(config, 'y', viewport.centerY);
     var width = GetValue(config, 'width', viewport.width);

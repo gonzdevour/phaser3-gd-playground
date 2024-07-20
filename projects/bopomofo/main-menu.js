@@ -14,7 +14,6 @@ class Test extends Phaser.Scene {
     }
 
     create() {
-        this.rexScaleOuter.scale();
         var mainMenu = CreateMainMenuPanel(this)
             .layout()
             .on('button.mode-select', function () {

@@ -8,7 +8,7 @@ var CreateModalDialog = function (scene, config) {
         config = {};
     }
 
-    var viewport = scene.rexScaleOuter.outerViewport;
+    var viewport = scene.scale.getViewPort();
     config.x = GetValue(config, 'x', viewport.centerX);
     config.y = GetValue(config, 'y', viewport.centerY);
     config.width = GetValue(config, 'width', 0);
