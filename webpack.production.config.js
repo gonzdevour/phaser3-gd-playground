@@ -162,7 +162,6 @@ module.exports = {
     mode: 'production',
     entry: {
         app: [
-            '@babel/polyfill',
             projectMain
         ]
     },
@@ -211,18 +210,7 @@ module.exports = {
                 loader: 'babel-loader',
                 options: {
                     presets: [
-                        '@babel/preset-env',
                         '@babel/preset-typescript'
-                    ]
-                }
-            },
-            {
-                test: /\.js$/i,
-                exclude: /node_modules/,
-                loader: 'babel-loader',
-                options: {
-                    presets: [
-                        '@babel/preset-env',
                     ]
                 }
             },
