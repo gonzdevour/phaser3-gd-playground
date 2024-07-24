@@ -59,11 +59,11 @@ var GetMdsSheetsFromGoogleDriveFolder = async function(scene, ifShowThrobber){
 var GetMdsSheetsFromLocal = function(scene){
     let jsonArray = [];
     scene.cache.text.getKeys().forEach(key => {
-        if (key.startsWith('mdsSheets_')) {
+        if (key.startsWith('mdsSheets_')) { //劇本檔名格式範例：mdsSheets_歷史事件_19490227天馬茶房事件
             let parts = key.split('_');
             if (parts.length === 3) {
-                let groupName = parts[1];
-                let scriptName = parts[2];
+                let groupName = parts[1]; //groupName: 歷史事件
+                let scriptName = parts[2]; //scriptName: 19490227天馬茶房事件
                 let content = scene.cache.text.get(key);
                 jsonArray.push({
                     groupName: groupName,

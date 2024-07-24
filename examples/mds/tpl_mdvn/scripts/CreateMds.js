@@ -1,8 +1,9 @@
 //mdvn
-import MarkdownVisualNovel from 'rexnote/templates/markdownvisualnovel/MarkdownVisualNovel.js';
+import MDScenario from 'rexnote/templates/mdscenario/MDScenario.js';
 import TextBoxStyle from '../gdk/mds/mdvn/styles/TextBoxStyle.js';
 import ChoiceStyle from '../gdk/mds/mdvn/styles/ChoiceStyle.js';
 import TitleStyle from  '../gdk/mds/mdvn/styles/TitleStyle.js';
+import NameInputStyle from '../gdk/mds/mdvn/styles/NameInputStyle.js';
 import { monitorProps } from '../scripts/memory.js'
 //memory & monitor
 import CreateMonitor from '../scripts/CreateMonitor.js';
@@ -11,11 +12,12 @@ var CreateMds = function(scene, layerName, memory, sheetsData){
     var viewport = scene.viewport;
     var mvdnLayer = scene.layerManager.getLayer(layerName);
 
-    var mds = new MarkdownVisualNovel(scene, {
+    var mds = new MDScenario(scene, {
         styles: {
             TEXTBOX: TextBoxStyle,
             CHOICE: ChoiceStyle,
             TITLE: TitleStyle,
+            NAMEINPUT: NameInputStyle,
         },
         rootLayer: mvdnLayer, //指定mdvn使用的root layer
         viewport: viewport, //指定viewport讓vpx,vpy,vpw,vph起作用
@@ -23,7 +25,7 @@ var CreateMds = function(scene, layerName, memory, sheetsData){
     .on('start', function(groupName, mds){ 
         console.log(`[mds.start]${groupName}`);
         if (groupName == '歷史事件') {
-            console.log(`今天是` + mds.getData('date'))
+            console.log(`今天是` + mds.getData('date')) //歷史事件的執行以日期為主要條件
         }
     })
     .on('complete', function (groupName, mds) {
@@ -69,7 +71,7 @@ var CreateMds = function(scene, layerName, memory, sheetsData){
     .setData('$tintOthers',0x333333) //SPRITE.focus
     .setData('vpw',viewport.width)
     .setData('choiceWidth',viewport.portrait?viewport.width*0.8:viewport.width*0.5)
-    //memory
+    //memory為遊戲內參數，呼叫函數時傳入
     .setData(memory)
 
     //sheets

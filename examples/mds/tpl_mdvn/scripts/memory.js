@@ -1,6 +1,6 @@
 //mdvn data monitor
 var memory = {
-  date: 19490225,
+  date: 19490227,
   coin: 10,
   charA: {
     hp: 100,

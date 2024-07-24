@@ -1,4 +1,4 @@
-import PixelationEffect from '../effects/PixelationEffect.js';
+import { cameraFadeOut, cameraFadeIn } from "../effects/cameraFade";
 
 class Base extends Phaser.Scene {
     get debugMode() {
@@ -34,14 +34,18 @@ class Base extends Phaser.Scene {
     }
     transitionTo(sceneKey, duration) {
         this.log(`transition to ${sceneKey}`)
+
         this.scene.transition({
             target: sceneKey,
             duration: duration,
-
+            moveBelow: true,
             onStart(fromScene, toScene, duration) {
-                console.log(`${fromScene.sys.settings.key} to ${toScene.sys.settings.key}`)
-                PixelationEffect(toScene, duration);
-            },
+                fromScene.cameras.getCamera("system").fadeOut(duration * 0.5);
+                toScene.time.delayedCall(duration * 0.5, function () {
+                    fromScene.scene.setVisible(false);    // fromScene is above toScene
+                    toScene.cameras.getCamera("system").fadeIn(duration * 0.5);
+                })
+            }
         });
     }
 }

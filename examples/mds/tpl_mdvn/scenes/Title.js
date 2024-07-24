@@ -42,7 +42,7 @@ class Title extends Base {
                     console.log(`0 clicked`)
                     break;
                     case 1: //重新開始
-                    scene.transitionTo( DefaultAppConfig.sceneKey.Home,1000 );
+                    scene.transitionTo( DefaultAppConfig.sceneKey.Home,3000 );
                     break;
                     case 2: //讀取進度
                     DialogY(scene, {

@@ -47,7 +47,7 @@ class Home extends Base {
 
     var map = CreateMap(scene);
 
-    var mds = CreateMds(scene, "story", memory, scene.cache.text.get("mdsSheets"));
+    var mds = CreateMds(scene, "story", memory, scene.cache.text.get("mdsSheets")); //memory為遊戲內容參數
     var mdsControlButtons = CreateMdsControlButtons(scene, mds);
     mds.startGroup("歷史事件");
 

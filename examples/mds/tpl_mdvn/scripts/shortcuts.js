@@ -30,7 +30,11 @@ TEXTBOX
 
 對話框.to
   alpha=1
-  wait=false`,
+  wait=false
+
+NAMEINPUT
+  id=NameInput
+  vpw=0.4`,
 
   顯示時間地點:
 `TITLE
