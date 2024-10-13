@@ -1,0 +1,43 @@
+# 隨機事件
+
+## 取得隨機數
+
+setData
+  randomNum=#( randomInt(1, 3) )
+
+log
+  text=取得隨機數{{randomNum}}
+
+### [IF randomNum == 1 ]
+
+log
+  text=妹妹穿新衣
+
+### [IF randomNum == 2 ]
+
+log
+  text=妹妹肚子餓
+
+### [IF randomNum == 3 ]
+
+log
+  text=妹妹去爬山
+
+## 等待點擊
+
+setData
+  時間地點=1949年，2月25日，台北大稻埕
+
+<<{顯示時間地點}>>
+
+wait
+  click
+
+標示.shake
+
+log
+  text=標示.x = {{@標示.x}}
+
+wait
+  click
+
